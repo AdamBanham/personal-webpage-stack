@@ -12,7 +12,7 @@ name: "FaceHolder"
 }
 </script>
 
-<style lang="sass">
+<style lang="sass" scoped>
 @import "@/styles/colours.sass"
 .face-holder
     position: relative
@@ -32,7 +32,7 @@ name: "FaceHolder"
     $d : 19
     .circle
         &:nth-child(#{$i+1})
-            filter: brightness((100% - ($i) *($d/3)))
+            filter: brightness((100% - ($i) *($d/2.5)))
             height: (400px - $i * $d)
             width: (400px - $i * $d)
             border-radius: (400px - $i * $d)/2
@@ -44,11 +44,11 @@ name: "FaceHolder"
         height: 200px
         width: 225px
         border-radius: 140px
-        background-image: url("./close_up.png")
-        background-color: $blue-7
+        background: url("./close_up.png"), radial-gradient(circle,$blue-4 5%, $blue-7 30%, $black-blue 75%),radial-gradient(circle, $black-blue 0%, $blue-7 40%), radial-gradient(circle,$blue-4 0%, $black-blue 70%),//, url("./close_up.png")
+        // background-color: $blue-7
         background-repeat: no-repeat
         background-size: auto
-        background-blend-mode: overlay
+        background-blend-mode: overlay,lighten,overlay,darken
         transform: scale(.75) translateX(-47px) translateY(-32px)
             
 </style>
