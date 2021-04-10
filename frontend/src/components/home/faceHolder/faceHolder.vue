@@ -18,6 +18,7 @@ name: "FaceHolder"
     position: relative
     height: 400px
     width: 400px
+    z-index: 50
 .circle
     background-color: $blue-8
     height: 400px
