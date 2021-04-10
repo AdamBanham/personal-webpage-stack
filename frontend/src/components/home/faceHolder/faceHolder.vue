@@ -13,12 +13,13 @@ name: "FaceHolder"
 </script>
 
 <style lang="sass">
+@import "@/styles/colours.sass"
 .face-holder
     position: relative
     height: 400px
     width: 400px
 .circle
-    background-color: #2e3b6e
+    background-color: $blue-7
     height: 400px
     width: 400px
     border-radius: 200px

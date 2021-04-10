@@ -5,8 +5,9 @@
 </template>
 
 <style lang="sass">
+@import "@/styles/colours.sass"
 html
-  background-color: #030408
+  background-color: $black-blue
 body 
   width: 100vw
   height: 100vh
