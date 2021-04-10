@@ -1,7 +1,7 @@
 <template>
   <div class="face-holder">
         <div class="circle" v-for="i in Array.from({length:13}, (x,i) => i)" :key="i"></div>
-        <img class="circle face" src="./close_up.png" alt="face" />
+        <div class="circle face" />
   </div>
 
 </template>
@@ -29,22 +29,26 @@ name: "FaceHolder"
     &:nth-child(1)
         box-shadow: 0 0 100px 10px cornflowerblue
 @for $i from 1 through 13
-    $d : 14
+    $d : 19
     .circle
         &:nth-child(#{$i+1})
-            filter: brightness((100% - ($i) *($d/2)))
+            filter: brightness((100% - ($i) *($d/3)))
             height: (400px - $i * $d)
             width: (400px - $i * $d)
             border-radius: (400px - $i * $d)/2
             top: $i * ($d/2) * 1px
             left: $i * ($d/2) * 1px
-.face
-    background: revert
 .face,.circle
     &:nth-child(14)
-        filter: brightness(60%)
-        height: auto
-        width: auto
-        transform: scale(.9) translateX(-8px) translateY(8px)
+        filter: brightness(50%)
+        height: 200px
+        width: 225px
+        border-radius: 140px
+        background-image: url("./close_up.png")
+        background-color: $blue-7
+        background-repeat: no-repeat
+        background-size: auto
+        background-blend-mode: overlay
+        transform: scale(.75) translateX(-47px) translateY(-32px)
             
 </style>
