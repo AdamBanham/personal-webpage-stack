@@ -19,7 +19,7 @@ name: "FaceHolder"
     height: 400px
     width: 400px
 .circle
-    background-color: $blue-7
+    background-color: $blue-8
     height: 400px
     width: 400px
     border-radius: 200px
@@ -27,12 +27,12 @@ name: "FaceHolder"
     left: 0
     position: absolute
     &:nth-child(1)
-        box-shadow: 0 0 100px 10px cornflowerblue
+        box-shadow: 0 0 100px 10px $blue-4
 @for $i from 1 through 13
     $d : 19
     .circle
         &:nth-child(#{$i+1})
-            filter: brightness((100% - ($i) *($d/2.5)))
+            filter: brightness((100% - ($i) *($d/2.2)))
             height: (400px - $i * $d)
             width: (400px - $i * $d)
             border-radius: (400px - $i * $d)/2
