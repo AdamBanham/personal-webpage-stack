@@ -28,8 +28,7 @@
 <script>
 import FaceHolder from "./faceHolder/faceHolder.vue";
 import FaceFloater from "./faceFloater/faceFloater.vue";
-import FloatData from "./floatData.js"
-import floatData from './floatData.js';
+import Floaters from './floaters.js';
 export default {
 name: "HomePage",
 components: {
@@ -44,17 +43,17 @@ data() {
 computed: {
   smallFloats() {
     return this.floats.filter(
-      (i) => i.type == floatData.FloaterTypes.SMALL
+      (i) => i.type == Floaters.FloaterTypes.SMALL
     );
   },
   mediumFloats() {
     return this.floats.filter(
-      (i) => i.type == floatData.FloaterTypes.MEDIUM
+      (i) => i.type == Floaters.FloaterTypes.MEDIUM
     );
   },
   largeFloats() {
     return this.floats.filter(
-      (i) => i.type == floatData.FloaterTypes.LARGE
+      (i) => i.type == Floaters.FloaterTypes.LARGE
     );
   }
 },
@@ -62,11 +61,11 @@ mounted() {
   var some;
   try {
     this.floats = this.floats.concat(
-      Array.from( {length:6}, () => new FloatData.Floater(floatData.FloaterTypes.SMALL))
+      Array.from( {length:6}, () => new Floaters.Floater(Floaters.FloaterTypes.SMALL))
     ).concat(
-      Array.from( {length:4}, () => new FloatData.Floater(floatData.FloaterTypes.MEDIUM))
+      Array.from( {length:4}, () => new Floaters.Floater(Floaters.FloaterTypes.MEDIUM))
     ).concat(
-      Array.from( {length:3}, () => new FloatData.Floater(floatData.FloaterTypes.LARGE))
+      Array.from( {length:3}, () => new Floaters.Floater(Floaters.FloaterTypes.LARGE))
     ) 
   }
   catch (err) {
