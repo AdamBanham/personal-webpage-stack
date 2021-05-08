@@ -57,7 +57,8 @@ computed : {
             'width': this.orbitsize+'px',
             'z-index': this.zlevel, 
             'animation-duration' : this.speed +'s',
-            'transform' : "rotate("+this.startdeg+"deg)"
+            'animation-delay': "0.2s",
+            'transform' : "rotate("+this.startdeg+"deg)",
         }
     },
     starStyler: function() {
