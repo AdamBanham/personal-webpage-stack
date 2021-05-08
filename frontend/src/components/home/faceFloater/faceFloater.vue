@@ -57,15 +57,47 @@ computed : {
             'width': this.orbitsize+'px',
             'z-index': this.zlevel, 
             'animation-duration' : this.speed +'s',
-            'animation-delay': "0.2s",
-            'transform' : "rotate("+this.startdeg+"deg)",
         }
     },
     starStyler: function() {
+        // work out left and right based on starting degree
+        var left,top;
+        if (this.startdeg <= 45)
+        {
+            top = "0px";
+            left = (this.orbitsize / 2) + (this.orbitsize/2) * (this.startdeg/45);
+            left = left+"px";
+        }
+        else if (this.startdeg > 45 && this.startdeg <= 135)
+        {
+            left = this.orbitsize +"px";
+            top = this.orbitsize *  ((this.startdeg-45)/(135-45));
+            top = top +"px";
+        }
+        else if (this.startdeg > 135 && this.startdeg <= 225)
+        {
+            top = this.orbitsize+"px";
+            left = this.orbitsize - this.orbitsize *  ((this.startdeg-135)/(225-135));
+            left = left +"px";
+        }
+        else if (this.startdeg > 225 && this.startdeg <= 315)
+        {
+            left= "0px"
+            top = this.orbitsize - this.orbitsize *  ((this.startdeg-225)/(315-225));
+            top = top +"px";
+        }
+        else 
+        {
+            top = "0px"
+            left = (this.orbitsize/2) *  ((this.startdeg-315)/(45));
+            left = left +"px";
+        }
         return {
             'z-index' : this.zlevel-10,
             'height' : this.starsize + 'px',
             'width': this.starsize + 'px',
+            'top' : top,
+            'left': left,
             'border-radius': Math.round(this.starsize/2) + 'px',
         }
     }
@@ -77,10 +109,9 @@ computed : {
 @import "@/styles/colours.sass"
 .facefloater-contain
     position: absolute
-    animation: rotate 10s linear -10s infinite
+    animation: rotate 10s infinite
     .facefloater
-        top: 0
-        left: 0
+        position: absolute
     .cyan
         background-color: $cyan-5
         box-shadow: 0 0 75px 5px $cyan-7

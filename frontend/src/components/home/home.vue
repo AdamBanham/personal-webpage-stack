@@ -84,4 +84,5 @@ mounted() {
   align-items: center
   display: flex
   z-index: 50
+  transform: scale(50%)
 </style>
