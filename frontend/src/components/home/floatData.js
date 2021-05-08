@@ -50,18 +50,18 @@ export class FloaterBase
 
     small()
     {
-        this.orbitsize=Math.random() * 125 + 350;
+        this.orbitsize=Math.random() * 100 + 350;
         this.zlevel=Math.round(Math.random() * 50 + 50);
-        this.speed=Math.round(Math.random() * 15 + 50);
+        this.speed=Math.round(Math.random() * 15 + 150);
         this.starsize=Math.random() * 25 + 30;
         this.startdeg=Math.random() * -1080;
     }
 
     medium() 
     {
-        this.orbitsize=Math.random() * 125 + 350;
+        this.orbitsize=Math.random() * 100 + 350;
         this.zlevel=Math.round(Math.random() * 50 + 15);
-        this.speed=Math.round(Math.random() * 15 + 100);
+        this.speed=Math.round(Math.random() * 15 + 250);
         this.starsize=Math.random() * 25 + 60;
         this.startdeg=Math.random() * -1080;
     }
@@ -70,7 +70,7 @@ export class FloaterBase
     {
        this.orbitsize=Math.random() * 250 + 350;
        this.zlevel=Math.round(Math.random() * 50 + 15);
-       this.speed=Math.round(Math.random() * 15 + 150);
+       this.speed=Math.round(Math.random() * 15 + 350);
        this.starsize=Math.random() * 25 + 120;
        this.startdeg=Math.random() * -1080;
     }

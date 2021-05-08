@@ -83,17 +83,17 @@ computed : {
         left: 0
     .cyan
         background-color: $cyan-5
-        box-shadow: 0 0 25px 10px $cyan-7
+        box-shadow: 0 0 75px 5px $cyan-7
     .yellow
         background-color: $yellow-5
-        box-shadow: 0 0 25px 10px $yellow-7
+        box-shadow: 0 0 75px 5px $yellow-7
     .green
         background-color: $green-5
-        box-shadow: 0 0 25px 10px $green-7
+        box-shadow: 0 0 75px 5px $green-7
     .red 
         background-color: $red-5
-        box-shadow: 0 0 25px 10px $red-7
+        box-shadow: 0 0 75px 5px $red-7
     .orange
         background-color: $orange-5
-        box-shadow: 0 0 25px 10px $orange-7
+        box-shadow: 0 0 75px 5px $orange-7
 </style>
