@@ -16,5 +16,37 @@
         transform: rotate(1turn)
         -webkit-transform: rotate(1turn)
 
+@keyframes wave-rise
+    0%
+        transform: translateY(0px)
+        opacity: 1
+    50%
+        transform: translateY(-30px) scale(0.8)
+        opacity: 1
+    100%
+        transform: translateY(-75px) scale(0.5)
+        opacity: 0
 
+@mixin wave()
+    position: absolute
+    width: 45px
+    height: 45px
+    content: ""
+    display: block
+    border-radius: 50%
+    -webkit-backface-visibility: hidden
+
+@mixin random_ani_duration($min, $max)
+    animation-duration: $min + math.random($max - $min) * 1s
+
+@mixin random_ani_delay($min, $max)
+    animation-delay: $min + math.random($max - $min) * 1s
+
+@mixin random_hw($min, $max)
+    $temp: $min + math.random($max - $min) * 1px
+    height: $temp
+    width: $temp
+
+@mixin random_left($min, $max)
+    left: $min + math.random($max - $min) * 1% 
         
