@@ -119,18 +119,18 @@ created() {
     .facefloater
         position: absolute
     .cyan
-        background-color: $cyan-5
+        background-image: radial-gradient($cyan-3, $cyan-5, $cyan-7)
         box-shadow: 0 0 75px 5px $cyan-7
     .yellow
-        background-color: $yellow-5
+        background-image: radial-gradient($yellow-3, $yellow-5, $yellow-7)
         box-shadow: 0 0 75px 5px $yellow-7
     .green
-        background-color: $green-5
+        background-image: radial-gradient($green-3, $green-5, $green-7)
         box-shadow: 0 0 75px 5px $green-7
     .red 
-        background-color: $red-5
+        background-image: radial-gradient($red-3, $red-5, $red-7)
         box-shadow: 0 0 75px 5px $red-7
     .orange
-        background-color: $orange-5
+        background-image: radial-gradient($orange-3, $orange-5, $orange-7)
         box-shadow: 0 0 75px 5px $orange-7
 </style>
