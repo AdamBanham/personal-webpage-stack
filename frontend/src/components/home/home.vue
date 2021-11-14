@@ -28,18 +28,21 @@
       :starsize="float.starsize"
       :startdeg="float.startdeg"
     />
+    <TimelineBar />
   </div>
 </template>
 
 <script>
 import FaceHolder from "./faceHolder/faceHolder.vue";
 import FaceFloater from "./faceFloater/faceFloater.vue";
+import TimelineBar from "./timelineBar/timelineBar.vue"
 import Floaters from './floaters.js';
 export default {
 name: "HomePage",
 components: {
     FaceHolder,
-    FaceFloater
+    FaceFloater,
+    TimelineBar
 },
 data() {
   return {
