@@ -1,27 +1,33 @@
 <template>
   <div class="home-page">
-      <FaceHolder />
-      <FaceFloater v-for="(float,i) in largeFloats" :key="'large-'+i"
-          :orbitsize="float.orbitsize"
-          :zlevel="float.zlevel"
-          :speed="float.speed"
-          :starsize="float.starsize"
-           :startdeg="float.startdeg"
-        />
-        <FaceFloater v-for="(float,i) in mediumFloats" :key="'medium-'+i"
-          :orbitsize="float.orbitsize"
-          :zlevel="float.zlevel"
-          :speed="float.speed"
-          :starsize="float.starsize"
-           :startdeg="float.startdeg"
-        />
-      <FaceFloater v-for="(float,i) in smallFloats" :key="'small-'+i"
-          :orbitsize="float.orbitsize"
-          :zlevel="float.zlevel"
-          :speed="float.speed"
-          :starsize="float.starsize"
-           :startdeg="float.startdeg"
-        />
+    <FaceHolder />
+    <FaceFloater
+      v-for="(float,i) in largeFloats"
+      :key="'large-'+i"
+      :orbitsize="float.orbitsize"
+      :zlevel="float.zlevel"
+      :speed="float.speed"
+      :starsize="float.starsize"
+      :startdeg="float.startdeg"
+    />
+    <FaceFloater
+      v-for="(float,i) in mediumFloats"
+      :key="'medium-'+i"
+      :orbitsize="float.orbitsize"
+      :zlevel="float.zlevel"
+      :speed="float.speed"
+      :starsize="float.starsize"
+      :startdeg="float.startdeg"
+    />
+    <FaceFloater
+      v-for="(float,i) in smallFloats"
+      :key="'small-'+i"
+      :orbitsize="float.orbitsize"
+      :zlevel="float.zlevel"
+      :speed="float.speed"
+      :starsize="float.starsize"
+      :startdeg="float.startdeg"
+    />
   </div>
 </template>
 
@@ -58,7 +64,6 @@ computed: {
   }
 },
 mounted() {
-  var some;
   try {
     this.floats = this.floats.concat(
       Array.from( {length:6}, () => new Floaters.Floater(Floaters.FloaterTypes.SMALL))
