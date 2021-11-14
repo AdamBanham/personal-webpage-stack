@@ -1,7 +1,13 @@
 <template>
-    <div class="facefloater-contain" :style="containStyler">
-        <div :class="[starClass, colourClass]" :style="starStyler" />
-    </div>  
+  <div
+    class="facefloater-contain"
+    :style="containStyler"
+  >
+    <div
+      :class="[starClass, colourClass]"
+      :style="starStyler"
+    />
+  </div>  
 </template>
 
 <script>
@@ -34,21 +40,6 @@ data() {
         colourClass: null,
         starClass: "facefloater"
     }
-},
-created() {
-    let rand = Math.random() * 12
-    if (rand < 2.5) {
-        this.colourClass = "red"
-    } else if (rand < 5.0) {
-        this.colourClass = "green"
-    } else if (rand < 7.5) {
-        this.colourClass = "yellow"
-    } else if (rand < 10) {
-        this.colourClass = "cyan"
-    } else {
-        this.colourClass = "orange"
-    }
-   
 },
 computed : {
     containStyler : function() {
@@ -101,6 +92,21 @@ computed : {
             'border-radius': Math.round(this.starsize/2) + 'px',
         }
     }
+},
+created() {
+    let rand = Math.random() * 12
+    if (rand < 2.5) {
+        this.colourClass = "red"
+    } else if (rand < 5.0) {
+        this.colourClass = "green"
+    } else if (rand < 7.5) {
+        this.colourClass = "yellow"
+    } else if (rand < 10) {
+        this.colourClass = "cyan"
+    } else {
+        this.colourClass = "orange"
+    }
+   
 }
 }
 </script>
