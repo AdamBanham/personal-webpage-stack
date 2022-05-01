@@ -33,7 +33,10 @@
     </div>
     <div class="right">
       <p>
-        <b> Adam Banham </b> (<a href="https://orcid.org/0000-0001-9912-8220" target="_blank">ORCID</a>) <br><br>
+        <b> Adam Banham </b> (<a
+          href="https://orcid.org/0000-0001-9912-8220"
+          target="_blank"
+        >ORCID</a>) <br><br>
         Thanks to the fantastic support at the Queensland University of Technology, I am currently studying for a PhD 
         focusing on Process Mining. In particular, I have to thank my current supervisor team for all their effort and patience, 
         as they have helped me grow significantly through my undergraduate studies and continue to do so now.

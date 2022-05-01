@@ -50,6 +50,8 @@ name: "FaceHolder"
     background-position: center
     background-repeat: no-repeat
     background-size: cover
+    box-shadow: $green-1 0 0 25px 15px
+    border-radius: 50%
 
 .circle
     background-color: $blue-2
