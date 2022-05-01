@@ -1,34 +1,75 @@
 <template>
   <div class="home-page">
-    <FaceHolder />
-    <FaceFloater
-      v-for="(float,i) in largeFloats"
-      :key="'large-'+i"
-      :orbitsize="float.orbitsize"
-      :zlevel="float.zlevel"
-      :speed="float.speed"
-      :starsize="float.starsize"
-      :startdeg="float.startdeg"
-    />
-    <FaceFloater
-      v-for="(float,i) in mediumFloats"
-      :key="'medium-'+i"
-      :orbitsize="float.orbitsize"
-      :zlevel="float.zlevel"
-      :speed="float.speed"
-      :starsize="float.starsize"
-      :startdeg="float.startdeg"
-    />
-    <FaceFloater
-      v-for="(float,i) in smallFloats"
-      :key="'small-'+i"
-      :orbitsize="float.orbitsize"
-      :zlevel="float.zlevel"
-      :speed="float.speed"
-      :starsize="float.starsize"
-      :startdeg="float.startdeg"
-    />
-    <TimelineBar />
+    <div class="left">
+      <FaceHolder />
+      <FaceFloater
+        v-for="(float,i) in largeFloats"
+        :key="'large-'+i"
+        :orbitsize="float.orbitsize"
+        :zlevel="float.zlevel"
+        :speed="float.speed"
+        :starsize="float.starsize"
+        :startdeg="float.startdeg"
+      />
+      <FaceFloater
+        v-for="(float,i) in mediumFloats"
+        :key="'medium-'+i"
+        :orbitsize="float.orbitsize"
+        :zlevel="float.zlevel"
+        :speed="float.speed"
+        :starsize="float.starsize"
+        :startdeg="float.startdeg"
+      />
+      <FaceFloater
+        v-for="(float,i) in smallFloats"
+        :key="'small-'+i"
+        :orbitsize="float.orbitsize"
+        :zlevel="float.zlevel"
+        :speed="float.speed"
+        :starsize="float.starsize"
+        :startdeg="float.startdeg"
+      />
+      <!-- <TimelineBar /> -->
+    </div>
+    <div class="right">
+      <p>
+        <b> Adam Banham </b> <br><br>
+        Thanks to the fantastic support at the Queensland University of Technology, I am currently studying to get a PhD 
+        focusing on Process Mining. In particular, I have to thank my current supervisor team for all their effort and patience, 
+        as they have helped me grow significantly through my undergraduate studies and continue to do so now.
+        Professor Moe T. Wynn, for taking me on during my undergraduate and creating opportunities to work with her and colleagues. 
+        Dr Robert Andrews, for giving me a chance to work alongside him during my undergraduate studies and for his continuing support. 
+        Finally, Dr Sander J.J. Leemans, for giving me the opportunity to learn from him during my honours and PhD.
+        <br>
+        <br>
+        <b>Additional Info:</b>
+        <ul>
+          <li>
+            Born in Ipswich, Queensland, Australia.
+          </li>
+          <li>
+            Completed Bachelor (Honours) of Information Technology at QUT in 2020 with Second Class honours - Division A
+          </li>
+          <li>
+            Started PhD on Feburary 22 in 2021 with the school of Information Systems at QUT.
+          </li>
+          <li>
+            Brief overview of project: <a
+              href="https://qut.to/cjvey"
+              target="_blank"
+              title="Project Description @ QUT"
+            >https://qut.to/cjvey</a>
+          </li>
+          <li>
+            Check out the BPM group at QUT : <a
+              href="https://qut.to/eb3gw"
+              target="_blank"
+              title="BPM @ QUT Homepage"
+            >https://qut.to/eb3gw</a>
+          </li>
+        </ul>
+      </p>
+    </div>
   </div>
 </template>
 
@@ -42,7 +83,7 @@ name: "HomePage",
 components: {
     FaceHolder,
     FaceFloater,
-    TimelineBar
+    // TimelineBar
 },
 data() {
   return {
@@ -84,13 +125,22 @@ mounted() {
 }
 </script>
 
-<style lang="sass">
+<style lang="sass" scoped>
+@import "@/styles/colours_ant.sass"
+
 .home-page
   width: 100% 
   height: 100%
+  display: flex
   justify-content: center
   align-items: center
-  display: flex
-  z-index: 50
-  transform: scale(.66)
+  .left 
+    justify-content: center
+    align-items: center
+    display: flex
+    z-index: 50
+    transform: scale(.66)
+  .right
+    margin-left: 100px
+    max-width: 450px
 </style>

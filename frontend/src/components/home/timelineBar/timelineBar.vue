@@ -22,7 +22,7 @@ export default {
             spotTitles: [ 
                 "The Early Years",
                 "Undergraduate Years",
-                "Postgraude Training",
+                "Postgraduate Training",
                 "????",
                 "????"
             ],
@@ -46,7 +46,7 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-@import "@/styles/colours"
+@import "@/styles/colours_ant"
 .timeline
     position: absolute
     height: 12.5px 

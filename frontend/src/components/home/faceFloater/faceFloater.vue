@@ -112,7 +112,7 @@ created() {
 </script>
 
 <style lang="sass" scoped>
-@import "@/styles/colours.sass"
+@import "@/styles/colours_ant.sass"
 .facefloater-contain
     position: absolute
     animation: rotate 10s infinite

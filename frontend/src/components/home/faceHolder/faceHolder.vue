@@ -1,6 +1,7 @@
 <template>
   <div class="face-holder">
-    <div
+    <div class="fader" />
+    <!-- <div
       v-for="i in Array.from({length:13}, (x,i) => i)"
       :key="i"
       class="circle"
@@ -26,7 +27,7 @@
           class="blob blob-fg"
         />
       </div>
-    </div>
+    </div>  -->
   </div>
 </template>
 
@@ -37,7 +38,7 @@ name: "FaceHolder"
 </script>
 
 <style lang="sass" scoped>
-@import "@/styles/colours.sass"
+@import "@/styles/colours_ant.sass"
 @import "@/styles/animations.sass"
 
 .face-holder
@@ -45,8 +46,13 @@ name: "FaceHolder"
     height: 400px
     width: 400px
     z-index: 50
+    background-image: url("~@/assets/profile_left.png")
+    background-position: center
+    background-repeat: no-repeat
+    background-size: cover
+
 .circle
-    background-color: $blue-8
+    background-color: $blue-2
     height: 400px
     width: 400px
     border-radius: 200px
@@ -70,8 +76,9 @@ name: "FaceHolder"
   display: flex
   flex-direction: column
   justify-content: center
+  
   .progress
-    color: $blue-2
+    color: $blue-3
     text-align: center
     font-size: 36pt
     font-weight: bold
@@ -82,7 +89,7 @@ name: "FaceHolder"
     border-radius: 140px
     z-index: 0
     position: absolute
-    background: linear-gradient(0deg, $blue-5 25%, $blue-8 25%)
+    background: linear-gradient(0deg, $blue-3 25%, $blue-6 25%)
     .blob
       position: absolute
       width: 100%
@@ -92,19 +99,19 @@ name: "FaceHolder"
       &::after
         @include wave()
         opacity: 0
-        background: $blue-5
+        background: $blue-3
         height: 50px
         width: 50px
         z-index: -2
         animation: wave-rise 5s infinite ease-out
   &:nth-child(14)
         filter: brightness(90%)
-        border: 2.5px $blue-5 solid
+        border: 2.5px $blue-4 solid
         height: 200px
         width: 225px
         border-radius: 140px
         // background: url("./close_up.png"), radial-gradient(circle,$blue-4 5%, $blue-7 30%, $black-blue 75%),radial-gradient(circle, $black-blue 0%, $blue-7 40%), radial-gradient(circle,$blue-4 0%, $black-blue 70%),//, url("./close_up.png")
-        background-color: $blue-8
+        background-color: $blue-3
         background-repeat: no-repeat
         background-size: auto
         background-blend-mode: overlay,lighten,overlay,darken

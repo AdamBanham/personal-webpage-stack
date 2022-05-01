@@ -5,10 +5,12 @@
 </template>
 
 <style lang="sass">
-@import "@/styles/colours.sass"
+@import "@/styles/colours_ant.sass"
 @import "@/styles/animations.sass"
+@import "@/styles/tags.sass"
+
 html
-  background-color: $black-blue
+  background-color: $background
   overflow-x: hidden
   overflow-y: hidden
 body 
