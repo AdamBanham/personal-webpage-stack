@@ -1,8 +1,19 @@
 <template>
   <div class="app">
-    <router-view/>
+    <toolbar />
+    <router-view />
   </div>
 </template>
+
+<script>
+import toolbar from "@/components/toolbar/toolbar.vue"
+export default {
+name: "App",
+components: {
+    toolbar
+},
+}
+</script>
 
 <style lang="sass">
 @import "@/styles/colours_ant.sass"
@@ -18,7 +29,6 @@ body
   height: 100vh
   margin: 0px
 .app 
-  width: 98vw
-  height: 98vh
-  padding: 1vh 1vw
+  width: 100vw
+  height: 100vh
 </style>
