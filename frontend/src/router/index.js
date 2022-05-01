@@ -1,15 +1,32 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import Home from '../views/Home.vue'
+import NotReady from "@/views/NotReady.vue"
 
 const routes = [
   {
     path: '/',
-    name: 'Home',
+    name: 'home',
     component: Home
   },
   {
-    path: '/about',
-    name: 'About',
+    path: '/blog',
+    name: 'blog',
+    component: NotReady
+  },
+  {
+    path: '/pubs',
+    name: 'pubs',
+    component: NotReady
+  },
+  {
+    path: '/code',
+    name: 'code',
+    component: NotReady
+  },
+  {
+    path: '/contact',
+    name: 'contact',
+    component: NotReady
   },
   {
     // catch all back to home
