@@ -34,7 +34,7 @@
     <div class="right">
       <p>
         <b> Adam Banham </b> (<a href="https://orcid.org/0000-0001-9912-8220" target="_blank">ORCID</a>) <br><br>
-        Thanks to the fantastic support at the Queensland University of Technology, I am currently studying to get a PhD 
+        Thanks to the fantastic support at the Queensland University of Technology, I am currently studying for a PhD 
         focusing on Process Mining. In particular, I have to thank my current supervisor team for all their effort and patience, 
         as they have helped me grow significantly through my undergraduate studies and continue to do so now.
         Professor Moe T. Wynn, for taking me on during my undergraduate and creating opportunities to work with her and colleagues. 
@@ -143,4 +143,12 @@ mounted() {
   .right
     margin-left: 100px
     max-width: 450px
+    padding: 15px
+    background-color: $background-light 
+    border-radius: 15px
+    box-shadow: $green-1 2.5px 5px 5px 0.5px
+    p 
+      text-align: center
+    ul
+      text-align: left
 </style>
