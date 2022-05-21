@@ -13,7 +13,7 @@ components: {
     toolbar
 },
 mounted() {
-   document.dispatchEvent(new Event('app.rendered'))
+   document.dispatchEvent(new Event('x-app-rendered'))
 }
 }
 </script>
