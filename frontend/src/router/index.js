@@ -1,5 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import Home from '../views/Home.vue'
+import ContactPage from "@/views/ContactPage.vue"
 import NotReady from "@/views/NotReady.vue"
 
 const routes = [
@@ -26,7 +27,7 @@ const routes = [
   {
     path: '/contact',
     name: 'contact',
-    component: NotReady
+    component: ContactPage
   },
   {
     // catch all back to home
