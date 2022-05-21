@@ -12,6 +12,9 @@ name: "App",
 components: {
     toolbar
 },
+mounted() {
+   document.dispatchEvent(new Event('app.rendered'))
+}
 }
 </script>
 
