@@ -23,7 +23,7 @@ components: {
 html
   background-color: $background
   overflow-x: hidden
-  overflow-y: hidden
+  overflow-y: auto
 body 
   width: 100vw
   height: 100vh
