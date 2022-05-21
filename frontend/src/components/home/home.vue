@@ -57,6 +57,9 @@
             Started PhD on Feburary 22 in 2021 with the school of Information Systems at QUT.
           </li>
           <li>
+            Year One Milestone - Research Plan - Confirmed with no changes 
+            </li>
+          <li>
             Brief overview of project: <a
               href="https://qut.to/cjvey"
               target="_blank"
