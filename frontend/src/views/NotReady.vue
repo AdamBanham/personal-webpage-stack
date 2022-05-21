@@ -15,7 +15,7 @@ name: "NotReady"
 </script>
 
 <style lang="sass" scoped>
-@import "@/styles/colours_ant.sass"
+@import "@/styles/coloursAnt.sass"
 .not-ready
     width: 100%
     height: 60% 

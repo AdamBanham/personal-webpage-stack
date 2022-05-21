@@ -50,7 +50,7 @@ methods : {
 </script>
 
 <style lang="sass" scoped>
-@import "@/styles/colours_ant.sass"
+@import "@/styles/coloursAnt.sass"
 .toolbar
     width: 100% 
     height: 40px

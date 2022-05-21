@@ -46,7 +46,7 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-@import "@/styles/colours_ant"
+@import "@/styles/coloursAnt"
 .timeline
     position: absolute
     height: 12.5px 

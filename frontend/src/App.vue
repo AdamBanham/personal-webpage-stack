@@ -16,7 +16,7 @@ components: {
 </script>
 
 <style lang="sass">
-@import "@/styles/colours_ant.sass"
+@import "@/styles/coloursAnt.sass"
 @import "@/styles/animations.sass"
 @import "@/styles/tags.sass"
 
