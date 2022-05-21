@@ -1,39 +1,39 @@
 <template>
   <div class="toolbar">
     <div class="name">
-        Adam P. Banham
+      Adam P. Banham
     </div>
-    <div  class="choices">
-    <div
-      class="choice"
-      @click="moveTo('home')"
-    >
-      Home
-    </div>
-    <div
-      class="choice"
-      @click="moveTo('blog')"
-    >
-      Blog
-    </div>
-    <div
-      class="choice"
-      @click="moveTo('pubs')"
-    >
-      Publications
-    </div>
-    <div
-      class="choice"
-      @click="moveTo('code')"
-    >
-      Coding
-    </div>
-    <div
-      class="choice"
-      @click="moveTo('contact')"
-    >
-      Contact
-    </div>
+    <div class="choices">
+      <div
+        class="choice"
+        @click="moveTo('home')"
+      >
+        Home
+      </div>
+      <div
+        class="choice"
+        @click="moveTo('blog')"
+      >
+        Blog
+      </div>
+      <div
+        class="choice"
+        @click="moveTo('pubs')"
+      >
+        Publications
+      </div>
+      <div
+        class="choice"
+        @click="moveTo('code')"
+      >
+        Coding
+      </div>
+      <div
+        class="choice"
+        @click="moveTo('contact')"
+      >
+        Contact
+      </div>
     </div>
   </div>
 </template>
