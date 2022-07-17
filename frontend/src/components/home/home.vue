@@ -33,10 +33,15 @@
     </div>
     <div class="right">
       <p>
-        <b> Adam Banham </b> (<a
+        <b> Adam Banham </b> 
+        (<a
           href="https://orcid.org/0000-0001-9912-8220"
           target="_blank"
-        >ORCID</a>) <br><br>
+        >ORCID</a>) 
+        (<a
+          href="https://scholar.google.com/citations?hl=en&user=IyiPbEAAAAAJ"
+          target="_blank"
+        >Scholar</a>) <br><br>
         Thanks to the fantastic support at the Queensland University of Technology, I am currently studying for a PhD 
         focusing on Process Mining. In particular, I have to thank my current supervisor team for all their effort and patience, 
         as they have helped me grow significantly through my undergraduate studies and continue to do so now.
@@ -58,7 +63,7 @@
           </li>
           <li>
             Year One Milestone - Research Plan - Confirmed with no changes 
-            </li>
+          </li>
           <li>
             Brief overview of project: <a
               href="https://qut.to/cjvey"
@@ -137,6 +142,7 @@ mounted() {
 .home-page
   width: 100% 
   height: 100%
+  margin-top: 200px
   display: flex
   justify-content: center
   align-items: center
@@ -147,6 +153,7 @@ mounted() {
     z-index: 50
     transform: scale(.66)
   .right
+    z-index: 100
     margin-left: 100px
     max-width: 450px
     padding: 15px
