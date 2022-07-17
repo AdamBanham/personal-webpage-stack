@@ -26,6 +26,7 @@ mounted() {
 @import "@/styles/tags.sass"
 
 html
+  background-image: url("~@/assets/patterns/processy.png")
   background-color: $background
   overflow-x: hidden
   overflow-y: auto
