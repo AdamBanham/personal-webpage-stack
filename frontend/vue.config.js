@@ -22,7 +22,7 @@ module.exports = {
       onlyProduction: true,
       customRendererConfig: 
       {
-        args: ["--auto-open-devtools-for-tabs", '--disable-dev-shm-usage']
+        args: ['--disable-extensions',"--unhandled-rejections=strict", "--auto-open-devtools-for-tabs", '--disable-dev-shm-usage']
       }
     }
   }
