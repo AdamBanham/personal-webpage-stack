@@ -52,6 +52,7 @@ methods : {
 <style lang="sass" scoped>
 @import "@/styles/coloursAnt.sass"
 .toolbar
+    position: relative
     width: 100% 
     height: 40px
     background: linear-gradient($cyan-1, $cyan-5 90%)
@@ -59,6 +60,7 @@ methods : {
     border-radius: 0px 0px 5px 5px
     display: inline-flex
     justify-content: flex-start
+    z-index: 2000
     .choices
       display: inline-flex
       justify-content: center
@@ -85,11 +87,11 @@ methods : {
     .name
       margin-left: 25px
       font-size: 22px
-      color: $blue-1
+      color: $green-1
       width: 200px
       display: inline-flex
       justify-content: center
       align-items: center
-      opacity: 50%
+      opacity: 0.8
     
 </style>
