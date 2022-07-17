@@ -1,7 +1,9 @@
 <template>
   <div class="app">
     <toolbar />
-    <router-view />
+    <div class="view">
+      <router-view />
+    </div>
   </div>
 </template>
 
@@ -34,4 +36,6 @@ body
 .app 
   width: 100vw
   height: 100vh
+.view
+  z-index: 1000
 </style>
