@@ -1,9 +1,9 @@
 name: Upload Website
 
 on:
-  push:
-    branches:
-    - main
+  release:
+    types: [published]
+  workflow_dispatch:
 
 jobs:
   deploy:
