@@ -20,7 +20,7 @@ props: {
     },
     zlevel: {
         type: Number,
-        default: 25
+        default: 5
     },
     speed: {
         type: Number,
