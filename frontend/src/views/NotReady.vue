@@ -1,4 +1,5 @@
 <template>
+<div class="content-bar">
   <div class="not-ready">
     <div class="content">
       <p> 
@@ -6,6 +7,7 @@
       </p>
     </div>
   </div>
+</div>
 </template>
 
 <script>
@@ -16,6 +18,8 @@ name: "NotReady"
 
 <style lang="sass" scoped>
 @import "@/styles/coloursAnt.sass"
+@import "@/styles/content.sass"
+
 .not-ready
     width: 100%
     height: 60% 
@@ -23,10 +27,10 @@ name: "NotReady"
     justify-content: center
     align-items: center
     .content
-        margin-left: 100px
+        // margin-left: 100px
         max-width: 450px
         padding: 15px
-        background-color: $background-light 
+        background-color: $green-2
         border-radius: 15px
         box-shadow: $green-1 2.5px 5px 5px 0.5px
         p 
