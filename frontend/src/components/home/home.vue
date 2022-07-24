@@ -47,7 +47,7 @@
         as they have helped me grow significantly through my undergraduate studies and continue to do so now.
         Professor Moe T. Wynn, for taking me on during my undergraduate and creating opportunities to work with her and colleagues. 
         Dr Robert Andrews, for giving me a chance to work alongside him during my undergraduate studies and for his continuing support. 
-        Finally, Dr Sander J.J. Leemans, for giving me the opportunity to learn from him during my honours and PhD.
+        Finally, Prof. Sander J.J. Leemans, for giving me the opportunity to learn from him during my honours and PhD.
         <br>
         <br>
         <b>Additional Info:</b>
@@ -87,14 +87,12 @@
 <script>
 import FaceHolder from "./faceHolder/faceHolder.vue";
 import FaceFloater from "./faceFloater/faceFloater.vue";
-import TimelineBar from "./timelineBar/timelineBar.vue"
 import Floaters from './floaters.js';
 export default {
 name: "HomePage",
 components: {
     FaceHolder,
     FaceFloater,
-    // TimelineBar
 },
 data() {
   return {
@@ -138,24 +136,35 @@ mounted() {
 
 <style lang="sass" scoped>
 @import "@/styles/coloursAnt.sass"
+@import "@/styles/breakpoints.sass"
 
 .home-page
   width: 100% 
   height: 100%
-  margin-top: 200px
   display: flex
+  
   justify-content: center
   align-items: center
+
+  @media (min-width: $desktop-width)
+    margin-top: 200px
+
+  @media (max-width: calc($desktop-width - 1px)) and (min-width: $tablet-width)
+    margin-top: 75px
+    flex-direction: column
+
+  @media (max-width: calc($tablet-width - 1px))
+    margin-top: 50px
+    flex-direction: column
+
   .left 
     justify-content: center
     align-items: center
     display: flex
     z-index: 50
-    transform: scale(.66)
+
   .right
     z-index: 100
-    margin-left: 100px
-    max-width: 450px
     padding: 15px
     background-color: $background-light 
     border-radius: 15px
@@ -164,4 +173,13 @@ mounted() {
       text-align: center
     ul
       text-align: left
+    
+    @media (min-width: $desktop-width)
+      margin-left: 100px
+
+    @media (min-width: $tablet-width)
+      max-width: 450px
+
+    @media (max-width: calc($tablet-width - 1px))
+      max-width: 300px
 </style>

@@ -1,7 +1,15 @@
-@import "@/styles/coloursAnt.sass"    
+@import "@/styles/coloursAnt.sass"   
+@import "@/styles/breakpoints.sass" 
+
+$content-width-full: 650px
+$content-width-medium: 500px
+$content-width-small: 100%
+
+$detail-card-height-full: 150px
+$detail-card-height-medium: 200px
+$detail-card-height-small: 250px
 
 .content-bar
-  width: 650px
   margin: auto
   display: flex
   flex-grow: 1
@@ -10,6 +18,15 @@
   min-height: 100vh
   background-color: $background-light
   padding-bottom: 75px
+
+  @media (min-width: $desktop-width)
+    width: $content-width-full
+
+  @media (max-width: calc($desktop-width - 1px)) and (min-width: $tablet-width)
+    width: $content-width-medium
+
+  @media (max-width: calc($tablet-width - 1px))
+    width: $content-width-small
 
 .content-bar > :first-child
   margin-top: 100px
@@ -23,6 +40,17 @@
     background: $light-grey
     display: flex
     flex-direction: column
+
+    @media (min-width: $desktop-width)
+      height: $detail-card-height-full
+
+    @media (max-width: calc($desktop-width - 1px)) and (min-width: $tablet-width)
+      height: $detail-card-height-medium
+
+    @media (max-width: calc($tablet-width - 1px))
+      height: $detail-card-height-small
+
+
     .header 
       width: 100% 
       height: 50px

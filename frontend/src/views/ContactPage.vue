@@ -44,19 +44,9 @@ data : function() {
 
 <style lang="sass">
 @import "@/styles/coloursAnt.sass"
+@import "@/styles/content.sass"
 
-.content-bar > :first-child
-  margin-top: 100px
 .content-bar
-  width: 650px
-  margin: auto
-  display: flex
-  flex-grow: 1
-  flex-direction: column
-  flex-flow: column
-  min-height: 100vh
-  background-color: $background-light
-  padding-bottom: 75px
 
   // :first-child
   //   margin-top: 100px

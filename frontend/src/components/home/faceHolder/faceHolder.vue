@@ -13,11 +13,10 @@ name: "FaceHolder"
 <style lang="sass" scoped>
 @import "@/styles/coloursAnt.sass"
 @import "@/styles/animations.sass"
+@import "@/styles/breakpoints.sass"
 
 .face-holder
     position: relative
-    height: 300px
-    width: 300px
     z-index: 10
     background-image: url("~@/assets/profile_left.png")
     background-position: center
@@ -25,4 +24,16 @@ name: "FaceHolder"
     background-size: cover
     box-shadow: $green-1 0 0 25px 15px
     border-radius: 50%
+
+    @media (min-width: $desktop-width)
+      height: 300px
+      width: 300px
+
+    @media (max-width: calc($desktop-width - 1px)) and (min-width: $tablet-width)
+      height: 200px
+      width: 200px
+
+    @media (max-width: calc($tablet-width - 1px))
+      height: 150px
+      width: 150px
 </style>

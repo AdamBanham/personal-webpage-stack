@@ -113,6 +113,8 @@ created() {
 
 <style lang="sass" scoped>
 @import "@/styles/coloursAnt.sass"
+@import "@/styles/breakpoints.sass"
+
 .facefloater-contain
     position: absolute
     animation: rotate 10s infinite
@@ -133,4 +135,27 @@ created() {
     .orange
         background-image: radial-gradient($orange-3, $orange-5, $orange-7)
         box-shadow: 0 0 75px 5px $orange-7
+
+    div
+        @media (min-width: $desktop-width)
+            transform: scale(0.75)
+
+        @media (max-width: calc($desktop-width - 1px)) and (min-width: $tablet-width)
+            transform: scale(0.5)
+
+        @media (max-width: calc($tablet-width - 1px))
+            transform: scale(0.3)
+
+    @media (min-width: $desktop-width)
+        transform: scale(0.75)
+
+    @media (max-width: calc($desktop-width - 1px)) and (min-width: $tablet-width)
+        transform: scale(0.5)
+        max-width: 450px
+        max-height: 450px
+
+    @media (max-width: calc($tablet-width - 1px))
+        max-width: 300px
+        max-height: 300px
+    
 </style>

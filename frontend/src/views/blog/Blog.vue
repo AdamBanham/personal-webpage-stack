@@ -103,9 +103,17 @@ methods: {
 
 .content-bar
     position: absolute
-    margin-left: calc( (100vw - 650px)/2 )
     box-shadow: $background -5px 0px 15px -5px
     z-index: 5
+
+    @media (min-width: $desktop-width)
+      margin-left: calc( (100vw - $content-width-full)/2 )
+
+    @media (max-width: calc($desktop-width - 1px)) and (min-width: $tablet-width)
+      margin-left: calc( (100vw - $content-width-medium)/2 )
+
+    @media (max-width: calc($tablet-width - 1px))
+      
 
     h2
         text-align: center 
@@ -120,7 +128,7 @@ methods: {
     position: absolute
     z-index: 4
     width: 650px
-    margin-left: calc( ((100vw - 650px)/2) - 150px )
+    
     display: flex
     flex-grow: 1
     flex-direction: column
@@ -128,6 +136,14 @@ methods: {
     min-height: 100vh
     background-color: $light-grey
     padding-bottom: 75px
+
+    @media (min-width: $desktop-width)
+      margin-left: calc( ((100vw - $content-width-full)/2) - 150px )
+
+    @media (max-width: calc($desktop-width - 1px)) and (min-width: $tablet-width)
+      margin-left: calc( ((100vw - $content-width-medium)/2) - 150px )
+
+    @media (max-width: calc($tablet-width - 1px))
 
     div 
         width: 150px
