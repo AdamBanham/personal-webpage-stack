@@ -3,6 +3,7 @@ import Home from '../views/Home.vue'
 import ContactPage from "@/views/ContactPage.vue"
 import NotReady from "@/views/NotReady.vue"
 import BlogPage from "@/views/blog/Blog.vue"
+import PublicationPage from "@/views/publications/Publications.vue"
 
 const routes = [
   {
@@ -18,7 +19,7 @@ const routes = [
   {
     path: '/pubs',
     name: 'pubs',
-    component: NotReady
+    component: PublicationPage
   },
   {
     path: '/code',
