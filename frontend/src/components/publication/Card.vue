@@ -21,15 +21,21 @@
         <p> {{ abstract }} </p>
       </div>
       <div class="pub-card-fill" />
-      <div class="pub-card-download" v-if="file != false">
+      <div
+        v-if="file != false"
+        class="pub-card-download"
+      >
         <div class="holder">
-        <a 
-          :href="fileURL" 
-          target="_blank"
-        > Click here to download a copy</a>
+          <a 
+            :href="fileURL" 
+            target="_blank"
+          > Click here to download a copy</a>
+        </div>
       </div>
-      </div>
-      <div class="pub-card-download" v-else>
+      <div
+        v-else
+        class="pub-card-download"
+      >
         <p>Prepint not available</p>
       </div>
     </div>
@@ -79,7 +85,7 @@ export default {
   },
   methods: {
     getArticle : function (file) {
-      return new URL(`/${file}`, import.meta.url).href
+      return new URL(`../../assets/${file}`, import.meta.url).href
     }
   }
 }
