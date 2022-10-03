@@ -4,9 +4,15 @@ const Renderer = PrerenderSPAPlugin.PuppeteerRenderer;
 
 module.exports = {
   devServer: {
-    watchOptions: {
-      aggregateTimeout: 300,
-      poll: 1000,
+    host: "local-ip",
+    static: {
+      watch: true
+    },
+    watchFiles: {
+      paths: ['src/**/*.vue', 'public/**/*'],
+      options: {
+        usePolling: true,
+      },
     },
   },
 
