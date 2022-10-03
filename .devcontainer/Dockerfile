@@ -2,6 +2,9 @@
 ARG VARIANT=14
 FROM mcr.microsoft.com/vscode/devcontainers/javascript-node:0-${VARIANT}
 
+# bind your app to the gateway IP
+ENV HOST=0.0.0.0
+
 RUN su node -c "umask 0002 && npm install -g npm && npm install -g http-server @vue/cli @vue/cli-service-global"
 
 # Install latest chrome dev package and fonts to support major charsets (Chinese, Japanese, Arabic, Hebrew, Thai and a few others)
