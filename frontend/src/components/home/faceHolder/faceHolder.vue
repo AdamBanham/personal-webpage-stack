@@ -18,7 +18,7 @@ name: "FaceHolder"
 .face-holder
     position: relative
     z-index: 10
-    background-image: url("~@/assets/profile_left.png")
+    background-image: url("@/assets/profile_left.png")
     background-position: center
     background-repeat: no-repeat
     background-size: cover
