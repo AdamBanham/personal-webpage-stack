@@ -11,6 +11,8 @@
         :abstract="paper.abstract"
         :venue="paper.venue"
         :file="paper.file"
+        :doi="paper.doi"
+        :bibtex="paper.bibtex"
       />
     </div>
   </div>

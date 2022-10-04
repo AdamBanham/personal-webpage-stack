@@ -14,7 +14,7 @@
       </div>
       <div class="pub-card-authors">
         <p>
-          {{ authors.join(", ") }} 
+          <i>{{ authors.join(", ") }}</i> 
         </p>
       </div>
       <div class="pub-card-abstract">
@@ -22,21 +22,31 @@
       </div>
       <div class="pub-card-fill" />
       <div
-        v-if="file != false"
+        
         class="pub-card-download"
       >
+        <div v-if="doi != false">
+          <a
+            :href="doi"
+            target="_blank"
+          > doi </a>
+        </div>
         <div class="holder">
           <a 
-            :href="fileURL" 
+            v-if="file != false" 
+            :href="fileURL"
             target="_blank"
-          > Click here to download a copy</a>
+          > download</a>
+          <p v-else>
+            N/A
+          </p>
         </div>
-      </div>
-      <div
-        v-else
-        class="pub-card-download"
-      >
-        <p>Prepint not available</p>
+        <div v-if="bibtex != false">
+          <a
+            :href="bibtexURL"
+            target="_blank"
+          > bibtex </a>
+        </div>
       </div>
     </div>
   </div>
@@ -74,17 +84,30 @@ export default {
           type: [String,Boolean],
           required: false,
           default: false
+        },
+        'doi' : {
+          type: [Boolean, String],
+          required: false,
+          default: false
+        },
+        'bibtex' : {
+          type: [Boolean, String],
+          required: false,
+          default: false
         }
     },
   computed: {
     fileURL: function(){
       if (this.file == false) return "";
-      console.log(`@/assets/${this.file}`)
-      return this.getArticle(this.file)
+      return this.getURL(this.file)
+    },
+    bibtexURL: function(){
+      if (this.bibtex == false) return "";
+      return this.getURL(this.bibtex)
     }
   },
   methods: {
-    getArticle : function (file) {
+    getURL : function (file) {
       return new URL(`../../assets/${file}`, import.meta.url).href
     }
   }
@@ -93,6 +116,7 @@ export default {
 
 <style lang="sass" scoped>
 @import "@/styles/coloursAnt.sass"
+@import "@/styles/breakpoints.sass"
 
 .pub-card
     margin-left: 10%
@@ -107,6 +131,18 @@ export default {
     display: flex
     flex-grow: 1
     flex-direction: row
+
+    @media (min-width: $desktop-width)
+      min-height: 225px
+      max-height: 225px
+
+    @media (max-width: calc($desktop-width - 1px)) and (min-width: $mobile-width)
+      min-height: 225px
+      max-height: 225px
+
+    @media (max-width: calc($mobile-width - 1px))
+      min-height: 275px
+      max-height: 275px
 
     .pub-card-left
       padding-top: 5px 
@@ -143,11 +179,15 @@ export default {
               width: 100%
       .pub-card-venue
           margin-top: 2px
+          margin-bottom: 10px
           width: 90%
           margin-left: 5%
           margin-right: 5%
           min-height: 10px
           max-height: 20px
+          @media (max-width: calc($mobile-width - 1px))
+            min-height: 10px
+            max-height: 30px
           p 
             margin: 0 0 0 0
             text-align: center
@@ -155,12 +195,16 @@ export default {
             font-size: 8px
             color: $green-1
       .pub-card-authors
-          margin-top: 5px
+          margin-top: 10px
           width: 80%
           margin-left: 10%
           margin-right: 10%
           min-height: 10px
           max-height: 25px
+          @media (max-width: calc($mobile-width - 1px))
+            min-height: 10px
+            max-height: 50px
+            margin-bottom: 10px
           p
               margin: 0 0 0 0
               text-align: center
@@ -168,31 +212,42 @@ export default {
               font-size: 10px
               color: $green-2
       .pub-card-abstract
-        max-height: 85px
+        margin-top: 10px
         overflow-y: hidden
         width: 90%
         margin-left: 5%
         margin-right: 5%
+        flex-grow: 1
         p 
           color: $green-3
           font-size: 10px
       .pub-card-fill
-        display: flex 
-        flex-grow: 1
+        width: 100%
+        min-height: 5px
       .pub-card-download
         width: 90%
         margin-left: 5%
         margin-right: 5%
-        min-height: 15px
-        max-height: 15px
+        min-height: 25px
+        max-height: 25px
         margin-bottom: 5px
+        display: flex
+        div 
+          width: fit-content
+          box-shadow: 0 2px 0 0px $background-light
+          justify-content: center
+          justify-items: center
+          height: 15px
+          margin: 0 0 0 0
+          background-color: white
+          border-radius: 5px
+          padding: 5px
         p 
           width: 100%
           margin: 0 0 0 0
           text-align: center 
           color: $red-5
         .holder 
-          width: fit-content
           margin-left: auto
           margin-right: auto
         a 
