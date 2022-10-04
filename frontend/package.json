@@ -15,6 +15,7 @@
   },
   "devDependencies": {
     "@rollup/plugin-dynamic-import-vars": "~1.4",
+    "@rollup/plugin-node-resolve": "^14.1.0",
     "@vitejs/plugin-vue": "^1.6.1",
     "@vue/compiler-sfc": "^3.2.37",
     "eslint": "^7.5",
