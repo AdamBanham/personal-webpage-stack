@@ -99,16 +99,16 @@ export default {
   computed: {
     fileURL: function(){
       if (this.file == false) return "";
-      return this.getURL(this.file)
+      return this.getPublic(this.file)
     },
     bibtexURL: function(){
       if (this.bibtex == false) return "";
-      return this.getURL(this.bibtex)
+      return this.getPublic(this.bibtex)
     }
   },
   methods: {
-    getURL : function (file) {
-      return new URL(`../../assets/${file}`, import.meta.url).href
+    getPublic : function(file) {
+      return `/${file}`;
     }
   }
 }
