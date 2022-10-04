@@ -141,20 +141,21 @@ created() {
             transform: scale(0.75)
 
         @media (max-width: calc($desktop-width - 1px)) and (min-width: $tablet-width)
-            transform: scale(0.5)
+            transform: scale(0.4)
 
         @media (max-width: calc($tablet-width - 1px))
-            transform: scale(0.3)
+            transform: scale(0.2)
 
     @media (min-width: $desktop-width)
         transform: scale(0.75)
 
     @media (max-width: calc($desktop-width - 1px)) and (min-width: $tablet-width)
         transform: scale(0.5)
-        max-width: 450px
-        max-height: 450px
+        max-width: 300px
+        max-height: 300px
 
     @media (max-width: calc($tablet-width - 1px))
+        transform: scale(0.25)
         max-width: 300px
         max-height: 300px
     
