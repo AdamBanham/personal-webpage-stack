@@ -2,11 +2,12 @@
   <div class="blog">
     <div class="filter-bar">
       <div class="section">
-        <h3> Projects </h3>
-        <div class="options">
-          <p> Exogenous Data</p>
-          <p> vispm </p>
-          <p> PhD </p>
+        <h3> Tags </h3>
+        <div 
+          class="options" 
+          v-for:="tag in blogtags"
+        >
+          <p> {{ tag }} </p>
         </div>
       </div>
       <div class="section">
@@ -38,11 +39,12 @@
       </div>
     </div>
     <div class="content-bar">
-      <h2> Posts </h2>
+      <h2> Blog Articles </h2>
       <div
         v-for="info in infos"
         :key="info.title"
         class="detail-card"
+        @click="moveToExpansion(info.expansion)"
       >
         <div class="header">
           <div class="title">
@@ -53,6 +55,15 @@
           <div class="info">
             <p> {{ info.overview }} </p>
           </div>
+          <div>
+            <p
+              v-for="tag in info.tags" 
+              :key="tag"
+              class="tags"
+            >
+              {{ tag }}
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -61,12 +72,14 @@
 
 <script>
 import { manager } from "./contentManager"
+import { TAGS } from "./tagList"
 
 export default {
 name: "BlogPage",
 data : function() {
   return {
-    manager : manager
+    manager : manager,
+    blogtags : Object.values(TAGS)
   }
 },
 computed : {
@@ -87,7 +100,13 @@ computed : {
     }
 },
 methods: {
-
+  moveToExpansion(expansionId){
+    // debugger;
+    this.$router.push(
+      this.$router.currentRoute.value.path + 
+      "/" + expansionId
+    )
+  }
 }
 }
 </script>
@@ -117,12 +136,27 @@ methods: {
 
     h2
         text-align: center 
+        text-transform: capitalize
         color: $green-5
 
 .detail-card
+    height: 180px
+
     &:hover
         cursor: pointer 
         background: $green-10
+
+    .body
+      flex-direction: column
+      align-items: center
+      justify-items: center
+
+      .tags
+        background-color: $yellow-1
+        margin-left: 4px
+        border-radius: 5px
+        padding: 6px
+        color: $light-grey
 
 .filter-bar
     position: absolute

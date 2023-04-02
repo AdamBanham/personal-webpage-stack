@@ -1,8 +1,4 @@
-import { exogenousContent } from "./exogenousdata/content"
-import { phdContent } from "./phd/content"
-import { vispmContent } from "./vispm/content"
-
-const allContent = exogenousContent.concat(phdContent).concat(vispmContent)
+import { allContent } from "./content/allContent"
 
 class ContentManager {
 
