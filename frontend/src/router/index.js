@@ -3,6 +3,7 @@ import Home from '../views/Home.vue'
 import ContactPage from "@/views/ContactPage.vue"
 import NotReady from "@/views/NotReady.vue"
 import BlogPage from "@/views/blog/Blog.vue"
+import ArticlePage from "@/views/blog/article/ArticleViewer.vue"
 import PublicationPage from "@/views/publications/Publications.vue"
 
 const routes = [
@@ -15,6 +16,12 @@ const routes = [
     path: '/blog',
     name: 'blog',
     component: BlogPage
+  },
+  {
+    path: "/blog/:articleId",
+    name: 'blog-article',
+    component : ArticlePage,
+    props: true
   },
   {
     path: '/pubs',
