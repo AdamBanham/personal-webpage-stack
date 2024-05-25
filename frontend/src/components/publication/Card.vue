@@ -119,12 +119,11 @@ export default {
 @import "@/styles/breakpoints.sass"
 
 .pub-card
-    margin-left: 10%
-    margin-right: 10%
-    min-width: 80%
-    max-width: 80%
-    min-height: 200px
-    max-height: 200px
+    margin-left: 3%
+    margin-right: 3%
+    min-width: 94%
+    max-width: 94%
+    min-height: 250px
     background-color: $green-10
     margin-bottom: 10px
     border-radius: 8px
@@ -133,16 +132,13 @@ export default {
     flex-direction: row
 
     @media (min-width: $desktop-width)
-      min-height: 225px
-      max-height: 225px
+      min-height: 250px
 
     @media (max-width: calc($desktop-width - 1px)) and (min-width: $mobile-width)
-      min-height: 225px
-      max-height: 225px
+      min-height: 250px
 
     @media (max-width: calc($mobile-width - 1px))
       min-height: 275px
-      max-height: 275px
 
     .pub-card-left
       padding-top: 5px 
@@ -213,7 +209,6 @@ export default {
               color: $green-2
       .pub-card-abstract
         margin-top: 10px
-        overflow-y: hidden
         width: 90%
         margin-left: 5%
         margin-right: 5%
@@ -228,8 +223,8 @@ export default {
         width: 90%
         margin-left: 5%
         margin-right: 5%
-        min-height: 25px
-        max-height: 25px
+        min-height: 35px
+        max-height: 35px
         margin-bottom: 5px
         display: flex
         div 
@@ -241,7 +236,7 @@ export default {
           margin: 0 0 0 0
           background-color: white
           border-radius: 5px
-          padding: 5px
+          padding: 10px
         p 
           width: 100%
           margin: 0 0 0 0
