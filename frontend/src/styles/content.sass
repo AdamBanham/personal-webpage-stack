@@ -35,26 +35,25 @@ $detail-card-height-small: 250px
     width: 90%
     margin-left: 5%
     margin-right: 5%
-    height: 100px
     border-radius: 10px
     background: $light-grey
     display: flex
     flex-direction: column
 
-    @media (min-width: $desktop-width)
-      height: $detail-card-height-full
+    // @media (min-width: $desktop-width)
+    //   height: $detail-card-height-full
 
-    @media (max-width: calc($desktop-width - 1px)) and (min-width: $tablet-width)
-      height: $detail-card-height-medium
+    // @media (max-width: calc($desktop-width - 1px)) and (min-width: $tablet-width)
+    //   height: $detail-card-height-medium
 
-    @media (max-width: calc($tablet-width - 1px))
-      height: $detail-card-height-small
+    // @media (max-width: calc($tablet-width - 1px))
+    //   height: $detail-card-height-small
 
 
     .header 
       width: 100% 
-      height: 50px
       display: flex
+      height: fit-content
       justify-items: center
       align-items: center
       justify-content: center
@@ -63,7 +62,7 @@ $detail-card-height-small: 250px
         color: $green-3
     .body
       display: flex
-      height: 100%
+      height: fit-content
       justify-content: center
       align-content: center
       flex-direction: row

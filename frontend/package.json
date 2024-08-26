@@ -8,6 +8,7 @@
     "serve": "vite preview"
   },
   "dependencies": {
+    "@wdns/vue-code-block": "^2.3.3",
     "prerender-spa-plugin": "^3.4.0",
     "vue": "^3.2.40",
     "vue-router": "^4.1.5",

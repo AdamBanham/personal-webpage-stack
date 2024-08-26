@@ -1,13 +1,21 @@
 <template>
   <div class="blog">
     <div class="filter-bar">
+      <h2> Quick Search Bar </h2>
       <div class="section">
         <h3> Tags </h3>
         <div 
           class="options" 
           v-for:="tag in blogtags"
         >
-          <p> {{ tag }} </p>
+          <input
+            :id="tag"
+            type="checkbox"
+            @change="checkFilter($event,1, tag)"
+          >
+          <label 
+            :for="tag" 
+          >{{ tag }}</label>
         </div>
       </div>
       <div class="section">
@@ -16,7 +24,12 @@
           class="options"
           v-for:="year in years"
         >
-          <p> {{ year }}</p>
+          <input
+            :id="year"
+            type="checkbox"
+            @change="checkFilter($event,2, year)"
+          >
+          <label :for="year">{{ year }}</label>
         </div>
       </div>
       <div class="section">
@@ -25,7 +38,12 @@
           class="options"
           v-for:="month in months"
         >
-          <p> {{ month }}</p>
+          <input
+            :id="month"
+            type="checkbox"
+            @change="checkFilter($event,3, month)"
+          >
+          <label :for="month">{{ month }}</label>
         </div>
       </div>
       <div class="section">
@@ -34,7 +52,12 @@
           class="options"
           v-for:="author in authors"
         >
-          <p> {{ author }}</p>
+          <input
+            :id="author"
+            type="checkbox"
+            @change="checkFilter($event,4, author)"
+          >
+          <label :for="author">{{ author }}</label>
         </div>
       </div>
     </div>
@@ -49,6 +72,8 @@
         <div class="header">
           <div class="title">
             <h2>{{ info.title }} </h2>
+            <h3>{{ info.authors.join(", ") }}</h3>
+            <h4>{{ info.month }}, {{ info.year }}</h4>
           </div>
         </div>
         <div class="body">
@@ -79,6 +104,7 @@ name: "BlogPage",
 data : function() {
   return {
     manager : manager,
+    infos : manager.getInfo(),
     blogtags : Object.values(TAGS)
   }
 },
@@ -95,9 +121,6 @@ computed : {
     authors : function() {
         return manager.getAuthors();
     },
-    infos : function() {
-        return manager.getInfo();
-    }
 },
 methods: {
   moveToExpansion(expansionId){
@@ -106,6 +129,14 @@ methods: {
       this.$router.currentRoute.value.path + 
       "/" + expansionId
     )
+  },
+  checkFilter(event, mode, value){
+    if (event.target.checked){
+      this.manager.addFilter(mode, value)
+    } else {
+      this.manager.removeFilter(mode,value)
+    }
+    this.infos = this.manager.getInfo()
   }
 }
 }
@@ -116,91 +147,126 @@ methods: {
 @import "@/styles/coloursAnt.sass"    
 
 .blog 
-    width: 100%
-    height: 100%
-    z-index: 50
+  width: 100%
+  height: 100%
+  z-index: 50
 
-.content-bar
-    position: absolute
-    box-shadow: $background -5px 0px 15px -5px
-    z-index: 5
+  .content-bar
+      position: absolute
+      box-shadow: $background -5px 0px 15px -5px
+      z-index: 5
 
-    @media (min-width: $desktop-width)
-      margin-left: calc( (100vw - $content-width-full)/2 )
+      @media (min-width: $desktop-width)
+        margin-left: calc( (100vw - $content-width-full)/2 )
 
-    @media (max-width: calc($desktop-width - 1px)) and (min-width: $tablet-width)
-      margin-left: calc( (100vw - $content-width-medium)/2 )
+      @media (max-width: calc($desktop-width - 1px)) and (min-width: $tablet-width)
+        margin-left: calc( (100vw - $content-width-medium)/2 )
 
-    @media (max-width: calc($tablet-width - 1px))
-      
+      @media (max-width: calc($tablet-width - 1px))
+        
 
-    h2
+      h2
+          text-align: center 
+          text-transform: capitalize
+          color: $green-5
+          margin-bottom: 5px
+
+  .detail-card
+      padding-top: 20px
+      padding-bottom: 20px
+      height: fit-content
+
+      h3 
         text-align: center 
-        text-transform: capitalize
-        color: $green-5
+        color: $green-1
+        margin: 0px
+        padding: 0px
 
-.detail-card
-    height: 180px
+      h4 
+        text-align: center 
+        color: $green-1
+        margin: 0px
+        padding: 0px
 
-    &:hover
-        cursor: pointer 
-        background: $green-10
+      &:hover
+          cursor: pointer 
+          background: $green-10
 
-    .body
+      .body
+        flex-direction: column
+        align-items: center
+        justify-items: center
+
+        .tags
+          background-color: $yellow-1
+          margin-left: 4px
+          border-radius: 5px
+          padding: 6px
+          color: $light-grey
+
+  .filter-bar
+      position: absolute
+      z-index: 4
+      width: 650px
+      
+      display: flex
+      flex-grow: 1
       flex-direction: column
-      align-items: center
-      justify-items: center
+      flex-flow: column
+      min-height: 100vh
+      background-color: $light-grey
+      padding-bottom: 75px
 
-      .tags
-        background-color: $yellow-1
-        margin-left: 4px
-        border-radius: 5px
-        padding: 6px
-        color: $light-grey
+      @media (min-width: $desktop-width)
+        margin-left: calc( ((100vw - $content-width-full)/2) - 200px )
 
-.filter-bar
-    position: absolute
-    z-index: 4
-    width: 650px
-    
-    display: flex
-    flex-grow: 1
-    flex-direction: column
-    flex-flow: column
-    min-height: 100vh
-    background-color: $light-grey
-    padding-bottom: 75px
+      @media (max-width: calc($desktop-width - 1px)) and (min-width: $tablet-width)
+        margin-left: calc( ((100vw - $content-width-medium)/2) - 200px )
 
-    @media (min-width: $desktop-width)
-      margin-left: calc( ((100vw - $content-width-full)/2) - 150px )
+      @media (max-width: calc($tablet-width - 1px))
 
-    @media (max-width: calc($desktop-width - 1px)) and (min-width: $tablet-width)
-      margin-left: calc( ((100vw - $content-width-medium)/2) - 150px )
+      div 
+          width: 150px
+          text-align: center
 
-    @media (max-width: calc($tablet-width - 1px))
+      h2 
+          font-size: 16px
+          text-align: center
+          width: 200px
+          color: $green-4    
+      
+      h3 
+          font-size: 16px
+          color: $green-2
 
-    div 
-        width: 150px
-        text-align: center
-    
-    h3 
-        font-size: 16px
+      .options
+        width: 100%
         color: $green-2
+        text-align: left
+        padding-left: 10px
+        &:hover
+                  background-color: $background-light
+                  color: $light-grey
+                  cursor: pointer
+        label
+          width: 100%
 
-    .section
-        margin-bottom: 25px 
+      .section
+          margin-bottom: 25px 
+          width: 200px
+          justify-content: left
 
+          p 
+              text-align: left
+              padding-left: 20px
+              color: $green-2
+              &:hover
+                  background-color: $background-light
+                  color: $light-grey
+                  cursor: pointer
 
-        p 
-            color: $green-2
-            margin: 5px 0 0 0 
-            &:hover
-                background-color: $background-light
-                color: $light-grey
-                cursor: pointer
-
-.filter-bar > :first-child
-    margin-top: 50px
+  .filter-bar > :first-child
+      margin-top: 50px
 
 
 </style>

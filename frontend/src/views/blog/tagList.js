@@ -6,7 +6,10 @@ const TAGS = {
     "phd" : "PhD",
     "qut" : "QUT",
     "res" : "Research",
-    "cod" : "Coding"
+    "cod" : "Coding",
+    "pmd" : "Process Discovery",
+    "pmc" : "Conformance Checking",
+    "pme" : "Process Enhancement"
 }
 
 export {

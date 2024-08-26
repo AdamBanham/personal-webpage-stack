@@ -1,14 +1,15 @@
 import { BlogInfo } from "@/views/blog/blogElements.js"
 
 const confirmSeminar = new BlogInfo(
-    "Confirmation Seminar",
+    "Confirmation Seminar @ QUT",
     "A key milestone for PhD students at QUT, done and dusted.",
     "TODO",
     2022,
     'July',
     ['Adam Banham']
 )
-confirmSeminar.addTags("phd","qut")
+confirmSeminar.addTags("ex","en","pm","phd","qut","res")
+confirmSeminar.addExpansionPage("confirmSeminar2022")
 
 const exogenousEndogenous = new BlogInfo(
     "The Difference between Endo And Exo",
@@ -22,10 +23,36 @@ const exogenousEndogenous = new BlogInfo(
 exogenousEndogenous.addTags("ex","en","pm","phd","qut","res")
 exogenousEndogenous.addExpansionPage("DifExoEndo2023")
 
+const FinalSeminar2024A = new BlogInfo(
+    "Final Seminar @ QUT",
+    "Reflections on presenting my final seminar.",
+    "TODO",
+    2024,
+    "August",
+    ["Adam Banham"]
+)
+FinalSeminar2024A.addTags("ex","en","pm","phd","qut","res")
+FinalSeminar2024A.addExpansionPage("FinalSeminar2024A")
+
+const AgrawalMiner2024B = new BlogInfo(
+    "Agrawal Miner implemented in Koalas",
+    "A breakdown of an early process discovery technique proposed in 1998.",
+    "TODO",
+    2024,
+    "August",
+    ['Adam Banham']
+)
+AgrawalMiner2024B.addTags("pm","res","pmd","cod")
+AgrawalMiner2024B.addExpansionPage("AgrawalMiner2024B")
+
+// ordering is listing ordering.
 const content = [
+    AgrawalMiner2024B,
+    FinalSeminar2024A,
+    exogenousEndogenous,
     confirmSeminar,
-    exogenousEndogenous
 ]
+
 
 export default {
     content
