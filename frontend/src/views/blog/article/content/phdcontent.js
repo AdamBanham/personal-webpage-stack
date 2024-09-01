@@ -379,9 +379,9 @@ AgrawalMiner2024B.addFigure(
     +" that may execute activities once, after optimisation."
 )
 AgrawalMiner2024B.addFigure(
-    "AgrawalMiner2024B/cyclic_runtime.svg",
+    "AgrawalMiner2024B/cyclic_opt_runtime.svg",
     "Runtime analysis when only considering adjusted samples from BPIC15 "
-    +" that may execute activities repeatly."
+    +" that may execute activities repeatly, after optimisation."
 )
 
 AgrawalMiner2024B.addTextSection(
