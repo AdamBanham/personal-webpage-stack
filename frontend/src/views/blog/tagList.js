@@ -9,7 +9,8 @@ const TAGS = {
     "cod" : "Coding",
     "pmd" : "Process Discovery",
     "pmc" : "Conformance Checking",
-    "pme" : "Process Enhancement"
+    "pme" : "Process Enhancement",
+    "rwth" : "RWTH Aachen"
 }
 
 export {

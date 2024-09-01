@@ -23,6 +23,17 @@ const exogenousEndogenous = new BlogInfo(
 exogenousEndogenous.addTags("ex","en","pm","phd","qut","res")
 exogenousEndogenous.addExpansionPage("DifExoEndo2023")
 
+const vistingRWTHAachen = new BlogInfo(
+    "Visting RWTH Aachen",
+    "I was luckly enough to secure a research visit at RWTH Aachen.",
+    "TODO",
+    2023,
+    'November',
+    ['Adam Banham']
+)
+vistingRWTHAachen.addTags("pm","phd","rwth","res")
+vistingRWTHAachen.addExpansionPage("rwthVist2023")
+
 const FinalSeminar2024A = new BlogInfo(
     "Final Seminar @ QUT",
     "Reflections on presenting my final seminar.",
@@ -49,6 +60,7 @@ AgrawalMiner2024B.addExpansionPage("AgrawalMiner2024B")
 const content = [
     AgrawalMiner2024B,
     FinalSeminar2024A,
+    vistingRWTHAachen,
     exogenousEndogenous,
     confirmSeminar,
 ]

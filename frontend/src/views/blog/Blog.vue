@@ -144,7 +144,17 @@ methods: {
 
 <style lang="sass" scoped>
 @import "@/styles/content.sass"
-@import "@/styles/coloursAnt.sass"    
+@import "@/styles/coloursAnt.sass"   
+
+.content-bar
+  > div
+      margin-top: 20px
+
+  p 
+    display: inline-flex
+    justify-content: center
+    align-items: center
+    text-align: center 
 
 .blog 
   width: 100%

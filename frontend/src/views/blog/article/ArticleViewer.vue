@@ -26,10 +26,9 @@
       >
         <div
           v-if="comp.mode == 1"
+          v-html="comp.value"
           class="text"
-        >
-          <p> {{ comp.value }}</p>
-        </div>
+        />
         <div 
           v-else-if="comp.mode == 2"
           class="figure"
@@ -50,8 +49,8 @@
           class="quote"
         >
           <section :id="'quote-'+comp.count">
-            <p class="quote-text">
-              {{ comp.value }}
+            <p class="quote-text" 
+            v-html="comp.value">
             </p>
             <p class="quote-person">
               <a :href="'#quote-'+comp.count">
@@ -85,13 +84,16 @@
         References:
       </h2>
       <ol>
-        <li
+        <section
           v-for="(comp,t) of articleInfo.getReferences()"
+          :id="'ref-'+(t+1)"
           :key="t"
           class="reference"
         >
-          {{ comp.value }}
-        </li>
+          <li>
+            {{ comp.value }}
+          </li>
+        </section>
       </ol>
     </div> 
   </div>
@@ -138,162 +140,188 @@ export default {
 
 </script>
 
-<style lang="sass" scoped>
+<style lang="sass">
 @import "@/styles/content.sass"
 @import "@/styles/coloursAnt.sass"   
 
-.content-bar
+.article-viewer
+  .content-bar
 
-  h2
-    color: $light-grey
-    margin: 0px
-    padding-top: 8px
-    padding-left: 15px
-    width: 100%
-    text-align: left
+    h2
+      color: $light-grey
+      margin: 0px
+      padding-top: 8px
+      padding-left: 15px
+      width: 100%
+      text-align: left
 
-  .bread-crumbs
-    display: flex
-    flex-direction: row 
-    .crumb
-      // background-color: $background
-      border-radius: 5px
-      margin-left: 5px
-      justify-content: center
-      align-items: center
-      padding-left: 2.5px
-      padding-right: 2.5px
+    .bread-crumbs
+      > div
+          margin-top: 20px
+
       p 
-        color: $light-grey
-      h2
-        font-size: larger
-        color: $light-grey
-        margin: 0px
-        padding: 0px
-        padding-top: 8px
-        width: 100%
-        text-align: center
-
-      &::after
-        content: "   >"
-        color: $green-7
-      
-      &:last-child::after
-        content: ""
-
-      .click-back 
-        color: $green-8
-        &:hover
-          cursor: pointer
-  .article-content
-
-    .text
-      border-radius: 10px
-      width: 92%
-      text-align: left 
-      margin: 2%
-      padding: 2%
-      background-color: $cyan-1
-
-      p
-        color: $green-1
-
-    .figure
-      border-radius: 10px
-      width: 92%
-      text-align: left 
-      margin: 2%
-      padding: 2%
-
-      img 
-        width: 100%
-        margin: 0
-      
-      p 
-        margin: 0
-        margin-top: 5px
-        width: 100%
-        color: $black-blue
+        display: inline-flex
         justify-content: center
-        align-items: flex-start
-
-        a 
-          color: $black-blue
-          min-width: 75px
-          &::after
-            content: " "
-            padding-right: 2px
-          
-
-    .figure
-
-    .code 
-      border-radius: 10px
-      width: 92%
-      text-align: left 
-      margin: 2%
-      padding: 2%
-      padding-top: 0%
-
-      p 
-        margin: 0
-        margin-top: 5px
-        width: 100%
+        align-items: center
+        text-align: center 
+      display: flex
+      flex-direction: row 
+      .crumb
+        // background-color: $background
+        border-radius: 5px
+        margin-left: 5px
         justify-content: center
-        align-items: flex-start
-        color: $black-blue
+        align-items: center
+        padding-left: 2.5px
+        padding-right: 2.5px
+        p 
+          color: $light-grey
+        h2
+          font-size: larger
+          color: $light-grey
+          margin: 0px
+          padding: 0px
+          padding-top: 8px
+          width: 100%
+          text-align: center
 
-        a 
-          color: $black-blue
-          min-width: 70px
-          &::after
-            content: " "
-          
-
-    .quote
-      border-radius: 10px
-      width: 92%
-      text-align: left 
-      margin: 2%
-      padding: 2%
-      padding-top: 0%
-
-      .quote-text
-        width: 85%
-        text-align: left
-        margin: 0px
-        padding: 0px
-        padding-left: 15%
-        color: $green-9
-        justify-content: left
-
-        &::before
-          content: "''"
-          padding-right: 5px
-          font-size: xx-large
-          color: $black-blue
-          
         &::after
-          content: "''"
-          padding-right: 5px
-          transform: rotate(180deg)
-          font-size: xx-large
-          color: $black-blue
-      
-      .quote-person
-        margin: 0px
-        padding: 0px
-        width: 85%
-        padding-right: 15%
-        color: $black-blue
-        text-align: right
-        justify-content: right
-        font-style: italic
-        font-weight: bold
+          content: "   >"
+          color: $green-7
+        
+        &:last-child::after
+          content: ""
 
-        a
+        .click-back 
+          color: $green-8
+          &:hover
+            cursor: pointer
+
+    
+
+    .article-content
+      margin-top: 0px
+
+      .text
+        border-radius: 10px
+        width: 92%
+        text-align: center 
+        margin: 2%
+        padding: 2%
+        background-color: $cyan-1
+        color: $green-1
+        p
+          text-align: center
+          display: inline
+          color: $green-1
+          a
+            color: $green-3
+          b 
+            color: $green-2
+
+      .figure
+        border-radius: 10px
+        width: 92%
+        text-align: left 
+        margin: 2%
+        padding: 2%
+
+        img 
+          width: 100%
+          margin: 0
+        
+        p 
+          margin: 0
+          margin-top: 5px
+          width: 100%
+          color: $black-blue
+          justify-content: center
+          align-items: flex-start
+
+          a 
+            color: $black-blue
+            min-width: 75px
+            &::after
+              content: " "
+              padding-right: 2px
+
+      .code 
+        border-radius: 10px
+        width: 92%
+        text-align: left 
+        margin: 2%
+        padding: 2%
+        padding-top: 0%
+
+        p 
+          margin: 0
+          margin-top: 5px
+          width: 100%
+          justify-content: center
+          align-items: flex-start
           color: $black-blue
 
-  .reference 
-    color: $black-blue
+          a 
+            color: $black-blue
+            min-width: 70px
+            &::after
+              content: " "
+            
+
+      .quote
+        border-radius: 10px
+        width: 92%
+        text-align: left 
+        margin: 2%
+        padding: 2%
+        padding-top: 0
+
+        .quote-text
+          width: 90%
+          text-align: center
+          margin: 0px
+          padding: 0px
+          padding-left: 5%
+          padding-right: 5%
+          color: $green-9
+          justify-content: center
+          display: inline-flex
+          flex-direction: column
+          margin-bottom: 5px
+
+          b 
+            display: contents
+
+          &::before
+            align-self: flex-start
+            content: "''"
+            padding-right: 10px
+            font-size: xx-large
+            color: $black-blue
+            
+          &::after
+            align-self: flex-end
+            content: "''"
+            padding-right: 10px
+            transform: rotate(180deg)
+            font-size: xx-large
+            color: $black-blue
+        
+        .quote-person
+          margin: 0px
+          padding: 0px
+          width: 85%
+          padding-right: 15%
+          color: $black-blue
+          text-align: right
+          justify-content: right
+          font-style: italic
+          font-weight: bold
+
+          a
+            color: $black-blue
+
+    .reference 
+        li
+          color: $black-blue
 </style>

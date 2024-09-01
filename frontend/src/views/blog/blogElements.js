@@ -14,10 +14,8 @@ class BlogInfo {
     }
 
     addTag(tag) {
-        console.log("Adding :: "+tag)
         if (tag in TAGS){
             this.tags.push(TAGS[tag]);
-            console.log(this.tags)
         } else {
             throw new Error("Unknown Tag presented :: " + tag);
         }

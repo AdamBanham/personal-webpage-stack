@@ -6,7 +6,6 @@ var contentDict = {}
 
 for(let i in allcontent){
     var cont = allcontent[i]
-    console.log(cont)
     if (cont.id in contentDict){
         throw Error("Found duplicated article id :: "+cont.id)
     }

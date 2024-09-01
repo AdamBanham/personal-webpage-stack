@@ -46,7 +46,7 @@ data : function() {
 }
 </script>
 
-<style lang="sass">
+<style lang="sass" scoped>
 @import "@/styles/coloursAnt.sass"
 @import "@/styles/content.sass"
 

@@ -64,7 +64,7 @@ class TextSection {
 
         constructor(text){
             this.mode = compModes['text']
-            this.value = text
+            this.value = '<p> '+text+' </p>'
         }
 }
 
