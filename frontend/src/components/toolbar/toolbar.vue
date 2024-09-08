@@ -108,22 +108,26 @@ methods : {
 @import "@/styles/coloursAnt.sass"
 @import "@/styles/breakpoints.sass"
 .toolbar
-    .v-toolbar__prepend
-      @media (max-width: calc($tablet-width - 1px))
-        display: none
+  overflow-x: auto
 
+  .v-toolbar__content
+    overflow-x: auto
 
+  .v-toolbar__prepend
     @media (max-width: calc($tablet-width - 1px))
-      height: 55px
+      display: none
 
-    &::-webkit-scrollbar
-      height: 15px
-      width: 5px 
-      background-color: none
-    
-    &::-webkit-scrollbar-thumb
-      background-color: $green-3
-      opacity: 0.6
-      border-radius: 5px
+  @media (max-width: calc($tablet-width - 1px))
+    height: 55px
+
+  &::-webkit-scrollbar
+    height: 15px
+    width: 5px 
+    background-color: none
+  
+  &::-webkit-scrollbar-thumb
+    background-color: $green-3
+    opacity: 0.6
+    border-radius: 5px
     
 </style>
