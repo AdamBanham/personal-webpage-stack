@@ -1,10 +1,8 @@
 <template>
-  <div class="app">
+  <v-app>
     <toolbar />
-    <div class="view">
-      <router-view />
-    </div>
-  </div>
+    <router-view />
+  </v-app>
 </template>
 
 <script>
@@ -25,18 +23,14 @@ mounted() {
 @import "@/styles/animations.sass"
 @import "@/styles/tags.sass"
 
-html
+.v-application__wrap
   background-image: url("@/assets/patterns/processy.png")
+  background-repeat: repeat
+  background-color: $background  
+
+body
+  background-image: url("@/assets/patterns/processy.png")
+  background-repeat: repeat
   background-color: $background
-  overflow-x: hidden
-  overflow-y: auto
-body 
-  width: 100vw
-  height: 100vh
-  margin: 0px
-.app 
-  width: 100vw
-  height: 100vh
-.view
-  z-index: 1000
+  
 </style>

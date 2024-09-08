@@ -1,8 +1,8 @@
 <template>
-  <div class="blog">
+  <div class="blow-view">
     <div class="filter-bar">
       <h2> Quick Search Bar </h2>
-      <div class="section">
+      <div class="filter-section">
         <h3> Tags </h3>
         <div 
           class="options" 
@@ -18,7 +18,7 @@
           >{{ tag }}</label>
         </div>
       </div>
-      <div class="section">
+      <div class="filter-section">
         <h3> Year </h3>
         <div
           class="options"
@@ -32,7 +32,7 @@
           <label :for="year">{{ year }}</label>
         </div>
       </div>
-      <div class="section">
+      <div class="filter-section">
         <h3> Month </h3>
         <div
           class="options"
@@ -46,7 +46,7 @@
           <label :for="month">{{ month }}</label>
         </div>
       </div>
-      <div class="section">
+      <div class="filter-section">
         <h3> Author </h3>
         <div
           class="options"
@@ -146,25 +146,15 @@ methods: {
 @import "@/styles/content.sass"
 @import "@/styles/coloursAnt.sass"   
 
-.content-bar
-  > div
-      margin-top: 20px
-
-  p 
-    display: inline-flex
-    justify-content: center
-    align-items: center
-    text-align: center 
-
-.blog 
-  width: 100%
-  height: 100%
-  z-index: 50
+.blow-view 
+  // width: 100%
+  // height: 100%
+  // z-index: 50
 
   .content-bar
       position: absolute
       box-shadow: $background -5px 0px 15px -5px
-      z-index: 5
+      // z-index: 5
 
       @media (min-width: $desktop-width)
         margin-left: calc( (100vw - $content-width-full)/2 )
@@ -174,12 +164,20 @@ methods: {
 
       @media (max-width: calc($tablet-width - 1px))
         
+      > div
+        margin-top: 20px  
 
       h2
-          text-align: center 
-          text-transform: capitalize
-          color: $green-5
-          margin-bottom: 5px
+        text-align: center 
+        text-transform: capitalize
+        color: $green-5
+        margin-bottom: 5px
+
+      p 
+        display: inline-flex
+        justify-content: center
+        align-items: center
+        text-align: center 
 
   .detail-card
       padding-top: 20px
@@ -216,7 +214,7 @@ methods: {
 
   .filter-bar
       position: absolute
-      z-index: 4
+      // z-index: 4
       width: 650px
       
       display: flex
@@ -261,7 +259,7 @@ methods: {
         label
           width: 100%
 
-      .section
+      .filter-section
           margin-bottom: 25px 
           width: 200px
           justify-content: left

@@ -156,6 +156,9 @@ export default {
       text-align: left
 
     .bread-crumbs
+      display: flex
+      flex-direction: row 
+
       > div
           margin-top: 20px
 
@@ -164,8 +167,7 @@ export default {
         justify-content: center
         align-items: center
         text-align: center 
-      display: flex
-      flex-direction: row 
+      
       .crumb
         // background-color: $background
         border-radius: 5px

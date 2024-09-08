@@ -61,53 +61,53 @@
           <br>
           <br>
           <b>Additional Info:</b>
-          <ul>
-            <li>
-              Born in Ipswich, Queensland, Australia.
-            </li>
-            <li>
-              Completed Bachelor (Honours) of Information Technology at QUT in 2020 with Second Class honours - Division A
-            </li>
-            <li>
-              Started PhD on Feburary 22 in 2021 with the school of Information Systems at QUT.
-            </li>
-            <li>
-              Year One Milestone - Research Plan - Confirmed with no changes 
-            </li>
-            <li>
-              Brief overview of project: <a
-                href="https://qut.to/cjvey"
-                target="_blank"
-                title="Project Description @ QUT"
-              >https://qut.to/cjvey</a>
-            </li>
-            <li>
-              Check out the BPM group at QUT : <a
-                href="https://qut.to/eb3gw"
-                target="_blank"
-                title="BPM @ QUT Homepage"
-              >https://qut.to/eb3gw</a>
-            </li>
-            <li>
-              Visited RWTH Aachen from November to March, working with Prof.
-              Sander J. J. Leemans.
-              <a
-                href="/blog/rwthVist2023"
-                target="_blank"
-                title="BPM @ QUT Homepage"
-              >More info.</a>
-            </li>
-            <li>
-              Finished internally presenting Thesis work @ QUT - minor 
-              changes needed.
-              <a
-                href="/blog/FinalSeminar2024A"
-                target="_blank"
-                title="BPM @ QUT Homepage"
-              >Check out the presentation.</a>
-            </li>
-          </ul>
         </p>
+        <ul>
+          <li>
+            Born in Ipswich, Queensland, Australia.
+          </li>
+          <li>
+            Completed Bachelor (Honours) of Information Technology at QUT in 2020 with Second Class honours - Division A
+          </li>
+          <li>
+            Started PhD on Feburary 22 in 2021 with the school of Information Systems at QUT.
+          </li>
+          <li>
+            Year One Milestone - Research Plan - Confirmed with no changes 
+          </li>
+          <li>
+            Brief overview of project: <a
+              href="https://qut.to/cjvey"
+              target="_blank"
+              title="Project Description @ QUT"
+            >https://qut.to/cjvey</a>
+          </li>
+          <li>
+            Check out the BPM group at QUT : <a
+              href="https://qut.to/eb3gw"
+              target="_blank"
+              title="BPM @ QUT Homepage"
+            >https://qut.to/eb3gw</a>
+          </li>
+          <li>
+            Visited RWTH Aachen from November to March, working with Prof.
+            Sander J. J. Leemans.
+            <a
+              href="/blog/rwthVist2023"
+              target="_blank"
+              title="BPM @ QUT Homepage"
+            >More info.</a>
+          </li>
+          <li>
+            Finished internally presenting Thesis work @ QUT - minor 
+            changes needed.
+            <a
+              href="/blog/FinalSeminar2024A"
+              target="_blank"
+              title="BPM @ QUT Homepage"
+            >Check out the presentation.</a>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
@@ -171,12 +171,12 @@ mounted() {
   width: 100% 
   height: 100%
   display: flex
-  
   justify-content: center
   align-items: center
 
   @media (min-width: $desktop-width)
-    margin-top: 200px
+    margin-top: 50px
+    margin-bottom: 50px
 
   @media (max-width: calc($desktop-width - 1px)) and (min-width: $tablet-width)
     margin-top: 75px
@@ -203,10 +203,12 @@ mounted() {
       border-radius: 15px
       box-shadow: $green-1 2.5px 5px 5px 0.5px
       margin-bottom: 25px
+      padding : 15px
       p 
         text-align: center
       ul
         text-align: left
+        padding: 10px
       
       @media (min-width: $desktop-width)
         margin-left: 100px
