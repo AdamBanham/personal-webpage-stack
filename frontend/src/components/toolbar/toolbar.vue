@@ -20,21 +20,21 @@
         <v-menu activator="#menu-process-mining">
           <v-list>
             <v-list-item
-            :key="1"
-            :value="1"
-            @click="moveTo('pm-discovery')"
+              :key="1"
+              :value="1"
+              @click="moveTo('pm-discovery')"
             >
               <v-list-item-title> Process Discovery </v-list-item-title>
             </v-list-item>
             <v-list-item
-            :key="2"
-            :value="2"
+              :key="2"
+              :value="2"
             >
               <v-list-item-title> Conformance Checking </v-list-item-title>
             </v-list-item>
             <v-list-item
-            :key="3"
-            :value="3"
+              :key="3"
+              :value="3"
             >
               <v-list-item-title> Process Enhancement </v-list-item-title>
             </v-list-item>

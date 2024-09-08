@@ -224,29 +224,41 @@ export default {
         margin-left: 5%
         margin-right: 5%
         min-height: 35px
-        max-height: 35px
+        max-height: 50px
         margin-bottom: 5px
         display: flex
+        justify-content: center
+        justify-items: center
+        font-size: 12px
+
         div 
           width: fit-content
           box-shadow: 0 2px 0 0px $background-light
           justify-content: center
           justify-items: center
-          height: 15px
+          height: auto
           margin: 0 0 0 0
-          background-color: white
+          background-color: $light-grey
           border-radius: 5px
           padding: 10px
+          &:hover
+            background-color: $background-light
         p 
           width: 100%
           margin: 0 0 0 0
+          padding: 0px
           text-align: center 
           color: $red-5
+
         .holder 
           margin-left: auto
           margin-right: auto
+          justify-content: center
+          justify-items: center
         a 
           text-align: center
+          justify-content: center
+          justify-items: center
           color: $blue-1
           &:link 
             color: $blue-1
