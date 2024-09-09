@@ -254,9 +254,9 @@ methods: {
         justify-content: center
         padding-left: 10px
         &:hover
-                  background-color: $background-light
-                  color: $light-grey
-                  cursor: pointer
+          background-color: $background-light
+          color: $light-grey
+          cursor: pointer
         label
           width: 100%
           padding-left: 10px
