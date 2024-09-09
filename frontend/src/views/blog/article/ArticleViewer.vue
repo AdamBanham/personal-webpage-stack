@@ -2,7 +2,12 @@
   <div class="article-viewer">
     <div class="content-bar">
       <div class="bread-crumbs">
-        <div
+        <v-breadcrumbs :items="articleCrumbs">
+          <template v-slot:prepend>
+            <v-icon icon="mdi-post" size="small" />
+          </template>
+        </v-breadcrumbs>
+        <!-- <div
           v-for="(path,i) in articleCrumbs"
           :key="i"
           class="crumb"
@@ -17,7 +22,7 @@
           <h2 v-else>
             {{ path }}
           </h2>
-        </div>
+        </div> -->
       </div>
       <div
         v-for="(comp,t) of articleInfo.getComponents()"
@@ -128,7 +133,10 @@ export default {
         if (this.articleInfo == null){
           return this.dummy
         }
-        return ["Blogs", this.articleInfo.title]
+        return [
+          {title: "Blogs", disabled: false, href : "/blog", link: true}, 
+          {title: this.articleInfo.title, disabled: false, link: false}
+        ]
       }
     },
     methods: {
@@ -167,6 +175,11 @@ export default {
         justify-content: center
         align-items: center
         text-align: center 
+
+      .v-breadcrumbs__prepend
+        color: $green-3
+        i 
+          color: $green-5
       
       .crumb
         // background-color: $background
@@ -326,4 +339,8 @@ export default {
     .reference 
         li
           color: $black-blue
+    
+    ol 
+      padding: 25px
+      padding-top: 5px
 </style>

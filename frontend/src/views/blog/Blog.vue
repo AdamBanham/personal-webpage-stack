@@ -250,7 +250,9 @@ methods: {
       .options
         width: 100%
         color: $green-2
+        display: inline-flex
         text-align: left
+        justify-content: center
         padding-left: 10px
         &:hover
                   background-color: $background-light
@@ -258,6 +260,8 @@ methods: {
                   cursor: pointer
         label
           width: 100%
+          padding-left: 10px
+          font-size: 14px
 
       .filter-section
           margin-bottom: 25px 
