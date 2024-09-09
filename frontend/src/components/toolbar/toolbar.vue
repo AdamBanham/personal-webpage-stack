@@ -110,10 +110,12 @@ methods : {
 .toolbar
   overflow-x: auto
 
+
   .v-toolbar__content
     overflow-x: auto
 
   .v-toolbar__prepend
+    margin-left: 20px
     @media (max-width: calc($tablet-width - 1px))
       display: none
 
