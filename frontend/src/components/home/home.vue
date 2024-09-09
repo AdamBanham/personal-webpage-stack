@@ -52,12 +52,17 @@
             href="https://scholar.google.com/citations?hl=en&user=IyiPbEAAAAAJ"
             target="_blank"
           >Scholar</a>) <br><br>
-          Thanks to the fantastic support at the Queensland University of Technology, I am currently studying for a PhD 
-          focusing on Process Mining. In particular, I have to thank my current supervisor team for all their effort and patience, 
-          as they have helped me grow significantly through my undergraduate studies and continue to do so now.
-          Professor Moe T. Wynn, for taking me on during my undergraduate and creating opportunities to work with her and colleagues. 
-          Dr Robert Andrews, for giving me a chance to work alongside him during my undergraduate studies and for his continuing support. 
-          Finally, Prof. Sander J.J. Leemans, for giving me the opportunity to learn from him during my honours and PhD.
+          Thanks to the fantastic support at the Queensland University of 
+          Technology, I am finishing a PhD focusing on Process Mining. I am 
+          deeply grateful for the significant impact my current supervisor 
+          team has had on my academic journey, their effort and patience have 
+          helped me grow from my undergraduate studies to the present. I am 
+          particularly thankful to Professor Moe T. Wynn, for taking me on 
+          during my undergraduate and creating opportunities to work with her 
+          and colleagues. Dr Robert Andrews, for giving me a chance to work 
+          alongside him during my undergraduate studies and for his continuing 
+          support. Finally, Prof. Sander J.J. Leemans, for giving me the 
+          opportunity to learn from him during my honours and PhD.
           <br>
           <br>
           <b>Additional Info:</b>

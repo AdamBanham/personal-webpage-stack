@@ -2,6 +2,9 @@
   <div class="toolbar">
     <v-app-bar :elevation="5">
       <template #prepend>
+        <v-icon icon="mdi-graph-outline" size="large" 
+        style="margin-right: 10px"
+        />
         Adam P. Banham
       </template>
       <template #append>
@@ -48,48 +51,6 @@
         </v-btn>
       </template>
     </v-app-bar>
-    <!-- <div class="choices">
-      <div
-        class="choice"
-        @click="moveTo('home')"
-      >
-        Home
-      </div>
-      <div
-        class="choice"
-        @click="moveTo('blog')"
-      >
-        Blog
-      </div>
-      <div
-        class="choice"
-        @click="moveTo('pubs')"
-      >
-        Publications
-      </div>
-      <div class="sub-choices choice">
-        Process Mining
-        <div
-          class="choice"
-          @click="moveTo('pm-discovery')"
-        >
-          Process Discovery
-        </div>
-      </div>
-      
-      <div
-        class="choice"
-        @click="moveTo('code')"
-      >
-        Coding
-      </div>
-      <div
-        class="choice"
-        @click="moveTo('contact')"
-      >
-        Contact
-      </div>
-    </div> -->
   </div>
 </template>
 
