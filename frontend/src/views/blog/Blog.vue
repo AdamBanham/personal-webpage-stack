@@ -214,9 +214,8 @@ methods: {
 
   .filter-bar
       position: absolute
-      // z-index: 4
+      padding-top: 75px
       width: 650px
-      
       display: flex
       flex-grow: 1
       flex-direction: column
