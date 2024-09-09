@@ -5,6 +5,7 @@ import NotReady from "@/views/NotReady.vue"
 import BlogPage from "@/views/blog/Blog.vue"
 import ArticlePage from "@/views/blog/article/ArticleViewer.vue"
 import PublicationPage from "@/views/publications/Publications.vue"
+import PMDiscoveryPage from "@/views/process-mining/DiscoveryPage.vue"
 
 const routes = [
   {
@@ -27,6 +28,11 @@ const routes = [
     path: '/pubs',
     name: 'pubs',
     component: PublicationPage
+  },
+  {
+    path: '/process-mining/discovery',
+    name: 'pm-discovery',
+    component: PMDiscoveryPage
   },
   {
     path: '/code',
