@@ -3,7 +3,7 @@ const getRandomYear = function() {
     return 1998 + Math.floor(Math.random() * 25)
 }
 
-const dummyPaper = "R. Agrawal, D. Gunopulos, and F. Leymann, “Mining process models from workflow logs,” in EDBT, ser. Lecture Notes in Computer Science, vol. 1377, Springer, 1998, pp. 469–483"
+const dummyPaper = "??? (Missing Reference) ???"
 const dummyFigure = "agrawal-BPIC15.svg"
 const dummyShortInfo = "Given the executions of the process, finds a graph."
 const dummyLongInfo = `
@@ -25,9 +25,6 @@ class TimelinePoint {
         this.code = code
     }
 }
-
-
-
 
 const cards = [
 new TimelinePoint(
@@ -123,7 +120,48 @@ with open("roadfines-alpha.dot", "w") as f:
     f.close()
 `
 ),
-    new TimelinePoint(2007, "Alpha++ Miner"),
+    new TimelinePoint(2004, "Alpha+ Miner",
+        'de Medeiros, A.K.A., van Dongen, B.F., van der Aalst, W.M.P., Weijters, A.J.M.M. (2004). Process Mining for Ubiquitous Mobile Systems: An Overview and a Concrete Algorithm. In: Baresi, L., Dustdar, S., Gall, H.C., Matera, M. (eds) Ubiquitous Mobile Information and Collaboration Systems. UMICS 2004. Lecture Notes in Computer Science, vol 3272. Springer',
+        null,
+        "Given an event log, find a net from the class of sound structured workflow nets"
+    ),
+    new TimelinePoint(2004 ,"Alpha-&#946; Miner",
+        'Wen, L., Wang, J., Aalst, van der, W. M. P., Wang, Z., & Sun, J. (2004). A novel approach for process mining based on event types. (BETA publicatie : working papers; Vol. 118). Technische Universiteit Eindhoven.',
+        null,
+        "Given an event log with start and end events, find a Petri net"
+    ),
+    new TimelinePoint(2007, "Alpha++ Miner",
+        "Wen, L., van der Aalst, W.M.P., Wang, J. et al, \"Mining process models with non-free-choice constructs\", Data Min Knowl Disc 15, 145–180 (2007)."
+    ),
+    new TimelinePoint(2003, "Heuristic Miner",
+        'Weijters, A. J. M. M., & Aalst, van der, W. M. P. (2003). Rediscovering workflow models from event-based data using Little Thumb. Integrated Computer-Aided Engineering, 10(2), 151-162.',
+        null,
+        "Given a workflow log, find a WF-net"
+    ),
+    new TimelinePoint(2011, "Flexible Heuristic Miner", 
+        'A. J. M. M. Weijters and J. T. S. Ribeiro, "Flexible Heuristics Miner (FHM)," 2011 IEEE Symposium on Computational Intelligence and Data Mining (CIDM), Paris, France, 2011, pp. 310-317',
+        null
+    ),
+    new TimelinePoint(2005, "Genetic Process Mining",
+        'van der Aalst, W.M.P., de Medeiros, A.K.A., Weijters, A.J.M.M. (2005). Genetic Process Mining. In: Ciardo, G., Darondeau, P. (eds) Applications and Theory of Petri Nets 2005. ICATPN 2005. Lecture Notes in Computer Science, vol 3536. Springer',
+        null,
+        "Given a set of event traces, find a Petri net"
+    ),
+    new TimelinePoint(1998, "RNet/Ktail/Markov Miners", 
+        'Jonathan E. Cook and Alexander L. Wolf. 1998. Discovering models of software processes from event-based data. ACM Trans. Softw. Eng. Methodol. 7, 3 (July 1998), 215–249.',
+        null,
+        "Given an event stream collected from a software process, find a formal model of the behaviour of the process"
+    ),
+    new TimelinePoint(2004, "Social Network Miner",
+        'van der Aalst, W.M.P., Song, M. (2004). Mining Social Networks: Uncovering Interaction Patterns in Business Processes. In: Desel, J., Pernici, B., Weske, M. (eds) Business Process Management. BPM 2004. Lecture Notes in Computer Science, vol 3080. Springer',
+        null,
+        "Given an event log, find a meaningful sociograms"
+    ),
+    new TimelinePoint(2004, "ProcessDiscover",
+        'Greco, G., Guzzo, A., Pontieri, L., Saccà, D. (2004). Mining Expressive Process Models by Clustering Workflow Traces. In: Dai, H., Srikant, R., Zhang, C. (eds) Advances in Knowledge Discovery and Data Mining. PAKDD 2004. Lecture Notes in Computer Science(), vol 3056. Springer',
+        null,
+        "Given log data related to some executions of the process, find a workflow model of an unknown process"
+    ),
     new TimelinePoint(2023, "Alpha+++ Miner"),
     new TimelinePoint(2013, "Beta Miner"),
     new TimelinePoint(2014, "Inductive Miner Infrequent"),

@@ -42,7 +42,7 @@
             }"
           >
             <h4> {{ info.year }} </h4>
-            <h2> {{ info.title }}</h2>
+            <h2 v-html="info.title" />
             <p> 
               {{ info.shortInfo }}
             </p>
@@ -88,7 +88,18 @@
             height: histYears[year] > 0 ? calcHistBarHeight(histYears[year])+'px' : '0px',
             'margin-top': calcHistBarMargin(histYears[year])+'px',
           }"
-        />
+        >
+          <v-tooltip
+            :text="'('+year+','+histYears[year]+')'"
+            activator="parent"
+            opacity="0.5"
+            location="top"
+            width="80"
+            height="25"
+            theme="dark"
+            content-class="hist-bar-tooltip"
+          />
+        </div>
       </div>
       <div> {{ histYearsMax }}</div>
     </div>
@@ -151,9 +162,7 @@
     <div class="timeline-info">
       <div class="content-bar">
         <section>
-          <h1> 
-            {{ selectInfo.title }}
-          </h1>
+          <h1 v-html="selectInfo.title" />
           <h3> 
             {{ selectInfo.year }}
           </h3>
@@ -284,15 +293,37 @@ export default {
         },
         calcHistBarHeight: function(count){
           var prec = count / this.histCountMax
-          return 32.5 * prec
+          return 95 * prec
         },
         calcHistBarMargin: function(count){
           var prec = 1 - (count / this.histCountMax)
-          return 32.5 * prec
+          return 95 * prec
         }
     }
 }
 </script>
+
+<style lang="sass">
+@import "@/styles/coloursAnt.sass"  
+.hist-bar-tooltip
+  background-color: $black-blue !important
+  color: $light-grey !important
+  justify-content: center
+  text-align: center
+  padding: 5px
+  font-size: 12px !important
+
+  &::after
+    content: " "
+    position: absolute
+    top: 100%
+    left: 50%
+    margin-left: -5px
+    border-width: 5px
+    border-style: solid
+    border-color: black transparent transparent transparent
+
+</style>
 
 <style lang="sass" scoped>
 @import "@/styles/content.sass"
@@ -450,7 +481,7 @@ export default {
           margin-top: 15px
 .timeline-dots-line
     position: absolute
-    height: 225px 
+    height: 250px 
     margin-top: -38px
     margin-right: 30%
     min-width: 2.5px
@@ -471,8 +502,9 @@ export default {
         transform: translateX(calc($content-width-small/2))
 .timeline-hist
   margin: auto
-  height: 75px
+  height: 100px
   display: flex
+  z-index: 3
   
   @media (min-width: $desktop-width)
       width: $content-width-full
@@ -485,17 +517,18 @@ export default {
 
   .timeline-hist-bars
     width: 80%
-    height: 65px
+    height: 100px
     margin: auto
     display: inline-flex
+    z-index: 3
 
     .timeline-hist-bar 
       background-color: $light-grey
       opacity: 0.5
+      z-index: 2
 
       &.active
         background-color: $green-8
-
 
 .timeline-dots
     // border: 5px blue solid
