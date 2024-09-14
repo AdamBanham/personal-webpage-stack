@@ -387,8 +387,15 @@ export default {
           transition: all .3s ease
 
           &:first-child
-            margin-left: calc(((650px * 0.9)/2) - 100px)
+            @media (min-width: $desktop-width)
+              margin-left: calc((($content-width-full * 0.9)/2) - 100px)
 
+            @media (max-width: calc($desktop-width - 1px)) and (min-width: $tablet-width)
+              margin-left: calc((($content-width-medium * 0.9)/2) - 100px)
+
+            @media (max-width: calc($tablet-width - 1px))
+              margin-left: calc((($content-width-small * 0.9)/2) - 115px)
+          
           h2 
               color: $green-9
               margin: 5px
@@ -479,6 +486,7 @@ export default {
           text-align: center
           color: $black-blue
           margin-top: 15px
+
 .timeline-dots-line
     position: absolute
     height: 250px 
@@ -500,6 +508,8 @@ export default {
     @media (max-width: calc($tablet-width - 1px))
         margin-left: calc(calc(100vw - $content-width-small)/2)
         transform: translateX(calc($content-width-small/2))
+
+    
 .timeline-hist
   margin: auto
   height: 100px
@@ -577,8 +587,22 @@ export default {
         box-shadow: 0 2px 5px rgba(0,0,0,.2)
         transition: all .3s ease
 
+        $colors: $red-3, $cyan-7, $orange-7, $green-3, $blue-3
+        $repeat: 5 
+
+        @for $i from 1 through $repeat 
+          &:nth-child(#{length($colors)}n+#{$i}) 
+            border-color: lighten(nth($colors, $i), 20%)
+
         &:first-child
-          margin-left: calc(((650px * 0.9)/2) - 100px - 15px + 100px - 1.5px)
+          @media (min-width: $desktop-width)
+            margin-left: calc((($content-width-full * 0.9)/2) - 100px - 15px + 100px - 1.5px)
+
+          @media (max-width: calc($desktop-width - 1px)) and (min-width: $tablet-width)
+            margin-left: calc((($content-width-medium * 0.9)/2) - 100px - 22.5px + 100px - 1.5px)
+
+          @media (max-width: calc($tablet-width - 1px))
+            margin-left: calc((($content-width-small * 0.9)/2) - 100px - 27px + 100px - 1.5px)
 
         &:last-child
           margin-right: 200px
