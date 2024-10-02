@@ -8,6 +8,12 @@
         Adam P. Banham
       </template>
       <template #append>
+        <v-btn>
+          <a
+            href="docs/Adam_Banham___Curriculum_Vitae.pdf"
+            target="_blank"
+          > CV </a>
+        </v-btn>
         <v-btn @click="moveTo('home')">
           Home
         </v-btn>
