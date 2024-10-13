@@ -120,11 +120,62 @@ with open("roadfines-alpha.dot", "w") as f:
     f.close()
 `
 ),
-    new TimelinePoint(2004, "Alpha+ Miner",
-        'de Medeiros, A.K.A. and van Dongen, B.F. and van der Aalst, W.M.P., Weijters, A.J.M.M, (2004) \"Process Mining for Ubiquitous Mobile Systems: An Overview and a Concrete Algorithm\", In: Baresi, L., Dustdar, S., Gall, H.C., Matera, M. (eds) Ubiquitous Mobile Information and Collaboration Systems. UMICS 2004. Lecture Notes in Computer Science, vol 3272. Springer',
-        null,
-        "Given an event log, find a net from the class of sound structured workflow nets"
+    new TimelinePoint(
+        2004, "Alpha+ Miner",
+        'de Medeiros, A.K.A. and van Dongen, B.F. and van der Aalst, W.M.P., Weijters, A.J.M.M, (2004) \"Process mining : extending the alpha-algorithm to mine short loops\", BETA publicatie : working papers; Vol. 113). Technische Universiteit Eindhoven.',
+        "roadfines-alpha-plus.svg",
+        "Given an event log, find a net from the class of sound structured workflow nets",
+`
+This extension of the alpha miner targets how loops of length one and  
+two could be rediscovered using the alpha approach. A loop of length one is 
+an activity t that can appear in a trace after itself has been executed, e.g.
+<...tt...>. A loop of length two is between two activities a,b such that the
+activities can be interwoven during execution, e.g. <...aba....> or 
+<...bab...>. To achieve an alpha extension that can mine these
+relations, the authors propose one additional ordering property be included
+in the footprint matrix and a change in the ordering mechanisms to
+determine causal dependencies for alpha. However, to handle loops of length
+one, a preprocessing step is introduced after which the original algorithm
+for alpha can be used to safety mine workflow nets with loops of length one
+and two. This results in an extension of alpha (which calls the original alpha 
+adjusted with new ordering relations) that consists of roughly 6-9 steps. A 
+nice property of the extension is that is equivalent to calling alpha on logs
+without short loops.
+`,
+`
+from pmkoalas.discovery.alpha_miner import AlphaMinerPlusInstance as Miner
+from pmkoalas.read import read_xes_simple
+from pmkoalas.models.dotutil import lpn_prettier_dot
+from pmkoalas._logging import setLevel
+from os.path import join
+
+from logging import INFO
+
+setLevel(INFO)
+
+log = read_xes_simple(join(".","Road_Traffic_Fine_Management_Process.xes"))
+miner = Miner(optimised=True)
+graph = miner.discover(log)
+
+with open("roadfines-alpha-plus.net", "w") as f:
+    f.write(repr(graph))
+    f.flush()
+    f.close()
+
+
+dotform = lpn_prettier_dot(graph)
+with open("roadfines-alpha-plus.dot", "w") as f:
+    f.write(dotform)
+    f.flush()
+    f.close()
+`
     ),
+    new TimelinePoint(1998, "TS-Synthesis Miner",
+        `J. Cortadella, M. Kishinevsky, L. Lavagno and A. Yakovlev, "Deriving Petri nets from finite transition systems," in IEEE Transactions on Computers, vol. 47, no. 8, pp. 859-882, Aug. 1998, doi: 10.1109/12.707587.`,
+        null,
+        "Given a transition system, synthesize a Petri net"
+    )
+    ,
     new TimelinePoint(2004 ,"Alpha-&#946; Miner",
         'Wen, L. and Wang, J. and van der Aalst , W.M.P. and Wang, Z. and Sun, J., (2004) \"A novel approach for process mining based on event types\", (BETA publicatie : working papers; Vol. 118). Technische Universiteit Eindhoven.',
         null,
