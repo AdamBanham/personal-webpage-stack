@@ -170,6 +170,11 @@ with open("roadfines-alpha-plus.dot", "w") as f:
     f.close()
 `
     ),
+    new TimelinePoint(1998, "Induction Miner",
+        `J. Herbst and D. Karagiannis, "Integrating Machine Learning and Workflow Management to Support Acquisition and Adaptation of Workflow Models", in Proceedings of the Ninth International Workshop on Database and Expert Systems Applications, pages 745–752. IEEE, 1998.`,
+        null,
+        "Given a workflow log, induce a workflow model"
+    ),
     new TimelinePoint(1998, "Modified Biermann-Feldman(k,c) Miner",
         `Datta A, "Automating the discovery of as-is business process models: probabilistic and algorithmic approaches", Inform Sys Res 9(3):275–301, 1998.`,
         null,
