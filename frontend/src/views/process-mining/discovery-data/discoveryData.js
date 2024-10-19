@@ -174,6 +174,11 @@ with open("roadfines-alpha-plus.dot", "w") as f:
         `J. Cortadella, M. Kishinevsky, L. Lavagno and A. Yakovlev, "Deriving Petri nets from finite transition systems," in IEEE Transactions on Computers, vol. 47, no. 8, pp. 859-882, Aug. 1998, doi: 10.1109/12.707587.`,
         null,
         "Given a transition system, synthesize a Petri net"
+    ),
+    new TimelinePoint(2004, "Multi-Phase Miner",
+        `B.F. van Dongen and W.M.P. van der Aalst, "Multi-Phase Process Mining: Building Instance Graphs", in International Conference on Conceptual Modeling (ER 2004), vol. 3288 of Lecture Notes in Computer Science, pages 362-376. Springer-Verlag, Berlin, 2004.`,
+        null,
+        "Given an instance graph, derive a instance EPC"
     )
     ,
     new TimelinePoint(2004 ,"Alpha-&#946; Miner",
