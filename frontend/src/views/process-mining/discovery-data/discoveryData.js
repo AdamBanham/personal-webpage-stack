@@ -170,6 +170,11 @@ with open("roadfines-alpha-plus.dot", "w") as f:
     f.close()
 `
     ),
+    new TimelinePoint(1998, "Modified Biermann-Feldman(k,c) Miner",
+        `Datta A, "Automating the discovery of as-is business process models: probabilistic and algorithmic approaches", Inform Sys Res 9(3):275–301, 1998.`,
+        null,
+        "Given an activity stream, derive a Process Activity Graph"
+    ),
     new TimelinePoint(1998, "TS-Synthesis Miner",
         `J. Cortadella, M. Kishinevsky, L. Lavagno and A. Yakovlev, "Deriving Petri nets from finite transition systems," in IEEE Transactions on Computers, vol. 47, no. 8, pp. 859-882, Aug. 1998, doi: 10.1109/12.707587.`,
         null,
