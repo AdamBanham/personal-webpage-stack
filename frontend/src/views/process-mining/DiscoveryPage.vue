@@ -1,5 +1,12 @@
 <template>
   <div class="pm-discovery router-view">
+    <div class="info-header">
+      <h4>
+        This is a work-in-progress project, where I add more entries once or
+        twice a month with the goal to implement a discovery entry with each 
+        update.
+      </h4>
+    </div>
     <div 
       class="timeline-snippets"
     >
@@ -329,6 +336,22 @@ export default {
 @import "@/styles/content.sass"
 @import "@/styles/coloursAnt.sass"  
 @import "@/styles/breakpoints.sass"
+
+.info-header
+  text-align: center
+  margin-bottom: 15px
+  margin-top: 15px
+  margin-left: auto 
+  margin-right: auto
+
+  @media (min-width: $desktop-width)
+    width: $content-width-full
+
+  @media (max-width: calc($desktop-width - 1px)) and (min-width: $tablet-width)
+    width: $content-width-medium
+
+  @media (max-width: calc($tablet-width - 1px))
+    width: $content-width-small
 
 .timeline-snippets
     display: inline-flex
