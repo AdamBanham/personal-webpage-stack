@@ -1,5 +1,3 @@
-import inherits from 'inherits-browser';
-
 import {
     append as svgAppend,
     attr as svgAttr,
@@ -178,7 +176,7 @@ export default class TSRenderer extends  BaseRenderer {
     };
 }
 
-TSRenderer.prototype.inject = [
+TSRenderer.$inject = [
     'eventBus',
     'styles',
     'canvas'

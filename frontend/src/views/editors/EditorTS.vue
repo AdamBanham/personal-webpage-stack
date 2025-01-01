@@ -3,7 +3,12 @@
     <div class="editor-header">
       <h4>
         This is an editor to create transition systems, powered by 
-        <a href="https://github.com/bpmn-io/diagram-js/tree/develop" target="_blank">diagram-js</a>.
+        <a 
+          href="https://github.com/bpmn-io/diagram-js/tree/develop" 
+          target="_blank"
+        >
+          diagram-js
+        </a>.
       </h4>
       <p>
         For more information on the formalism and its structure see: 

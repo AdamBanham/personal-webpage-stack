@@ -1,5 +1,4 @@
 import ExamplePaletteProvider from "./PaletteProvider.js"
-import PopupMenuProvider from "./PopupMenuProvider.js"
 import ContextPadProvider from "./ContextPadProvider.js"
 
 export default {

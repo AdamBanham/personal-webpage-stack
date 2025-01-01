@@ -1,6 +1,7 @@
 import Diagram from 'diagram-js';
 
 import ConnectModule from 'diagram-js/lib/features/connect';
+import ConnectPreview from 'diagram-js/lib/features/connection-preview'
 import ContextPadModule from 'diagram-js/lib/features/context-pad';
 import CreateModule from 'diagram-js/lib/features/create';
 import LassoToolModule from 'diagram-js/lib/features/lasso-tool';
@@ -52,6 +53,7 @@ export default function TSEditor(options) {
     // default modules provided by the toolbox
     const builtinModules = [
         ConnectModule,
+        ConnectPreview,
         ContextPadModule,
         CreateModule,
         LassoToolModule,

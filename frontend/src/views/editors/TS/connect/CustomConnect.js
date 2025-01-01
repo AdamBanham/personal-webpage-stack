@@ -1,6 +1,6 @@
 
 
-export default function CustomConnect(eventBus, modeling, factory){
+export default function CustomConnect(eventBus, modeling){
 
     var modeling = modeling
 
@@ -13,6 +13,5 @@ export default function CustomConnect(eventBus, modeling, factory){
 
 CustomConnect.$inject = [
     'eventBus',
-    'modeling',
-    'elementFactory'
+    'modeling'
 ];
