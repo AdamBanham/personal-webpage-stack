@@ -22,6 +22,7 @@ mounted() {
 @import "@/styles/coloursAnt.sass"
 @import "@/styles/animations.sass"
 @import "@/styles/tags.sass"
+@import "diagram-js/assets/diagram-js.css"
 
 .v-application__wrap
   background-image: url("@/assets/patterns/processy.png")

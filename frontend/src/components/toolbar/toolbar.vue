@@ -53,6 +53,41 @@
         <v-btn @click="moveTo('code')">
           Coding
         </v-btn>
+        <v-btn id="menu-editors">
+          Editors
+        </v-btn>
+        <v-menu activator="#menu-editors">
+          <v-list>
+            <v-list-item
+              :key="1"
+              :value="1"
+              @click="moveTo('editor-orm')"
+            >
+              <v-list-item-title> ORM </v-list-item-title>
+            </v-list-item>
+            <v-list-item
+              :key="2"
+              :value="2"
+              @click="moveTo('editor-pn')"
+            >
+              <v-list-item-title> Petri Net </v-list-item-title>
+            </v-list-item>
+            <v-list-item
+              :key="3"
+              :value="3"
+              @click="moveTo('editor-ts')"
+            >
+              <v-list-item-title> Transition System </v-list-item-title>
+            </v-list-item>
+            <v-list-item
+              :key="4"
+              :value="4"
+              @click="moveTo('editor-bpmn')"
+            >
+              <v-list-item-title> BPMN </v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
         <v-btn @click="moveTo('contact')">
           Contact
         </v-btn>

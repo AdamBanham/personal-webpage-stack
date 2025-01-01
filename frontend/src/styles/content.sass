@@ -13,6 +13,40 @@ $detail-card-height-small: 250px
   margin-top: 75px
 
 
+.editor-hover
+  &:hover
+    color: $blue-7
+
+.editor-content
+  margin: auto
+  display: flex
+  flex-grow: 1
+  flex-direction: column
+  flex-flow: column
+  background-color: $light-grey
+  min-height: 100vh
+  padding-left: 5px
+  padding-right: 5px
+  padding-bottom: 75px
+  padding-top: 100px
+  min-width: 80%
+
+  .editor-header
+    text-align: center
+    h4
+      color: $black-blue
+    p
+      color: $blue-1
+
+  // @media (min-width: $desktop-width)
+  //   width: $content-width-full
+
+  // @media (max-width: calc($desktop-width - 1px)) and (min-width: $tablet-width)
+  //   width: $content-width-medium
+
+  // @media (max-width: calc($tablet-width - 1px))
+  //   width: $content-width-small
+
 .content-bar
   margin: auto
   display: flex

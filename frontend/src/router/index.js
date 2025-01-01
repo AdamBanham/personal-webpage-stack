@@ -6,6 +6,7 @@ import BlogPage from "@/views/blog/Blog.vue"
 import ArticlePage from "@/views/blog/article/ArticleViewer.vue"
 import PublicationPage from "@/views/publications/Publications.vue"
 import PMDiscoveryPage from "@/views/process-mining/DiscoveryPage.vue"
+import EditorTS from "@/views/editors/EditorTS.vue"
 
 const routes = [
   {
@@ -37,6 +38,26 @@ const routes = [
   {
     path: '/code',
     name: 'code',
+    component: NotReady
+  },
+  {
+    path: '/editor/pn',
+    name: 'editor-pn',
+    component: NotReady
+  },
+  {
+    path: '/editor/orm',
+    name: 'editor-orm',
+    component: NotReady
+  },
+  {
+    path: '/editor/ts',
+    name: 'editor-ts',
+    component: EditorTS
+  },
+  {
+    path: '/editor/bpmn',
+    name: 'editor-bpmn',
     component: NotReady
   },
   {
