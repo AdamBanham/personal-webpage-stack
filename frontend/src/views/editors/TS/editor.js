@@ -14,11 +14,12 @@ import ResizeModule from 'diagram-js/lib/features/resize';
 import RulesModule from 'diagram-js/lib/features/rules';
 import SelectionModule from 'diagram-js/lib/features/selection';
 import ZoomScrollModule from 'diagram-js/lib/navigation/zoomscroll';
+import SnappingModule from 'diagram-js/lib/features/snapping'
 
 // custom providers
 import ProvidersModule from './providers';
 
-// custom renderer
+// custom renderers
 import TSRenderer from './draw';
 
 // custom element factory
@@ -59,12 +60,14 @@ export default function TSEditor(options) {
         LassoToolModule,
         ModelingModule,
         MoveCanvasModule,
+        // ResizeModule,
         MoveModule,
         OutlineModule,
         PaletteModule,
         RulesModule,
         SelectionModule,
         ZoomScrollModule,
+        SnappingModule
     ];
 
     // our own modules, contributing controls, customizations, and more

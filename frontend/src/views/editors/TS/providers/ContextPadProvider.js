@@ -139,35 +139,34 @@ export default function ContextPadProvider(
             group: 'edit'
         }
 
-        if (isStartingState(element) || isInternalState(element)){
-            contextPadOptions['connect'] = {
-                action: {
-                    click: startConnect,
-                    dragstart: startConnect
-                },
-                className: 'context-pad-contect',
-                html: '<div class="entry mdi-arrow-right-thick mdi editor-hover"/>',
-                title: 'connect',
-                group: 'join'
-            }
-            contextPadOptions['connect-to-internal'] = {
-                action: {
-                    click: jumpToInternal
-                },
-                className: 'context-pad-contect',
-                html: '<div class="entry mdi-circle-outline mdi editor-hover"/>',
-                title: 'jump to internal',
-                group: 'jump'
-            }
-            contextPadOptions['connect-to-ending'] = {
-                action: {
-                    click: jumpToEnding
-                },
-                className: 'context-pad-contect',
-                html: '<div class="entry mdi-stop-circle-outline mdi editor-hover"/>',
-                title: 'jump to ending',
-                group: 'jump'
-            }
+        contextPadOptions['connect'] = {
+            action: {
+                click: startConnect,
+                dragstart: startConnect
+            },
+            className: 'context-pad-contect',
+            html: '<div class="entry mdi-arrow-right-thick mdi editor-hover"/>',
+            title: 'connect',
+            group: 'join'
+        }
+            
+        contextPadOptions['connect-to-internal'] = {
+            action: {
+                click: jumpToInternal
+            },
+            className: 'context-pad-contect',
+            html: '<div class="entry mdi-circle-outline mdi editor-hover"/>',
+            title: 'jump to internal',
+            group: 'jump'
+        }
+        contextPadOptions['connect-to-ending'] = {
+            action: {
+                click: jumpToEnding
+            },
+            className: 'context-pad-contect',
+            html: '<div class="entry mdi-stop-circle-outline mdi editor-hover"/>',
+            title: 'jump to ending',
+            group: 'jump'
         }
 
         return contextPadOptions

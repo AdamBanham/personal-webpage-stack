@@ -91,6 +91,7 @@ export class TSElementFactory extends ElementFactory {
         attrs.cy = stateRadius
         attrs.width = stateRadius * 2
         attrs.height = stateRadius * 2
+        attrs.label = ''
         attrs.stateType = type
         attrs.group = "states"
         return this.createShape(attrs)

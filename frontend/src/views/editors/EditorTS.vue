@@ -57,9 +57,12 @@
                 this.editor.invoke([ 'eventBus', 'elementFactory', 'canvas', 
                     function(events, factory, canvas) {
 
-                    var s1 = { id: factory.getNextStateId(), x: 300, y: 100,};
-                    var s3 = { id: factory.getNextStateId(), x: 300, y: 200,}
-                    var s2 = { id: factory.getNextStateId(), x: 300, y: 300,};
+                    var s1 = { id: factory.getNextStateId(),
+                      stateLabel: "{}", x: 300, y: 100,};
+                    var s3 = { id: factory.getNextStateId(),
+                      stateLabel: "{0,1}", x: 300, y: 200,}
+                    var s2 = { id: factory.getNextStateId(),
+                      stateLabel: "{}", x: 300, y: 300,};
                     s1 = factory.createStartingState(s1);
                     s3 = factory.createInternalState(s3);
                     s2 = factory.createEndingState(s2);
@@ -69,11 +72,13 @@
                         s1,
                         s3,
                     );
+                    c1.arcLabel = "foo"
                     var c2 = factory.createConnectionBetweenStates(
                         factory.getNextConnectionId(), 
                         s3,
                         s2,
                     );
+                    c2.arcLabel = "baz"
 
                     canvas.addConnection(c1)
                     canvas.addConnection(c2)
@@ -127,13 +132,16 @@
 @import "@/styles/coloursAnt.sass"
 .editor-canvas-ts-container
     .editor-canvas
+        border-radius: 15px
         .djs-container
-                .djs-context-pad-parent
-                    .open
-                        .group
-                            .editor-hover
-                                color: black
-                                &:hover
-                                    color: $blue-7
-                                    background: $background-light-50
+          border-radius: 15px
+          background: $gray-5
+          .djs-context-pad-parent
+              .open
+                  .group
+                      .editor-hover
+                          color: black
+                          &:hover
+                              color: $blue-7
+                              // background: $background-light-50
 </style>
