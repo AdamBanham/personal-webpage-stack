@@ -3,8 +3,11 @@
     <div class="content-bar">
       <div class="bread-crumbs">
         <v-breadcrumbs :items="articleCrumbs">
-          <template v-slot:prepend>
-            <v-icon icon="mdi-post" size="small" />
+          <template #prepend>
+            <v-icon
+              icon="mdi-post"
+              size="small"
+            />
           </template>
         </v-breadcrumbs>
         <!-- <div
@@ -31,8 +34,8 @@
       >
         <div
           v-if="comp.mode == 1"
-          v-html="comp.value"
           class="text"
+          v-html="comp.value"
         />
         <div 
           v-else-if="comp.mode == 2"
@@ -54,9 +57,10 @@
           class="quote"
         >
           <section :id="'quote-'+comp.count">
-            <p class="quote-text" 
-            v-html="comp.value">
-            </p>
+            <p
+              class="quote-text" 
+              v-html="comp.value"
+            />
             <p class="quote-person">
               <a :href="'#quote-'+comp.count">
                 <u>{{ comp.label }}</u>
@@ -80,6 +84,59 @@
                 <u>Snippet {{ comp.count }}: </u></a> {{ ' '+comp.label }}
             </p>
           </section>
+        </div>
+        <div
+          v-else-if="comp.mode == 5"
+          class="profile"
+        >
+          <div
+            :class="{
+              'l-align header' : comp.align == 'L',
+              'r-align header' : comp.align == 'R'
+            }"
+          >
+            <h3>{{ comp.name }}</h3>
+            <img
+              :src="'/profiles/'+comp.photo"
+              :alt="comp.name"
+            >  
+          </div>
+          <div
+            :class="{
+              'r-align blur text' : comp.align == 'L',
+              'l-align blur text' : comp.align == 'R'
+            }"
+          >
+            <p>{{ comp.blur }}</p>  
+          </div>
+        </div>
+        <div 
+          v-else-if="comp.mode == 6"
+          class="youtube"
+        >
+          <p
+            v-if="comp.pretext.length > 0"
+            class="pretext text"
+            v-html="comp.pretext"
+          />
+          <section :id="'clip-'+ comp.clipNo">
+            <p class="clip-caption">
+              <a :href="'#clip-'+comp.clipNo">
+                <u>Clip {{ comp.clipNo }}: </u></a> {{ ' '+comp.title }}
+            </p>
+            <iframe
+              class="youtube-clip-frame" 
+              :src="comp.youtube"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media;gyroscope; picture-in-picture; web-share" 
+              referrerpolicy="strict-origin-when-cross-origin"
+              allowfullscreen
+            />
+          </section>
+          <p
+            v-if="comp.posttext.length > 0"
+            class="postext text"
+            v-html="comp.posttext"
+          />
         </div>
         <div v-else>
           <p> {{ comp }}</p>
@@ -219,7 +276,7 @@ export default {
 
       .text
         border-radius: 10px
-        width: 92%
+        width: 96%
         text-align: center 
         margin: 2%
         padding: 2%
@@ -229,14 +286,53 @@ export default {
           text-align: center
           display: inline
           color: $green-1
-          a
-            color: $green-3
           b 
             color: $green-2
+          a
+            color: $blue-6
+        a
+          color: $blue-6
+
+      .profile
+
+        .text 
+          background-color: $green-1
+          p
+            color: $gray-7
+
+        .l-align
+          justify-content: left
+
+        .r-align
+          justify-content: right 
+
+        .header 
+          display: inline-flex 
+          text-align: center
+          justify-items: center
+          align-items: center
+          margin-top: auto 
+          margin-left: 5%
+          margin-right: 5%
+          margin-bottom: auto 
+          padding-left: 10px 
+          padding-right: 10px
+          max-height: 80px
+          width: 90%
+
+          h3
+            padding-left: 10px
+            padding-right: 10px
+
+          img 
+            width: 75px
+            height: 75px
+            border-radius: 15px
+
 
       .figure
         border-radius: 10px
-        width: 92%
+        width: 96%
         text-align: left 
         margin: 2%
         padding: 2%
@@ -262,7 +358,7 @@ export default {
 
       .code 
         border-radius: 10px
-        width: 92%
+        width: 96%
         text-align: left 
         margin: 2%
         padding: 2%
@@ -285,14 +381,14 @@ export default {
 
       .quote
         border-radius: 10px
-        width: 92%
+        width: 96%
         text-align: left 
         margin: 2%
         padding: 2%
         padding-top: 0
 
         .quote-text
-          width: 90%
+          width: 100%
           text-align: center
           margin: 0px
           padding: 0px
@@ -340,6 +436,21 @@ export default {
         li
           color: $black-blue
     
+    .youtube 
+
+      .clip-caption
+        text-align: center
+        padding-top: 10px
+        padding-bottom: 10px
+
+      .youtube-clip-frame
+        width: 90%
+        margin-left: 5% 
+        margin-right: auto
+        height: 360px
+        border-radius: 15px
+        border: none
+
     ol 
       padding: 25px
       padding-top: 5px

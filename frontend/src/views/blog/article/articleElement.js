@@ -9,6 +9,7 @@ class ArticleStructure {
         this.figures = 0
         this.snippets = 0
         this.quotes = 0
+        this.clips = 0
     }
 
     addTextSection(text){
@@ -44,6 +45,19 @@ class ArticleStructure {
         )
     }
 
+    addProfile(name, photo, blur, align){
+        this.components.push(
+            new ProfileSection(name, photo, blur, align)
+        )
+    }
+
+    addYoutubeSection(youtube, title, pretext, posttext){
+        this.clips += 1
+        this.components.push( 
+            new YoutTubeVideoSection(youtube, title, pretext, posttext, this.clips)
+        )
+    }
+
     getComponents(){
         return this.components
     }
@@ -58,6 +72,8 @@ const compModes = {
     'figure' : 2,
     'quote' : 3,
     'code' : 4,
+    'profile': 5,
+    'youtube': 6
 }
 
 class TextSection {
@@ -103,6 +119,33 @@ class ReferenceSection {
 
     constructor(reference){
         this.value = reference
+    }
+}
+
+class ProfileSection {
+
+    constructor(name, photo, blur, align){
+        this.mode = compModes['profile']
+        this.name = name
+        this.photo = photo 
+        this.blur = blur
+        if (align == null){
+            this.align = "L"
+        } else {
+            this.align = align
+        }
+    }
+}
+
+class YoutTubeVideoSection {
+
+    constructor(youtube, title, pretext, posttext, clipNo){
+        this.mode = compModes['youtube']
+        this.youtube = youtube
+        this.title = title
+        this.pretext = pretext 
+        this.posttext = posttext
+        this.clipNo = clipNo
     }
 }
 
