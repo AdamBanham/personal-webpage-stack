@@ -41,8 +41,6 @@
         },
         mounted: function(){
             this.root = this.$refs.canvas;
-
-            
             var _options = {
                 container:  this.root
             }
