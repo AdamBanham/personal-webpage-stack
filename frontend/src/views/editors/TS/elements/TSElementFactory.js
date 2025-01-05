@@ -40,6 +40,12 @@ export function isEndingState(attrs){
     return false;
 } 
 
+export function isState(attrs){
+    return isStartingState(attrs)
+        || isInternalState(attrs)
+        || isEndingState(attrs)
+}
+
 export function toggleStateType(element){
 
     if (isStartingState(element)){
@@ -57,16 +63,35 @@ export class TSElementFactory extends ElementFactory {
         super()
         this._lastStateId = 0;
         this._lastConnectionId = 0;
+        this._seen = []
+    }
+
+    logIdentifer(id){
+        if (!this._seen.includes(id)){
+            this._seen.push(id)
+        }
+    }
+
+    checkIdentifer(id){
+        return !this._seen.includes(id)
     }
 
     getNextStateId(){
         this._lastStateId += 1;
-        return "b"+this._lastStateId;
+        var id = "b"+this._lastStateId;
+        if (this.checkIdentifer(id)){
+            return id
+        }
+        return this.getNextStateId()
     }
 
     getNextConnectionId(){
         this._lastConnectionId += 1
-        return "a"+this._lastConnectionId;
+        var id = "a"+this._lastConnectionId;
+        if (this.checkIdentifer(id)){
+            return id
+        }
+        return this.getNextConnectionId()
     }
 
     createInternalState(attrs) {
@@ -94,6 +119,7 @@ export class TSElementFactory extends ElementFactory {
         attrs.label = ''
         attrs.stateType = type
         attrs.group = "states"
+        attrs.selected = false
         return this.createShape(attrs)
     }
 

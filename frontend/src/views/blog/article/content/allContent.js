@@ -1,6 +1,9 @@
+import content2024 from "./2024"
 import phdcontent from "./phdcontent";
 
-const allcontent = [].concat(phdcontent.content);
+const allcontent = []
+    .concat(phdcontent.content)
+    .concat(content2024);
 var contentkeys = []
 var contentDict = {}
 

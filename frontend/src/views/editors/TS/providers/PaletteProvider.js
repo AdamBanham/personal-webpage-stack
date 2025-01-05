@@ -1,16 +1,22 @@
 
-import {stateRadius} from "../elements/staticShapeDesc.js"
+import TsXmlExporter from "../exporter.js"
+import TsXmlImporter from "../importer.js";
+import SvgSaver from "../svgSaver.js";
 
 /**
  * A example palette provider.
  */
 export default function ExamplePaletteProvider(
-    create, elementFactory, lassoTool, palette, connect) {
+    create, elementFactory, lassoTool, palette, connect, registry,
+    modeling, canvas) {
     this._create = create;
     this._elementFactory = elementFactory;
     this._lassoTool = lassoTool;
     this._palette = palette;
     this._connect = connect;
+    this._registry = registry;
+    this._modeling = modeling
+    this._canvas = canvas
   
     palette.registerProvider(this);
   }
@@ -21,6 +27,9 @@ export default function ExamplePaletteProvider(
     'lassoTool',
     'palette',
     'connect',
+    'elementRegistry',
+    'modeling',
+    'canvas'
   ];
   
   
@@ -28,6 +37,9 @@ export default function ExamplePaletteProvider(
     var create = this._create,
         elementFactory = this._elementFactory,
         lassoTool = this._lassoTool,
+        registry = this._registry,
+        modeling = this._modeling,
+        canvas = this._canvas,
         connect = this._connect;
   
     return {
@@ -50,7 +62,7 @@ export default function ExamplePaletteProvider(
         className: 'mdi-circle-outline mdi',
         title: 'Create Internal State',
         action: {
-          click: function() {
+          click: function(event) {
             var shape = elementFactory.createInternalState({
               x: 0, y:0
             });
@@ -61,10 +73,10 @@ export default function ExamplePaletteProvider(
       },
       'create-sshape': {
         group: 'create',
-        className: 'mdi-play-circle-outline mdi palette-green',
+        className: 'mdi-play-circle-outline mdi',
         title: 'Create Starting State',
         action: {
-          click: function() {
+          click: function(event) {
             var shape = elementFactory.createStartingState({
               x: 0, y:0
             });
@@ -75,10 +87,10 @@ export default function ExamplePaletteProvider(
       },
       'create-eshape': {
         group: 'create',
-        className: 'mdi-stop-circle-outline mdi palette-red',
+        className: 'mdi-stop-circle-outline mdi',
         title: 'Create Ending State',
         action: {
-          click: function() {
+          click: function(event) {
             var shape = elementFactory.createEndingState({
               x: 0, y:0
             });
@@ -87,18 +99,103 @@ export default function ExamplePaletteProvider(
           }
         }
       },
-      // 'create-connection': {
-      //   group: 'create',
-      //   className: 'mdi-arrow-right-thick mdi',
-      //   title: 'Connect States',
-      //   action: {
-      //     click: function() {
-      //       var shape = elementFactory.createConnection({
-      //       });
-  
-      //       connect.start(event, shape);
-      //     }
-      //   }
-      // }
+      'create-separator': {
+        group: 'create',
+        separator: true
+      },
+      'import-model': {
+        group: 'model',
+        className: 'mdi-import mdi',
+        title: 'Import Model',
+        action: {
+          click: function(event) {
+            let input = document.createElement('input');
+            var parser = new TsXmlImporter(modeling,
+              elementFactory, canvas, registry)
+            input.type = 'file';
+            input.accept = '.tsxml'
+            input.onchange = _ => {
+              // you can use this method to get file and perform respective operations
+                      let xml =   Array.from(input.files)[0];
+                      xml.text()
+                        .then( content => 
+                        {
+                          input.remove()
+                          URL.revokeObjectURL(input)
+                          var tree = new DOMParser().parseFromString(
+                            content, "text/xml"
+                          )
+                          
+                          var errors = tree.getElementsByTagName("parsererror")
+                          if (errors.length > 0){
+                            alert(
+                              "Parsing failed :: "
+                              + errors[0].textContent
+                            )
+                            return
+                          }
+                          var system = tree.getElementsByTagName("transition-system")
+                          if (system.length > 0){
+                            parser.import(system[0])
+                          }
+                        }
+                        )
+                  };
+            input.click();
+          }
+        }
+      },
+      'export-model': {
+        group: 'model',
+        className: 'mdi-export mdi',
+        title: 'Export Model',
+        action: {
+          click: function(event) {
+            // Generate the content you want to download as a string
+            const content = new TsXmlExporter(registry).export()
+
+            // Create a Blob (Binary Large Object) from the content
+            const blob = new Blob([content], { type: 'text/plain' });
+
+            // Create a link element for downloading the file
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'transition_system.tsxml'; // Specify the default filename
+
+            // Trigger a click event on the link to initiate the download
+            a.click();
+
+            // Clean up resources (revoke the URL to free up memory)
+            URL.revokeObjectURL(blob);
+            a.remove()
+          }
+        }
+      },
+      'export-svg': {
+        group: 'model',
+        className: 'mdi-content-save-move-outline mdi',
+        title: 'Export SVG',
+        action: {
+          click: function(event) {
+            // Generate the content you want to download as a string
+            const content = new SvgSaver(canvas).save()
+
+            // Create a Blob (Binary Large Object) from the content
+            const blob = new Blob([content], { type: 'text/plain' });
+
+            // Create a link element for downloading the file
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'transition_system.svg'; // Specify the default filename
+
+            // Trigger a click event on the link to initiate the download
+            a.click();
+
+            // Clean up resources (revoke the URL to free up memory)
+            URL.revokeObjectURL(blob);
+            a.remove()
+          }
+        }
+      },
     };
   };

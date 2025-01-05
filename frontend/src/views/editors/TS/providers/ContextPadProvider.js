@@ -2,17 +2,19 @@
 import {
     isInternalState,
     isStartingState,
-    toggleStateType
+    toggleStateType,
+    isState
 } from "../elements/TSElementFactory"
 
 export default function ContextPadProvider(
-    create, elementFactory, connect, contextPad, modeling, eventBus
+    create, elementFactory, connect, contextPad, modeling, eventBus, registry
 ) {
     this._create = create;
     this._elementFactory = elementFactory;
     this._connect = connect;
     this._modeling = modeling;
     this._eventBus = eventBus;
+    this._registry = registry
     // debugger;
     contextPad.registerProvider(this);
 }
@@ -24,6 +26,7 @@ export default function ContextPadProvider(
         'contextPad',
         'modeling',
         'eventBus',
+        'elementRegistry'
 
     ];
 
@@ -33,6 +36,7 @@ export default function ContextPadProvider(
             modeling = this._modeling,
             factory = this._elementFactory,
             create = this._create,
+            registry = this._registry,
             bus = this._eventBus;
 
         function removeElement() {
@@ -46,7 +50,7 @@ export default function ContextPadProvider(
         function switchStateType(event, element, autoActivate){
             var newType = toggleStateType(element)
             element.stateType = newType;
-            modeling.moveShape(element, {x:0, y:0})
+            bus.fire('elements.changed', {elements: [element]})
         }
 
         function jumpToInternal(event, element){
@@ -62,8 +66,9 @@ export default function ContextPadProvider(
             )
             modeling.createShape(ns, {x: ns.x, y:ns.y} ,element.parent)
             modeling.createConnection(element, ns, nc, element.parent)
-            modeling.moveShape(element, {x:0, y:0})
-            modeling.moveShape(ns, {x:0, y:0})
+            modeling.layoutConnection (
+                nc,
+            )
         }
 
         function jumpToEnding(event, element){
@@ -79,8 +84,9 @@ export default function ContextPadProvider(
             )
             modeling.createShape(ns, {x: ns.x, y:ns.y} ,element.parent)
             modeling.createConnection(element, ns, nc, element.parent)
-            modeling.moveShape(element, {x:0, y:0})
-            modeling.moveShape(ns, {x:0, y:0})
+            modeling.layoutConnection (
+                nc,
+            )
         }
 
         function flipConnection(event, element){
@@ -95,9 +101,29 @@ export default function ContextPadProvider(
             element.target = src 
             element.waypoints = waypoints
             modeling.removeConnection(element)
-            modeling.createConnection(tgt, src, element, src.parent)
-            modeling.moveShape(tgt, {x:0, y:0})
-            modeling.moveShape(src, {x:0, y:0})
+            var connect = modeling.createConnection(tgt, src, element, src.parent)
+            modeling.layoutConnection(
+                connect
+            )
+        }
+
+        function toggleSelected(event, element){
+            if (element.selected) {
+                element.selected = false 
+                bus.fire('elements.changed', {elements: [element]})
+            } else {
+                var changed = [element]
+                registry.filter(isState).forEach(
+                    (el) => {
+                        if (el.selected){
+                            el.selected = false;
+                            changed.push(el)
+                        }
+                    }
+                )
+                element.selected = true 
+                bus.fire('elements.changed', {elements: changed})
+            }
         }
 
         var contextPadOptions = {}
@@ -136,6 +162,16 @@ export default function ContextPadProvider(
             className: 'context-pad-edit',
             html: '<div class="entry mdi-circle mdi editor-hover"/>',
             title: 'change',
+            group: 'edit'
+        }
+
+        contextPadOptions['mark'] = {
+            action: {
+                click: toggleSelected,
+            },
+            className: 'context-pad-edit',
+            html: '<div class="entry mdi-marker mdi editor-hover"/>',
+            title: 'mark',
             group: 'edit'
         }
 

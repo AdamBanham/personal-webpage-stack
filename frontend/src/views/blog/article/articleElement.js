@@ -10,6 +10,9 @@ class ArticleStructure {
         this.snippets = 0
         this.quotes = 0
         this.clips = 0
+        this.files = 0
+        this.carousels = 0
+        this.defintions = 0
     }
 
     addTextSection(text){
@@ -58,6 +61,27 @@ class ArticleStructure {
         )
     }
 
+    addPdfSection(file, title){
+        this.files += 1 
+        this.components.push(
+            new PdfSection(file, title, this.files)
+        )
+    }
+
+    addCarousel(title, ...photos){
+        this.carousels += 1
+        this.components.push(
+            new CarouselSection(title, photos, this.carousels)
+        )
+    }
+
+    addDefintion(title, content){
+        this.defintions += 1 
+        this.components.push(
+            new DefinitionSection(title, content, this.defintions)
+        )
+    }
+
     getComponents(){
         return this.components
     }
@@ -73,7 +97,10 @@ const compModes = {
     'quote' : 3,
     'code' : 4,
     'profile': 5,
-    'youtube': 6
+    'youtube': 6,
+    'pdf' : 7,
+    'carousel' : 8,
+    'definition' : 9,
 }
 
 class TextSection {
@@ -146,6 +173,35 @@ class YoutTubeVideoSection {
         this.pretext = pretext 
         this.posttext = posttext
         this.clipNo = clipNo
+    }
+}
+
+class PdfSection {
+
+    constructor(file, title, fileNo){
+        this.mode = compModes['pdf']
+        this.file = file
+        this.title = title 
+        this.fileNo = fileNo
+    }
+}
+
+class CarouselSection {
+    constructor(title, photos, carouselNo){
+        this.mode = compModes['carousel']
+        this.title = title 
+        this.photos = photos
+        this.carouselNo = carouselNo
+    }
+}
+
+class DefinitionSection{
+
+    constructor(defName, content, defNo){
+        this.mode = compModes['definition']
+        this.name = defName 
+        this.content = content 
+        this.defNo = defNo
     }
 }
 

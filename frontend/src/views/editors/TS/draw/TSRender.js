@@ -21,6 +21,7 @@ import {
 var RENDER_PRIORITY = 1500;
 const LABEL_COLOUR = "#01031b"
 const INNER_ICON_FILL_COLOUR = "#222222"
+const MARKED_COLOR = "#ebdf3f"
 const TEXT_STYLE = {
       fontFamily: 'Arial, sans-serif',
       fontSize: 8,
@@ -139,6 +140,11 @@ export default class TSRenderer extends  BaseRenderer {
                 fill: svg.fill
             }
         );
+        if (element.selected) {
+            svgAttr(svg,
+                {fill: MARKED_COLOR}
+            )
+        }
         return svg
     }
     
@@ -244,10 +250,14 @@ export default class TSRenderer extends  BaseRenderer {
                 }, 
                 this.CONNECTION_STYLE, attrs || {})
             );
+            var waypoints = connection.waypoints.slice(0,2).map(p => {
+                return {x:p.x+5, y:p.y-5}
+            })
+            waypoints.sort(
+                (a,b) => a.x - b.x
+            )
             var pather = createLine(
-                connection.waypoints.map(p => {
-                    return {x:p.x+5, y:p.y-5}
-                }), {
+                waypoints, {
                     id: "d"+connection.id
                 })
             
@@ -259,6 +269,7 @@ export default class TSRenderer extends  BaseRenderer {
             var textPath = svgCreate('textPath', assign({
                 href: "#d"+connection.id,
                 startOffset: "50%",
+                side: "right",
                 fill: '#303c4a',
             }, TEXT_STYLE))
             textPath.textContent = connection.arcLabel

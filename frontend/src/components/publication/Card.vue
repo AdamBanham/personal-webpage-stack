@@ -17,36 +17,52 @@
           <i>{{ authors.join(", ") }}</i> 
         </p>
       </div>
-      <div class="pub-card-abstract">
+      <div
+        class="pub-card-abstract"
+        :class="{
+          'hidden' : hidden
+        }"
+        @click="toggleHidden"
+      >
         <p> {{ abstract }} </p>
       </div>
       <div class="pub-card-fill" />
       <div
-        
         class="pub-card-download"
       >
-        <div v-if="doi != false">
-          <a
-            :href="doi"
-            target="_blank"
-          > doi </a>
-        </div>
-        <div class="holder">
-          <a 
-            v-if="file != false" 
-            :href="fileURL"
-            target="_blank"
-          > download</a>
-          <p v-else>
-            N/A
-          </p>
-        </div>
-        <div v-if="bibtex != false">
-          <a
-            :href="bibtexURL"
-            target="_blank"
-          > bibtex </a>
-        </div>
+        <v-btn
+          v-if="doi != false"
+          prepend-icon="mdi-web"
+          size="x-small"
+          elevation="2"
+          :href="doi"
+          target="_black"
+          variant="tonal"
+        >
+          doi
+        </v-btn>
+        <v-btn
+          v-if="file != false"
+          prepend-icon="mdi-file-download-outline"
+          size="x-small"
+          elevation="2"
+          :href="fileURL"
+          target="_black"
+          variant="tonal"
+        >
+          download
+        </v-btn>
+        <v-btn
+          v-if="bibtex != false"
+          prepend-icon="mdi-file-document-outline"
+          size="x-small"
+          elevation="2"
+          :href="bibtexURL"
+          target="_black"
+          variant="tonal"
+        >
+          bibtex
+        </v-btn>
       </div>
     </div>
   </div>
@@ -96,6 +112,11 @@ export default {
           default: false
         }
     },
+  data: function(){
+    return {
+      hidden: true
+    }
+  },
   computed: {
     fileURL: function(){
       if (this.file == false) return "";
@@ -109,6 +130,9 @@ export default {
   methods: {
     getPublic : function(file) {
       return `/${file}`;
+    },
+    toggleHidden : function(){
+      this.hidden = !this.hidden
     }
   }
 }
@@ -123,22 +147,14 @@ export default {
     margin-right: 3%
     min-width: 94%
     max-width: 94%
-    min-height: 250px
+    min-height: 160px
     background-color: $green-10
     margin-bottom: 10px
     border-radius: 8px
     display: flex
     flex-grow: 1
     flex-direction: row
-
-    @media (min-width: $desktop-width)
-      min-height: 250px
-
-    @media (max-width: calc($desktop-width - 1px)) and (min-width: $mobile-width)
-      min-height: 250px
-
-    @media (max-width: calc($mobile-width - 1px))
-      min-height: 275px
+    transition: all 1s ease
 
     .pub-card-left
       padding-top: 5px 
@@ -151,6 +167,7 @@ export default {
       border-radius: 8px
       justify-content: center
       justify-items: center
+
       .pub-card-year
         margin: auto
         p
@@ -164,6 +181,15 @@ export default {
       display: flex 
       flex-direction: column
       flex-grow: 1
+
+      .hidden
+        flex: 0 1 25px !important
+        &:hover
+          &::after
+              content: "+" !important
+              font-size: 30px !important
+              top: -15% !important
+
       .pub-card-title
           margin-top: 10px
           width: 100%
@@ -207,54 +233,59 @@ export default {
               width: 100% 
               font-size: 10px
               color: $green-2
+
       .pub-card-abstract
         margin-top: 10px
         width: 90%
         margin-left: 5%
         margin-right: 5%
-        flex-grow: 1
+        min-height: 10px
+        flex: 1 0 250px
+        background-color: none
+        transition: all 1s ease
+        flex-grow: 20
+        grid-template-rows: 1fr
+        position: relative
+        overflow: hidden
+
         p 
           color: $green-3
           font-size: 10px
+          
+        &:hover
+          background-color: #bfbfbf5e
+          cursor: pointer
+
+          &::after
+            position: absolute
+            top: 20%
+            left: 46%
+            content: "-"
+            color: $black-blue
+            font-size: 100px
+            opacity: 0.5
+
       .pub-card-fill
         width: 100%
         min-height: 5px
       .pub-card-download
         width: 90%
+        max-width: 90%
         margin-left: 5%
         margin-right: 5%
-        min-height: 35px
+        min-height: 25px
         max-height: 50px
         margin-bottom: 5px
+        padding-top: 5px
         display: flex
         justify-content: center
         justify-items: center
         font-size: 12px
 
-        div 
-          width: fit-content
-          box-shadow: 0 2px 0 0px $background-light
-          justify-content: center
-          justify-items: center
-          height: auto
-          margin: 0 0 0 0
-          background-color: $light-grey
-          border-radius: 5px
-          padding: 10px
-          &:hover
-            background-color: $background-light
-        p 
-          width: 100%
-          margin: 0 0 0 0
-          padding: 0px
-          text-align: center 
-          color: $red-5
+        .v-btn
+          flex-grow: 1
+          margin-left: 15px
 
-        .holder 
-          margin-left: auto
-          margin-right: auto
-          justify-content: center
-          justify-items: center
         a 
           text-align: center
           justify-content: center

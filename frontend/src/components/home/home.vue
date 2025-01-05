@@ -89,28 +89,26 @@
           </li>
           <li>
             Check out the BPM group at QUT : <a
-              href="https://qut.to/eb3gw"
+              href="https://research.qut.edu.au/bpm/"
               target="_blank"
-              title="BPM @ QUT Homepage"
-            >https://qut.to/eb3gw</a>
+              title="Process Science @ QUT Homepage"
+            >https://research.qut.edu.au/bpm/</a>
           </li>
           <li>
             Visited RWTH Aachen from November to March, working with Prof.
             Sander J. J. Leemans.
-            <a
-              href="/blog/rwthVist2023"
-              target="_blank"
-              title="BPM @ QUT Homepage"
-            >More info.</a>
+            <router-link
+              to="/blog/rwthVist2023"
+              title="RWTH visit"
+            >More info.</router-link>
           </li>
           <li>
             Finished internally presenting Thesis work @ QUT - minor 
             changes needed.
-            <a
-              href="/blog/FinalSeminar2024A"
-              target="_blank"
-              title="BPM @ QUT Homepage"
-            >Check out the presentation.</a>
+            <router-link
+              title="blog about final seminar" 
+              to="/blog/FinalSeminar2024A"
+            >Check out the presentation.</router-link>
           </li>
         </ul>
       </div>
@@ -164,6 +162,11 @@ mounted() {
     console.log("Error occured in mouting home page : "+err.message)
   }
   
+},
+methods: {
+  moveTo: function(path){
+        this.$router.push({path:path})
+    }
 }
 }
 </script>

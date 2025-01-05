@@ -138,6 +138,75 @@
             v-html="comp.posttext"
           />
         </div>
+        <div 
+          v-else-if="comp.mode == 7"
+          class="pdf"
+        >
+          <section :id="'file-'+ comp.fileNo">
+            <p class="file-caption">
+              <a :href="'#file-'+comp.fileNo">
+                <u>File {{ comp.fileNo }}: </u></a> {{ ' '+comp.title }}
+            </p>
+            <object
+              class="pdf-embed"
+              :data="'/docs/blog/'+comp.file"
+              type="application/pdf"
+            >
+              <embed 
+                :src="'/docs/blog/'+comp.file+'#zoom=FitW'"
+                type="application/pdf"
+              >
+              <!-- alt : <a :href="'/docs/blog/'+comp.file">{{ comp.title }}.pdf</a> -->
+            </object>
+          </section>
+        </div>
+        <div 
+          v-else-if="comp.mode == 8"
+          class="carousel"
+        >
+          <section :id="'carousel-'+comp.carouselNo">
+            <p class="carousel-caption">
+              <a :href="'#carousel-'+comp.carouselNo">
+                <u>Carousel {{ comp.carouselNo }}: </u></a> {{ ' '+comp.title }}
+            </p>
+            <v-carousel
+              :progress="true"
+              :hide-delimiters="true"
+            >
+              <v-carousel-item 
+                v-for="(pic,t) of comp.photos"
+                :key="t"
+                :src="pic.src"
+              >
+                <v-responsive dark>
+                  <v-container fill-height>
+                    <v-layout align-center>
+                      <div class="flex">
+                        <h3 class="display-3">
+                          {{ pic.header }}
+                        </h3>
+                        <span class="subheading"> 
+                          {{ pic.subtitle }}
+                        </span>
+                      </div>
+                    </v-layout>
+                  </v-container>
+                </v-responsive>
+              </v-carousel-item>
+            </v-carousel>
+          </section>
+        </div>
+        <div
+          v-else-if="comp.mode == 9"
+          class="definition text"
+        >
+          <h4>
+            Definition {{ comp.defNo }}: {{ comp.name }}
+          </h4>
+          <p
+            v-html="comp.content" 
+          />
+        </div>
         <div v-else>
           <p> {{ comp }}</p>
         </div>
@@ -191,7 +260,7 @@ export default {
           return this.dummy
         }
         return [
-          {title: "Blogs", disabled: false, href : "/blog", link: true}, 
+          {title: "Blogs", disabled: false, to : "/blog", link: true}, 
           {title: this.articleInfo.title, disabled: false, link: false}
         ]
       }
@@ -450,6 +519,39 @@ export default {
         height: 360px
         border-radius: 15px
         border: none
+    
+    .pdf 
+
+      .file-caption
+        text-align: center
+        padding-top: 5px
+        padding-bottom: 5px
+
+      .pdf-embed
+        width: 96%
+        height: 800px
+        margin-left: 2%
+        margin-right: 2%
+        border-radius: 15px
+
+    .carousel
+
+      .carousel-caption
+        padding-top: 10px
+        padding-bottom: 10px
+        text-align: center
+
+    .definition
+      background-color: $gray-2 !important
+
+      h4 
+        text-align: left
+        color: $gray-7
+
+      p
+        color: $gray-5 !important
+        text-align: left !important
+
 
     ol 
       padding: 25px

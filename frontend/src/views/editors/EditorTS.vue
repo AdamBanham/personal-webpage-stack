@@ -54,8 +54,8 @@
         },
         methods: {
             addDefaultSystem: function(){
-                this.editor.invoke([ 'eventBus', 'elementFactory', 'canvas', 
-                    function(events, factory, canvas) {
+                this.editor.invoke([ 'eventBus', 'elementFactory', 'canvas', 'modeling', 
+                    function(events, factory, canvas, modeling) {
 
                     var s1 = { id: factory.getNextStateId(),
                       stateLabel: "{}", x: 300, y: 100,};
@@ -80,11 +80,20 @@
                     );
                     c2.arcLabel = "baz"
 
+                    modeling.createShape(
+                      s1, {x: s1.x, y:s1.y}, canvas.getRootElement()
+                    )
+                    modeling.createShape(
+                      s2, {x: s2.x, y:s2.y}, canvas.getRootElement()
+                    )
+                    modeling.createShape(
+                      s3, {x: s3.x, y:s3.y}, canvas.getRootElement()
+                    )
                     canvas.addConnection(c1)
+                    modeling.layoutConnection(c1,)
                     canvas.addConnection(c2)
-                    canvas.addShape(s1)
-                    canvas.addShape(s2)
-                    canvas.addShape(s3)
+                    modeling.layoutConnection(c2,)
+                    modeling.moveElements([s1,s2,s3], {x:0,y:0})
                     
             }]);
             }
@@ -95,7 +104,6 @@
 <style lang="sass" scoped>
     @import "@/styles/coloursAnt.sass"
     @import "@/styles/content.sass"
-    
     
     .editor-canvas-ts-container
         margin-top: 25px
@@ -133,6 +141,9 @@
 .editor-canvas-ts-container
     .editor-canvas
         border-radius: 15px
+        .djs-palette
+          border-radius: 15px
+          box-shadow: 5px 5px 15px black
         .djs-container
           border-radius: 15px
           background: $gray-5

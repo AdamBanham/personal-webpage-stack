@@ -9,8 +9,6 @@ isStartingState,
 isEndingState
 } from '../elements/TSElementFactory'
 
-
-
 // helpers //////////
 function isEmptyText(label) {
     return !label || !label.trim();
@@ -27,7 +25,7 @@ function getLabel(element){
   return element.arcLabel || null
 }
   
-  var HIGH_PRIORITY = 2000;
+var HIGH_PRIORITY = 2000;
   
 export default function LabelEditingProvider(
       eventBus, factory, canvas, directEditing,
@@ -89,14 +87,6 @@ export default function LabelEditingProvider(
           canExecute = event.context.canExecute,
           isTouch = event.isTouch;
   
-      // TODO(nikku): we need to find a way to support the
-      // direct editing on mobile devices; right now this will
-      // break for desworkflowediting on mobile devices
-      // as it breaks the user interaction workflow
-  
-      // TODO(nikku): we should temporarily focus the edited element
-      // here and release the focused viewport after the direct edit
-      // operation is finished
       if (isTouch) {
         return;
       }
@@ -178,48 +168,6 @@ export default function LabelEditingProvider(
       border: null
     });
   
-    // tasks
-    // if (
-    //   isAny(element, [
-    //     'bpmn:Task',
-    //     'bpmn:Participant',
-    //     'bpmn:Lane',
-    //     'bpmn:CallActivity'
-    //   ]) ||
-    //   isCollapsedSubProcess(element)
-    // ) {
-    //   assign(options, {
-    //     centerVertically: true
-    //   });
-    // }
-  
-    // // external labels
-    // if (isLabelExternal(element)) {
-    //   assign(options, {
-    //     autoResize: true
-    //   });
-  
-    //   // keep background and border for external labels
-    //   assign(style, {
-    //     backgroundColor: '#ffffff',
-    //     border: '1px solid #ccc'
-    //   });
-    // }
-  
-    // // text annotations
-    // if (is(element, 'bpmn:TextAnnotation')) {
-    //   assign(options, {
-    //     resizable: true,
-    //     autoResize: true
-    //   });
-  
-    //   // keep background and border for text annotations
-    //   assign(style, {
-    //     backgroundColor: '#ffffff',
-    //     border: '1px solid #ccc'
-    //   });
-    // }
-  
     assign(context, {
       options: options,
       style: style
@@ -263,173 +211,7 @@ export default function LabelEditingProvider(
         defaultLineHeight = defaultStyle.lineHeight;
   
     var style = defaultStyle;
-  
-    // adjust for expanded pools AND lanes
-    // if (is(element, 'bpmn:Lane') || isExpandedPool(element)) {
-    //   var isHorizontalLane = isHorizontal(element);
-  
-    //   var laneBounds = isHorizontalLane ? {
-    //     width: bbox.height,
-    //     height: 30 * zoom,
-    //     x: bbox.x - bbox.height / 2 + (15 * zoom),
-    //     y: mid.y - (30 * zoom) / 2
-    //   } : {
-    //     width: bbox.width,
-    //     height: 30 * zoom
-    //   };
-  
-    //   assign(bounds, laneBounds);
-  
-    //   assign(style, {
-    //     fontSize: defaultFontSize + 'px',
-    //     lineHeight: defaultLineHeight,
-    //     paddingTop: (7 * zoom) + 'px',
-    //     paddingBottom: (7 * zoom) + 'px',
-    //     paddingLeft: (5 * zoom) + 'px',
-    //     paddingRight: (5 * zoom) + 'px',
-    //     transform: isHorizontalLane ? 'rotate(-90deg)' : null
-    //   });
-    // }
-  
-  
-    // // internal labels for collapsed participants
-    // if (isCollapsedPool(element)) {
-    //   var isHorizontalPool = isHorizontal(element);
-  
-    //   var poolBounds = isHorizontalPool ? {
-    //     width: bbox.width,
-    //     height: bbox.height
-    //   } : {
-    //     width: bbox.height,
-    //     height: bbox.width,
-    //     x: mid.x - bbox.height / 2,
-    //     y: mid.y - bbox.width / 2
-    //   };
-  
-    //   assign(bounds, poolBounds);
-  
-    //   assign(style, {
-    //     fontSize: defaultFontSize + 'px',
-    //     lineHeight: defaultLineHeight,
-    //     paddingTop: (7 * zoom) + 'px',
-    //     paddingBottom: (7 * zoom) + 'px',
-    //     paddingLeft: (5 * zoom) + 'px',
-    //     paddingRight: (5 * zoom) + 'px',
-    //     transform: isHorizontalPool ? null : 'rotate(-90deg)'
-    //   });
-    // }
-  
-  
-    // // internal labels for tasks and collapsed call activities
-    // // and sub processes
-    // if (isAny(element, [ 'bpmn:Task', 'bpmn:CallActivity' ]) ||
-    //     isCollapsedSubProcess(element)) {
-  
-    //   assign(bounds, {
-    //     width: bbox.width,
-    //     height: bbox.height
-    //   });
-  
-    //   assign(style, {
-    //     fontSize: defaultFontSize + 'px',
-    //     lineHeight: defaultLineHeight,
-    //     paddingTop: (7 * zoom) + 'px',
-    //     paddingBottom: (7 * zoom) + 'px',
-    //     paddingLeft: (5 * zoom) + 'px',
-    //     paddingRight: (5 * zoom) + 'px'
-    //   });
-    // }
-  
-  
-    // // internal labels for expanded sub processes
-    // if (isExpandedSubProcess(element)) {
-    //   assign(bounds, {
-    //     width: bbox.width,
-    //     x: bbox.x
-    //   });
-  
-    //   assign(style, {
-    //     fontSize: defaultFontSize + 'px',
-    //     lineHeight: defaultLineHeight,
-    //     paddingTop: (7 * zoom) + 'px',
-    //     paddingBottom: (7 * zoom) + 'px',
-    //     paddingLeft: (5 * zoom) + 'px',
-    //     paddingRight: (5 * zoom) + 'px'
-    //   });
-    // }
-  
-    // var width = 90 * zoom,
-    //     paddingTop = 7 * zoom,
-    //     paddingBottom = 4 * zoom;
-  
-    // // external labels for events, data elements, gateways, groups and connections
-    // if (target.labelTarget) {
-    //   assign(bounds, {
-    //     width: width,
-    //     height: bbox.height + paddingTop + paddingBottom,
-    //     x: mid.x - width / 2,
-    //     y: bbox.y - paddingTop
-    //   });
-  
-    //   assign(style, {
-    //     fontSize: externalFontSize + 'px',
-    //     lineHeight: externalLineHeight,
-    //     paddingTop: paddingTop + 'px',
-    //     paddingBottom: paddingBottom + 'px'
-    //   });
-    // }
-  
-    // // external label not yet created
-    // if (isLabelExternal(target)
-    //     && !hasExternalLabel(target)
-    //     && !isLabel(target)) {
-  
-    //   var externalLabelMid = getExternalLabelMid(element);
-  
-    //   var absoluteBBox = canvas.getAbsoluteBBox({
-    //     x: externalLabelMid.x,
-    //     y: externalLabelMid.y,
-    //     width: 0,
-    //     height: 0
-    //   });
-  
-    //   var height = externalFontSize + paddingTop + paddingBottom;
-  
-    //   assign(bounds, {
-    //     width: width,
-    //     height: height,
-    //     x: absoluteBBox.x - width / 2,
-    //     y: absoluteBBox.y - height / 2
-    //   });
-  
-    //   assign(style, {
-    //     fontSize: externalFontSize + 'px',
-    //     lineHeight: externalLineHeight,
-    //     paddingTop: paddingTop + 'px',
-    //     paddingBottom: paddingBottom + 'px'
-    //   });
-    // }
-  
-    // // text annotations
-    // if (is(element, 'bpmn:TextAnnotation')) {
-    //   assign(bounds, {
-    //     width: bbox.width,
-    //     height: bbox.height,
-    //     minWidth: 30 * zoom,
-    //     minHeight: 10 * zoom
-    //   });
-  
-    //   assign(style, {
-    //     textAlign: 'left',
-    //     paddingTop: (5 * zoom) + 'px',
-    //     paddingBottom: (7 * zoom) + 'px',
-    //     paddingLeft: (7 * zoom) + 'px',
-    //     paddingRight: (5 * zoom) + 'px',
-    //     fontSize: defaultFontSize + 'px',
-    //     lineHeight: defaultLineHeight
-    //   });
-    // }
-  
+
     return { bounds: bounds, style: style };
   };
   
@@ -441,32 +223,16 @@ export default function LabelEditingProvider(
     var newBounds,
         bbox;
   
-    // if (is(element, 'bpmn:TextAnnotation')) {
-  
-    //   bbox = this._canvas.getAbsoluteBBox(element);
-  
-    //   newBounds = {
-    //     x: element.x,
-    //     y: element.y,
-    //     width: element.width / bbox.width * bounds.width,
-    //     height: element.height / bbox.height * bounds.height
-    //   };
-    // }
-  
     if (isEmptyText(newLabel)) {
       newLabel = null;
     }
     if (isState(element)){
-      console.log("adjusting state")
       element.stateLabel = newLabel
       this._modeling.moveShape(element, {x:0,y:0})
     } else {
-      console.log("adjusting arc", element)
       element.arcLabel = newLabel
       this._modeling.moveShape(element, {x:0,y:0})
       this._modeling.moveShape(element.source, {x:0,y:0})
       this._modeling.moveShape(element.target, {x:0,y:0})
     }
-    
-    
   };

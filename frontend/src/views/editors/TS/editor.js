@@ -10,7 +10,7 @@ import MoveCanvasModule from 'diagram-js/lib/navigation/movecanvas';
 import MoveModule from 'diagram-js/lib/features/move';
 import OutlineModule from 'diagram-js/lib/features/outline';
 import PaletteModule from 'diagram-js/lib/features/palette';
-import ResizeModule from 'diagram-js/lib/features/resize';
+import BendingModule from 'diagram-js/lib/features/bendpoints';
 import RulesModule from 'diagram-js/lib/features/rules';
 import SelectionModule from 'diagram-js/lib/features/selection';
 import ZoomScrollModule from 'diagram-js/lib/navigation/zoomscroll';
@@ -60,7 +60,7 @@ export default function TSEditor(options) {
         LassoToolModule,
         ModelingModule,
         MoveCanvasModule,
-        // ResizeModule,
+        BendingModule,
         MoveModule,
         OutlineModule,
         PaletteModule,
