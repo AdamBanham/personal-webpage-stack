@@ -192,7 +192,7 @@ in process science and have the potential to make it in academia.
 )
 
 PhDFinalSeminar.addYoutubeSection(
-"https://www.youtube.com/embed/0laVKLJye9g",
+"https://youtube.com/embed/u7f8Fx6BubY",
 "Adam Banham, 2024, Final Seminar, Process Mining with Exogenous Data",
 `
 This clip is a re-recording of the final seminar that I presented in 
