@@ -6,6 +6,11 @@ import {
     isState
 } from "../elements/TSElementFactory"
 
+import  {
+    isLabel, isConnection
+} from "diagram-js/lib/util/ModelUtil"
+  
+
 export default function ContextPadProvider(
     create, elementFactory, connect, contextPad, modeling, eventBus, registry
 ) {
@@ -69,6 +74,8 @@ export default function ContextPadProvider(
             modeling.layoutConnection (
                 nc,
             )
+            bus.fire('elements.changed', {
+                elements: [ns,nc]})
         }
 
         function jumpToEnding(event, element){
@@ -87,10 +94,11 @@ export default function ContextPadProvider(
             modeling.layoutConnection (
                 nc,
             )
+            bus.fire('elements.changed', {
+                elements: [ns,nc]})
         }
 
         function flipConnection(event, element){
-            console.log(element)
             var src = element.source
             var tgt = element.target
             var waypoints = [
@@ -102,9 +110,11 @@ export default function ContextPadProvider(
             element.waypoints = waypoints
             modeling.removeConnection(element)
             var connect = modeling.createConnection(tgt, src, element, src.parent)
-            modeling.layoutConnection(
-                connect
+            modeling.layoutConnection (
+                connect,
             )
+            bus.fire('elements.changed', {
+                elements: [connect, element, tgt, src]})
         }
 
         function toggleSelected(event, element){
@@ -126,6 +136,18 @@ export default function ContextPadProvider(
             }
         }
 
+        function createSelfLoop(event, element){
+            console.log(element)
+            var nc = factory.createConnectionBetweenStates(
+                factory.getNextConnectionId(), 
+                element, 
+                element
+            )
+            modeling.createConnection(element, element, nc, element.parent)
+            bus.fire('elements.changed', {
+                elements: [element,nc]}
+            )
+        }
         var contextPadOptions = {}
 
         // alaways present
@@ -138,6 +160,10 @@ export default function ContextPadProvider(
             html: '<div class="entry mdi-delete mdi editor-hover"/>',
             title: 'delete',
             group: 'edit'
+        }
+
+        if (isLabel(element)){
+            return contextPadOptions
         }
 
         if (element.id.startsWith("a") || element.id.startsWith("connection")){
@@ -183,6 +209,15 @@ export default function ContextPadProvider(
             className: 'context-pad-contect',
             html: '<div class="entry mdi-arrow-right-thick mdi editor-hover"/>',
             title: 'connect',
+            group: 'join'
+        }
+        contextPadOptions['self-connect'] = {
+            action: {
+                click: createSelfLoop
+            },
+            className: 'context-pad-contect',
+            html: '<div class="entry mdi-restore mdi editor-hover"/>',
+            title: 'loop to self',
             group: 'join'
         }
             

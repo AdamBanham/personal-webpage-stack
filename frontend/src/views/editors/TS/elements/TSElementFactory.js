@@ -116,7 +116,7 @@ export class TSElementFactory extends ElementFactory {
         attrs.cy = stateRadius
         attrs.width = stateRadius * 2
         attrs.height = stateRadius * 2
-        attrs.label = ''
+        // attrs.label = ''
         attrs.stateType = type
         attrs.group = "states"
         attrs.selected = false
@@ -124,14 +124,33 @@ export class TSElementFactory extends ElementFactory {
     }
 
     createConnectionBetweenStates(id,src,tgt){
+        var selfLoop = src.id == tgt.id;
+        var waypoints;
+        if (selfLoop){
+            waypoints = [
+                { x: src.x + src.r, y: src.y + src.r },
+                { x: src.x + src.r + (stateRadius * 0.5), 
+                  y: src.y + src.r - (stateRadius * 1.5) }, // go up
+                { x: src.x + src.r + (stateRadius * 1.5), 
+                  y: src.y + src.r - (stateRadius * 1.5) }, // go right
+                { x: src.x + src.r + (stateRadius * 1.5), 
+                  y: src.y + src.r + (stateRadius * 1.5) }, // go down
+                { x: src.x + src.r + (stateRadius * 0.5), 
+                  y: src.y + src.r + (stateRadius * 1.5) },  // go left
+                { x: tgt.x + tgt.r, y: tgt.y + src.r}
+            ]
+        } else {
+            waypoints = [
+                { x: src.x + src.r, y: src.y + src.r },
+                { x: tgt.x + tgt.r, y: tgt.y + src.r}
+            ]
+        }
         var attrs = {
             id: id,
             source: src,
             target: tgt,
-            waypoints: [
-                { x: src.x + src.r, y: src.y + src.r },
-                { x: tgt.x + tgt.r, y: tgt.y + src.r}
-            ],
+            selfLoop: selfLoop,
+            waypoints: waypoints,
             group: "connections"
         }
         var ret = this.createConnection(attrs)

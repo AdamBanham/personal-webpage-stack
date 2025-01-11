@@ -15,6 +15,8 @@ import RulesModule from 'diagram-js/lib/features/rules';
 import SelectionModule from 'diagram-js/lib/features/selection';
 import ZoomScrollModule from 'diagram-js/lib/navigation/zoomscroll';
 import SnappingModule from 'diagram-js/lib/features/snapping'
+import LabelSupport from 'diagram-js/lib/features/label-support'
+import ChangeSupport from 'diagram-js/lib/features/change-support'
 
 // custom providers
 import ProvidersModule from './providers';
@@ -67,7 +69,9 @@ export default function TSEditor(options) {
         RulesModule,
         SelectionModule,
         ZoomScrollModule,
-        SnappingModule
+        SnappingModule,
+        LabelSupport,
+        ChangeSupport
     ];
 
     // our own modules, contributing controls, customizations, and more
@@ -88,16 +92,7 @@ export default function TSEditor(options) {
         defaultRenderer: ['type', TSRenderer]
     });
 
-    // diagram.get('canvas').addMarker('arrow', ```<marker
-    //   id="arrow"
-    //   viewBox="0 0 10 10"
-    //   refX="5"
-    //   refY="5"
-    //   markerWidth="6"
-    //   markerHeight="6"
-    //   orient="auto-start-reverse">
-    //   <path d="M 0 0 L 10 5 L 0 10 z" />
-    // </marker>```)
+    
 
     return diagram
 }

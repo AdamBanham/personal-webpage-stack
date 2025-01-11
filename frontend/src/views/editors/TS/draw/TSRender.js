@@ -1,4 +1,5 @@
 import {
+    classes as svgClasses,
     append as svgAppend,
     attr as svgAttr,
     create as svgCreate,
@@ -11,10 +12,16 @@ import BaseRenderer from "diagram-js/lib/draw/BaseRenderer"
 import {
     createLine
   } from 'diagram-js/lib/util/RenderUtil';
+
 import { 
     isInternalState, 
     isEndingState, 
-    isStartingState } from '../elements/TSElementFactory';
+    isStartingState,
+    isState } from '../elements/TSElementFactory';
+
+import {
+    stateRadius
+} from "../elements/staticShapeDesc"
   
 
 
@@ -26,16 +33,17 @@ const TEXT_STYLE = {
       fontFamily: 'Arial, sans-serif',
       fontSize: 8,
       fontWeight: 'normal',
-      textLength: 30,
+      textLength: (stateRadius * 2) - 10,
       textAnchor: 'middle',
       dominantBaseline: 'middle'
 }
 
 export default class TSRenderer extends  BaseRenderer {
     
-    constructor(eventBus, styles, canvas) {
+    constructor(eventBus, styles, canvas, textRender) {
         super(eventBus, 1)
         var self = this;
+        this._textRender = textRender
 
         var renderPriority = RENDER_PRIORITY;
 
@@ -62,7 +70,7 @@ export default class TSRenderer extends  BaseRenderer {
 
         this.CONNECTION_STYLE = styles.style(
             { strokeWidth: 3, stroke: '#303c4a', strokeLinecap: 'round',
-                strokeLinejoin: 'round',});
+                strokeLinejoin: 'round', fill: 'none'});
         this.INTERNAL_SHAPE_STYLE = styles.style(
             { fill: '#f5f5f5', stroke: '#222222', strokeWidth: 2 }
         );
@@ -72,13 +80,15 @@ export default class TSRenderer extends  BaseRenderer {
         this.ENDING_SHAPE_STYLE = styles.style(
             { fill: '#f58867', stroke: '#222222', strokeWidth: 2 }
         );
-
+        
+        var xOffset = ((stateRadius+5) * 2) / 5.0
+        var yOffset = (((stateRadius-8) / 2)) / 5
         var defs = svgCreate("defs", {})
         var marker = svgCreate("marker", {
             id: 'arrow',
             viewbox: '0 0 10 10',
-            refX: 11,
-            refY: 2.5,
+            refX: xOffset,
+            refY: yOffset,
             markerWidth: 5,
             markerHeight: 5,
             strokeWidth: 0,
@@ -111,8 +121,19 @@ export default class TSRenderer extends  BaseRenderer {
             } else if (isEndingState(element)){
                 svgElements = this.drawEndingState(element)
             } else {
-                console.log("could not identify state while drawing.")
-                svgElements = this.drawInternalState(element)
+                if (!isState(element.labelTarget)){
+                    var labelAttrs = assign({
+                        x: 0,
+                        fitBox: true
+                    }, element)
+                    labelAttrs.x = labelAttrs.x - labelAttrs.width
+                    var text = this._textRender.createText(
+                        element.text || '', labelAttrs)
+                    svgClasses(text).add('djs-label');
+                    svgAppend(visuals, text);
+                    return [text]
+                }
+                return []
             }
 
             // check for label
@@ -226,8 +247,8 @@ export default class TSRenderer extends  BaseRenderer {
     drawStateLabel(element){
         var text = svgCreate('text',
             assign({
-                x: 20,
-                y: 20,
+                x: stateRadius,
+                y: stateRadius,
                 fill: LABEL_COLOUR,
             }, TEXT_STYLE)
         )
@@ -243,41 +264,148 @@ export default class TSRenderer extends  BaseRenderer {
         return text
     }
 
-    drawConnection(visuals, connection, attrs) {
-            var line = createLine(
-                connection.waypoints, assign({
-                    id: connection.id
-                }, 
-                this.CONNECTION_STYLE, attrs || {})
-            );
-            var waypoints = connection.waypoints.slice(0,2).map(p => {
-                return {x:p.x+5, y:p.y-5}
+    _drawSimpleConnection(visuals, connection, attrs){
+        var line = createLine(
+            connection.waypoints, assign({
+                id: connection.id
+            }, 
+            this.CONNECTION_STYLE, attrs || {})
+        );
+        var waypoints = connection.waypoints.slice(0,2).map(p => {
+            return {x:p.x+5, y:p.y-5}
+        })
+        waypoints.sort(
+            (a,b) => a.x - b.x
+        )
+        var pather = createLine(
+            waypoints, {
+                id: "d"+connection.id
             })
-            waypoints.sort(
-                (a,b) => a.x - b.x
-            )
-            var pather = createLine(
-                waypoints, {
-                    id: "d"+connection.id
-                })
-            
-            svgAttr(
-                line,
-                {'marker-end' : "url(#arrow)"}
-            )
-            var text = svgCreate('text', {})
-            var textPath = svgCreate('textPath', assign({
-                href: "#d"+connection.id,
-                startOffset: "50%",
-                side: "right",
-                fill: '#303c4a',
-            }, TEXT_STYLE))
-            textPath.textContent = connection.arcLabel
-            svgAppend(visuals, pather);
-            svgAppend(visuals, line);
-            svgAppend(text, textPath)
-            svgAppend(visuals, text)
-            return line;
+        
+        svgAttr(
+            line,
+            {'marker-end' : "url(#arrow)",}
+        )
+        var text = svgCreate('text', {})
+        var textPath = svgCreate('textPath', assign({
+            href: "#d"+connection.id,
+            startOffset: "50%",
+            side: "right",
+            fill: '#303c4a',
+        }, TEXT_STYLE))
+        textPath.textContent = connection.arcLabel
+        svgAppend(visuals, pather);
+        svgAppend(visuals, line);
+        // svgAppend(text, textPath)
+        svgAppend(visuals, text)
+        return line;
+    }
+
+    _drawSelfLoopConnection(visuals, connection, attrs){
+        // work out self loop from the src 
+        var d = "M "
+        var src = connection.source
+        console.log(src)
+        // add src
+        d += "" + (src.x + src.cx)
+        d += " " + (src.y + src.cy)
+        // work out equal right sides
+        //((src.r) ^ 2) .  sqrt(2) = s
+        var side = (src.r / 2.0) * Math.sqrt(2)
+        console.log(side)
+        d += " L "
+        d += "" + (src.x + src.cx + side)
+        d += " " + (src.y + src.cy - side)
+        d += " Q "
+        d += "" + (src.x + src.cx + (src.r * 4))
+        d += " " + (src.y + src.cy)
+        d += " " + (src.x + src.cx + side)
+        d += " " + (src.y + src.cy + side)
+        d += " Z"
+        console.log(d)
+        // construct line
+        var line = svgCreate('path',
+            {
+                id: connection.id,
+                d: d
+            }
+        )
+        svgAttr(line, this.CONNECTION_STYLE)
+        svgAttr(line, attrs)
+        // var waypoints = [
+        //     connection.waypoints[0],
+        //     {},
+        //     connection.waypoints[1]
+        // ]
+        // var line = createLine(
+        //     waypoints, assign({
+        //         id: connection.id
+        //     }, 
+        //     this.CONNECTION_STYLE, attrs || {})
+        // );
+        // var waypoints = connection.waypoints.slice(0,2).map(p => {
+        //     return {x:p.x+5, y:p.y-5}
+        // })
+        // waypoints.sort(
+        //     (a,b) => a.x - b.x
+        // )
+        // var pather = createLine(
+        //     waypoints, {
+        //         id: "d"+connection.id
+        //     })
+        var xOffset = ((side - 5) * 2.5) / 5.0
+        var yOffset = (((side + side + 10) / 2) / 5) * -1.0
+        var viewbox = "" + (src.x + src.cx + side)
+        viewbox += " " + (src.y + src.cy + side)
+        viewbox += " " + (src.x + src.cx + side + 10)
+        viewbox += " " + (src.y + src.cy + side + 10)
+        var marker = svgCreate("marker", {
+            id: 'newArrow',
+            viewbox: viewbox,
+            refX: xOffset,
+            refY: yOffset,
+            markerWidth: 5,
+            markerHeight: 5,
+            strokeWidth: 0,
+            orient: 'auto-start-reverse',
+            stroke: '#303c4a',
+            fill: '#303c4a'
+        })
+        var markerPath = svgCreate("path", {
+            d: "M 0 0 L 5 2.5 L 0 5 z"
+        })
+        svgAppend(marker, markerPath)
+        svgAttr(
+            line,
+            {'marker-end' : "url(#newArrow)", 'stroke' : "#ba3d23"}
+        )
+        var text = svgCreate('text', {})
+        var textPath = svgCreate('textPath', assign({
+            href: "#d"+connection.id,
+            startOffset: "50%",
+            side: "right",
+            fill: '#ba3d23',
+        }, TEXT_STYLE))
+        textPath.textContent = connection.arcLabel
+        svgAppend(visuals, marker);
+        svgAppend(visuals, line);
+        svgAppend(text, textPath)
+        svgAppend(visuals, text)
+        return line;
+    }
+
+    drawConnection(visuals, connection, attrs) {
+        return this._drawSimpleConnection(
+            visuals, connection, attrs
+        )
+            if (connection.selfLoop){
+                return this._drawSelfLoopConnection(
+                    visuals, connection, attrs)
+            } else {
+                return this._drawSimpleConnection(
+                    visuals, connection, attrs
+                )
+            }
     };
 
     
@@ -286,5 +414,6 @@ export default class TSRenderer extends  BaseRenderer {
 TSRenderer.$inject = [
     'eventBus',
     'styles',
-    'canvas'
+    'canvas',
+    'textRenderer'
 ]

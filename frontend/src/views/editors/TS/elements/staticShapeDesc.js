@@ -1,4 +1,4 @@
 
-const stateRadius = 20;
+const stateRadius = 30;
 
 export { stateRadius }; 

@@ -2,6 +2,13 @@ import {
     assign
 } from 'min-dash';
 
+import {
+  getConnectionMid
+} from "diagram-js/lib/layout/LayoutUtil"
+
+import  {
+  isLabel, isConnection
+} from "diagram-js/lib/util/ModelUtil"
 
 import {
 isInternalState,
@@ -22,6 +29,8 @@ function isState(element) {
 function getLabel(element){
   if (isState(element))
     return element.stateLabel || null
+  else if (isLabel(element))
+    return element.text || null
   return element.arcLabel || null
 }
   
@@ -35,6 +44,7 @@ export default function LabelEditingProvider(
     this._canvas = canvas;
     this._modeling = modeling;
     this._textRenderer = textRenderer;
+    this._bus = eventBus
   
     directEditing.registerProvider(this);
   
@@ -226,13 +236,45 @@ export default function LabelEditingProvider(
     if (isEmptyText(newLabel)) {
       newLabel = null;
     }
+    var position;
     if (isState(element)){
       element.stateLabel = newLabel
-      this._modeling.moveShape(element, {x:0,y:0})
+      this._bus.fire('elements.changed', {elements: [element]})
+      position = {
+        x: element.x, y:element.y
+      }
+    } else if (isLabel(element)){
+      element.text = newLabel
+      assign(element, this._textRenderer.getTextAnnotationBounds(
+        element, newLabel
+      ))
+      this._bus.fire('element.changed', {element: element})
+      return
     } else {
       element.arcLabel = newLabel
-      this._modeling.moveShape(element, {x:0,y:0})
-      this._modeling.moveShape(element.source, {x:0,y:0})
-      this._modeling.moveShape(element.target, {x:0,y:0})
+      this._bus.fire('elements.changed', {elements: [element]})
+      position = getConnectionMid(element)
     }
+    if (!element.label){
+      var label = this._factory.createLabel({
+        text: newLabel,
+        width: 50,
+        height: 12,
+        labelTarget: element,
+        x: 0
+      })
+      assign(label, this._textRenderer.getTextAnnotationBounds(
+        label, newLabel
+      ))
+      this._modeling.createLabel(
+        element,
+        position,
+        label,
+        element
+      )
+    } else {
+      element.label.text = newLabel
+      this._bus.fire('element.changed', {element: element.arcLabel})
+    }
+   
   };

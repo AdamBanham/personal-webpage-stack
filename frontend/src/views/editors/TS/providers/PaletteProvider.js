@@ -8,7 +8,7 @@ import SvgSaver from "../svgSaver.js";
  */
 export default function ExamplePaletteProvider(
     create, elementFactory, lassoTool, palette, connect, registry,
-    modeling, canvas) {
+    modeling, canvas, eventBus, textRenderer) {
     this._create = create;
     this._elementFactory = elementFactory;
     this._lassoTool = lassoTool;
@@ -17,6 +17,8 @@ export default function ExamplePaletteProvider(
     this._registry = registry;
     this._modeling = modeling
     this._canvas = canvas
+    this._bus = eventBus
+    this._textRenderer = textRenderer
   
     palette.registerProvider(this);
   }
@@ -29,7 +31,9 @@ export default function ExamplePaletteProvider(
     'connect',
     'elementRegistry',
     'modeling',
-    'canvas'
+    'canvas',
+    'eventBus',
+    'textRenderer'
   ];
   
   
@@ -40,7 +44,9 @@ export default function ExamplePaletteProvider(
         registry = this._registry,
         modeling = this._modeling,
         canvas = this._canvas,
-        connect = this._connect;
+        bus = this._bus,
+        connect = this._connect,
+        textRenderer = this._textRenderer;
   
     return {
       'lasso-tool': {
@@ -111,7 +117,7 @@ export default function ExamplePaletteProvider(
           click: function(event) {
             let input = document.createElement('input');
             var parser = new TsXmlImporter(modeling,
-              elementFactory, canvas, registry)
+              elementFactory, canvas, registry, bus, textRenderer)
             input.type = 'file';
             input.accept = '.tsxml'
             input.onchange = _ => {
@@ -194,6 +200,76 @@ export default function ExamplePaletteProvider(
             // Clean up resources (revoke the URL to free up memory)
             URL.revokeObjectURL(blob);
             a.remove()
+          }
+        }
+      },
+      'model-separator': {
+        group: 'model',
+        separator: true
+      },
+      'zoomview': {
+        group: 'view',
+        className: 'mdi-fit-to-page-outline mdi',
+        title: 'zoom to fit',
+        action: {
+          click: function(event) {
+            var scale;
+            // reset the scale back to one
+            const zoomedAndScrolledViewbox = canvas.viewbox();
+            canvas.viewbox({
+               x: 0,
+               y: 0,
+               width: zoomedAndScrolledViewbox.outer.width,
+               height: zoomedAndScrolledViewbox.outer.height
+            });
+            // work out the best scale
+            var outer = canvas.viewbox().outer 
+            var inner = canvas.viewbox().inner 
+            var hScale = 1; var vScale = 1;
+            hScale = (outer.width * 0.9) / inner.width
+            vScale = (outer.height * 0.9) / inner.height
+            scale = Math.min(hScale, vScale)
+            // find center
+            var center = {
+              x: inner.x,
+              y: inner.y,
+            }
+            // set zoom
+            canvas.zoom(scale, center)
+          }
+        }
+      },
+      'fitview': {
+        group: 'view',
+        className: 'mdi-overscan mdi',
+        title: 'fit to screen',
+        action: {
+          click: function(event) {
+            canvas.zoom('fit-viewpoint')
+          }
+        }
+      },
+      'view-separator': {
+        group: 'view',
+        separator: true
+      },
+      'clear-model': {
+        group: 'clear',
+        className: 'mdi-trash-can-outline mdi',
+        title: 'clear all elements',
+        action: {
+          click: function(event) {
+            // clear the system, except for root
+            var els = registry.getAll().filter(
+                (v) => {
+                    return !v.id.includes("implicitroot")
+                }
+            )
+            if (els.length > 0){
+                modeling.removeElements(
+                    els
+                )
+            }
           }
         }
       },

@@ -5,6 +5,10 @@ import {
     isStartingState
 } from "./elements/TSElementFactory"
 
+import  {
+    isLabel, isConnection
+  } from "diagram-js/lib/util/ModelUtil"
+
 const XML_HEAD = 
 `
 <?xml version="1.0" encoding="UTF-8"?>\n
@@ -16,12 +20,30 @@ const XML_TAIL =
 </transition-system>
 `
 
+const XML_ILLEGALS = {
+    '&' : '&amp;',
+    '<' : '&lt;',
+    '>' : '&gt;',
+    "'" : '&apos;',
+    '"' : '&quot;'
+}
+
 
 class TsXmlExporter {
 
     constructor(registry){
         this._registry = registry
         this._xml = ""
+    }
+
+    encode(text){
+        var ret = text
+        for(const illegal in XML_ILLEGALS){
+            ret = ret.replace(
+                illegal, XML_ILLEGALS[illegal]
+            )
+        }
+        return ret
     }
 
     export(){
@@ -52,29 +74,37 @@ return `<?xml version="1.0" encoding="UTF-8"?>
             return
         if(isState(element)){
             self._xml += self.serialiseState(element,gfx)
-        } else {
+        } else if (isConnection(element)) {
             self._xml += self.serialiseArc(element,gfx)
+        } else {
+
         }
     }
 
     serialiseState(state, gfx){
-        console.log(state, gfx)
+        // console.log(state, gfx)
 return `\t<state id="`+ state.id +`" type="` + state.stateType +`">
 \t\t<label>`
-+ (state.stateLabel != null ? state.stateLabel.trim() : "") +
++ (state.stateLabel != null ? this.encode(state.stateLabel.trim()) : "") +
 `</label>
 \t\t<position x="` + state.x + `" y="` + state.y + `" />
 \t</state>\n`
     }
 
     serialiseArc(arc,gfx){
-        console.log(arc, gfx)
-return `\t<arc id="` + arc.id + `">
+        // console.log(arc, gfx)
+var ret = `\t<arc id="` + arc.id + `">
 \t\t<label>`
-+ (arc.arcLabel != null ? arc.arcLabel.trim() : "") + 
++ (arc.arcLabel != null ? this.encode(arc.arcLabel.trim()) : "") + 
 `</label>
 \t\t<source id="` + arc.source.id +`" />
 \t\t<target id="` + arc.target.id +`" />
+\t\t<waypoints>\n`
+for(const way of arc.waypoints){
+    ret += `\t\t\t<position x="` + way.x + `" y="` + way.y + `" />\n`
+}
+
+return ret + `\t\t</waypoints>
 \t</arc>\n`
     }
 

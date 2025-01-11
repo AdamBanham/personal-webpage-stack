@@ -5,6 +5,7 @@ import ExamplePaletteProvider from "./PaletteProvider.js"
 import ContextPadProvider from "./ContextPadProvider.js"
 import LabelEditingProvider from "./StateLabelEditingProvider.js"
 import OrderingProvider from "./OrderingProvider.js"
+import LabelBehaviour from './LabelBehaviour.js';
 
 export default {
     __depends__:[
@@ -16,11 +17,13 @@ export default {
         // 'popupMenuProvider',
         'contextPadProvider',
         'labelEditingProvider',
-        'orderingProvidier'
+        'orderingProvidier',
+        'labelBehaviour'
     ],
     examplePaletteProvider: ['type', ExamplePaletteProvider],
     // popupMenuProvider: ['type', PopupMenuProvider],
     contextPadProvider: ['type', ContextPadProvider],
     labelEditingProvider: ['type', LabelEditingProvider],
-    orderingProvidier: ['type', OrderingProvider]
+    orderingProvidier: ['type', OrderingProvider],
+    labelBehaviour: ['type', LabelBehaviour]
 }
