@@ -174,8 +174,8 @@ academia.
 
 PhDFinalSeminar.addTextSection(
 `
-But let's not dwell on despair; instead, let's revisit what a successful 
-three-year research plan was. It started in the middle of the COVID-15 
+But let's not dwell on despair; instead, let's revisit what was a successful 
+three-year research plan. It started in the middle of the COVID-15 
 pandemic, and while Brisbane didn't have long periods of lockdowns due to 
 the somewhat low reporting of cases, it still meant a lot of working from home. 
 During my candidature, I learned I can do my best when collaborating and 

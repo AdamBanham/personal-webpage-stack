@@ -36,6 +36,16 @@ const routes = [
     component: PMDiscoveryPage
   },
   {
+    path: '/process-mining/conformance',
+    name: 'pm-conformance',
+    component: NotReady
+  },
+  {
+    path: '/process-mining/enhancement',
+    name: 'pm-enhancement',
+    component: NotReady
+  },
+  {
     path: '/code',
     name: 'code',
     component: NotReady

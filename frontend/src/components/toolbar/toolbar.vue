@@ -39,12 +39,14 @@
             <v-list-item
               :key="2"
               :value="2"
+              @click="moveTo('pm-conformance')"
             >
               <v-list-item-title> Conformance Checking </v-list-item-title>
             </v-list-item>
             <v-list-item
               :key="3"
               :value="3"
+              @click="moveTo('pm-enhancement')"
             >
               <v-list-item-title> Process Enhancement </v-list-item-title>
             </v-list-item>
