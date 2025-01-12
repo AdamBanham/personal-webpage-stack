@@ -234,21 +234,22 @@ export default function LabelEditingProvider(
         bbox;
   
     if (isEmptyText(newLabel)) {
-      newLabel = null;
+      newLabel = "";
+      return
     }
     var position;
     if (isState(element)){
       element.stateLabel = newLabel
       this._bus.fire('elements.changed', {elements: [element]})
-      position = {
-        x: element.x, y:element.y
-      }
+      return
     } else if (isLabel(element)){
       element.text = newLabel
+      element.labelTarget.arcLabel = newLabel
       assign(element, this._textRenderer.getTextAnnotationBounds(
         element, newLabel
       ))
-      this._bus.fire('element.changed', {element: element})
+      this._bus.fire('elements.changed', 
+        {elements: [element,element.labelTarget]})
       return
     } else {
       element.arcLabel = newLabel
@@ -272,9 +273,11 @@ export default function LabelEditingProvider(
         label,
         element
       )
+      this._bus.fire('action.create', {element: label})
     } else {
       element.label.text = newLabel
-      this._bus.fire('element.changed', {element: element.arcLabel})
+      this._bus.fire('elements.changed', 
+        {elements: [element, element.label]})
     }
    
   };

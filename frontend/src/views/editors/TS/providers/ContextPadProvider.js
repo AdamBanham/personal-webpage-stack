@@ -44,9 +44,13 @@ export default function ContextPadProvider(
             registry = this._registry,
             bus = this._eventBus;
 
-        function removeElement() {
+        function removeElement(event, target, autoActivate) {
+            bus.fire('pad.delete', {
+                elements: [element]
+            })
             modeling.removeElements([ element ]);
-            }
+        }
+            
 
         function startConnect(event, element, autoActivate) {
             connect.start(event, element, autoActivate);
@@ -62,7 +66,8 @@ export default function ContextPadProvider(
             var ns = factory.createInternalState({
                 id: factory.getNextStateId(),
                 x: element.x + 100,
-                y: element.y + 100
+                y: element.y + 100,
+                stateLabel: ''
             })
             var nc = factory.createConnectionBetweenStates(
                 factory.getNextConnectionId(), 
@@ -82,7 +87,8 @@ export default function ContextPadProvider(
             var ns = factory.createEndingState({
                 id: factory.getNextStateId(),
                 x: element.x + 100,
-                y: element.y + 100
+                y: element.y + 100,
+                stateLabel: ''
             })
             var nc = factory.createConnectionBetweenStates(
                 factory.getNextConnectionId(), 
@@ -154,7 +160,6 @@ export default function ContextPadProvider(
         contextPadOptions['delete'] = {
             action: {
                 click: removeElement,
-                dragstart: removeElement
             },
             className: 'context-pad-delete',
             html: '<div class="entry mdi-delete mdi editor-hover"/>',

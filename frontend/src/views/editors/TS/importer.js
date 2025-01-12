@@ -55,6 +55,7 @@ class TsXmlImporter {
             }
         )
         if (els.length > 0){
+            this._bus.fire('formal.clear', {})
             this._modeling.removeElements(
                 els
             )
@@ -71,7 +72,7 @@ class TsXmlImporter {
                 id: attrs.id.value,
                 x: pos.attributes.x.value,
                 y: pos.attributes.y.value,
-                stateLabel: this.decode(label.textContent)
+                stateLabel: this.decode(label.textContent + "")
             }
             var shape = this._factory.createState(
                 context, attrs.type.value
@@ -89,14 +90,15 @@ class TsXmlImporter {
         for(var arc of arcs){
             var attrs = arc.attributes 
             var label = this.decode(
-                arc.getElementsByTagName("label")[0].textContent 
-            )
+                arc.getElementsByTagName("label")[0].textContent + ""
+            ).trim()
             var src = arc.getElementsByTagName("source")[0].attributes
             var tgt = arc.getElementsByTagName("target")[0].attributes
             var connect = this._factory.createConnectionBetweenStates(
                 attrs.id.value, 
                 named_els[src.id.value],
                 named_els[tgt.id.value],
+                label
             );
             var waypoints = []
             var svgWay = arc.getElementsByTagName("waypoints")
@@ -130,23 +132,24 @@ class TsXmlImporter {
             } else {
                 // nc.waypoints = waypoints
             }
-
-            var elLabel = this._factory.createLabel({
-                text: label,
-                width: 50,
-                height: 12,
-                labelTarget: connect,
-                x: 0
-            })
-            assign(label, this._txRender.getTextAnnotationBounds(
-                elLabel, label
-            ))
-            this._modeling.createLabel(
-                connect,
-                getConnectionMid(connect),
-                elLabel,
-                connect
-            )
+            if (label.length > 0){
+                var elLabel = this._factory.createLabel({
+                    text: label,
+                    width: 50,
+                    height: 12,
+                    labelTarget: connect,
+                    x: 0
+                })
+                assign(label, this._txRender.getTextAnnotationBounds(
+                    elLabel, label
+                ))
+                this._modeling.createLabel(
+                    connect,
+                    getConnectionMid(connect),
+                    elLabel,
+                    connect
+                )
+            }
             
         }
         // move all states to ensure a clean start

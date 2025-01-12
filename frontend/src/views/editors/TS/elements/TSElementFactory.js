@@ -8,6 +8,10 @@ import {
     stateRadius
 } from './staticShapeDesc';
 
+import {
+    getConnectionMid
+  } from "diagram-js/lib/layout/LayoutUtil"
+
 const INTERNAL = "internal";
 const ENDING = "ending";
 const STARTING = "starting"
@@ -59,11 +63,27 @@ export function toggleStateType(element){
 
 export class TSElementFactory extends ElementFactory {
 
-    constructor(){
+    constructor(eventBus,textRenderer){
         super()
         this._lastStateId = 0;
         this._lastConnectionId = 0;
         this._seen = []
+        this._bus = eventBus
+        this._textRenderer = textRenderer
+    }
+
+    fireCreateState(element){
+        this._bus.fire(
+            'state.create',
+            {element: element}
+        )
+    }
+
+    fireCreateTransition(element){
+        this._bus.fire(
+            'transition.create',
+            {element: element}
+        )
     }
 
     logIdentifer(id){
@@ -116,14 +136,18 @@ export class TSElementFactory extends ElementFactory {
         attrs.cy = stateRadius
         attrs.width = stateRadius * 2
         attrs.height = stateRadius * 2
-        // attrs.label = ''
         attrs.stateType = type
         attrs.group = "states"
         attrs.selected = false
-        return this.createShape(attrs)
+        var ret = this.createShape(attrs)
+        this.fireCreateState(ret)
+        return ret
     }
 
-    createConnectionBetweenStates(id,src,tgt){
+    createConnectionBetweenStates(id,src,tgt,label){
+        if (!label){
+            label = ''
+        }
         var selfLoop = src.id == tgt.id;
         var waypoints;
         if (selfLoop){
@@ -151,10 +175,16 @@ export class TSElementFactory extends ElementFactory {
             target: tgt,
             selfLoop: selfLoop,
             waypoints: waypoints,
+            arcLabel: label,
             group: "connections"
         }
         var ret = this.createConnection(attrs)
-        
+        this.fireCreateTransition(ret)
         return ret
     }
 }
+
+TSElementFactory.$inject = [
+    'eventBus',
+    'textRenderer',
+]

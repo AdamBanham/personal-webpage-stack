@@ -70,7 +70,8 @@ export default function ExamplePaletteProvider(
         action: {
           click: function(event) {
             var shape = elementFactory.createInternalState({
-              x: 0, y:0
+              x: 0, y:0, stateLabel: "",
+              id: elementFactory.getNextStateId()
             });
   
             create.start(event, shape);
@@ -84,7 +85,8 @@ export default function ExamplePaletteProvider(
         action: {
           click: function(event) {
             var shape = elementFactory.createStartingState({
-              x: 0, y:0
+              x: 0, y:0, stateLabel: "", 
+              id: elementFactory.getNextStateId()
             });
   
             create.start(event, shape);
@@ -98,7 +100,8 @@ export default function ExamplePaletteProvider(
         action: {
           click: function(event) {
             var shape = elementFactory.createEndingState({
-              x: 0, y:0
+              x: 0, y:0, stateLabel: "",
+              id: elementFactory.getNextStateId()
             });
   
             create.start(event, shape);
@@ -207,45 +210,18 @@ export default function ExamplePaletteProvider(
         group: 'model',
         separator: true
       },
-      'zoomview': {
-        group: 'view',
-        className: 'mdi-fit-to-page-outline mdi',
-        title: 'zoom to fit',
-        action: {
-          click: function(event) {
-            var scale;
-            // reset the scale back to one
-            const zoomedAndScrolledViewbox = canvas.viewbox();
-            canvas.viewbox({
-               x: 0,
-               y: 0,
-               width: zoomedAndScrolledViewbox.outer.width,
-               height: zoomedAndScrolledViewbox.outer.height
-            });
-            // work out the best scale
-            var outer = canvas.viewbox().outer 
-            var inner = canvas.viewbox().inner 
-            var hScale = 1; var vScale = 1;
-            hScale = (outer.width * 0.9) / inner.width
-            vScale = (outer.height * 0.9) / inner.height
-            scale = Math.min(hScale, vScale)
-            // find center
-            var center = {
-              x: inner.x,
-              y: inner.y,
-            }
-            // set zoom
-            canvas.zoom(scale, center)
-          }
-        }
-      },
       'fitview': {
         group: 'view',
         className: 'mdi-overscan mdi',
         title: 'fit to screen',
         action: {
           click: function(event) {
-            canvas.zoom('fit-viewpoint')
+            const {inner} = canvas.viewbox()
+            var center = {
+              x: inner.x + inner.width/2,
+              y: inner.y + inner.height/2
+            }
+            canvas.zoom('fit-viewport', center)
           }
         }
       },
@@ -266,6 +242,7 @@ export default function ExamplePaletteProvider(
                 }
             )
             if (els.length > 0){
+                bus.fire('formal.clear', {})
                 modeling.removeElements(
                     els
                 )

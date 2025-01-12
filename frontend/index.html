@@ -15,6 +15,23 @@
     <noscript>
       <strong>Sorry but this webpage doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>
+    <script>
+      MathJax = {
+          output: {
+              displayAlign: 'middle',
+              displayOverflow: 'linebreak',
+              linebreaks: {
+                  inline: true,
+                  width: '80%',
+              }
+    },
+          tex: {
+              inlineMath: [['$$', '$$'], ["\\(", "\\)"]],
+              processEscapes: true,
+          },
+      };
+  </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@4.0.0-alpha.1/es5/tex-mml-chtml.js"></script>
     <script type="module" src="/src/main.js"></script>
     <div id="app"></div>
     <!-- built files will be auto injected -->

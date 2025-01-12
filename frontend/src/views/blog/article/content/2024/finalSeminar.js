@@ -175,9 +175,13 @@ academia.
 PhDFinalSeminar.addTextSection(
 `
 But let's not dwell on despair; instead, let's revisit what was a successful 
-three-year research plan. It started in the middle of the COVID-15 
-pandemic, and while Brisbane didn't have long periods of lockdowns due to 
-the somewhat low reporting of cases, it still meant a lot of working from home. 
+three-year research plan. The plan had a budget of $3000 AUD or roughly
+&euro; 1,800 for the three years, and I managed to publish three times, 
+which meant I was well over budget (thankfully, my wonderful supervisers 
+covered the overdraw). It started in the middle of the COVID-15 pandemic, 
+and while Brisbane didn't 
+have long periods of lockdowns due to the somewhat low reporting of cases, 
+it still meant a lot of working from home. 
 During my candidature, I learned I can do my best when collaborating and 
 discussing with colleagues, but Zoom meetings aren't enough to have a 
 meaningful conversation—too many context switches. Also, having a supervisor 

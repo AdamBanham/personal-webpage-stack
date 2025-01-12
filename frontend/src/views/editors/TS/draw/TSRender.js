@@ -259,8 +259,10 @@ export default class TSRenderer extends  BaseRenderer {
                 fill: "#F8F8FF"
             })
         }
-
-        text.textContent = element.stateLabel
+        if (element.stateLabel.length > 0)
+            text.textContent = element.stateLabel
+        else 
+        text.textContent = element.id
         return text
     }
 

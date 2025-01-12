@@ -48,7 +48,7 @@ export default function TSEditor(options) {
 
     const {
         container,
-        additionalModules = [ TSRenderer, elementFactory ]
+        additionalModules = [ TSRenderer,  ]
       } = options;
 
     
@@ -77,7 +77,8 @@ export default function TSEditor(options) {
     // our own modules, contributing controls, customizations, and more
     const customModules = [
         ProvidersModule,
-        customConnect
+        customConnect,
+        elementFactory
     ];
 
     var diagram =  new Diagram({
