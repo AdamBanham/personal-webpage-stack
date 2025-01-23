@@ -66,7 +66,7 @@ say IoT data (even though it might be the ideal use case).
 )
 
 EndogenousExogenousDifference.addFigure(
-"/blog/DifExoEndo2023/rose_onion.png",
+"blog/DifExoEndo2023/rose_onion.png",
 "Roseman, Recker, and Flender views on conceptual dimensions around processes [1]."
 )
 
@@ -86,7 +86,7 @@ concepts rather than data sources.
 )
 
 EndogenousExogenousDifference.addFigure(
-"/blog/DifExoEndo2023/aalst_onion.png",
+"blog/DifExoEndo2023/aalst_onion.png",
 "van der Aalst and Dustdar views on conceptual dimensions around processes [2]."
 )
 
