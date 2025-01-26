@@ -120,7 +120,7 @@ export default {
               }
             })
             this.triggerMathjax()
-            return "\\(\\{ " + ret + " \\}\\)"
+            return "\\begin{align*} \\{ " + ret + " \\}\\end{align*}"
           },
           labels : function(){
             var ret = []
@@ -142,21 +142,21 @@ export default {
               }
             })
             this.triggerMathjax()
-            return "\\(\\{ " + ret + " \\}\\)"
+            return "\\begin{align*} \\{ " + ret + " \\}\\end{align*}"
           },
           labelsML: function(){
             var ret = ""
             this.transitions.forEach((t, index) => {
               var label = t.silent ? "\\tau" : t.label
               ret += this.trimId(t.id) 
-              ret += " \\rightarrow "
+              ret += "\\rightarrow"
               ret += t.silent ? label : "\\text{'"+label+"'}"
               if (index < this.transitions.length - 1){
                 ret += ", "
               }
             })
             this.triggerMathjax()
-            return "\\(\\{ " + ret + " \\}\\)"
+            return "\\begin{align*} \\{ " + ret + " \\}\\end{align*}"
           },
           flowsML: function(){
             var ret = ""
@@ -169,7 +169,7 @@ export default {
               }
             })
             this.triggerMathjax()
-            return "\\(\\{ " + ret + " \\}\\)"
+            return "\\begin{align*} \\{" + ret + " \\}\\end{align*}"
           }
         },
         mounted: function(){
