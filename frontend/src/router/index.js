@@ -7,6 +7,7 @@ import ArticlePage from "@/views/blog/article/ArticleViewer.vue"
 import PublicationPage from "@/views/publications/Publications.vue"
 import PMDiscoveryPage from "@/views/process-mining/DiscoveryPage.vue"
 import EditorTS from "@/views/editors/EditorTS.vue"
+import EditorPN from "@/views/editors/PN/EditorPN.vue"
 
 const routes = [
   {
@@ -53,7 +54,7 @@ const routes = [
   {
     path: '/editor/pn',
     name: 'editor-pn',
-    component: NotReady
+    component: EditorPN
   },
   {
     path: '/editor/orm',

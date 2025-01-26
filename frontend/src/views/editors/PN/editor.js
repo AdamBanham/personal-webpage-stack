@@ -1,0 +1,107 @@
+import Diagram from 'diagram-js';
+
+import ConnectModule from 'diagram-js/lib/features/connect';
+import ConnectPreview from 'diagram-js/lib/features/connection-preview'
+import ContextPadModule from 'diagram-js/lib/features/context-pad';
+import CreateModule from 'diagram-js/lib/features/create';
+import LassoToolModule from 'diagram-js/lib/features/lasso-tool';
+import ModelingModule from 'diagram-js/lib/features/modeling';
+import MoveCanvasModule from 'diagram-js/lib/navigation/movecanvas';
+import MoveModule from 'diagram-js/lib/features/move';
+import OutlineModule from 'diagram-js/lib/features/outline';
+import PaletteModule from 'diagram-js/lib/features/palette';
+import BendingModule from 'diagram-js/lib/features/bendpoints';
+import RulesModule from 'diagram-js/lib/features/rules';
+import SelectionModule from 'diagram-js/lib/features/selection';
+import ZoomScrollModule from 'diagram-js/lib/navigation/zoomscroll';
+import SnappingModule from 'diagram-js/lib/features/snapping'
+import LabelSupport from 'diagram-js/lib/features/label-support'
+import ChangeSupport from 'diagram-js/lib/features/change-support'
+
+// custom providers
+import ProvidersModule from './providers';
+
+// custom renderers
+import TSRenderer from './draw';
+
+// custom element factory
+import elementFactory from './elements'
+
+// custom modeling 
+import customModeling from './modeling'
+
+// custom rules for Petri nets
+import PetriRules from './rules'
+
+// custom connect
+import customConnect from "./connect"
+
+/**
+ * A module that changes the default diagram look.
+ */
+const ElementStyleModule = {
+    __init__: [
+      [ 'defaultRenderer', function(defaultRenderer) {
+        // override default styles
+        defaultRenderer.CONNECTION_STYLE = { fill: 'none', strokeWidth: 5, stroke: '#000' };
+        defaultRenderer.SHAPE_STYLE = { fill: '#303c4a', stroke: '#000', strokeWidth: 2 };
+        // defaultRenderer.FRAME_STYLE = { fill: 'none', stroke: '#000', strokeDasharray: 4, strokeWidth: 2 };
+      } ]
+    ]
+  };
+
+export default function TSEditor(options) {
+
+    const {
+        container,
+        additionalModules = [ TSRenderer,  ]
+      } = options;
+
+    
+
+    // default modules provided by the toolbox
+    const builtinModules = [
+        ConnectModule,
+        ConnectPreview,
+        ContextPadModule,
+        CreateModule,
+        LassoToolModule,
+        ModelingModule,
+        MoveCanvasModule,
+        BendingModule,
+        MoveModule,
+        OutlineModule,
+        PaletteModule,
+        RulesModule,
+        SelectionModule,
+        ZoomScrollModule,
+        SnappingModule,
+        LabelSupport,
+        ChangeSupport
+    ];
+
+    // our own modules, contributing controls, customizations, and more
+    const customModules = [
+        ProvidersModule,
+        customConnect,
+        elementFactory,
+        customModeling,
+        PetriRules
+    ];
+
+    var diagram =  new Diagram({
+        canvas: {
+            container
+        },
+        modules: [
+        ...builtinModules,
+        ...customModules,
+        ...additionalModules
+        ],
+        defaultRenderer: ['type', TSRenderer]
+    });
+
+    
+
+    return diagram
+}

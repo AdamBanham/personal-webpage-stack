@@ -1,0 +1,18 @@
+@use "@/styles/coloursAnt.sass" as c
+
+.editor-canvas-ts-container
+    .editor-canvas
+        border-radius: 15px
+        .djs-palette
+          border-radius: 15px
+          box-shadow: 5px 5px 15px black
+        .djs-container
+          border-radius: 15px
+          background: c.$gray-5
+          .djs-context-pad-parent
+              .open
+                  .group
+                      .editor-hover
+                          color: black
+                          &:hover
+                              color: c.$blue-7
