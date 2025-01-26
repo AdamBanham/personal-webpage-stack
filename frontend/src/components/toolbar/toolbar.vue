@@ -2,8 +2,10 @@
   <div class="toolbar">
     <v-app-bar :elevation="5">
       <template #prepend>
-        <v-icon icon="mdi-graph-outline" size="large" 
-        style="margin-right: 10px"
+        <v-icon
+          icon="mdi-graph-outline"
+          size="large" 
+          style="margin-right: 10px"
         />
         Adam P. Banham
       </template>
@@ -12,8 +14,7 @@
           href="/docs/Adam_Banham___Curriculum_Vitae.pdf"
           target="_blank"
         >
-          <a
-          > CV </a>
+          <a> CV </a>
         </v-btn>
         <v-btn @click="moveTo('home')">
           Home
@@ -100,7 +101,7 @@
 
 <script>
 export default {
-name: "Toolbar",
+name: "ToolBar",
 methods : {
     moveTo: function(name){
         this.$router.push({name:name})
@@ -110,8 +111,9 @@ methods : {
 </script>
 
 <style lang="sass">
-@import "@/styles/coloursAnt.sass"
-@import "@/styles/breakpoints.sass"
+@use "@/styles/coloursAnt.sass" as c
+@use "@/styles/breakpoints.sass" as brk
+
 .toolbar
   overflow-x: auto
 
@@ -121,10 +123,10 @@ methods : {
 
   .v-toolbar__prepend
     margin-left: 20px
-    @media (max-width: calc($tablet-width - 1px))
+    @media (max-width: calc(brk.$tablet-width - 1px))
       display: none
 
-  @media (max-width: calc($tablet-width - 1px))
+  @media (max-width: calc(brk.$tablet-width - 1px))
     height: 55px
 
   &::-webkit-scrollbar
@@ -133,7 +135,7 @@ methods : {
     background-color: none
   
   &::-webkit-scrollbar-thumb
-    background-color: $green-3
+    background-color: c.$green-3
     opacity: 0.6
     border-radius: 5px
     

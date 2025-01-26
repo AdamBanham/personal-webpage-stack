@@ -298,7 +298,7 @@
               that.typesetPromise = that.typesetPromise.then(() => {
                 return mathjax.typesetPromise([that.$refs['editor-ts-math']])
               }
-            )}, 50)
+            )})
           },
         handleElementCreate: function(event){
           
@@ -433,106 +433,105 @@
 </script>
     
 <style lang="sass" scoped>
-    @import "@/styles/coloursAnt.sass"
-    @import "@/styles/content.sass"
+@use "@/styles/coloursAnt.sass" as c
+@use "@/styles/content.sass" as cont
     
-    .editor-canvas-ts-container
-        margin-top: 25px
-        min-width: 1000px
-        min-height: 640px
+.editor-canvas-ts-container
+  margin-top: 25px
+  min-width: 1000px
+  min-height: 640px
+  background: none
+  border: 2px c.$black-blue
+  border-style: solid
+  border-radius: 15px
+  margin-bottom: 15px
+      
+  .editor-canvas
+    width: 100%
+    height: 100%
+
+    div 
         background: none
-        border: 2px $black-blue
-        border-style: solid
-        border-radius: 15px
-        margin-bottom: 15px
-        
 
-        
-        .editor-canvas
-            width: 100%
-            height: 100%
+    .djs-container
+        .djs-context-pad-parent
+            .open
+                .group
+                    .editor-hover
+                        color: black
+                        width: 20px
+                        height: 20px
+                        border: 2px red solid
+                        &:hover
+                            color: c.$blue-7
 
-            div 
-                background: none
-
-            .djs-container
-                .djs-context-pad-parent
-                    .open
-                        .group
-                            .editor-hover
-                                color: black
-                                width: 20px
-                                height: 20px
-                                border: 2px red solid
-                                &:hover
-                                    color: $blue-7
-
-    .editor-content
-      margin-bottom: 100px
-      .net-compontents
-        width: 95%
-        border-radius: 15px 
-        margin-left: 2.5%
-        margin-right: 2.5%
-        background-color: $gray-5
-        height: fit-content
+.editor-content
+  margin-bottom: 100px
+  .net-compontents
+    width: 95%
+    border-radius: 15px 
+    margin-left: 2.5%
+    margin-right: 2.5%
+    background-color: c.$gray-5
+    height: fit-content
+    flex-direction: row
+    max-width: 95%
+    h3, h4 
+      text-align: center
+      vertical-align: middle
+      padding: 5px
+      color: c.$black-blue
+    p 
+      margin-bottom: 5px
+    .net 
+      display: flex 
+      flex-direction: row
+      width: 96%
+      max-width: 96%
+      margin-left: 2%
+      margin-right: 2%
+      flex-wrap: wrap
+      p 
+        color: c.$black-blue
+      .net-header
+        display: flex 
+        flex: 1
         flex-direction: row
-        max-width: 95%
-        h3, h4 
-          text-align: center
-          vertical-align: middle
-          padding: 5px
-          color: $black-blue
-        p 
-          margin-bottom: 5px
-        .net 
-          display: flex 
-          flex-direction: row
-          width: 96%
-          max-width: 96%
-          margin-left: 2%
-          margin-right: 2%
-          p 
-            color: $black-blue
-          .net-header
-            display: flex 
-            flex: 1
-            flex-direction: row
-            justify-content: center
-            align-items: center
-            h4
-              flex: 5
-              text-align: left
-              padding-left: 20px
-            button 
-              flex: 1
-          .net-states
-            width: 100%
-            max-width: 100%
-            background-color: $gray-6
-            border-radius: 15px 
-            margin: 5px
-            flex: auto
-            p
-              flex-wrap: wrap
-              width: 100%
-              max-width: 100%
-          .net-actions
-            width: 100%
-            background-color: $gray-6
-            border-radius: 15px 
-            margin: 5px
-            flex: auto
-          .net-transitions
-            width: 100%
-            background-color: $gray-6
-            border-radius: 15px 
-            margin: 5px
-            flex: auto
+        justify-content: center
+        align-items: center
+        h4
+          flex: 5
+          text-align: left
+          padding-left: 20px
+        button 
+          flex: 1
+      .net-states
+        width: 100%
+        max-width: 100%
+        background-color: c.$gray-6
+        border-radius: 15px 
+        margin: 5px
+        flex: 1 1
+        p
+          flex-wrap: wrap
+          width: 100%
+          max-width: 100%
+      .net-actions
+        width: 100%
+        background-color: c.$gray-6
+        border-radius: 15px 
+        margin: 5px
+        flex: 1 1
+      .net-transitions
+        width: 100%
+        background-color: c.$gray-6
+        border-radius: 15px 
+        margin: 5px
+        flex: 1 1
 </style>
 
 <style lang="sass">
-@import "@/styles/coloursAnt.sass"
+@use "@/styles/coloursAnt.sass" as c
 .editor-canvas-ts-container
     .editor-canvas
         border-radius: 15px
@@ -541,13 +540,13 @@
           box-shadow: 5px 5px 15px black
         .djs-container
           border-radius: 15px
-          background: $gray-5
+          background: c.$gray-5
           .djs-context-pad-parent
               .open
                   .group
                       .editor-hover
                           color: black
                           &:hover
-                              color: $blue-7
+                              color: c.$blue-7
                               // background: $background-light-50
 </style>

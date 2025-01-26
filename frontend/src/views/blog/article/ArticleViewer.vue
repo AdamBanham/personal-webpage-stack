@@ -275,14 +275,14 @@ export default {
 </script>
 
 <style lang="sass">
-@import "@/styles/content.sass"
-@import "@/styles/coloursAnt.sass"   
+@use "@/styles/content.sass" 
+@use "@/styles/coloursAnt.sass" as c
 
 .article-viewer
   .content-bar
 
     h2
-      color: $light-grey
+      color: c.$light-grey
       margin: 0px
       padding-top: 8px
       padding-left: 15px
@@ -303,9 +303,9 @@ export default {
         text-align: center 
 
       .v-breadcrumbs__prepend
-        color: $green-3
+        color: c.$green-3
         i 
-          color: $green-5
+          color: c.$green-5
       
       .crumb
         // background-color: $background
@@ -316,10 +316,10 @@ export default {
         padding-left: 2.5px
         padding-right: 2.5px
         p 
-          color: $light-grey
+          color: c.$light-grey
         h2
           font-size: larger
-          color: $light-grey
+          color: c.$light-grey
           margin: 0px
           padding: 0px
           padding-top: 8px
@@ -328,13 +328,13 @@ export default {
 
         &::after
           content: "   >"
-          color: $green-7
+          color: c.$green-7
         
         &:last-child::after
           content: ""
 
         .click-back 
-          color: $green-8
+          color: c.$green-8
           &:hover
             cursor: pointer
 
@@ -349,25 +349,25 @@ export default {
         text-align: center 
         margin: 2%
         padding: 2%
-        background-color: $cyan-1
-        color: $green-1
+        background-color: c.$cyan-1
+        color: c.$green-1
         p
           text-align: center
           display: inline
-          color: $green-1
+          color: c.$green-1
           b 
-            color: $green-2
+            color: c.$green-2
           a
-            color: $blue-6
+            color: c.$blue-6
         a
-          color: $blue-6
+          color: c.$blue-6
 
       .profile
 
         .text 
-          background-color: $green-1
+          background-color: c.$green-1
           p
-            color: $gray-7
+            color: c.$gray-7
 
         .l-align
           justify-content: left
@@ -414,12 +414,12 @@ export default {
           margin: 0
           margin-top: 5px
           width: 100%
-          color: $black-blue
+          color: c.$black-blue
           justify-content: center
           align-items: flex-start
 
           a 
-            color: $black-blue
+            color: c.$black-blue
             min-width: 75px
             &::after
               content: " "
@@ -439,10 +439,10 @@ export default {
           width: 100%
           justify-content: center
           align-items: flex-start
-          color: $black-blue
+          color: c.$black-blue
 
           a 
-            color: $black-blue
+            color: c.$black-blue
             min-width: 70px
             &::after
               content: " "
@@ -463,7 +463,7 @@ export default {
           padding: 0px
           padding-left: 5%
           padding-right: 5%
-          color: $green-9
+          color: c.$green-9
           justify-content: center
           display: inline-flex
           flex-direction: column
@@ -477,7 +477,7 @@ export default {
             content: "''"
             padding-right: 10px
             font-size: xx-large
-            color: $black-blue
+            color: c.$black-blue
             
           &::after
             align-self: flex-end
@@ -485,25 +485,25 @@ export default {
             padding-right: 10px
             transform: rotate(180deg)
             font-size: xx-large
-            color: $black-blue
+            color: c.$black-blue
         
         .quote-person
           margin: 0px
           padding: 0px
           width: 85%
           padding-right: 15%
-          color: $black-blue
+          color: c.$black-blue
           text-align: right
           justify-content: right
           font-style: italic
           font-weight: bold
 
           a
-            color: $black-blue
+            color: c.$black-blue
 
     .reference 
         li
-          color: $black-blue
+          color: c.$black-blue
     
     .youtube 
 
@@ -542,14 +542,14 @@ export default {
         text-align: center
 
     .definition
-      background-color: $gray-2 !important
+      background-color: c.$gray-2 !important
 
       h4 
         text-align: left
-        color: $gray-7
+        color: c.$gray-7
 
       p
-        color: $gray-5 !important
+        color: c.$gray-5 !important
         text-align: left !important
 
 

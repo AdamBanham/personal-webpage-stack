@@ -112,8 +112,8 @@ created() {
 </script>
 
 <style lang="sass" scoped>
-@import "@/styles/coloursAnt.sass"
-@import "@/styles/breakpoints.sass"
+@use "@/styles/coloursAnt.sass" as c
+@use "@/styles/breakpoints.sass" as brk
 
 .facefloater-contain
     position: absolute
@@ -121,40 +121,40 @@ created() {
     .facefloater
         position: absolute
     .cyan
-        background-image: radial-gradient($cyan-3, $cyan-5, $cyan-7)
-        box-shadow: 0 0 75px 5px $cyan-7
+        background-image: radial-gradient(c.$cyan-3, c.$cyan-5, c.$cyan-7)
+        box-shadow: 0 0 75px 5px c.$cyan-7
     .yellow
-        background-image: radial-gradient($yellow-3, $yellow-5, $yellow-7)
-        box-shadow: 0 0 75px 5px $yellow-7
+        background-image: radial-gradient(c.$yellow-3, c.$yellow-5, c.$yellow-7)
+        box-shadow: 0 0 75px 5px c.$yellow-7
     .green
-        background-image: radial-gradient($green-3, $green-5, $green-7)
-        box-shadow: 0 0 75px 5px $green-7
+        background-image: radial-gradient(c.$green-3, c.$green-5, c.$green-7)
+        box-shadow: 0 0 75px 5px c.$green-7
     .red 
-        background-image: radial-gradient($red-3, $red-5, $red-7)
-        box-shadow: 0 0 75px 5px $red-7
+        background-image: radial-gradient(c.$red-3, c.$red-5, c.$red-7)
+        box-shadow: 0 0 75px 5px c.$red-7
     .orange
-        background-image: radial-gradient($orange-3, $orange-5, $orange-7)
-        box-shadow: 0 0 75px 5px $orange-7
+        background-image: radial-gradient(c.$orange-3, c.$orange-5, c.$orange-7)
+        box-shadow: 0 0 75px 5px c.$orange-7
 
     div
-        @media (min-width: $desktop-width)
+        @media (min-width: brk.$desktop-width)
             transform: scale(0.75)
 
-        @media (max-width: calc($desktop-width - 1px)) and (min-width: $tablet-width)
+        @media (max-width: calc(brk.$desktop-width - 1px)) and (min-width: brk.$tablet-width)
             transform: scale(0.4)
 
-        @media (max-width: calc($tablet-width - 1px))
+        @media (max-width: calc(brk.$tablet-width - 1px))
             transform: scale(0.2)
 
-    @media (min-width: $desktop-width)
+    @media (min-width: brk.$desktop-width)
         transform: scale(0.75)
 
-    @media (max-width: calc($desktop-width - 1px)) and (min-width: $tablet-width)
+    @media (max-width: calc(brk.$desktop-width - 1px)) and (min-width: brk.$tablet-width)
         transform: scale(0.5)
         max-width: 300px
         max-height: 300px
 
-    @media (max-width: calc($tablet-width - 1px))
+    @media (max-width: calc(brk.$tablet-width - 1px))
         transform: scale(0.25)
         max-width: 300px
         max-height: 300px

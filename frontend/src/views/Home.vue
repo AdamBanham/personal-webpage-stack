@@ -15,7 +15,7 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-@import "@/styles/breakpoints.sass"
+@use "@/styles/breakpoints.sass"
 .home
   width: 100% 
   height: 100%

@@ -1,5 +1,5 @@
-@import "@/styles/coloursAnt.sass"   
-@import "@/styles/breakpoints.sass" 
+@use "@/styles/coloursAnt.sass" as c   
+@use "@/styles/breakpoints.sass" as brk
 
 $content-width-full: 650px
 $content-width-medium: 500px
@@ -15,7 +15,7 @@ $detail-card-height-small: 250px
 
 .editor-hover
   &:hover
-    color: $blue-7
+    color: c.$blue-7
 
 .editor-content
   margin: auto
@@ -23,7 +23,7 @@ $detail-card-height-small: 250px
   flex-grow: 1
   flex-direction: column
   flex-flow: column
-  background-color: $light-grey
+  background-color: c.$light-grey
   min-height: 100vh
   padding-left: 5px
   padding-right: 5px
@@ -34,18 +34,48 @@ $detail-card-height-small: 250px
   .editor-header
     text-align: center
     h4
-      color: $black-blue
+      color: c.$black-blue
     p
-      color: $blue-1
+      color: c.$blue-1
 
-  // @media (min-width: $desktop-width)
-  //   width: $content-width-full
+  @media (min-width: brk.$desktop-width)
+    width: $content-width-full
 
-  // @media (max-width: calc($desktop-width - 1px)) and (min-width: $tablet-width)
-  //   width: $content-width-medium
+  @media (max-width: calc(brk.$desktop-width - 1px)) and (min-width: brk.$tablet-width)
+    width: $content-width-medium
 
-  // @media (max-width: calc($tablet-width - 1px))
-  //   width: $content-width-small
+  @media (max-width: calc(brk.$tablet-width - 1px))
+    width: $content-width-small
+
+@mixin diagram-editor 
+  margin: auto
+  display: flex
+  flex-grow: 1
+  flex-direction: column
+  flex-flow: column
+  background-color: c.$light-grey
+  min-height: 100vh
+  padding-left: 5px
+  padding-right: 5px
+  padding-bottom: 75px
+  padding-top: 100px
+  min-width: 80%
+
+  .editor-header
+    text-align: center
+    h4
+      color: c.$black-blue
+    p
+      color: c.$blue-1
+
+  @media (min-width: brk.$desktop-width)
+    width: $content-width-full
+
+  @media (max-width: calc(brk.$desktop-width - 1px)) and (min-width: brk.$tablet-width)
+    width: $content-width-medium
+
+  @media (max-width: calc(brk.$tablet-width - 1px))
+    width: $content-width-small
 
 .content-bar
   margin: auto
@@ -54,18 +84,18 @@ $detail-card-height-small: 250px
   flex-direction: column
   flex-flow: column
   min-height: 100vh
-  background-color: $background-light
+  background-color: c.$background-light
   padding-left: 5px
   padding-right: 5px
   padding-bottom: 75px
 
-  @media (min-width: $desktop-width)
+  @media (min-width: brk.$desktop-width)
     width: $content-width-full
 
-  @media (max-width: calc($desktop-width - 1px)) and (min-width: $tablet-width)
+  @media (max-width: calc(brk.$desktop-width - 1px)) and (min-width: brk.$tablet-width)
     width: $content-width-medium
 
-  @media (max-width: calc($tablet-width - 1px))
+  @media (max-width: calc(brk.$tablet-width - 1px))
     width: $content-width-small
 
 .content-bar > :first-child
@@ -76,7 +106,7 @@ $detail-card-height-small: 250px
     margin-left: 5%
     margin-right: 5%
     border-radius: 10px
-    background: $light-grey
+    background: c.$light-grey
     display: flex
     flex-direction: column
 
@@ -99,7 +129,7 @@ $detail-card-height-small: 250px
       justify-content: center
       flex-direction: row  
       h2 
-        color: $green-3
+        color: c.$green-3
     .body
       display: flex
       height: fit-content
@@ -128,10 +158,10 @@ $detail-card-height-small: 250px
           text-align: center
           vertical-align: middle
           flex-direction: column
-          color: $green-4
+          color: c.$green-4
           b 
-            color: $green-2
+            color: c.$green-2
             a 
-              color: $blue-2
+              color: c.$blue-2
               &:hover
-                color: $blue-5
+                color: c.$blue-5

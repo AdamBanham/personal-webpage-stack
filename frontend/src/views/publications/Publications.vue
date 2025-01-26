@@ -36,8 +36,8 @@ data: function() {
 </script>
 
 <style lang="sass" scoped>
-@import "@/styles/coloursAnt.sass"
-@import "@/styles/content.sass"
+@use "@/styles/coloursAnt.sass" as c
+@use "@/styles/content.sass"
 
 .publications
     padding-top: 15px
@@ -45,6 +45,6 @@ data: function() {
     padding-right: 2%
     width: 96%
     h2 
-        color: $light-grey 
+        color: c.$light-grey 
 
 </style>

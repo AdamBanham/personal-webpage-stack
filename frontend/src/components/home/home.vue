@@ -172,8 +172,8 @@ methods: {
 </script>
 
 <style lang="sass" scoped>
-@import "@/styles/coloursAnt.sass"
-@import "@/styles/breakpoints.sass"
+@use "@/styles/coloursAnt.sass" as c 
+@use "@/styles/breakpoints.sass" as brk
 
 .home-page
   width: 100% 
@@ -182,15 +182,15 @@ methods: {
   justify-content: center
   align-items: center
 
-  @media (min-width: $desktop-width)
+  @media (min-width: brk.$desktop-width)
     margin-top: 50px
     margin-bottom: 50px
 
-  @media (max-width: calc($desktop-width - 1px)) and (min-width: $tablet-width)
+  @media (max-width: calc(brk.$desktop-width - 1px)) and (min-width: brk.$tablet-width)
     margin-top: 75px
     flex-direction: column
 
-  @media (max-width: calc($tablet-width - 1px))
+  @media (max-width: calc(brk.$tablet-width - 1px))
     margin-top: 50px
     flex-direction: column
 
@@ -207,9 +207,9 @@ methods: {
     flex-direction: column
 
     div
-      background-color: $background-light 
+      background-color: c.$background-light 
       border-radius: 15px
-      box-shadow: $green-1 2.5px 5px 5px 0.5px
+      box-shadow: c.$green-1 2.5px 5px 5px 0.5px
       margin-bottom: 25px
       padding : 15px
       p 
@@ -218,12 +218,12 @@ methods: {
         text-align: left
         padding: 10px
       
-      @media (min-width: $desktop-width)
+      @media (min-width: brk.$desktop-width)
         margin-left: 100px
 
-      @media (min-width: $tablet-width)
+      @media (min-width: brk.$tablet-width)
         max-width: 450px
 
-      @media (max-width: calc($tablet-width - 1px))
+      @media (max-width: calc(brk.$tablet-width - 1px))
         max-width: 300px
 </style>

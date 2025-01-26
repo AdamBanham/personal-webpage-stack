@@ -1,12 +1,12 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
 // https://github.com/microsoft/vscode-dev-containers/tree/v0.158.0/containers/vue
 {
-	"name": "Vue (Community)",
+	"name": "Vue App",
 	"build": {
 		"dockerfile": "Dockerfile",
 		"context": "..",
 		// Update 'VARIANT' to pick a Node version: 10, 12, 14
-		"args": { "VARIANT": "14" }
+		"args": { "VARIANT": "18" }
 	},
 
 	// Set *default* container specific settings.json values on container create.

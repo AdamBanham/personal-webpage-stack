@@ -49,7 +49,16 @@
             }"
           >
             <h4> {{ info.year }} </h4>
-            <h2 v-html="info.title" />
+            <h2
+              :class="{
+                'color-swap-1' : (idx % 5 == 0),
+                'color-swap-2' : (idx % 5 == 1),
+                'color-swap-3' : (idx % 5 == 2),
+                'color-swap-4' : (idx % 5 == 3),
+                'color-swap-5' : (idx % 5 == 4)
+              }"
+              v-html="info.title"
+            />
             <p> 
               {{ info.shortInfo }}
             </p>
@@ -169,7 +178,16 @@
     <div class="timeline-info">
       <div class="content-bar">
         <section>
-          <h1 v-html="selectInfo.title" />
+          <h1
+            :class="{
+              'color-swap-1' : (curr % 5 == 0),
+              'color-swap-2' : (curr % 5 == 1),
+              'color-swap-3' : (curr % 5 == 2),
+              'color-swap-4' : (curr % 5 == 3),
+              'color-swap-5' : (curr % 5 == 4)
+            }"
+            v-html="selectInfo.title"
+          />
           <h3> 
             {{ selectInfo.year }}
           </h3>
@@ -246,7 +264,7 @@ export default {
             return 150
         },
         timelineOffset: function() {
-            return this.curr * -75.75
+            return this.curr * -76
         },
         snippetOffeset: function(){
           var dis = this.curr * - 200
@@ -311,10 +329,10 @@ export default {
 </script>
 
 <style lang="sass">
-@import "@/styles/coloursAnt.sass"  
+@use "@/styles/coloursAnt.sass" as c
 .hist-bar-tooltip
-  background-color: $black-blue !important
-  color: $light-grey !important
+  background-color: c.$black-blue !important
+  color: c.$light-grey !important
   justify-content: center
   text-align: center
   padding: 5px
@@ -333,9 +351,14 @@ export default {
 </style>
 
 <style lang="sass" scoped>
-@import "@/styles/content.sass"
-@import "@/styles/coloursAnt.sass"  
-@import "@/styles/breakpoints.sass"
+@use "@/styles/content.sass" as cont
+@use "@/styles/coloursAnt.sass" as c  
+@use "@/styles/breakpoints.sass" as brk
+@use "sass:color"
+@use "sass:list"
+
+$colors: c.$red-3, c.$cyan-7, c.$orange-7, c.$green-3, c.$blue-3
+$repeat: 5 
 
 .info-header
   text-align: center
@@ -344,19 +367,19 @@ export default {
   margin-left: auto 
   margin-right: auto
 
-  @media (min-width: $desktop-width)
-    width: $content-width-full
+  @media (min-width: brk.$desktop-width)
+    width: cont.$content-width-full
 
-  @media (max-width: calc($desktop-width - 1px)) and (min-width: $tablet-width)
-    width: $content-width-medium
+  @media (max-width: calc(brk.$desktop-width - 1px)) and (min-width: brk.$tablet-width)
+    width: cont.$content-width-medium
 
-  @media (max-width: calc($tablet-width - 1px))
-    width: $content-width-small
+  @media (max-width: calc(brk.$tablet-width - 1px))
+    width: cont.$content-width-small
 
 .timeline-snippets
     display: inline-flex
     height: 300px
-    width: $content-width-full
+    width: cont.$content-width-full
     margin: auto
     justify-content: center
     align-content: center
@@ -369,23 +392,23 @@ export default {
         padding: 1em 0
         box-sizing: border-box
 
-    @media (min-width: $desktop-width)
-        width: $content-width-full
+    @media (min-width: brk.$desktop-width)
+        width: cont.$content-width-full
 
-    @media (max-width: calc($desktop-width - 1px)) and (min-width: $tablet-width)
-        width: $content-width-medium
+    @media (max-width: calc(brk.$desktop-width - 1px)) and (min-width: brk.$tablet-width)
+        width: cont.$content-width-medium
 
-    @media (max-width: calc($tablet-width - 1px))
-        width: $content-width-small
+    @media (max-width: calc(brk.$tablet-width - 1px))
+        width: cont.$content-width-small
 
-    @media (min-width: $desktop-width)
-        margin-left: calc(calc(100vw - $content-width-full)/2)
+    @media (min-width: brk.$desktop-width)
+        margin-left: calc(calc(100vw - cont.$content-width-full)/2)
 
-    @media (max-width: calc($desktop-width - 1px)) and (min-width: $tablet-width)
-        margin-left: calc(calc(100vw - $content-width-medium)/2)
+    @media (max-width: calc(brk.$desktop-width - 1px)) and (min-width: brk.$tablet-width)
+        margin-left: calc(calc(100vw - cont.$content-width-medium)/2)
 
-    @media (max-width: calc($tablet-width - 1px))
-        margin-left: calc(calc(100vw - $content-width-small)/2)
+    @media (max-width: calc(brk.$tablet-width - 1px))
+        margin-left: calc(calc(100vw - cont.$content-width-small)/2)
 
     .timeline-snippets-holder
       display: inline-block
@@ -399,7 +422,7 @@ export default {
 
       section
           text-align: center
-          background-color: $background-light
+          background-color: c.$background-light
           min-width: 200px
           max-width: 200px
           min-height: 250px
@@ -410,24 +433,24 @@ export default {
           transition: all .3s ease
 
           &:first-child
-            @media (min-width: $desktop-width)
-              margin-left: calc((($content-width-full * 0.9)/2) - 100px)
+            @media (min-width: brk.$desktop-width)
+              margin-left: calc(((cont.$content-width-full * 0.9)/2) - 100px)
 
-            @media (max-width: calc($desktop-width - 1px)) and (min-width: $tablet-width)
-              margin-left: calc((($content-width-medium * 0.9)/2) - 100px)
+            @media (max-width: calc(brk.$desktop-width - 1px)) and (min-width: brk.$tablet-width)
+              margin-left: calc(((cont.$content-width-medium * 0.9)/2) - 100px)
 
-            @media (max-width: calc($tablet-width - 1px))
-              margin-left: calc((($content-width-small * 0.9)/2) - 115px)
+            @media (max-width: calc(brk.$tablet-width - 1px))
+              margin-left: calc(((cont.$content-width-small * 0.9)/2) - 115px)
           
           h2 
-              color: $green-9
+              color: c.$green-9
               margin: 5px
 
           h4 
-              color: $light-grey
+              color: c.$light-grey
               margin: 2.5px
           p
-              color: $light-grey
+              color: c.$light-grey
 
           &.hide 
             opacity: 0
@@ -472,11 +495,11 @@ export default {
             margin-top: 15px
 
         h1 
-            color: $green-9
+            color: c.$green-9
             margin: 2.5px
         h3 
             margin: 5px
-            color: $light-grey
+            color: c.$light-grey
         h4
             margin: 5px
             font-size: 12px
@@ -484,21 +507,21 @@ export default {
             width: 80%
             margin-left: auto
             margin-right: auto
-            color: $light-grey
+            color: c.$light-grey
 
         img
             width: 80%
             margin: 15px 0 0 0
-            color: $black-blue
+            color: c.$black-blue
 
         .long-info
           padding: 15px
 
           p
-              color: $green-9
+              color: c.$green-9
 
         .figure-caption
-            color: $black-blue
+            color: c.$black-blue
             margin-bottom: 15px
 
         .code-snippet
@@ -507,7 +530,7 @@ export default {
 
         .code-snippet-caption
           text-align: center
-          color: $black-blue
+          color: c.$black-blue
           margin-top: 15px
 
 .timeline-dots-line
@@ -516,21 +539,21 @@ export default {
     margin-top: -38px
     margin-right: 30%
     min-width: 2.5px
-    background-color: $light-grey
+    background-color: c.$light-grey
     border-radius: 2px
     z-index: 1
 
-    @media (min-width: $desktop-width)
-        margin-left: calc(calc(100vw - $content-width-full)/2)
-        transform: translateX(calc($content-width-full/2))
+    @media (min-width: brk.$desktop-width)
+        margin-left: calc(calc(100vw - cont.$content-width-full)/2)
+        transform: translateX(calc(cont.$content-width-full/2))
 
-    @media (max-width: calc($desktop-width - 1px)) and (min-width: $tablet-width)
-        margin-left: calc(calc(100vw - $content-width-medium)/2)
-        transform: translateX(calc($content-width-medium/2))
+    @media (max-width: calc(brk.$desktop-width - 1px)) and (min-width: brk.$tablet-width)
+        margin-left: calc(calc(100vw - cont.$content-width-medium)/2)
+        transform: translateX(calc(cont.$content-width-medium/2))
 
-    @media (max-width: calc($tablet-width - 1px))
-        margin-left: calc(calc(100vw - $content-width-small)/2)
-        transform: translateX(calc($content-width-small/2))
+    @media (max-width: calc(brk.$tablet-width - 1px))
+        margin-left: calc(calc(100vw - cont.$content-width-small)/2)
+        transform: translateX(calc(cont.$content-width-small/2))
 
     
 .timeline-hist
@@ -539,14 +562,14 @@ export default {
   display: flex
   z-index: 3
   
-  @media (min-width: $desktop-width)
-      width: $content-width-full
+  @media (min-width: brk.$desktop-width)
+      width: cont.$content-width-full
 
-  @media (max-width: calc($desktop-width - 1px)) and (min-width: $tablet-width)
-      width: $content-width-medium
+  @media (max-width: calc(brk.$desktop-width - 1px)) and (min-width: brk.$tablet-width)
+      width: cont.$content-width-medium
 
-  @media (max-width: calc($tablet-width - 1px))
-      width: $content-width-small
+  @media (max-width: calc(brk.$tablet-width - 1px))
+      width: cont.$content-width-small
 
   .timeline-hist-bars
     width: 80%
@@ -556,12 +579,12 @@ export default {
     z-index: 3
 
     .timeline-hist-bar 
-      background-color: $light-grey
+      background-color: c.$light-grey
       opacity: 0.5
       z-index: 2
 
       &.active
-        background-color: $green-8
+        background-color: c.$green-8
 
 .timeline-dots
     // border: 5px blue solid
@@ -573,14 +596,14 @@ export default {
     position: relative
     z-index: 2
 
-    @media (min-width: $desktop-width)
-        width: $content-width-full
+    @media (min-width: brk.$desktop-width)
+        width: cont.$content-width-full
 
-    @media (max-width: calc($desktop-width - 1px)) and (min-width: $tablet-width)
-        width: $content-width-medium
+    @media (max-width: calc(brk.$desktop-width - 1px)) and (min-width: brk.$tablet-width)
+        width: cont.$content-width-medium
 
-    @media (max-width: calc($tablet-width - 1px))
-        width: $content-width-small
+    @media (max-width: calc(brk.$tablet-width - 1px))
+        width: cont.$content-width-small
 
     .timeline-dots-content
         width: auto
@@ -593,7 +616,7 @@ export default {
       margin-top: 15px
       display: inline-flex
       height: 2px
-      background-color: $light-grey
+      background-color: c.$light-grey
       padding-right: 500px
       list-style: none
 
@@ -603,36 +626,35 @@ export default {
         margin-top: -12px
         margin-left: 50px
         border-radius: 50%
-        border: 3px solid $green-5
-        background-color: $background
+        border: 3px solid c.$green-5
+        background-color: c.$background
         position: relative
         cursor: pointer
         box-shadow: 0 2px 5px rgba(0,0,0,.2)
         transition: all .3s ease
 
-        $colors: $red-3, $cyan-7, $orange-7, $green-3, $blue-3
-        $repeat: 5 
+
 
         @for $i from 1 through $repeat 
-          &:nth-child(#{length($colors)}n+#{$i}) 
-            border-color: lighten(nth($colors, $i), 20%)
+          &:nth-child(#{list.length($colors)}n+#{$i}) 
+            border-color: color.adjust(list.nth($colors, $i), $lightness: 20%)
 
         &:first-child
-          @media (min-width: $desktop-width)
-            margin-left: calc((($content-width-full * 0.9)/2) - 100px - 15px + 100px - 1.5px)
+          @media (min-width: brk.$desktop-width)
+            margin-left: calc(((cont.$content-width-full * 0.9)/2) - 100px - 15px + 100px - 1.5px)
 
-          @media (max-width: calc($desktop-width - 1px)) and (min-width: $tablet-width)
-            margin-left: calc((($content-width-medium * 0.9)/2) - 100px - 22.5px + 100px - 1.5px)
+          @media (max-width: calc(brk.$desktop-width - 1px)) and (min-width: brk.$tablet-width)
+            margin-left: calc(((cont.$content-width-medium * 0.9)/2) - 100px - 22.5px + 100px - 1.5px)
 
-          @media (max-width: calc($tablet-width - 1px))
-            margin-left: calc((($content-width-small * 0.9)/2) - 100px - 27px + 100px - 1.5px)
+          @media (max-width: calc(brk.$tablet-width - 1px))
+            margin-left: calc(((cont.$content-width-small * 0.9)/2) - 100px - 27px + 100px - 1.5px)
 
         &:last-child
           margin-right: 200px
 
         &.active
           box-shadow: none
-          background-color: $light-grey
+          background-color: c.$light-grey
         &.active:before
           content: ""
           display: block
@@ -667,4 +689,15 @@ export default {
     
     .btn-next
         right: 1em
+
+.color-swap-1
+  color: color.adjust(list.nth($colors, 1), $lightness: 20%) !important
+.color-swap-2
+  color: color.adjust(list.nth($colors, 2), $lightness: 20%) !important
+.color-swap-3
+  color: color.adjust(list.nth($colors, 3), $lightness: 20%) !important
+.color-swap-4
+  color: color.adjust(list.nth($colors, 4), $lightness: 20%) !important
+.color-swap-5
+  color: color.adjust(list.nth($colors, 5), $lightness: 20%) !important
 </style>

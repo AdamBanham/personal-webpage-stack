@@ -17,8 +17,8 @@ name: "NotReady"
 </script>
 
 <style lang="sass" scoped>
-@import "@/styles/coloursAnt.sass"
-@import "@/styles/content.sass"
+@use "@/styles/coloursAnt.sass" as c
+@use "@/styles/content.sass" as cont
 
 .not-ready
     width: 100%
@@ -30,9 +30,9 @@ name: "NotReady"
         // margin-left: 100px
         max-width: 450px
         padding: 15px
-        background-color: $green-2
+        background-color: c.$green-2
         border-radius: 15px
-        box-shadow: $green-1 2.5px 5px 5px 0.5px
+        box-shadow: c.$green-1 2.5px 5px 5px 0.5px
         p 
             text-align: center
         ul

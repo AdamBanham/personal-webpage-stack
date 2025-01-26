@@ -143,8 +143,9 @@ methods: {
 </script>
 
 <style lang="sass" scoped>
-@import "@/styles/content.sass"
-@import "@/styles/coloursAnt.sass"   
+@use "@/styles/content.sass" as cont
+@use "@/styles/coloursAnt.sass" as c 
+@use "@/styles/breakpoints.sass" as brk
 
 .blow-view 
   // width: 100%
@@ -153,16 +154,16 @@ methods: {
 
   .content-bar
       position: absolute
-      box-shadow: $background -5px 0px 15px -5px
+      box-shadow: c.$background -5px 0px 15px -5px
       // z-index: 5
 
-      @media (min-width: $desktop-width)
-        margin-left: calc( (100vw - $content-width-full)/2 )
+      @media (min-width: brk.$desktop-width)
+        margin-left: calc( (100vw - cont.$content-width-full)/2 )
 
-      @media (max-width: calc($desktop-width - 1px)) and (min-width: $tablet-width)
-        margin-left: calc( (100vw - $content-width-medium)/2 )
+      @media (max-width: calc(brk.$desktop-width - 1px)) and (min-width: brk.$tablet-width)
+        margin-left: calc( (100vw - cont.$content-width-medium)/2 )
 
-      @media (max-width: calc($tablet-width - 1px))
+      @media (max-width: calc(brk.$tablet-width - 1px))
         
       > div
         margin-top: 20px  
@@ -170,7 +171,7 @@ methods: {
       h2
         text-align: center 
         text-transform: capitalize
-        color: $green-5
+        color: c.$green-5
         margin-bottom: 5px
 
       p 
@@ -186,19 +187,19 @@ methods: {
 
       h3 
         text-align: center 
-        color: $green-1
+        color: c.$green-1
         margin: 0px
         padding: 0px
 
       h4 
         text-align: center 
-        color: $green-1
+        color: c.$green-1
         margin: 0px
         padding: 0px
 
       &:hover
           cursor: pointer 
-          background: $green-10
+          background: c.$green-10
 
       .body
         flex-direction: column
@@ -206,11 +207,11 @@ methods: {
         justify-items: center
 
         .tags
-          background-color: $yellow-1
+          background-color: c.$yellow-1
           margin-left: 4px
           border-radius: 5px
           padding: 6px
-          color: $light-grey
+          color: c.$light-grey
 
   .filter-bar
       position: absolute
@@ -221,16 +222,16 @@ methods: {
       flex-direction: column
       flex-flow: column
       min-height: 100vh
-      background-color: $light-grey
+      background-color: c.$light-grey
       padding-bottom: 75px
 
-      @media (min-width: $desktop-width)
-        margin-left: calc( ((100vw - $content-width-full)/2) - 200px )
+      @media (min-width: brk.$desktop-width)
+        margin-left: calc( ((100vw - cont.$content-width-full)/2) - 200px )
 
-      @media (max-width: calc($desktop-width - 1px)) and (min-width: $tablet-width)
-        margin-left: calc( ((100vw - $content-width-medium)/2) - 200px )
+      @media (max-width: calc(brk.$desktop-width - 1px)) and (min-width: brk.$tablet-width)
+        margin-left: calc( ((100vw - cont.$content-width-medium)/2) - 200px )
 
-      @media (max-width: calc($tablet-width - 1px))
+      @media (max-width: calc(brk.$tablet-width - 1px))
 
       div 
           width: 150px
@@ -240,22 +241,22 @@ methods: {
           font-size: 16px
           text-align: center
           width: 200px
-          color: $green-4    
+          color: c.$green-4    
       
       h3 
           font-size: 16px
-          color: $green-2
+          color: c.$green-2
 
       .options
         width: 100%
-        color: $green-2
+        color: c.$green-2
         display: inline-flex
         text-align: left
         justify-content: center
         padding-left: 10px
         &:hover
-          background-color: $background-light
-          color: $light-grey
+          background-color: c.$background-light
+          color: c.$light-grey
           cursor: pointer
         label
           width: 100%
@@ -270,14 +271,12 @@ methods: {
           p 
               text-align: left
               padding-left: 20px
-              color: $green-2
+              color: c.$green-2
               &:hover
-                  background-color: $background-light
-                  color: $light-grey
+                  background-color: c.$background-light
+                  color: c.$light-grey
                   cursor: pointer
 
   .filter-bar > :first-child
       margin-top: 50px
-
-
 </style>

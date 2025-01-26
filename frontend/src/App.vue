@@ -19,19 +19,18 @@ mounted() {
 </script>
 
 <style lang="sass">
-@import "@/styles/coloursAnt.sass"
-@import "@/styles/animations.sass"
-@import "@/styles/tags.sass"
-@import "diagram-js/assets/diagram-js.css"
+@use "@/styles/coloursAnt.sass" as c
+@use "@/styles/animations.sass"
+@use "@/styles/tags.sass"
+@use "diagram-js/assets/diagram-js.css"
 
 .v-application__wrap
   background-image: url("@/assets/patterns/processy.png")
   background-repeat: repeat
-  background-color: $background  
+  background-color: c.$background  
 
 body
   background-image: url("@/assets/patterns/processy.png")
   background-repeat: repeat
-  background-color: $background
-  
+  background-color: c.$background
 </style>

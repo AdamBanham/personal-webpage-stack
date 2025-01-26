@@ -47,14 +47,10 @@ data : function() {
 </script>
 
 <style lang="sass" scoped>
-@import "@/styles/coloursAnt.sass"
-@import "@/styles/content.sass"
+@use "@/styles/coloursAnt.sass" as c
+@use "@/styles/content.sass" as cont
 
 .content-bar
-
-  // :first-child
-  //   margin-top: 100px
-
   > div
     margin-top: 20px
 
@@ -70,7 +66,7 @@ data : function() {
     margin-right: 5%
     height: 250px
     border-radius: 10px
-    background: $light-grey
+    background: c.$light-grey
     display: flex
     flex-direction: column
     .header 
@@ -82,7 +78,7 @@ data : function() {
       justify-content: center
       flex-direction: row  
       h2 
-        color: $green-3
+        color: c.$green-3
     .body
       display: flex
       height: 100%
@@ -111,13 +107,11 @@ data : function() {
           text-align: center
           vertical-align: middle
           flex-direction: column
-          color: $green-4
+          color: c.$green-4
           b 
-            color: $green-2
+            color: c.$green-2
             a 
-              color: $blue-2
+              color: c.$blue-2
               &:hover
-                color: $blue-5
-
-    
+                color: c.$blue-5
 </style>

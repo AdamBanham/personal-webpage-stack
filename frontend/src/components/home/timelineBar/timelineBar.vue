@@ -46,14 +46,15 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-@import "@/styles/coloursAnt"
+@use "@/styles/coloursAnt" as c
+
 .timeline
     position: absolute
     height: 12.5px 
     width: 500px 
     border-radius: 4px
     top: 107.5%
-    background-color: $cyan-1
+    background-color: c.$cyan-1
     display: flex
     flex-direction: row
     .spot 
@@ -62,9 +63,9 @@ export default {
         height: 50px 
         width: 50px 
         border-radius: 25px
-        background-image: radial-gradient($cyan-1 30%,$cyan-3)
+        background-image: radial-gradient(c.$cyan-1 30%, c.$cyan-3)
     .selected
-        background-image: radial-gradient($cyan-1 15%,$cyan-7) !important
+        background-image: radial-gradient(c.$cyan-1 15%,c.$cyan-7) !important
     .title
         position: absolute
         top : 25px
@@ -73,7 +74,7 @@ export default {
         justify-items: center
         p 
             text-align: center
-            color: $cyan-1
+            color: c.$cyan-1
             font-size: 24pt
 
 @for $i from 1 through 5

@@ -139,8 +139,8 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-@import "@/styles/coloursAnt.sass"
-@import "@/styles/breakpoints.sass"
+@use "@/styles/coloursAnt.sass" as c
+@use "@/styles/breakpoints.sass" as brk
 
 .pub-card
     margin-left: 3%
@@ -148,7 +148,7 @@ export default {
     min-width: 94%
     max-width: 94%
     min-height: 160px
-    background-color: $green-10
+    background-color: c.$green-10
     margin-bottom: 10px
     border-radius: 8px
     display: flex
@@ -163,7 +163,7 @@ export default {
       display: flex
       width: 25 
       min-height: 100%
-      background-color: $light-grey
+      background-color: c.$light-grey
       border-radius: 8px
       justify-content: center
       justify-items: center
@@ -173,7 +173,7 @@ export default {
         p
           font-size: 16px
           font-weight: bold
-          color: $red-5
+          color: c.$red-5
           margin: 0 0 0 0
           writing-mode: vertical-rl
 
@@ -197,7 +197,7 @@ export default {
               margin: 0 0 0 0
               font-size: 13px
               text-align: center
-              color: $green-1
+              color: c.$green-1
               width: 100%
       .pub-card-venue
           margin-top: 2px
@@ -207,7 +207,7 @@ export default {
           margin-right: 5%
           min-height: 10px
           max-height: 20px
-          @media (max-width: calc($mobile-width - 1px))
+          @media (max-width: calc(brk.$mobile-width - 1px))
             min-height: 10px
             max-height: 30px
           p 
@@ -215,7 +215,7 @@ export default {
             text-align: center
             width: 100% 
             font-size: 8px
-            color: $green-1
+            color: c.$green-1
       .pub-card-authors
           margin-top: 10px
           width: 80%
@@ -223,7 +223,7 @@ export default {
           margin-right: 10%
           min-height: 10px
           max-height: 25px
-          @media (max-width: calc($mobile-width - 1px))
+          @media (max-width: calc(brk.$mobile-width - 1px))
             min-height: 10px
             max-height: 50px
             margin-bottom: 10px
@@ -232,7 +232,7 @@ export default {
               text-align: center
               width: 100% 
               font-size: 10px
-              color: $green-2
+              color: c.$green-2
 
       .pub-card-abstract
         margin-top: 10px
@@ -249,7 +249,7 @@ export default {
         overflow: hidden
 
         p 
-          color: $green-3
+          color: c.$green-3
           font-size: 10px
           
         &:hover
@@ -261,7 +261,7 @@ export default {
             top: 20%
             left: 46%
             content: "-"
-            color: $black-blue
+            color: c.$black-blue
             font-size: 100px
             opacity: 0.5
 
@@ -290,15 +290,15 @@ export default {
           text-align: center
           justify-content: center
           justify-items: center
-          color: $blue-1
+          color: c.$blue-1
           &:link 
-            color: $blue-1
+            color: c.$blue-1
             text-decoration: none
           &:visited 
-              color: $blue-1
+              color: c.$blue-1
           &:hover
-              color: $red-5
+              color: c.$red-5
               cursor: pointer
           &:active 
-              color: $yellow-10
+              color: c.$yellow-10
 </style>
