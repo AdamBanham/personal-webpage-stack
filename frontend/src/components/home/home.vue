@@ -114,7 +114,7 @@
             External examination completed, 13/03/2025, passed with minor revisions.
           </li>
           <li>
-            Likely confermenet by late May 2025.
+            Likely conferment by late May 2025.
           </li>
         </ul>
       </div>
