@@ -110,6 +110,12 @@
               to="/blog/FinalSeminar2024A"
             >Check out the presentation.</router-link>
           </li>
+          <li>
+            External examination completed, 13/03/2025, passed with minor revisions.
+          </li>
+          <li>
+            Likely confermenet by late May 2025.
+          </li>
         </ul>
       </div>
     </div>
