@@ -114,6 +114,24 @@ var papers = [
         "IEEE Access",
         "https://doi.org/10.1109/ACCESS.2024.3391234",
         "bibtex/2024/ACCESS2024.bib"
+    ),
+    new Paper(
+        "PetriNet2025",
+        "Discovering the Influence of Exogenous Data on Decisions in Processes",
+        ["Adam Banham", "Yannis Bertrand", "Robert Andrews", 
+         "Moe T. Wynn", "Sander J.J. Leemans"],
+         2025,
+         `Process mining, when applied to data stored in the information systems of businesses, provides insights into the internal performance of their processes.
+        These insights reveal how the behaviour of processes impacts businesses, and can inform planning for various future scenarios by anticipating how processes will perform in these scenarios.
+        However, these scenarios may be influenced by the context of the process, i.e., external data streams (exogenous data) to the process.
+        In these cases, typical process discovery techniques can produce process models that describe what activities could occur next in a given state, but cannot express the effect of external influences on how likely these are to occur.
+        Our contribution presents an extension of stochastic labelled Petri nets and a discovery technique for our new modelling formalism.
+        The proposed formalism can be used to quantify whether the firing likelihood of a transition is influenced by exogenous data when replaying historical process executions over the net.
+        We compare our approach against existing stochastic techniques over several publicly available event logs.
+        Our results show that our approach can outperform existing data-aware techniques in unstructured processes.
+        `,
+        "papers/2025/Petri_Nets_2025___Exogenous_Influences_on_Processes.pdf",
+        "45th International Conference on Application and Theory of Petri Nets and Concurrency (Petri Nets 2025)"
     )
 ]
 
