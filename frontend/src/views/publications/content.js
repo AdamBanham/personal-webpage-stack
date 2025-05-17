@@ -132,6 +132,23 @@ var papers = [
         `,
         "papers/2025/Petri_Nets_2025___Exogenous_Influences_on_Processes.pdf",
         "45th International Conference on Application and Theory of Petri Nets and Concurrency (Petri Nets 2025)"
+    ),
+    new Paper(
+        "BPMForum2025",
+        "A Case for Public Process Documentation: Robodebt an Automated Decision Making System",
+        ["Adam Banham", "Azumah Mamudu", "Rehan Syed"],
+         2025,
+         `Governments worldwide are embracing the evolution of digital economies and automation for efficiency gains to overcome scarce resourcing.
+            However, achieving efficiencies without burdening the government or community they serve is not trivial.
+            We explore a case study following the creation of an automated system to recover debts from welfare recipients who supposedly misrepresented their income, colloquially known as "Robodebt".
+            Business process management was extensively used in the project's design and implementation; however, the owners and agents struggled to achieve their desired outcomes.
+            On the flip side, the recipients of the automated system faced erroneous debts and a faceless system that ignored their existence.
+            The system would ultimately fail; ruled illegal due to its process assumptions and, never came close to the goal of \thesavings in savings.
+            Our analysis synthesises the project's design choices, deriving how the process mindset failed the owners and agents. 
+            We posit that public process documentation is required to prevent similar failures in the future.
+        `,
+        false,
+        "23rd International Conference on Business Process Management, BPM Forum, 2025 (BPM 2025)"
     )
 ]
 

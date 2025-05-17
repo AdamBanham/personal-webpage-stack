@@ -43,7 +43,7 @@
       </div>
       <div>
         <p>
-          <b> Adam Banham </b> 
+          <b> <strong style="color:yellowgreen">Dr.</strong> Adam Banham </b> 
           (<a
             href="https://orcid.org/0000-0001-9912-8220"
             target="_blank"
@@ -114,7 +114,12 @@
             External examination completed, 13/03/2025, passed with minor revisions.
           </li>
           <li>
-            Likely conferment by late May 2025.
+            <strong style="color:yellowgreen">Offically Conferred PhD on 09/05/2025</strong>, see 
+            <a
+            href="/docs/education/Dr-Banham-Conferred.pdf"
+            target="_blank">
+              letter
+            </a>.
           </li>
         </ul>
       </div>
