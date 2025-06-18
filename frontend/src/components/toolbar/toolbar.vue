@@ -10,14 +10,37 @@
         Adam P. Banham
       </template>
       <template #append>
-        <v-btn
-          href="/docs/Adam_Banham___Curriculum_Vitae.pdf"
-          target="_blank"
-        >
-          <a> CV </a>
+        <v-btn id="menu-cv">
+          CV
         </v-btn>
+        <v-menu activator="#menu-cv">
+          <v-list>
+            <v-list-item
+              :key="1"
+              :value="1"
+              href="/docs/adam-banham-research-resume.pdf"
+              target="_blank"
+            >
+              <v-list-item-title> Research </v-list-item-title>
+            </v-list-item>
+            <v-list-item
+              :key="2"
+              :value="2"
+              href="/docs/adam-banham-tech-resume.pdf"
+              target="_blank"
+            >
+              <v-list-item-title> Tech </v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
         <v-btn @click="moveTo('home')">
           Home
+        </v-btn>
+        <v-btn 
+          href="/docs/education/adam-banham-phd-thesis-2025-1.pdf"
+          target="_blank"
+        >
+          Thesis
         </v-btn>
         <v-btn @click="moveTo('blog')">
           Blog
