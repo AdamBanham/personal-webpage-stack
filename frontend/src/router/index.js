@@ -8,6 +8,7 @@ import PublicationPage from "@/views/publications/Publications.vue"
 import PMDiscoveryPage from "@/views/process-mining/DiscoveryPage.vue"
 import EditorTS from "@/views/editors/EditorTS.vue"
 import EditorPN from "@/views/editors/PN/EditorPN.vue"
+import EditorORM from "@/views/editors/EditorORM.vue"
 
 const routes = [
   {
@@ -59,7 +60,7 @@ const routes = [
   {
     path: '/editor/orm',
     name: 'editor-orm',
-    component: NotReady
+    component: EditorORM
   },
   {
     path: '/editor/ts',
