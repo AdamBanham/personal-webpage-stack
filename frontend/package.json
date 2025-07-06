@@ -9,9 +9,11 @@
   },
   "dependencies": {
     "@mdi/font": "5.9.55",
+    "@types/js-yaml": "^4.0.9",
     "@wdns/vue-code-block": "^2.3.5",
     "diagram-js": "^15.2.4",
     "diagram-js-direct-editing": "^3.2.0",
+    "js-yaml": "^4.1.0",
     "prerender-spa-plugin": "^3.4.0",
     "roboto-fontface": "^0.10.0",
     "uuid": "^11.0.5",
@@ -22,7 +24,9 @@
     "webfontloader": "^1.6.28"
   },
   "devDependencies": {
+    "@rollup/plugin-commonjs": "^28.0.6",
     "@rollup/plugin-dynamic-import-vars": "~1.4",
+    "@rollup/plugin-inject": "^5.0.5",
     "@rollup/plugin-node-resolve": "^14.1.0",
     "@vitejs/plugin-vue": "^5.2.1",
     "@vue/compiler-sfc": "^3.2.37",
@@ -31,6 +35,7 @@
     "prerender-spa-plugin": "^3.4.0",
     "sass": "^1.83.4",
     "vite": "^6.0.11",
+    "vite-plugin-commonjs": "^0.10.4",
     "vite-plugin-vuetify": "^2.0.4",
     "vue-cli-plugin-prerender-spa": "~1.1.6",
     "vue-cli-plugin-sass-resources-loader": "^1.0.0",
@@ -43,12 +48,25 @@
     },
     "extends": [
       "plugin:vue/vue3-essential",
-      "eslint:recommended"
+      "eslint:recommended",
+      "@typescript-eslint/recommended"
     ],
+    "parser": "@typescript-eslint/parser",
     "parserOptions": {
-      "parser": "babel-eslint"
+      "ecmaVersion": 2020,
+      "sourceType": "module",
+      "parser": {
+        "ts": "@typescript-eslint/parser",
+        "<template>": "espree"
+      }
     },
-    "rules": {}
+    "plugins": [
+      "@typescript-eslint"
+    ],
+    "rules": {
+      "@typescript-eslint/no-unused-vars": "error",
+      "@typescript-eslint/no-explicit-any": "off"
+    }
   },
   "browserslist": [
     "> 1%",
