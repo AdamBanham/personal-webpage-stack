@@ -23,16 +23,17 @@
     </div>
     <div
       ref="container"
-      class="editor-canvas-ts-container"
+      class="editor-canvas-ts-container editor-outter-box-shadow"
     >
       <div
         ref="canvas"
         class="editor-canvas"
+        id="ts-editor" 
       />
     </div>
     <div
       ref="editor-pn-math"
-      class="net-compontents"
+      class="net-compontents editor-outter-box-shadow"
     >
       <h3> Petri Net Components </h3>
       <div class="net">
@@ -170,7 +171,7 @@ export default {
             })
             this.triggerMathjax()
             return "\\begin{align*} \\{" + ret + " \\}\\end{align*}"
-          }
+          },
         },
         mounted: function(){
             this.root = this.$refs.canvas;
@@ -182,6 +183,13 @@ export default {
             );
             // add hanlders to track net state
             var that = this
+            this.editor.invoke(['eventBus', function(bus){
+              bus.on(
+                'editor.fullscreen.toggle',
+              50, (ev) => {
+                that.toggleFullscreen()
+              }, that)
+            }]);
             this.editor.invoke(['eventBus', function(bus){
               bus.on(
                 [
@@ -225,58 +233,61 @@ export default {
             this.triggerMathjax()
           },
         methods: {
-            addDefaultSystem: function(){
-                this.editor.invoke([ 'eventBus', 'elementFactory', 'canvas', 'modeling', 
-                    function(events, factory, canvas, modeling) {
-                      var inc = factory.createPlace({
-                        x: 100,
-                        y: 100
-                      })
-                      var transition = factory.createTransition({
-                        x: 200,
-                        y: 100
-                      })
-                      var out = factory.createPlace({
-                        x: 300,
-                        y: 100
-                      })
-                      var arcInc = factory.createFlow({
-                        source: inc,
-                        target: transition,
-                        waypoints: [
-                          {x: inc.x, y: inc.y},
-                          {x: transition.x, y: transition.y}
-                        ]
-                      })
-                      var arcOut = factory.createFlow({
-                        source: transition,
-                        target: out,
-                        waypoints: [
-                          {x: transition.x, y: transition.y},
-                          {x: out.x, y: out.y},
-                        ]
-                      })
-                      var root = canvas.getRootElement()
-                      inc = modeling.createShape(inc, {
-                        x: inc.x, y:inc.y
-                      }, root)
-                      transition = modeling.createShape(transition, {
-                        x: transition.x, y:transition.y
-                      }, root)
-                      out = modeling.createShape(out, {
-                        x: out.x, y:out.y
-                      }, root)
-                      modeling.createConnection(
-                        inc, transition,
-                        arcInc, root) 
-                      modeling.layoutConnection(arcInc, root)
-                      modeling.createConnection(
-                        transition, out,
-                        arcOut, root) 
-                      modeling.layoutConnection(arcOut, root)
-                      modeling.moveShape(inc, {x: 0.01, y: 0.01})
-            }]);
-            },
+          toggleFullscreen: function(){
+            this.$refs.container.classList.toggle('fullscreen')
+          },
+          addDefaultSystem: function(){
+              this.editor.invoke([ 'eventBus', 'elementFactory', 'canvas', 'modeling', 
+                  function(events, factory, canvas, modeling) {
+                    var inc = factory.createPlace({
+                      x: 100,
+                      y: 100
+                    })
+                    var transition = factory.createTransition({
+                      x: 200,
+                      y: 100
+                    })
+                    var out = factory.createPlace({
+                      x: 300,
+                      y: 100
+                    })
+                    var arcInc = factory.createFlow({
+                      source: inc,
+                      target: transition,
+                      waypoints: [
+                        {x: inc.x, y: inc.y},
+                        {x: transition.x, y: transition.y}
+                      ]
+                    })
+                    var arcOut = factory.createFlow({
+                      source: transition,
+                      target: out,
+                      waypoints: [
+                        {x: transition.x, y: transition.y},
+                        {x: out.x, y: out.y},
+                      ]
+                    })
+                    var root = canvas.getRootElement()
+                    inc = modeling.createShape(inc, {
+                      x: inc.x, y:inc.y
+                    }, root)
+                    transition = modeling.createShape(transition, {
+                      x: transition.x, y:transition.y
+                    }, root)
+                    out = modeling.createShape(out, {
+                      x: out.x, y:out.y
+                    }, root)
+                    modeling.createConnection(
+                      inc, transition,
+                      arcInc, root) 
+                    modeling.layoutConnection(arcInc, root)
+                    modeling.createConnection(
+                      transition, out,
+                      arcOut, root) 
+                    modeling.layoutConnection(arcOut, root)
+                    modeling.moveShape(inc, {x: 0.01, y: 0.01})
+          }]);
+          },
           loadDefaultSystem: function(){
             this.editor.invoke([
               'modeling', 'elementFactory', 'canvas', 'elementRegistry',

@@ -15,7 +15,8 @@ import {
   
 
 export default function ContextPadProvider(
-    create, elementFactory, connect, contextPad, modeling, eventBus, registry
+    create, elementFactory, connect, contextPad, modeling, 
+    eventBus, registry, select
 ) {
     this._create = create;
     this._elementFactory = elementFactory;
@@ -23,6 +24,7 @@ export default function ContextPadProvider(
     this._modeling = modeling;
     this._eventBus = eventBus;
     this._registry = registry
+    this._select = select
     // debugger;
     contextPad.registerProvider(this);
 }
@@ -34,7 +36,8 @@ export default function ContextPadProvider(
         'contextPad',
         'modeling',
         'eventBus',
-        'elementRegistry'
+        'elementRegistry',
+        'selection'
 
     ];
 
@@ -45,6 +48,7 @@ export default function ContextPadProvider(
             factory = this._elementFactory,
             create = this._create,
             registry = this._registry,
+            select = this._select,
             bus = this._eventBus;
 
         function removeElement(event, target, autoActivate) {
@@ -80,42 +84,81 @@ export default function ContextPadProvider(
             )
             bus.fire('elements.changed', {
                 elements: [connect, element, tgt, src]})
+            select.select(connect)
         }
 
         function createConnectedTransition(event, element, silent=false){
             var trans = factory.createTransition({
-                x: element.x+100,
-                y: element.y+100
+                x: element.x+150,
+                y: element.y + element.height/2,
             }, silent)
+            factory.logIdentifer(trans.id)
             trans = modeling.createShape(
-                trans, {x:trans.x, y:trans.y}, element.parent, 1
+                trans, {x:trans.x, y:trans.y}, 
+                element.parent, 1
             )
-            var connect = factory.createFlow({
+            var context = {
                 source: element,
-                target: trans})
-            modeling.createConnection(
-                element, trans, connect, element.parent)
+                target: trans,
+                waypoints: [
+                    {x: element.x, y: element.y},
+                    {x: trans.x, y:trans.y}
+                ]
+            }
+            var shape = factory.createFlow(
+                context
+            )
+            factory.logIdentifer(shape.id)
+            const connect = modeling.connect(
+                element, trans, 
+                shape,
+                element.parent
+            )
+            modeling.layoutConnection(
+                connect
+            )
+            modeling.moveElements([trans ,element, connect], {x:0,y:0})  
             bus.fire('elements.changed', {
                 elements: [trans,element, connect]}
-            )            
+            )          
+            select.select(trans)
         }
 
         function createConnectedPlace(event, element){
             var place = factory.createPlace({
-                x: element.x+100,
-                y: element.y+100
+                x: element.x + 150,
+                y: element.y + element.height/2
             })
+            factory.logIdentifer(place.id)
             place = modeling.createShape(
-                place, {x:place.x, y:place.y}, element.parent, 1
+                place, {x:place.x, y:place.y}, 
+                element.parent, 1
             )
-            var connect = factory.createFlow({
+            var context = {
                 source: element,
-                target: place})
-            modeling.createConnection(
-                element, place, connect, element.parent)
+                target: place,
+                waypoints: [
+                    {x: element.x, y: element.y},
+                    {x: place.x, y:place.y}
+                ]
+            }
+            var shape = factory.createFlow(
+                context
+            )
+            factory.logIdentifer(shape.id)
+            const connect = modeling.connect(
+                element, place, 
+                shape,
+                element.parent
+            )
+            modeling.layoutConnection(
+                connect
+            )
+            modeling.moveElements([place,element, connect], {x:0,y:0})
             bus.fire('elements.changed', {
                 elements: [place,element, connect]}
             )
+            select.select(place)
         }
 
         var contextPadOptions = {}

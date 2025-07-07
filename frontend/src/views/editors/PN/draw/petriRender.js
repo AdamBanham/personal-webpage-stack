@@ -77,7 +77,7 @@ export default class PetriRenderer extends  BaseRenderer {
         });
 
         this.CONNECTION_STYLE = styles.style(
-            { strokeWidth: 3, stroke: '#303c4a', strokeLinecap: 'round',
+            { strokeWidth: 3, stroke: 'var(--petri-net-connection-fill)', strokeLinecap: 'round',
                 strokeLinejoin: 'round', fill: 'none'});
         this.PLACE_STYLE = styles.style(
             { fill: '#f5f5f5', stroke: '#222222', strokeWidth: 2 }
@@ -100,28 +100,28 @@ export default class PetriRenderer extends  BaseRenderer {
         var marker = svgCreate("marker", {
             id: 'src-place-arrow',
             viewbox: '0 0 10 10',
-            refX: xOffset,
-            refY: yOffset,
+            refX: 5,
+            refY: 2.5,
             markerWidth: 5,
             markerHeight: 5,
             strokeWidth: 0,
             orient: 'auto-start-reverse',
-            stroke: '#303c4a',
-            fill: '#303c4a'
+            stroke: 'var(--petri-net-connection-fill)',
+            fill: 'var(--petri-net-connection-fill)'
         })
         xOffset = (((transitionSize/2)+8) * 2) / 5.0
         yOffset = ((((transitionSize/2)-8) / 2)) / 5
         var marker2 = svgCreate("marker", {
             id: 'src-trans-arrow',
             viewbox: '0 0 10 10',
-            refX: xOffset,
-            refY: yOffset,
+            refX: 5,
+            refY: 2.5,
             markerWidth: 5,
             markerHeight: 5,
             strokeWidth: 0,
             orient: 'auto-start-reverse',
-            stroke: '#303c4a',
-            fill: '#303c4a'
+            stroke: 'var(--petri-net-connection-fill)',
+            fill: 'var(--petri-net-connection-fill)'
         })
 
         xOffset = (((transitionSize/4) * 2.0) / 5.0) * 2.1
@@ -129,26 +129,26 @@ export default class PetriRenderer extends  BaseRenderer {
         var marker3 = svgCreate("marker", {
             id: 'src-silent-trans-arrow',
             viewbox: '0 0 10 10',
-            refX: xOffset,
-            refY: yOffset,
-            markerWidth: 5,
-            markerHeight: 5,
-            strokeWidth: 0,
-            orient: 'auto-start-reverse',
-            stroke: '#303c4a',
-            fill: '#303c4a'
-        })
-        var marker4 = svgCreate("marker", {
-            id: 'connect-hover-arrow',
-            viewbox: '0 0 10 10',
-            refX: 2.5,
+            refX: 5,
             refY: 2.5,
             markerWidth: 5,
             markerHeight: 5,
             strokeWidth: 0,
             orient: 'auto-start-reverse',
-            stroke: '#303c4a',
-            fill: '#2f5274'
+            stroke: 'var(--petri-net-connection-fill)',
+            fill: 'var(--petri-net-connection-fill)'
+        })
+        var marker4 = svgCreate("marker", {
+            id: 'connect-hover-arrow',
+            viewbox: '0 0 10 10',
+            refX: 5,
+            refY: 2.5,
+            markerWidth: 5,
+            markerHeight: 5,
+            strokeWidth: 0,
+            orient: 'auto-start-reverse',
+            stroke: 'var(--petri-net-connection-fill)',
+            fill: 'var(--petri-net-connection-fill)'
         })
         var markerPath = svgCreate("path", {
             d: "M 0 0 L 5 2.5 L 0 5 z"
@@ -201,19 +201,14 @@ export default class PetriRenderer extends  BaseRenderer {
                 var trans = this.drawTransition(element, this.TRANSITION_STYLE)
                 svgElements.push(
                     this.drawTransitionShadow(trans)
-                )
+                );
                 svgElements.push(
                     trans
-                )
-                if (!element.silent){
-                    svgElements.push(
-                        this.drawTransitionLabel(element)
-                    )
-                } else {
-                    svgElements.push(
-                        this.drawPlaceLabel(element)
-                    )
-                }
+                );
+                svgElements.push(
+                    this.drawTransitionLabel(element)
+                );
+                
             } else if (isFlow(element)){
                 svgElements.push(
                     this._drawSimpleConnection(visuals, element, attrs)
@@ -279,8 +274,7 @@ export default class PetriRenderer extends  BaseRenderer {
         if (element.silent){
             svgAttr(rect, 
                 {
-                    x: element.width / 4,
-                    width: element.width /2,
+                    width: element.width,
                     height: element.height,
                     rx: 10
                 }
@@ -301,15 +295,18 @@ export default class PetriRenderer extends  BaseRenderer {
     drawTransitionLabel(element){
         var text = svgCreate('text',
             assign({
-                x: transitionSize/2,
-                y: transitionSize/2,
+                x: element.silent ? transitionSize/-3 : transitionSize/2,
+                y: element.silent ? element.height : transitionSize/2,
                 fill: LABEL_COLOUR,
             }, TEXT_STYLE)
         )
-        if (element.labelText.length > 0)
+        if (element.labelText.length > 0 && !element.silent)
             text.textContent = element.labelText
         else 
-        text.textContent = element.id
+            text.textContent = "t" + element.id.split('-')[1]
+            svgAttr(text, {
+                textLength: "none" 
+            })        
         return text
     }
 
@@ -326,22 +323,16 @@ export default class PetriRenderer extends  BaseRenderer {
     }
 
     _drawSimpleConnection(visuals, connection, attrs){
+        if (!connection.waypoints || connection.waypoints.length < 2){
+            return visuals;
+        }
+        console.log("Drawing connection", connection.waypoints)
+        let waypoints = Array.from(connection.waypoints);
         var line = createLine(
-            connection.waypoints, assign({
-                id: connection.id
-            }, 
-            this.CONNECTION_STYLE, attrs || {})
+            connection.waypoints, 
+            assign({}, this.CONNECTION_STYLE),
+            5
         );
-        var waypoints = connection.waypoints.slice(0,2).map(p => {
-            return {x:p.x+5, y:p.y-5}
-        })
-        waypoints.sort(
-            (a,b) => a.x - b.x
-        )
-        var pather = createLine(
-            waypoints, {
-                id: "d"+connection.id
-            })
         if (!connection.target){
             svgAttr(
                 line,
@@ -364,9 +355,8 @@ export default class PetriRenderer extends  BaseRenderer {
                     {'marker-end' : "url(#src-trans-arrow)",}
                 )
         }
-        svgAppend(visuals, pather);
         svgAppend(visuals, line);
-        return line;
+        return visuals;
     }
 
     drawConnection(visuals, connection, attrs) {

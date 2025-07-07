@@ -93,7 +93,7 @@ class TsXmlImporter {
             )
             this._factory.logIdentifer(shape.id)
             const mshape = this._modeling.createShape(
-                shape, {x: shape.x, y:shape.y}, 
+                shape, {x: shape.x+shape.width/2, y:shape.y + shape.height/2}, 
                 this._canvas.getRootElement(),
                 1
             )
@@ -119,7 +119,7 @@ class TsXmlImporter {
             )
             this._factory.logIdentifer(shape.id)
             const mshape = this._modeling.createShape(
-                shape, {x: shape.x, y:shape.y}, 
+                shape, {x: shape.x + shape.width/2, y:shape.y + shape.height/2}, 
                 this._canvas.getRootElement(),
                 1
             )
@@ -143,14 +143,14 @@ class TsXmlImporter {
                 }
                 points = points.map((p) => {
                     return {
-                        x: p.x - src.width/2,
-                        y: p.y - src.height/2
+                        x: p.x,
+                        y: p.y
                     }
                 })
             } else {
                 var points = [
-                    {x: src.x+src.width/2, y: src.y+src.height/2},
-                    {x: tgt.x+tgt.width/2, y: tgt.y+src.height/2}
+                    {x: src.x, y: src.y},
+                    {x: tgt.x, y: tgt.y}
                 ]
             }
             
@@ -168,6 +168,9 @@ class TsXmlImporter {
                 src, tgt, 
                 shape,
                 this._canvas.getRootElement()
+            )
+            this._modeling.layoutConnection(
+                mshape
             )
             named_els[shape.id] = mshape
             // this._modeling.reconnectStart(mshape, src, {x: src.x+src.width/2, y: src.y+tgt.height/2})
@@ -187,11 +190,14 @@ class TsXmlImporter {
                     false,
                     {
                         recurse: false,
-                        layout: false
+                        layout: true
                     }
                 )
                 bus.fire('element.changed', 
                     {element: item}
+                )
+                bus.fire('elements.changed', 
+                    {elements: [item]}
                 )
             }
             , push) 

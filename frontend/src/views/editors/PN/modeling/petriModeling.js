@@ -1,6 +1,10 @@
 import modeling from 'diagram-js/lib/features/modeling/Modeling';
 import { isTransition } from '../elements/pertiElementFactory';
 
+import {
+    placeRadius, transitionSize
+} from '../elements/staticShapeDesc';
+
 class PetriModeling extends modeling {
   
   constructor(eventBus, elementRegistry, commandStack) {
@@ -19,6 +23,14 @@ class PetriModeling extends modeling {
   toggleTransitionType(element) {
     if (isTransition(element)) {
 
+      
+
+      if (element.silent) {
+        element.width = transitionSize;
+      } else {
+        element.width = transitionSize/2;
+      }
+
       element.silent = !element.silent;
 
       var context = {
@@ -26,6 +38,10 @@ class PetriModeling extends modeling {
       }
 
       this._eventBus.fire('elements.changed', context)
+      this.moveElements(context.elements, {
+        x: 0,
+        y: 0
+      });
     }
 
   }

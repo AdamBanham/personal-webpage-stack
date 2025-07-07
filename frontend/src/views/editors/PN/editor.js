@@ -20,21 +20,13 @@ import ChangeSupport from 'diagram-js/lib/features/change-support'
 
 // custom providers
 import ProvidersModule from './providers';
-
-// custom renderers
 import TSRenderer from './draw';
-
-// custom element factory
-import elementFactory from './elements'
-
-// custom modeling 
-import customModeling from './modeling'
-
-// custom rules for Petri nets
-import PetriRules from './rules'
-
-// custom connect
-import customConnect from "./connect"
+import elementFactory from './elements';
+import customModeling from './modeling';
+import PetriRules from './rules';
+import customConnect from './connect';
+import GridModule from '../base/grid';
+import PetriLayout from './layout';
 
 /**
  * A module that changes the default diagram look.
@@ -86,7 +78,9 @@ export default function TSEditor(options) {
         customConnect,
         elementFactory,
         customModeling,
-        PetriRules
+        PetriRules,
+        GridModule,
+        PetriLayout
     ];
 
     var diagram =  new Diagram({

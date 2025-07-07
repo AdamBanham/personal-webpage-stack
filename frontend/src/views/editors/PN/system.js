@@ -10,258 +10,259 @@ export default `<?xml version="1.0" encoding="UTF-8"?>
                 <text>place-5</text>
             </name>
             <graphics>
-                <position x="10" y="-54"/>
+                <position x="-12" y="-76"/>
             </graphics>
-            <toolspecific tool="ProM" version="6.4" localNodeID="84802b06-eb14-490a-892d-0e22ef1ae24f" />
+            <toolspecific tool="ProM" version="6.4" localNodeID="ac1acead-3e7e-418d-bd04-033c9bdad594" />
        </place>
        <place id="place-8">
             <name>
                 <text>place-8</text>
             </name>
             <graphics>
-                <position x="246" y="144"/>
+                <position x="221" y="119"/>
             </graphics>
-            <toolspecific tool="ProM" version="6.4" localNodeID="b88a249a-3621-48af-8f91-249632d65931" />
+            <toolspecific tool="ProM" version="6.4" localNodeID="9477b480-da66-463f-9743-d6af15d102f4" />
        </place>
        <place id="place-9">
             <name>
                 <text>place-9</text>
             </name>
             <graphics>
-                <position x="246" y="-54"/>
+                <position x="221" y="-76"/>
             </graphics>
-            <toolspecific tool="ProM" version="6.4" localNodeID="3716cfcc-598d-4596-a64d-c523162fef2b" />
+            <toolspecific tool="ProM" version="6.4" localNodeID="6550d9cb-c798-4629-9a00-a42d6ee8a1ed" />
        </place>
        <place id="place-12">
             <name>
                 <text>place-12</text>
             </name>
             <graphics>
-                <position x="480" y="-54"/>
+                <position x="455" y="-76"/>
             </graphics>
-            <toolspecific tool="ProM" version="6.4" localNodeID="d4cfea4a-5876-402c-a480-5df94e447e99" />
+            <toolspecific tool="ProM" version="6.4" localNodeID="8bd60168-18df-4223-bb00-4dfa290d9621" />
        </place>
        <place id="place-14">
             <name>
                 <text>place-14</text>
             </name>
             <graphics>
-                <position x="480" y="144"/>
+                <position x="455" y="119"/>
             </graphics>
-            <toolspecific tool="ProM" version="6.4" localNodeID="7b398a5c-6400-4181-90a6-9171f8eed694" />
+            <toolspecific tool="ProM" version="6.4" localNodeID="fdba7780-d268-40a2-a225-c75243cf1e94" />
        </place>
        <place id="place-17">
             <name>
                 <text>place-17</text>
             </name>
             <graphics>
-                <position x="681" y="44"/>
+                <position x="656" y="14"/>
             </graphics>
-            <toolspecific tool="ProM" version="6.4" localNodeID="02cfa26c-2466-4998-a73b-cc52e6793eac" />
+            <toolspecific tool="ProM" version="6.4" localNodeID="911691ec-2bf1-4749-9477-756f641eff49" />
        </place>
        <transition id="transition-7" invisible="true">
             <name>
                 <text>action</text>
             </name>
             <graphics>
-                <position x="103" y="-59"/>
+                <position x="103" y="-82"/>
             </graphics>
-            <toolspecific tool="ProM" version="6.4" localNodeID="3e62a03d-0567-4696-9741-f9dd6fc9d5fc" activity="$invisible$"/>
+            <toolspecific tool="ProM" version="6.4" localNodeID="550b3b56-b23e-4563-906c-9c5c6b23d343" activity="$invisible$"/>
        </transition>
        <transition id="transition-10" invisible="false">
             <name>
                 <text>a</text>
             </name>
             <graphics>
-                <position x="359" y="-59"/>
+                <position x="329" y="-81"/>
             </graphics>
-            <toolspecific tool="ProM" version="6.4" localNodeID="b5ddcb02-caf5-4589-a91b-05889adeecb9" activity=""/>
+            <toolspecific tool="ProM" version="6.4" localNodeID="a77aeaec-04ea-4b4a-a293-a44bf780e353" activity=""/>
        </transition>
        <transition id="transition-11" invisible="false">
             <name>
                 <text>b</text>
             </name>
             <graphics>
-                <position x="359" y="39"/>
+                <position x="329" y="9"/>
             </graphics>
-            <toolspecific tool="ProM" version="6.4" localNodeID="67028e7d-43a7-47e6-a384-0e6947afa8d2" activity=""/>
+            <toolspecific tool="ProM" version="6.4" localNodeID="b6f9a240-17c8-4cf5-99cb-ce990501962f" activity=""/>
        </transition>
        <transition id="transition-13" invisible="false">
             <name>
                 <text>c</text>
             </name>
             <graphics>
-                <position x="359" y="139"/>
+                <position x="329" y="114"/>
             </graphics>
-            <toolspecific tool="ProM" version="6.4" localNodeID="42bb413e-9ac5-41ae-a333-f9fc48a6af5b" activity=""/>
+            <toolspecific tool="ProM" version="6.4" localNodeID="a38eaf78-e081-4d4d-bc78-d3a7d1abe996" activity=""/>
        </transition>
        <transition id="transition-15" invisible="true">
             <name>
                 <text>action</text>
             </name>
             <graphics>
-                <position x="359" y="233"/>
+                <position x="344" y="203"/>
             </graphics>
-            <toolspecific tool="ProM" version="6.4" localNodeID="c19a6db8-c2d6-4bbf-9c23-762f4bb6e895" activity="$invisible$"/>
+            <toolspecific tool="ProM" version="6.4" localNodeID="e480d2ff-24ad-43ad-9e40-dd78c11338d7" activity="$invisible$"/>
        </transition>
        <transition id="transition-16" invisible="true">
             <name>
                 <text>action</text>
             </name>
             <graphics>
-                <position x="569" y="39"/>
+                <position x="554" y="9"/>
             </graphics>
-            <toolspecific tool="ProM" version="6.4" localNodeID="ca3c4d3b-c751-48ac-be29-30308e591f50" activity="$invisible$"/>
+            <toolspecific tool="ProM" version="6.4" localNodeID="130b0d55-5001-4bfd-aaef-1f30626bd9a4" activity="$invisible$"/>
        </transition>
        <arc id="flow-12" source="place-5" target="transition-7">
-            <toolspecific tool="ProM" version="6.4" localNodeID="e8d6d9f2-380b-44d1-a7ab-ab7a1598fe19" />
+            <toolspecific tool="ProM" version="6.4" localNodeID="f9b41349-4244-4a51-8297-7049b7ac6be1" />
             <arctype>
                 <text>normal</text>
             </arctype>
             <graphics>            
-                <position x="35" y="-30"/>
-                <position x="133" y="-30"/>
+                <position x="37" y="-52"/>
+                <position x="103" y="-52"/>
            </graphics>       
         </arc>
        <arc id="flow-14" source="transition-7" target="place-8">
-            <toolspecific tool="ProM" version="6.4" localNodeID="57ccb4be-c9e4-4f9f-a05a-595069ca8c53" />
+            <toolspecific tool="ProM" version="6.4" localNodeID="216d15fc-d063-4c6b-863d-695be127cc68" />
             <arctype>
                 <text>normal</text>
             </arctype>
             <graphics>            
-                <position x="133" y="-30"/>
-                <position x="133" y="169"/>
-                <position x="271" y="169"/>
+                <position x="118" y="-22"/>
+                <position x="118" y="143"/>
+                <position x="221" y="143"/>
            </graphics>       
         </arc>
        <arc id="flow-16" source="transition-7" target="place-9">
-            <toolspecific tool="ProM" version="6.4" localNodeID="3d1d0e5b-ce13-458b-9a6b-bb914386d329" />
+            <toolspecific tool="ProM" version="6.4" localNodeID="23d17c48-942d-46be-af1e-9f5cfe191cfe" />
             <arctype>
                 <text>normal</text>
             </arctype>
             <graphics>            
-                <position x="133" y="-30"/>
-                <position x="271" y="-30"/>
+                <position x="133" y="-52"/>
+                <position x="221" y="-52"/>
            </graphics>       
         </arc>
        <arc id="flow-17" source="place-9" target="transition-10">
-            <toolspecific tool="ProM" version="6.4" localNodeID="52a25f83-d561-4a36-a1d6-80c6e53f7384" />
+            <toolspecific tool="ProM" version="6.4" localNodeID="c2a5e6b7-151b-4ed3-af99-f7e855258e57" />
             <arctype>
                 <text>normal</text>
             </arctype>
             <graphics>            
-                <position x="271" y="-31"/>
-                <position x="389" y="-30"/>
+                <position x="271" y="-51"/>
+                <position x="329" y="-51"/>
            </graphics>       
         </arc>
        <arc id="flow-18" source="place-9" target="transition-11">
-            <toolspecific tool="ProM" version="6.4" localNodeID="10adbdfc-1093-4b41-a3c5-c7e9c6649e7a" />
+            <toolspecific tool="ProM" version="6.4" localNodeID="446fa84a-2a5c-43cc-8d4a-ce6d118152d6" />
             <arctype>
                 <text>normal</text>
             </arctype>
             <graphics>            
-                <position x="271" y="-30"/>
-                <position x="271" y="69"/>
-                <position x="389" y="69"/>
+                <position x="246" y="-26"/>
+                <position x="246" y="40"/>
+                <position x="329" y="39"/>
            </graphics>       
         </arc>
        <arc id="flow-19" source="transition-11" target="place-12">
-            <toolspecific tool="ProM" version="6.4" localNodeID="201f8661-873f-4170-af0a-a168c2dc806e" />
+            <toolspecific tool="ProM" version="6.4" localNodeID="bc9d9e91-7d60-4616-8091-6e7e78088b9f" />
             <arctype>
                 <text>normal</text>
             </arctype>
             <graphics>            
-                <position x="389" y="69"/>
-                <position x="505" y="69"/>
-                <position x="505" y="-30"/>
+                <position x="389" y="39"/>
+                <position x="479" y="39"/>
+                <position x="479" y="-26"/>
            </graphics>       
         </arc>
        <arc id="flow-21" source="transition-10" target="place-12">
-            <toolspecific tool="ProM" version="6.4" localNodeID="93fd3088-b10c-497e-a049-bbd656ba64e0" />
+            <toolspecific tool="ProM" version="6.4" localNodeID="640f2371-2acd-429a-8f0e-9505aeb3b4e9" />
             <arctype>
                 <text>normal</text>
             </arctype>
             <graphics>            
-                <position x="389" y="-30"/>
-                <position x="505" y="-30"/>
+                <position x="389" y="-51"/>
+                <position x="455" y="-51"/>
            </graphics>       
         </arc>
        <arc id="flow-22" source="place-8" target="transition-13">
-            <toolspecific tool="ProM" version="6.4" localNodeID="43875f2b-1fd3-48cd-8c2d-be396c756ef3" />
+            <toolspecific tool="ProM" version="6.4" localNodeID="128ee4d1-6268-4585-bb0f-0dcd809e4a19" />
             <arctype>
                 <text>normal</text>
             </arctype>
             <graphics>            
-                <position x="271" y="169"/>
-                <position x="389" y="169"/>
+                <position x="271" y="144"/>
+                <position x="329" y="144"/>
            </graphics>       
         </arc>
        <arc id="flow-23" source="transition-13" target="place-14">
-            <toolspecific tool="ProM" version="6.4" localNodeID="bfe671ca-71ae-47ab-8488-c7eb37de897c" />
+            <toolspecific tool="ProM" version="6.4" localNodeID="451a92b3-eb2d-46c7-9d8e-38c252f70091" />
             <arctype>
                 <text>normal</text>
             </arctype>
             <graphics>            
-                <position x="389" y="169"/>
-                <position x="505" y="169"/>
+                <position x="389" y="144"/>
+                <position x="455" y="144"/>
            </graphics>       
         </arc>
        <arc id="flow-24" source="place-14" target="transition-15">
-            <toolspecific tool="ProM" version="6.4" localNodeID="07bb6cd8-0bb9-41bb-8de7-a5d2dadf7dac" />
+            <toolspecific tool="ProM" version="6.4" localNodeID="a99b0f25-d960-4cc1-aff5-7b5a716c1833" />
             <arctype>
                 <text>normal</text>
             </arctype>
             <graphics>            
-                <position x="505" y="169"/>
-                <position x="505" y="268"/>
-                <position x="394" y="268"/>
+                <position x="480" y="169"/>
+                <position x="480" y="233"/>
+                <position x="374" y="233"/>
            </graphics>       
         </arc>
        <arc id="flow-26" source="transition-15" target="place-8">
-            <toolspecific tool="ProM" version="6.4" localNodeID="519ace7f-30a1-4bee-a46b-ded16c3704ac" />
+            <toolspecific tool="ProM" version="6.4" localNodeID="9a5d46ad-d465-4bff-9026-5d34e5dcb214" />
             <arctype>
                 <text>normal</text>
             </arctype>
             <graphics>            
-                <position x="389" y="263"/>
-                <position x="271" y="263"/>
-                <position x="271" y="169"/>
+                <position x="344" y="233"/>
+                <position x="247" y="233"/>
+                <position x="246" y="169"/>
            </graphics>       
         </arc>
        <arc id="flow-27" source="place-14" target="transition-16">
-            <toolspecific tool="ProM" version="6.4" localNodeID="d3cb8e16-259a-4eb2-a6f6-25f5402b1080" />
+            <toolspecific tool="ProM" version="6.4" localNodeID="65588183-dbb2-45f6-b6c5-a31513b9b500" />
             <arctype>
                 <text>normal</text>
             </arctype>
             <graphics>            
-                <position x="505" y="169"/>
-                <position x="604" y="169"/>
-                <position x="604" y="74"/>
+                <position x="505" y="144"/>
+                <position x="570" y="144"/>
+                <position x="569" y="69"/>
            </graphics>       
         </arc>
        <arc id="flow-29" source="place-12" target="transition-16">
-            <toolspecific tool="ProM" version="6.4" localNodeID="531e0d37-9836-4310-9349-dc98b20781fd" />
+            <toolspecific tool="ProM" version="6.4" localNodeID="f4627edf-20f0-41e7-8e07-20ea66ca425d" />
             <arctype>
                 <text>normal</text>
             </arctype>
             <graphics>            
-                <position x="505" y="-31"/>
-                <position x="599" y="-31"/>
-                <position x="599" y="69"/>
+                <position x="505" y="-52"/>
+                <position x="569" y="-53"/>
+                <position x="569" y="9"/>
            </graphics>       
         </arc>
        <arc id="flow-30" source="transition-16" target="place-17">
-            <toolspecific tool="ProM" version="6.4" localNodeID="76836f30-c123-4b5e-9200-b4b84e281867" />
+            <toolspecific tool="ProM" version="6.4" localNodeID="bbb24df9-bc8d-468f-a4dd-2bff18d50e5d" />
             <arctype>
                 <text>normal</text>
             </arctype>
             <graphics>            
-                <position x="599" y="69"/>
-                <position x="706" y="69"/>
+                <position x="584" y="39"/>
+                <position x="656" y="39"/>
            </graphics>       
         </arc>
    </page>
 </net>
 </pnml>
+
 
 `

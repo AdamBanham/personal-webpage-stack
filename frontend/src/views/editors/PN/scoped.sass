@@ -1,15 +1,38 @@
 @use "@/styles/coloursAnt.sass" as c
 @use "@/styles/content.sass" as cont
+
+.editor-canvas-ts-container
+  --editor-primary: #2222f8
+  --editor-secondary: #074355
+  --editor-scence-bg: #323650
+  --petri-net-connection-fill: #000000
+
+$editor-scene-bg: #323650
+
+.editor-canvas-ts-container.fullscreen
+  position: absolute
+  top: 0
+  left: 0
+  width: 100%
+  height: 100%
+  z-index: 9999
+  margin: 0 0 0 0 
+  border-radius: 0px
     
 .editor-canvas-ts-container
   margin-top: 25px
-  min-width: 1000px
-  min-height: 640px
-  background: none
+  width: calc(100% - 20px)
+  height: 80%
+  background: var(--editor-scence-bg)
   border: 2px c.$black-blue
   border-style: solid
   border-radius: 15px
   margin-bottom: 15px
+  margin-left: 10px
+  margin-right: 10px
+
+  #ts-editor 
+
       
   .editor-canvas
     width: 100%
@@ -19,16 +42,16 @@
         background: none
 
     .djs-container
-        .djs-context-pad-parent
-            .open
-                .group
-                    .editor-hover
-                        color: black
-                        width: 20px
-                        height: 20px
-                        border: 2px red solid
-                        &:hover
-                            color: c.$blue-7
+      .djs-context-pad-parent
+          .open
+              .group
+                  .editor-hover
+                      color: black
+                      width: 20px
+                      height: 20px
+                      border: 2px red solid
+                      &:hover
+                          color: c.$blue-7
 
 .pn-editor-content
   margin-bottom: 100px
@@ -39,7 +62,7 @@
     border-radius: 15px 
     margin-left: 2.5%
     margin-right: 2.5%
-    background-color: c.$gray-5
+    background-color: $editor-scene-bg
     height: fit-content
     flex-direction: row
     max-width: 95%
@@ -75,7 +98,7 @@
       .net-states
         width: 100%
         max-width: 100%
-        background-color: c.$gray-6
+        background-color: lighten($editor-scene-bg, 25%)
         border-radius: 15px 
         margin: 5px
         flex: 1 1

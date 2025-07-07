@@ -7,6 +7,7 @@ import {
 import {
     placeRadius, transitionSize
 } from './staticShapeDesc';
+import { getMid } from "diagram-js/lib/layout/LayoutUtil";
 
 function isPlace(element) {
     if (!element.type) return false
@@ -102,7 +103,7 @@ class PetriElementFactory extends ElementFactory {
             x: context.x,
             y: context.y,
             silent: silent,
-            width: transitionSize,
+            width: silent ? transitionSize/ 2 : transitionSize,
             height: transitionSize,
             labelText: context.labelText ? context.labelText : 'action'
         }
@@ -114,7 +115,10 @@ class PetriElementFactory extends ElementFactory {
         var flow = {
             id: context.id ? context.id : this.getNextFlowId(),
             type: 'flow',
-            waypoints: context.waypoints,
+            waypoints: context.waypoints || [
+                getMid(context.source),
+                getMid(context.target)
+            ],
             source: context.source,
             target: context.target
         }

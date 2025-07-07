@@ -103,9 +103,9 @@ export default function Connect(eventBus, dragging, modeling, rules,
       var connection = factory.createFlow({
         source: source,
         target: target,
-        waypoints: [ connectionStart, connectionEnd ]
       });
       context.connection = modeling.connect(source, target, connection, hints);
+      modeling.layoutConnection(context.connection)
       eventBus.fire('elements.changed', {
         elements: [source,target,context.connection]
       })

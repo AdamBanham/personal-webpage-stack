@@ -1,6 +1,7 @@
 
-import TsXmlExporter from "../exporter.js"
+import TsXmlExporter from "../exporter.js";
 import TsXmlImporter from "../importer.js";
+import {scaleToFitElements} from "../../base/utils/canvasUtils.js";
 import SvgSaver from "../svgSaver.js";
 
 /**
@@ -21,6 +22,12 @@ export default function ExamplePaletteProvider(
     this._textRenderer = textRenderer
   
     palette.registerProvider(this);
+
+    this._bus.on('diagram.init', (event) => {
+      setTimeout(() => {scaleToFitElements(canvas)},100);
+      setTimeout(() => {scaleToFitElements(canvas)},150);
+      console.log("Palette initialized", event);
+    });
   }
   
   ExamplePaletteProvider.$inject = [
@@ -194,15 +201,24 @@ export default function ExamplePaletteProvider(
       'fitview': {
         group: 'view',
         className: 'mdi-overscan mdi',
-        title: 'fit to screen',
+        title: 'Fit to Screen',
         action: {
           click: function(event) {
-            const {inner} = canvas.viewbox()
-            var center = {
-              x: inner.x + inner.width/2,
-              y: inner.y + inner.height/2
-            }
-            canvas.zoom('fit-viewport', center)
+            scaleToFitElements(canvas)
+          }
+        }
+      },
+      'fullscreen': {
+        group: 'view',
+        className: 'mdi-fullscreen mdi',
+        title: 'Toggle Fullscreen',
+        action: {
+          click: function(event) {
+            bus.fire('editor.fullscreen.toggle', {})
+            setTimeout(() => {
+              scaleToFitElements(canvas)
+              scaleToFitElements(canvas)
+            }, 75);
           }
         }
       },
