@@ -7,7 +7,7 @@
           size="large" 
           style="margin-right: 10px"
         />
-        Adam P. Banham
+        <p style="color:whitesmoke"><strong><i>Dr</i></strong> Adam P. Banham</p>
       </template>
       <template #append>
         <v-btn id="menu-cv">
