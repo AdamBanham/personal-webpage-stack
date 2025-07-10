@@ -31,13 +31,13 @@
       </div>
       <div
         ref="container"
-        class="editor-container"
+        class="editor-container editor-orm-container"
         id="content"
       >
         <div
           ref="canvas"
           class="editor"
-          id="editor"
+          id="orm-editor"
         >
           <!-- The editor will be rendered here -->
           <div class="helpers">
@@ -289,12 +289,13 @@ export default {
 <style lang="css">
 @import "./ORM/media/editor.css";
 @import "./ORM/media/render.css";
-@import "./ORM/media/diagram-js.css";
+/* @import "./ORM/media/diagram-js.css"; */
 </style>
     
 <style lang="sass" scoped>
 @import "@/styles/coloursAnt.sass"
 @import "@/styles/content.sass"
+
 
 .editor-header
   margin-bottom: 15px

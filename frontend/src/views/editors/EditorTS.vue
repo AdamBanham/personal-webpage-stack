@@ -23,7 +23,7 @@
     </div>
     <div
       ref="container"
-      class="editor-canvas-ts-container"
+      class="editor-canvas-ts-container editor-outter-box-shadow"
     >
       <div
         ref="canvas"
@@ -32,7 +32,7 @@
     </div>
     <div
       ref="editor-ts-math"
-      class="net-compontents"
+      class="net-compontents editor-outter-box-shadow"
     >
       <h3> Transition Net Components </h3>
       <div class="net">
@@ -79,9 +79,10 @@
 </template>
     
 <script>
-    import EditorTS  from "./TS/editor.js"
-    import defaultSystem from "./TS/system.js"
-    import TsXmlImporter from "./TS/importer.js"
+    import EditorTS  from "./TS/editor.js";
+    import defaultSystem from "./TS/system.js";
+    import TsXmlImporter from "./TS/importer.js";
+    import { scaleToFitElements } from "./base/utils/canvasUtils.js";
 
     import {
       getConnectionMid
@@ -93,6 +94,7 @@
             return {
                 root: null,
                 editor: null,
+                container: null,
                 diagramXML: null,
                 states : [],
                 transitions : [],
@@ -101,12 +103,16 @@
         },
         computed : {
           statesML : function(){
-            var ret = "\\begin{align*} \\{ "
+            var ret = "\\begin{align*} \\{ ";
+            let added = false;
             for(const state of this.states){
               var label = this.findLabel(state)
               ret += "\\text{"+ label + "}, "
             }
             this.triggerMathjax()
+            if (!added){
+              return ret + " \\} \\end{align*}"
+            }
             return ret.substring(0, ret.length-2) + " \\} \\end{align*}"
           },
           actions : function(){
@@ -120,18 +126,24 @@
           },
           actionsML : function(){
             var ret = "\\begin{align*} \\{ "
+            let added = false;
             for(const act of this.actions){
               if (act.startsWith("\\")){
                 ret += " " + act + ", "
               } else {
                 ret += " \\textit{"+act+"}, "
               }
+              added = true;
             }
             this.triggerMathjax()
+            if (!added){
+              return ret + " \\} \\end{align*}"
+            }
             return ret.substring(0, ret.length-2) + " \\} \\end{align*}"
           },
           transitionsML : function(){
-            var ret = "\\begin{align*} \\{ "
+            var ret = "\\begin{align*} \\{ ";
+            let added = false;
             for(const trans of this.transitions){
               var action = this.findLabel(trans)
               if (!action.startsWith("\\")){
@@ -140,13 +152,18 @@
               var src = this.findLabel(trans.src)
               var tgt = this.findLabel(trans.tgt)
               ret += " (\\text{"+src+"}, "+action+", \\text{"+tgt+"}), "
+              added = true;
             }
             this.triggerMathjax()
+            if (!added){
+              return ret + " \\} \\end{align*}"
+            }
             return ret.substring(0, ret.length-2) + " \\} \\end{align*}"
           }
         },
         mounted: function(){
             this.root = this.$refs.canvas;
+            this.container = this.$refs.container;  
             var _options = {
                 container:  this.root
             }
@@ -177,6 +194,15 @@
             this.editor.invoke(['eventBus', function(bus){
                 bus.on(
                   [
+                  'editor.fullscreen.toggle'
+                  ],
+                50, (ev) => {
+                  that.toggleFullScreen()
+              }, that)
+            }]);
+            this.editor.invoke(['eventBus', function(bus){
+                bus.on(
+                  [
                   'element.changed', 'elements.changed'
                   ],
                 50, (ev) => {
@@ -192,12 +218,22 @@
                   that.resetToEmpty()
               }, that)
             }]);
+            this.editor.invoke(['canvas', function(canvas){
+                setTimeout(() => {
+                  scaleToFitElements(canvas);
+                }, 150);
+            }]);
             // add default system
             this.loadDefaultSystem()
             this.editor.get('canvas').zoom('fit-viewport');
             this.triggerMathjax()
           },
         methods: {
+            toggleFullScreen: function() {
+              if (this.container) {
+                this.container.classList.toggle('fullscreen');
+              }
+            },
             addDefaultSystem: function(){
                 this.editor.invoke([ 'eventBus', 'elementFactory', 'canvas', 'modeling', 
                     function(events, factory, canvas, modeling) {
@@ -435,44 +471,67 @@
 <style lang="sass" scoped>
 @use "@/styles/coloursAnt.sass" as c
 @use "@/styles/content.sass" as cont
+
+$editor-scene-bg: #323650
     
-.editor-canvas-ts-container
-  margin-top: 25px
-  min-width: 1000px
-  min-height: 640px
-  background: none
-  border: 2px c.$black-blue
-  border-style: solid
-  border-radius: 15px
-  margin-bottom: 15px
-      
-  .editor-canvas
-    width: 100%
-    height: 100%
-
-    div 
-        background: none
-
-    .djs-container
-        .djs-context-pad-parent
-            .open
-                .group
-                    .editor-hover
-                        color: black
-                        width: 20px
-                        height: 20px
-                        border: 2px red solid
-                        &:hover
-                            color: c.$blue-7
-
 .editor-content
   margin-bottom: 100px
+  --editor-primary: #2222f8
+  --editor-secondary: #074355
+  --editor-scence-bg: #323650
+  --petri-net-connection-fill: #000000
+
+  .editor-canvas-ts-container.fullscreen
+    position: absolute
+    top: 0
+    left: 0
+    width: 100%
+    height: 100%
+    z-index: 1000
+    margin: 0 0 0 0 
+    border-radius: 0px
+
+  .editor-canvas-ts-container
+    margin-top: 25px
+    margin-left: 25px
+    margin-right: 25px
+    width: auto
+    min-height: 500px
+    height: 80%
+    background: var(--editor-scence-bg)
+    border: 1px c.$black-blue
+    border-style: solid
+    border-radius: 15px
+    margin-bottom: 15px
+
+    &:focus-within
+      border: 1px yellow solid inset
+        
+    .editor-canvas
+      width: 100%
+      height: 100%
+
+      div 
+          background: none
+
+      .djs-container
+          .djs-context-pad-parent
+              .open
+                  .group
+                      .editor-hover
+                          color: black
+                          width: 20px
+                          height: 20px
+                          border: 2px red solid
+                          &:hover
+                              color: c.$blue-7
+
   .net-compontents
     width: 95%
     border-radius: 15px 
     margin-left: 2.5%
     margin-right: 2.5%
-    background-color: c.$gray-5
+    background-color: var(--editor-scence-bg)
     height: fit-content
     flex-direction: row
     max-width: 95%
@@ -508,7 +567,7 @@
       .net-states
         width: 100%
         max-width: 100%
-        background-color: c.$gray-6
+        background-color: lighten($editor-scene-bg, 20%)
         border-radius: 15px 
         margin: 5px
         flex: 1 1
@@ -518,13 +577,13 @@
           max-width: 100%
       .net-actions
         width: 100%
-        background-color: c.$gray-6
+        background-color: lighten($editor-scene-bg, 20%)
         border-radius: 15px 
         margin: 5px
         flex: 1 1
       .net-transitions
         width: 100%
-        background-color: c.$gray-6
+        background-color: lighten($editor-scene-bg, 20%)
         border-radius: 15px 
         margin: 5px
         flex: 1 1

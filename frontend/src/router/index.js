@@ -9,6 +9,7 @@ import PMDiscoveryPage from "@/views/process-mining/DiscoveryPage.vue"
 import EditorTS from "@/views/editors/EditorTS.vue"
 import EditorPN from "@/views/editors/PN/EditorPN.vue"
 import EditorORM from "@/views/editors/EditorORM.vue"
+import EditorBPMN from "@/views/editors/EditorBPMN.vue"
 
 const routes = [
   {
@@ -70,7 +71,7 @@ const routes = [
   {
     path: '/editor/bpmn',
     name: 'editor-bpmn',
-    component: NotReady
+    component: EditorBPMN
   },
   {
     path: '/contact',

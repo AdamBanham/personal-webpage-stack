@@ -18,14 +18,14 @@
     --render-value-constraint-text-fill: hsl(300, 36%, 51%);
 }
 
-#editor .fact-role {
+#orm-editor .fact-role {
     fill: var(--render-fill-colour);
     stroke: var(--render-border-colour);
     stroke-width: 1.5;
     cursor: pointer;
 }
 
-#editor .fact-label {
+#orm-editor .fact-label {
     fill: var(--render-fill-colour);
     font-family: 'Roboto', sans-serif;
     font-size: 12px;
@@ -36,7 +36,7 @@
 }
 
 
-#editor .djs-visual {
+#orm-editor .djs-visual {
     .orm-visuals {
         .fact-role-free {
             fill: var(--render-fact-hover-success);

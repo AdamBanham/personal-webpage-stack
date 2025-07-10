@@ -326,7 +326,6 @@ export default class PetriRenderer extends  BaseRenderer {
         if (!connection.waypoints || connection.waypoints.length < 2){
             return visuals;
         }
-        console.log("Drawing connection", connection.waypoints)
         let waypoints = Array.from(connection.waypoints);
         var line = createLine(
             connection.waypoints, 

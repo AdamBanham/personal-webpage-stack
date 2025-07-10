@@ -26,7 +26,6 @@ export default function ExamplePaletteProvider(
     this._bus.on('diagram.init', (event) => {
       setTimeout(() => {scaleToFitElements(canvas)},100);
       setTimeout(() => {scaleToFitElements(canvas)},150);
-      console.log("Palette initialized", event);
     });
   }
   

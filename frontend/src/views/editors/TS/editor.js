@@ -20,15 +20,11 @@ import ChangeSupport from 'diagram-js/lib/features/change-support'
 
 // custom providers
 import ProvidersModule from './providers';
-
-// custom renderers
 import TSRenderer from './draw';
-
-// custom element factory
-import elementFactory from './elements'
-
-// custom connect
-import customConnect from "./connect"
+import elementFactory from './elements';
+import customConnect from "./connect";
+import gridModules from '../base/grid';
+import customLayouter from './layout';
 
 /**
  * A module that changes the default diagram look.
@@ -78,7 +74,9 @@ export default function TSEditor(options) {
     const customModules = [
         ProvidersModule,
         customConnect,
-        elementFactory
+        elementFactory,
+        gridModules,
+        customLayouter
     ];
 
     var diagram =  new Diagram({

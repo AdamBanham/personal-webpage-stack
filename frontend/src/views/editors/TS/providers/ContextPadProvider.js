@@ -149,7 +149,8 @@ export default function ContextPadProvider(
                 element, 
                 element
             )
-            modeling.createConnection(element, element, nc, element.parent)
+            nc = modeling.createConnection(element, element, nc, element.parent)
+            modeling.layoutConnection(nc)
             bus.fire('elements.changed', {
                 elements: [element,nc]}
             )

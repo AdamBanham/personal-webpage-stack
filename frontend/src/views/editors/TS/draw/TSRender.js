@@ -69,7 +69,7 @@ export default class TSRenderer extends  BaseRenderer {
         });
 
         this.CONNECTION_STYLE = styles.style(
-            { strokeWidth: 3, stroke: '#303c4a', strokeLinecap: 'round',
+            { strokeWidth: 3, stroke: '#000000', strokeLinecap: 'round',
                 strokeLinejoin: 'round', fill: 'none'});
         this.INTERNAL_SHAPE_STYLE = styles.style(
             { fill: '#f5f5f5', stroke: '#222222', strokeWidth: 2 }
@@ -81,20 +81,18 @@ export default class TSRenderer extends  BaseRenderer {
             { fill: '#f58867', stroke: '#222222', strokeWidth: 2 }
         );
         
-        var xOffset = ((stateRadius+5) * 2) / 5.0
-        var yOffset = (((stateRadius-8) / 2)) / 5
         var defs = svgCreate("defs", {})
         var marker = svgCreate("marker", {
             id: 'arrow',
             viewbox: '0 0 10 10',
-            refX: xOffset,
-            refY: yOffset,
+            refX: 4,
+            refY: 2.5,
             markerWidth: 5,
             markerHeight: 5,
             strokeWidth: 0,
             orient: 'auto-start-reverse',
-            stroke: '#303c4a',
-            fill: '#303c4a'
+            stroke: '#000000',
+            fill: '#000000'
         })
         var markerPath = svgCreate("path", {
             d: "M 0 0 L 5 2.5 L 0 5 z"
@@ -271,7 +269,8 @@ export default class TSRenderer extends  BaseRenderer {
             connection.waypoints, assign({
                 id: connection.id
             }, 
-            this.CONNECTION_STYLE, attrs || {})
+            this.CONNECTION_STYLE, attrs || {}),
+            5
         );
         var waypoints = connection.waypoints.slice(0,2).map(p => {
             return {x:p.x+5, y:p.y-5}
@@ -400,14 +399,6 @@ export default class TSRenderer extends  BaseRenderer {
         return this._drawSimpleConnection(
             visuals, connection, attrs
         )
-            if (connection.selfLoop){
-                return this._drawSelfLoopConnection(
-                    visuals, connection, attrs)
-            } else {
-                return this._drawSimpleConnection(
-                    visuals, connection, attrs
-                )
-            }
     };
 
     

@@ -114,21 +114,14 @@ class TsXmlImporter {
             }
             connect.arcLabel = label
             this._factory.logIdentifer(connect.id)
-            var nc = this._modeling.createConnection(
+            var nc = this._modeling.connect(
                 connect.source,
                 connect.target,
-                -1,
                 connect,
                 this._canvas.getRootElement()
             )
+            this._modeling.layoutConnection(connect);
             if (!connect.selfLoop){
-                if (connect.waypoints.length < 2){
-                    this._modeling.layoutConnection(connect)
-                }
-                this._bus.fire('elements.changed', {
-                    elements: [connect.source, connect.target, connect]
-                })
-
             } else {
                 // nc.waypoints = waypoints
             }
@@ -150,6 +143,9 @@ class TsXmlImporter {
                     connect
                 )
             }
+            this._bus.fire('elements.changed', {
+                elements: [connect, connect.source, connect.target]
+            });
             
         }
         // move all states to ensure a clean start

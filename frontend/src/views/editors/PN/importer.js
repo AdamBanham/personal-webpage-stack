@@ -103,7 +103,6 @@ class TsXmlImporter {
         var trans = system.getElementsByTagName("transition")
         for (var tran of trans){
             var attrs = tran.attributes
-            console.log(trans)
             var pos = tran.getElementsByTagName("graphics")[0]
                 .getElementsByTagName("position")[0]
             var label = this.decode(tran.getElementsByTagName("name")[0]
