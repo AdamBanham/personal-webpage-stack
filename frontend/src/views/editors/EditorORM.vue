@@ -31,7 +31,7 @@
       </div>
       <div
         ref="container"
-        class="editor-container editor-orm-container"
+        class="editor-container editor-orm-container editor-canvas editor-outter-box-shadow"
         id="content"
       >
         <div
@@ -40,6 +40,7 @@
           id="orm-editor"
         >
           <!-- The editor will be rendered here -->
+
           <div class="helpers">
             <div
               id="help-interactions" 
@@ -53,194 +54,19 @@
             >
               <div class="content" />
             </div>
+            <div class="djs-parent djs-palette open keyboard-palette">
+              <div class="djs-palette-entries">
+                <div class="group">
+                  <div
+                    id="keyboard-controls-icon"
+                    class="entry mdi mdi-keyboard"
+                  >
+                  </div>  
+                </div>
+              </div>
+            </div>  
           </div>
-          <div
-            id="keyboard-window"
-            class="keyboard"
-          >
-            <div class="content">
-              <h2 style="text-align: center;">
-                Keyboard Controls
-              </h2>
-              <h3> Creation Controls</h3>
-              <div class="keys">
-                <div class="entry mdi mdi-square-rounded">
-                  <span class="mdi">
-                    <strong>alt</strong>
-                  </span>
-                  <span class="mdi mdi-plus" />
-                  <span class="mdi mdi-alpha-e-box-outline" />
-                  <span class="mdi mdi-arrow-right-thin" />
-                  <span>Create a new entity</span>
-                </div>
-                <div class="entry mdi mdi-square-rounded">
-                  <span class="mdi">
-                    <strong>alt</strong>
-                  </span>
-                  <span class="mdi mdi-plus" />
-                  <span class="mdi mdi-alpha-v-box-outline" />
-                  <span class="mdi mdi-arrow-right-thin" />
-                  <span>Create a new value entity</span>
-                </div>
-                <div class="entry mdi mdi-square-rounded">
-                  <span class="mdi">
-                    <strong>alt</strong>
-                  </span>
-                  <span class="mdi mdi-plus" />
-                  <span class="mdi mdi-alpha-f-box-outline" />
-                  <span class="mdi mdi-arrow-right-thin" />
-                  <span>Create a new fact relation</span>
-                </div>
-                <div class="entry mdi mdi-square-rounded">
-                  <span class="mdi">
-                    <strong>alt</strong>
-                  </span>
-                  <span class="mdi mdi-plus" />
-                  <span class="mdi mdi-alpha-a-box-outline" />
-                  <span class="mdi mdi-arrow-right-thin" />
-                  <span>Use Lasso (<span class="mdi mdi-lasso" />) tool</span>
-                </div>
-                <div class="entry mdi mdi-square-rounded">
-                  <span class="mdi">
-                    <strong>alt</strong>
-                  </span>
-                  <span class="mdi mdi-plus" />
-                  <span class="mdi mdi-alpha-s-box-outline" />
-                  <span class="mdi mdi-arrow-right-thin" />
-                  <span>Use Space (<span class="mdi mdi-cursor-move" />) tool</span>
-                </div>
-                <div class="entry mdi mdi-square-rounded">
-                  <span class="mdi">
-                    <strong>crtl</strong>
-                  </span>
-                  <span class="mdi mdi-plus" />
-                  <span class="mdi mdi-alpha-k-box-outline" />
-                  <span class="mdi mdi-arrow-right-thin" />
-                  <span>Toggle keyboard help menu</span>
-                </div>
-                <div class="entry mdi mdi-square-rounded">
-                  <span class="mdi">
-                    <strong>Tab</strong>
-                  </span>
-                  <span class="mdi mdi-arrow-right-thin" />
-                  :
-                  <span>Toggle selection between shapes</span>
-                </div>
-                <div class="entry mdi mdi-square-rounded">
-                  <span class="mdi">
-                    <strong>alt</strong>
-                  </span>
-                  <span class="mdi mdi-plus" />
-                  <span class="mdi mdi-arrow-left-bold-box-outline" />
-                  <span class="mdi mdi-arrow-right-thin" />
-                  <span>Step back in selection history</span>
-                </div>
-                <div class="entry mdi mdi-square-rounded">
-                  <span class="mdi">
-                    <strong>alt</strong>
-                  </span>
-                  <span class="mdi mdi-plus" />
-                  <span class="mdi mdi-arrow-right-bold-box-outline" />
-                  <span class="mdi mdi-arrow-right-thin" />
-                  <span>Step forward in selection history</span>
-                </div>
-              </div>
-              <p>
-                When any element is selected, the element can be deleted by
-                pressing the <strong>del</strong> key or the 
-                <span class="mdi mdi-delete" /> icon.
-              </p>
-              <h3> Enities / Value Entities</h3>
-              <p>
-                When an entity or value entity is selected the following keyboard 
-                shortcuts are available:
-              </p>
-              <div class="keys">
-                <div class="entry mdi mdi-square-rounded">
-                  <span class="mdi mdi-alpha-c-box-outline" />
-                  <span class="mdi mdi-arrow-right-thin" />
-                  <span>Link entity to fact relation</span>
-                </div>
-                <div class="entry mdi mdi-square-rounded">
-                  <span class="mdi mdi-alpha-s-box-outline" />
-                  <span class="mdi mdi-arrow-right-thin" />
-                  <span>Make entity a substype of other</span>
-                </div>
-                <div class="entry mdi mdi-square-rounded">
-                  <span class="mdi mdi-alpha-t-box-outline" />
-                  <span class="mdi mdi-arrow-right-thin" />
-                  <span>Change the type of the entity</span>
-                </div>
-                <div class="entry mdi mdi-square-rounded">
-                  <span class="mdi mdi-alpha-r-box-outline" />
-                  <span class="mdi mdi-arrow-right-thin" />
-                  <span>Change the reference mode of the entity</span>
-                </div>
-                <div class="entry mdi mdi-square-rounded">
-                  <span class="mdi mdi-alpha-f-box-outline" />
-                  <span class="mdi mdi-arrow-right-thin" />
-                  <span>Create a connected unary fact relation</span>
-                </div>
-              </div>
-              <h3>Fact Relations</h3>
-              <p> 
-                When an fact relation is selected the following keyboard 
-                shortcuts are available:
-              </p>
-              <div class="keys">
-                <div class="entry mdi mdi-square-rounded">
-                  <span class="mdi mdi-plus-box-outline" />
-                  <span class="mdi mdi-arrow-right-thin" />
-                  <span>Expand the arity of the fact relation</span>
-                </div>
-                <div class="entry mdi mdi-square-rounded">
-                  <span class="mdi mdi-minus-box-outline" />
-                  <span class="mdi mdi-arrow-right-thin" />
-                  <span>Reduce the arity of the fact relation</span>
-                </div>
-                <div class="entry mdi mdi-square-rounded">
-                  <span class="mdi mdi-alpha-d-box-outline" />
-                  <span class="mdi mdi-arrow-right-thin" />
-                  <span>Create/remove derived label</span>
-                </div>
-                <div class="entry mdi mdi-square-rounded">
-                  <span class="mdi mdi-alpha-l-box-outline" />
-                  <span class="mdi mdi-arrow-right-thin" />
-                  <span>Set direction of verbalisation to the left</span>
-                </div>
-                <div class="entry mdi mdi-square-rounded">
-                  <span class="mdi mdi-alpha-r-box-outline" />
-                  <span class="mdi mdi-arrow-right-thin" />
-                  <span>Set direction of verbalisation to the right</span>
-                </div>
-                <div class="entry mdi mdi-square-rounded">
-                  <span class="mdi mdi-alpha-n-box-outline" />
-                  <span class="mdi mdi-arrow-right-thin" />
-                  <span>Remove direction of verbalisation</span>
-                </div>
-                <div class="entry mdi mdi-square-rounded">
-                  <span class="mdi mdi-alpha-c-box-outline" />
-                  <span class="mdi mdi-arrow-right-thin" />
-                  <span>Create uniqueness constraint</span>
-                </div>
-                <div class="entry mdi mdi-square-rounded">
-                  <span class="mdi mdi-alpha-o-box-outline" />
-                  <span class="mdi mdi-arrow-right-thin" />
-                  <span>Make/remove objectification of relation</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="djs-parent djs-palette open keyboard-palette">
-            <div class="djs-palette-entries">
-              <div class="group">
-                <div
-                  id="keyboard-controls-icon"
-                  class="entry mdi mdi-keyboard"
-                />
-              </div>
-            </div>
-          </div>  
+          
         </div>
       </div>
     </div>
@@ -260,7 +86,7 @@ export default {
   },
   methods: {
     toggleFullscreen: function() {
-      this.container.classList.toggle("editor-full-screen");
+      this.container.classList.toggle("fullscreen");
       setTimeout(
         () => this.editor.get('canvas').zoom('fit-viewport'),
         50

@@ -185,6 +185,10 @@ export default function ExamplePaletteProvider(
         action: {
           click: function(event) {
             bus.fire('editor.fullscreen.toggle');
+            setTimeout(() => {
+              // After toggling fullscreen, fit the view to the screen
+              scaleToFitElements(canvas);
+            }, 50);
           }
         }
       },

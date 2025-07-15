@@ -1,5 +1,5 @@
 <template>
-  <div class="pn-editor-content">
+  <div class="editor-content">
     <div class="editor-header">
       <h4>
         This is an editor to create Petri nets, powered by 
@@ -23,11 +23,11 @@
     </div>
     <div
       ref="container"
-      class="editor-canvas-ts-container editor-outter-box-shadow"
+      class="editor-canvas-ts-container editor-outter-box-shadow editor-canvas"
     >
       <div
         ref="canvas"
-        class="editor-canvas"
+        class="editor"
         id="ts-editor" 
       />
     </div>
@@ -429,8 +429,4 @@ export default {
     
 <style lang="sass" scoped>
 @use "./scoped"
-</style>
-
-<style lang="sass">
-@use "./global"
 </style>

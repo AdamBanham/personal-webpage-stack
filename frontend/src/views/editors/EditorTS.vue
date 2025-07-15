@@ -23,11 +23,11 @@
     </div>
     <div
       ref="container"
-      class="editor-canvas-ts-container editor-outter-box-shadow"
+      class="editor-canvas editor-outter-box-shadow"
     >
       <div
         ref="canvas"
-        class="editor-canvas"
+        class="editor"
       />
     </div>
     <div
@@ -481,50 +481,8 @@ $editor-scene-bg: #323650
   --editor-scence-bg: #323650
   --petri-net-connection-fill: #000000
 
-  .editor-canvas-ts-container.fullscreen
-    position: absolute
-    top: 0
-    left: 0
-    width: 100%
-    height: 100%
-    z-index: 1000
-    margin: 0 0 0 0 
-    border-radius: 0px
-
-  .editor-canvas-ts-container
-    margin-top: 25px
-    margin-left: 25px
-    margin-right: 25px
-    width: auto
-    min-height: 500px
-    height: 80%
+  .editor-canvas
     background: var(--editor-scence-bg)
-    border: 1px c.$black-blue
-    border-style: solid
-    border-radius: 15px
-    margin-bottom: 15px
-
-    &:focus-within
-      border: 1px yellow solid inset
-        
-    .editor-canvas
-      width: 100%
-      height: 100%
-
-      div 
-          background: none
-
-      .djs-container
-          .djs-context-pad-parent
-              .open
-                  .group
-                      .editor-hover
-                          color: black
-                          width: 20px
-                          height: 20px
-                          border: 2px red solid
-                          &:hover
-                              color: c.$blue-7
 
   .net-compontents
     width: 95%
