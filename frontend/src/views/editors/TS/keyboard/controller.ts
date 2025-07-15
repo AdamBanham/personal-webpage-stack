@@ -14,7 +14,8 @@ export default class KeyboardController {
         'modeling',
         'copyPaste',
         'globalConnect',
-        'editorActions'
+        'editorActions',
+        'connect'
     ]
     _eventBus: EventBus;
     _keyboard: any;
@@ -25,12 +26,14 @@ export default class KeyboardController {
     _copyPaste: any;
     _globalConnect: any;
     _actions: any;
+    _connect: any;
 
     constructor(eventBus: EventBus, 
         keyboard: any, selection: any, 
         mouse: any, distributeElements: any,
         modeling: any, copyPaste: any, 
-        globalConnect: any, actions: any) {
+        globalConnect: any, actions: any,
+        connect: any) {
         this._eventBus = eventBus;
         this._keyboard = keyboard;
         this._selection = selection;
@@ -40,11 +43,13 @@ export default class KeyboardController {
         this._copyPaste = copyPaste;
         this._globalConnect = globalConnect;
         this._actions = actions;
+        this._connect = connect;
 
         // listeners 
         keyboard.addListener(this.triggerDist.bind(this));
         keyboard.addListener(this.triggerCopy.bind(this));
         keyboard.addListener(this.triggerDelete.bind(this));
+        keyboard.addListener(this.triggerConnect.bind(this));
 
     }
 
@@ -134,6 +139,18 @@ export default class KeyboardController {
                 this._modeling.removeElements(selectedElements);
                 event.preventDefault();
                 event.stopPropagation();
+            }
+        }
+    }
+
+    triggerConnect(context:any) {
+        const event = context.keyEvent;
+
+        if (isKey(['c'], event) ) {
+            let selectedElements = this._selection.get();
+            if (selectedElements.length === 1) {
+                let element = selectedElements[0];
+                this._connect.start(this._mouse.getLastMoveEvent (), element, true);
             }
         }
     }
