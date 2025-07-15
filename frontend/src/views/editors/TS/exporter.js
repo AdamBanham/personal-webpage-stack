@@ -82,7 +82,7 @@ return `<?xml version="1.0" encoding="UTF-8"?>
     }
 
     serialiseState(state, gfx){
-        // console.log(state, gfx)
+        // //console.log(state, gfx)
 return `\t<state id="`+ state.id +`" type="` + state.stateType +`">
 \t\t<label>`
 + (state.stateLabel != null ? this.encode(state.stateLabel.trim()) : "") +
@@ -92,7 +92,7 @@ return `\t<state id="`+ state.id +`" type="` + state.stateType +`">
     }
 
     serialiseArc(arc,gfx){
-        // console.log(arc, gfx)
+        // //console.log(arc, gfx)
 var ret = `\t<arc id="` + arc.id + `">
 \t\t<label>`
 + (arc.arcLabel != null ? this.encode(arc.arcLabel.trim()) : "") + 

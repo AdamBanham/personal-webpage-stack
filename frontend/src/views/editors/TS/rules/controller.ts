@@ -21,14 +21,14 @@ export default class TSRules extends RuleProvider {
         });
 
         this.addRule('connection.create', (context) => {
-            console.log("TSRules connection.create", context);
+            //console.log("TSRules connection.create", context);
             const { source, target } = context;
             if (!source || !target) {
                 return false;
             }
             // Allow connection creation only if both source and target are valid
             let ret = isState(source) && isState(target);
-            console.log("TSRules connection.create", ret);
+            //console.log("TSRules connection.create", ret);
             return ret
         });
     }

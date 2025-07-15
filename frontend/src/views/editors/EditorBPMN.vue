@@ -128,7 +128,7 @@ methods: {
           reader.onload = (e) => {
             const xml = e.target.result;
             this.editor.importXML(xml).then(() => {
-              console.log('BPMN XML imported successfully');
+              //console.log('BPMN XML imported successfully');
             }).catch((err) => {
               console.error('Error importing BPMN XML:', err);
             });

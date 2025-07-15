@@ -116,7 +116,7 @@ export default function Connect(eventBus, dragging, modeling, rules,
         x: event.x,
         y: event.y
       }
-      console.log(context.canExecute);
+      //console.log(context.canExecute);
     });
 
     eventBus.on(['connect.cleanup'], function(event) {
@@ -128,7 +128,7 @@ export default function Connect(eventBus, dragging, modeling, rules,
       context.canExecute = false;
 
       let connection = context.getConnection();
-      console.log("connect cleanup", connection);
+      //console.log("connect cleanup", connection);
       if (connection) {
         modeling.removeElements([connection]);
       }

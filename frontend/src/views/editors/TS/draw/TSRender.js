@@ -306,14 +306,14 @@ export default class TSRenderer extends  BaseRenderer {
         // work out self loop from the src 
         var d = "M "
         var src = connection.source
-        console.log(src)
+        //console.log(src)
         // add src
         d += "" + (src.x + src.cx)
         d += " " + (src.y + src.cy)
         // work out equal right sides
         //((src.r) ^ 2) .  sqrt(2) = s
         var side = (src.r / 2.0) * Math.sqrt(2)
-        console.log(side)
+        //console.log(side)
         d += " L "
         d += "" + (src.x + src.cx + side)
         d += " " + (src.y + src.cy - side)
@@ -323,7 +323,7 @@ export default class TSRenderer extends  BaseRenderer {
         d += " " + (src.x + src.cx + side)
         d += " " + (src.y + src.cy + side)
         d += " Z"
-        console.log(d)
+        //console.log(d)
         // construct line
         var line = svgCreate('path',
             {

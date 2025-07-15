@@ -64,8 +64,8 @@ export default class SchemaImporter {
 
     attemptToLoadDocument(content: string, fileName: string): any {
         // Process the loaded document content
-        console.log('Loading document:', fileName);
-        console.log('Content:', content);
+        //console.log('Loading document:', fileName);
+        //console.log('Content:', content);
         
         // clear the system, except for root
         var els = this._elementRegistry.getAll().filter(

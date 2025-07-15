@@ -170,7 +170,7 @@ mounted() {
     ) 
   }
   catch (err) {
-    console.log("Error occured in mouting home page : "+err.message)
+    //console.log("Error occured in mouting home page : "+err.message)
   }
   
 },

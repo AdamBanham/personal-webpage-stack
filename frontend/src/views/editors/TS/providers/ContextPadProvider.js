@@ -143,7 +143,7 @@ export default function ContextPadProvider(
         }
 
         function createSelfLoop(event, element){
-            console.log(element)
+            //console.log(element)
             var nc = factory.createConnectionBetweenStates(
                 factory.getNextConnectionId(), 
                 element, 

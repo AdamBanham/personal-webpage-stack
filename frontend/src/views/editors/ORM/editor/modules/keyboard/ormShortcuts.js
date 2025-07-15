@@ -65,7 +65,7 @@ export default class OrmShortcuts {
 
         // debugger to work out key codes, albeit a bit silly
         // keyboard.addListener((context) => {
-        //     console.log('keyboard event', context);
+        //     //console.log('keyboard event', context);
         // });
 
         keyboard.addListener((context) =>{

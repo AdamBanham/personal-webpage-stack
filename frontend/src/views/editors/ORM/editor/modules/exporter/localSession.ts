@@ -23,7 +23,7 @@ export default class LocalSessionStorage {
                     text: document 
                 });
             } else {
-                console.log("No document found in local storage, starting fresh.");
+                //console.log("No document found in local storage, starting fresh.");
             }
         });
     }

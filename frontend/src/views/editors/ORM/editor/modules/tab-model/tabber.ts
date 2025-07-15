@@ -262,14 +262,12 @@ export default class TabModel {
             split: node.split
         }));
         cache._current = Object.assign( {} , this._tabHistory._current );
-        console.log('TabModel.cache: store history', cache);
         this._cache = cache;
     }
 
     renew(event:any) {
         if (this._cache) {
             const renew = Object.assign( new TabHistoryController() , this._cache);
-            console.log('TabModel.renew: restore history', renew);
             this._tabHistory = renew;
             this._cache = undefined;
         } else {

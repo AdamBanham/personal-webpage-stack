@@ -387,7 +387,7 @@
             )
             if (deleted.incoming.length){
               for(const inc of deleted.incoming){
-                console.log("removing ", inc.id)
+                //console.log("removing ", inc.id)
                 this.transitions = this.transitions.filter(
                   (v) => v.id != inc.id
                 )

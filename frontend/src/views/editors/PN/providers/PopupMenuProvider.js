@@ -9,7 +9,7 @@ export default function PopupMenuProvider
   this._popup = popupMenu
 
   this._popup.registerProvider('connection-menu',1, this)
-  console.log(this._popup)
+  //console.log(this._popup)
   }
 
   PopupMenuProvider.$inject = [
@@ -25,13 +25,13 @@ export default function PopupMenuProvider
     return {
       createConnection: {
         action: (event, entry) => {
-          console.log(event.target);
-          console.log(entry.label);
+          //console.log(event.target);
+          //console.log(entry.label);
 
           if (Array.isArray(target)) {
-            target.forEach(({ id }) => console.log(id));
+            target.forEach(({ id }) => //console.log(id));
           } else {
-            console.log(target.id);
+            //console.log(target.id);
           }
         },
         className: 'mdi-arrow-right-thick mdi',
@@ -44,13 +44,13 @@ export default function PopupMenuProvider
     return [
       {
         action: (event, entry) => {
-          console.log(event.target);
-          console.log(entry.title);
+          //console.log(event.target);
+          //console.log(entry.title);
 
           if (Array.isArray(target)) {
-            target.forEach(({ id }) => console.log(id));
+            target.forEach(({ id }) => //console.log(id));
           } else {
-            console.log(target.id);
+            //console.log(target.id);
           }
         },
         active: false,

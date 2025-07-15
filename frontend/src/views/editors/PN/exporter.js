@@ -203,7 +203,7 @@ class TsXmlExporter {
 
     _serialiseFlow(self, element, gfx){
         var UUID = uuidv4()
-        console.log(element)
+        //console.log(element)
         var flowSvg = ""+ FLOW_TEMPLATE({
             id: element.id,
             src: element.source.id,

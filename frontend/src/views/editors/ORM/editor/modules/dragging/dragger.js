@@ -108,11 +108,11 @@ function getLength(point) {
  * function MyDragComponent(eventBus, dragging) {
  *
  *   eventBus.on('mydrag.start', function(event) {
- *     console.log('yes, we start dragging');
+ *     //console.log('yes, we start dragging');
  *   });
  *
  *   eventBus.on('mydrag.move', function(event) {
- *     console.log('canvas local coordinates', event.x, event.y, event.dx, event.dy);
+ *     //console.log('canvas local coordinates', event.x, event.y, event.dx, event.dy);
  *
  *     // local drag data is passed with the event
  *     event.context.foo; // "BAR"
