@@ -6,9 +6,14 @@ import {
     isNil,
     isObject
   } from 'min-dash';
+import connect from '.';
+import layout from '../layout';
+
+var MARKER_OK = 'connect-ok',
+MARKER_NOT_OK = 'connect-not-ok';
   
 export default function Connect(eventBus, dragging, modeling, rules, 
-    factory) {
+    factory, canvas) {
   
 
     this._factory = factory
@@ -24,6 +29,47 @@ export default function Connect(eventBus, dragging, modeling, rules,
     function canConnectReverse(source, target) {
       return canConnect(target, source);
     }
+
+    function removeMarkers(element) {
+      if (!element) {
+        return;
+      }
+      canvas.removeMarker(element, MARKER_OK);
+      canvas.removeMarker(element, MARKER_NOT_OK);
+    }
+
+    function updateMarkers(start, canExecute) {
+      if (!start) {
+        return;
+      }
+      removeMarkers(start);
+      if (canExecute) {
+        canvas.addMarker(start, MARKER_OK);
+      } else {
+        canvas.addMarker(start, MARKER_NOT_OK);
+      }
+    }
+
+    function hasMarkers(element){
+      if (!element) {
+        return false;
+      }
+      return canvas.hasMarker(element, MARKER_OK) ||
+        canvas.hasMarker(element, MARKER_NOT_OK);
+    }
+
+    function recuriseRemoveMarkers(element) {
+      if (!element) {
+        return;
+      }
+      while (hasMarkers(element)) {
+        removeMarkers(element);
+        element = element.parent;
+        if (!element) {
+          break;
+        }
+      }
+    }
   
   
     // event handlers
@@ -38,7 +84,7 @@ export default function Connect(eventBus, dragging, modeling, rules,
       context.hover = hover;
   
       canExecute = context.canExecute = canConnect(start, hover);
-  
+      updateMarkers(start, canExecute);
       // ignore hover
       if (isNil(canExecute)) {
         return;
@@ -51,37 +97,49 @@ export default function Connect(eventBus, dragging, modeling, rules,
         return;
       }
   
-      canExecute = context.canExecute = canConnectReverse(start, hover);
-  
-      // ignore hover
-      if (isNil(canExecute)) {
-        return;
-      }
-  
-      if (canExecute !== false) {
-        context.source = hover;
-        context.target = start;
-      }
     });
   
-    eventBus.on([ 'connect.out', 'connect.cleanup' ], function(event) {
+    eventBus.on([ 'connect.out', ], function(event) {
       var context = event.context;
   
       context.hover = null;
-      context.source = null;
       context.target = null;
   
       context.canExecute = false;
+
+      updateMarkers(context.start, context.canExecute);
+    });
+
+    eventBus.on(['connect.move'], function(event) {
+      var context = event.context;
+      context.connectionEnd = {
+        x: event.x,
+        y: event.y
+      }
+      console.log(context.canExecute);
+    });
+
+    eventBus.on(['connect.cleanup'], function(event) {
+      var context = event.context;
+  
+      context.hover = null;
+      context.target = null;
+  
+      context.canExecute = false;
+
+      let connection = context.getConnection();
+      console.log("connect cleanup", connection);
+      if (connection) {
+        modeling.removeElements([connection]);
+      }
+      removeMarkers(context.start);
     });
   
     eventBus.on('connect.end', function(event) {
       var context = event.context,
           canExecute = context.canExecute,
           connectionStart = context.connectionStart,
-          connectionEnd = {
-            x: event.x,
-            y: event.y
-          },
+          connectionEnd = context.connectionEnd,
           source = context.source,
           target = context.target;
   
@@ -90,8 +148,8 @@ export default function Connect(eventBus, dragging, modeling, rules,
       }
   
       var attrs = {
-        id: context.id
-      },
+            id: context.id
+          },
           hints = {
             connectionStart: isReverse(context) ? connectionEnd : connectionStart,
             connectionEnd: isReverse(context) ? connectionStart : connectionEnd,
@@ -100,10 +158,16 @@ export default function Connect(eventBus, dragging, modeling, rules,
       if (isObject(canExecute)) {
         attrs = canExecute;
       }
-      context.connection = modeling.connect(source, target, attrs, hints);
+      let connection = modeling.connect(source, target, attrs, hints);
+      modeling.layoutConnection(connection);
+
       eventBus.fire('elements.changed', {
-        elements: [source,target,context.connection]
+        elements: [source,target,connection],
+        layout: true
       })
+      modeling.moveElements([source, target, connection], { x: 0.1, y: 0.1 }, );
+      modeling.moveElements([source, target, connection], { x: -0.1, y: -0.1 }, );
+
     });
   
   
@@ -126,10 +190,12 @@ export default function Connect(eventBus, dragging, modeling, rules,
       dragging.init(event, 'connect', {
         autoActivate: autoActivate,
         data: {
-          shape: start,
+          shape: {},
           context: {
             start: start,
             connectionStart: connectionStart,
+            connectionEnd: connectionStart,
+            canExecute: false,
             id: this._factory.getNextConnectionId()
           }
         }
@@ -142,7 +208,8 @@ Connect.$inject = [
     'dragging',
     'modeling',
     'rules',
-    'elementFactory'
+    'elementFactory',
+    'canvas'
   ];
   
   

@@ -5,6 +5,7 @@ import Clipboard from 'diagram-js/lib/features/clipboard';
 import Rules from 'diagram-js/lib/features/rules';
 import Mouse from 'diagram-js/lib/features/mouse';
 import ConnectPreview from 'diagram-js/lib/features/connection-preview'
+import ConnectionPreview from 'diagram-js/lib/features/connection-preview';
 import ContextPadModule from 'diagram-js/lib/features/context-pad';
 import CreateModule from 'diagram-js/lib/features/create';
 import LassoToolModule from 'diagram-js/lib/features/lasso-tool';
@@ -67,6 +68,7 @@ export default function TSEditor(options) {
         Clipboard,
         ConnectModule,
         ConnectPreview,
+        ConnectionPreview,
         ContextPadModule,
         CreateModule,
         LassoToolModule,
