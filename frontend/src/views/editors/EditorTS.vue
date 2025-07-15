@@ -475,7 +475,6 @@
 $editor-scene-bg: #323650
     
 .editor-content
-  margin-bottom: 100px
   --editor-primary: #2222f8
   --editor-secondary: #074355
   --editor-scence-bg: #323650
@@ -545,25 +544,4 @@ $editor-scene-bg: #323650
         border-radius: 15px 
         margin: 5px
         flex: 1 1
-</style>
-
-<style lang="sass">
-@use "@/styles/coloursAnt.sass" as c
-.editor-canvas-ts-container
-    .editor-canvas
-        border-radius: 15px
-        .djs-palette
-          border-radius: 15px
-          box-shadow: 5px 5px 15px black
-        .djs-container
-          border-radius: 15px
-          background: c.$gray-5
-          .djs-context-pad-parent
-              .open
-                  .group
-                      .editor-hover
-                          color: black
-                          &:hover
-                              color: c.$blue-7
-                              // background: $background-light-50
 </style>
