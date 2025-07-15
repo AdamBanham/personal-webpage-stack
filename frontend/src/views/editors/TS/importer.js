@@ -14,6 +14,8 @@ const XML_ILLEGALS = {
     '&' : '&amp;',
 }
 
+import { scaleToFitElements } from '../base/utils/canvasUtils'
+
 
 class TsXmlImporter {
 
@@ -38,7 +40,9 @@ class TsXmlImporter {
 
     import(system){
         try {
-            this._import(system)
+            this._import(system);   
+            scaleToFitElements(this._canvas);
+            setTimeout(() => scaleToFitElements(this._canvas), 75);
         } catch (error){
             alert("Failed to parse and load in system :: "
                 + error
