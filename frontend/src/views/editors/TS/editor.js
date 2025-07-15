@@ -1,6 +1,9 @@
 import Diagram from 'diagram-js';
 
 import ConnectModule from 'diagram-js/lib/features/connect';
+import Clipboard from 'diagram-js/lib/features/clipboard';
+import Rules from 'diagram-js/lib/features/rules';
+import Mouse from 'diagram-js/lib/features/mouse';
 import ConnectPreview from 'diagram-js/lib/features/connection-preview'
 import ContextPadModule from 'diagram-js/lib/features/context-pad';
 import CreateModule from 'diagram-js/lib/features/create';
@@ -17,6 +20,11 @@ import ZoomScrollModule from 'diagram-js/lib/navigation/zoomscroll';
 import SnappingModule from 'diagram-js/lib/features/snapping'
 import LabelSupport from 'diagram-js/lib/features/label-support'
 import ChangeSupport from 'diagram-js/lib/features/change-support'
+import KeyboardSupport from 'diagram-js/lib/features/keyboard';
+import CopyPasteSupport from 'diagram-js/lib/features/copy-paste';
+import DistributeElements from 'diagram-js/lib/features/distribute-elements';
+import GlobalConnect from 'diagram-js/lib/features/global-connect'; 
+import EditorActions from 'diagram-js/lib/features/editor-actions';
 
 // custom providers
 import ProvidersModule from './providers';
@@ -25,6 +33,9 @@ import elementFactory from './elements';
 import customConnect from "./connect";
 import gridModules from '../base/grid';
 import customLayouter from './layout';
+import tsKeyboardController from './keyboard';
+import tsRules from './rules';
+import tsCopyPaste from './copyPaste';
 
 /**
  * A module that changes the default diagram look.
@@ -51,6 +62,9 @@ export default function TSEditor(options) {
 
     // default modules provided by the toolbox
     const builtinModules = [
+        Rules,
+        Mouse,
+        Clipboard,
         ConnectModule,
         ConnectPreview,
         ContextPadModule,
@@ -67,16 +81,23 @@ export default function TSEditor(options) {
         ZoomScrollModule,
         SnappingModule,
         LabelSupport,
-        ChangeSupport
+        ChangeSupport,
+        DistributeElements,
+        GlobalConnect,
+        EditorActions,
+        KeyboardSupport,
     ];
 
     // our own modules, contributing controls, customizations, and more
     const customModules = [
-        ProvidersModule,
-        customConnect,
-        elementFactory,
-        gridModules,
-        customLayouter
+      ProvidersModule,
+      customConnect,
+      elementFactory,
+      gridModules,
+      customLayouter,
+      tsKeyboardController,
+      tsRules,
+      tsCopyPaste,
     ];
 
     var diagram =  new Diagram({
