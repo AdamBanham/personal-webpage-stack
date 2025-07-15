@@ -20,7 +20,7 @@ export default class Layouter extends BaseLayouter {
             waypoints = connection.waypoints || [];
 
         if (!source || !target) {
-            return;
+            return super.layoutConnection(connection, hints);
         }
 
         waypoints = waypoints.slice(1, waypoints.length - 1);
