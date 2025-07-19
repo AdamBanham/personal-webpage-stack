@@ -14,10 +14,32 @@ const XML_ILLEGALS = {
     '&' : '&amp;',
 }
 
-import { scaleToFitElements } from '../base/utils/canvasUtils'
+import { scaleToFitElements } from '../../base/utils/canvasUtils'
 
+export type PREFIX = "importing."
+export type SUFFIX = "load"
+export type EVENTS = `${PREFIX}${SUFFIX}`
+export interface EventContext {
+    text?: string,
+}
 
-class TsXmlImporter {
+export default class Importing {
+
+    static $inject = [
+        'modeling',
+        'elementFactory',
+        'canvas',
+        'elementRegistry',
+        'eventBus',
+        'textRenderer'
+    ]
+
+    _modeling;
+    _factory;
+    _canvas;
+    _registry;
+    _bus;
+    _txRender;
 
     constructor(modeling, factory, canvas, registry, bus, txRenderer){
         this._modeling = modeling 
@@ -26,6 +48,15 @@ class TsXmlImporter {
         this._registry = registry
         this._bus = bus
         this._txRender = txRenderer
+
+        this._bus.on(
+            'importing.load', 
+            this.load.bind(this)
+        );
+    }
+
+    fire(event:EVENTS, context:EventContext){
+        return this._bus.fire(event, context)
     }
 
     decode(text){
@@ -38,7 +69,29 @@ class TsXmlImporter {
         return ret
     }
 
-    import(system){
+    load(context:EventContext){
+
+
+        var tree = new DOMParser().parseFromString(
+            context.text, "text/xml"
+        )
+        
+        var errors = tree.getElementsByTagName("parsererror")
+        if (errors.length > 0){
+            alert(
+                "Parsing failed :: "
+                + errors[0].textContent
+            )
+            return;
+        }
+        var system = tree.getElementsByTagName("transition-system")
+        if (system.length > 0){
+            this.import(system[0])
+        }
+    }
+
+    import(system:any){
+
         try {
             this._import(system);   
             scaleToFitElements(this._canvas);
@@ -185,5 +238,3 @@ class TsXmlImporter {
         }
     }
 }
-
-export default TsXmlImporter

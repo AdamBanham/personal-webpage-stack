@@ -80,8 +80,6 @@
     
 <script>
     import EditorTS  from "./TS/editor.js";
-    import defaultSystem from "./TS/system.js";
-    import TsXmlImporter from "./TS/importer.js";
     import { scaleToFitElements } from "./base/utils/canvasUtils.js";
 
     import {
@@ -185,7 +183,7 @@
             this.editor.invoke(['eventBus', function(bus){
                 bus.on(
                   [
-                  'pad.delete'
+                  'pad.delete', 'elements.delete'
                   ],
                 50, (ev) => {
                   that.handleElementDelete(ev)
@@ -223,9 +221,7 @@
                   scaleToFitElements(canvas);
                 }, 150);
             }]);
-            // add default system
-            this.loadDefaultSystem()
-            this.editor.get('canvas').zoom('fit-viewport');
+
             this.triggerMathjax()
           },
         methods: {
@@ -234,97 +230,6 @@
                 this.container.classList.toggle('fullscreen');
               }
             },
-            addDefaultSystem: function(){
-                this.editor.invoke([ 'eventBus', 'elementFactory', 'canvas', 'modeling', 
-                    function(events, factory, canvas, modeling) {
-
-                    var s1 = { id: factory.getNextStateId(),
-                      stateLabel: "srt", x: 300, y: 100,};
-                    var s3 = { id: factory.getNextStateId(),
-                      stateLabel: "a", x: 300, y: 300,}
-                    var s2 = { id: factory.getNextStateId(),
-                      stateLabel: "end", x: 300, y: 500,};
-                    s1 = factory.createStartingState(s1);
-                    s3 = factory.createInternalState(s3);
-                    s2 = factory.createEndingState(s2);
-
-                    var c1 = factory.createConnectionBetweenStates(
-                        factory.getNextConnectionId(), 
-                        s1,
-                        s3,
-                        'foo'
-                    );
-                    var c2 = factory.createConnectionBetweenStates(
-                        factory.getNextConnectionId(), 
-                        s3,
-                        s2,
-                        'baz'
-                    );
-                    modeling.createShape(
-                      s1, {x: s1.x, y:s1.y}, canvas.getRootElement()
-                    )
-                    modeling.createShape(
-                      s2, {x: s2.x, y:s2.y}, canvas.getRootElement()
-                    )
-                    modeling.createShape(
-                      s3, {x: s3.x, y:s3.y}, canvas.getRootElement()
-                    )
-                    canvas.addConnection(c1)
-                    modeling.layoutConnection(c1,)
-                    canvas.addConnection(c2)
-                    modeling.layoutConnection(c2,)
-
-                    var position = getConnectionMid(c2)
-                    var label = factory.createLabel({
-                      text: 'baz',
-                      width: 50,
-                      height: 12,
-                      labelTarget: c2,
-                      x: 0
-                    })
-                    modeling.createLabel(
-                      c2,
-                      position,
-                      label,
-                      c2
-                    )
-
-                    position = getConnectionMid(c1)
-                    label = factory.createLabel({
-                      text: 'foo',
-                      width: 50,
-                      height: 12,
-                      labelTarget: c1,
-                      x: 0
-                    })
-                    modeling.createLabel(
-                      c1,
-                      position,
-                      label,
-                      c1
-                    )
-
-                    modeling.moveElements([s1,s2,s3], {x:0,y:0})
-                    
-            }]);
-            },
-          loadDefaultSystem: function(){
-            this.editor.invoke([
-              'modeling', 'elementFactory', 'canvas', 'elementRegistry',
-              'eventBus', 'textRenderer'
-            ,function(modeling, factory, canvas, registry, bus, 
-                      textRenderer) {
-              var parser = new TsXmlImporter(modeling, 
-                factory, canvas, registry, bus, textRenderer
-              );
-              var tree = new DOMParser().parseFromString(
-                            defaultSystem, "text/xml"
-              )
-              var system = tree.getElementsByTagName("transition-system")[0]
-              parser.import(system)
-            }
-            ])
-          },
           triggerMathjax: function(){
             const mathjax = window.MathJax
             const that = this

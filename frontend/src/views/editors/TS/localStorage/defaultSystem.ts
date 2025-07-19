@@ -1,4 +1,4 @@
-export default `<?xml version="1.0" encoding="UTF-8"?>
+const system = `<?xml version="1.0" encoding="UTF-8"?>
 <transition-system>
 	<state id="b1" type="internal">
 		<label>&lt;R,R,0&gt;</label>
@@ -180,3 +180,5 @@ export default `<?xml version="1.0" encoding="UTF-8"?>
 	</arc>
 </transition-system>
 `
+
+export default system;

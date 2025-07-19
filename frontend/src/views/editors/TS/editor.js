@@ -35,8 +35,12 @@ import customConnect from "./connect";
 import gridModules from '../base/grid';
 import customLayouter from './layout';
 import tsKeyboardController from './keyboard';
+import localStorage from './localStorage'
 import tsRules from './rules';
 import tsCopyPaste from './copyPaste';
+import Importing from './importer';
+import Exporting from './exporter';
+import DocumentReflection from './document'
 
 /**
  * A module that changes the default diagram look.
@@ -92,6 +96,8 @@ export default function TSEditor(options) {
 
     // our own modules, contributing controls, customizations, and more
     const customModules = [
+      Importing,
+      Exporting,
       ProvidersModule,
       customConnect,
       elementFactory,
@@ -100,6 +106,8 @@ export default function TSEditor(options) {
       tsKeyboardController,
       tsRules,
       tsCopyPaste,
+      localStorage,
+      DocumentReflection
     ];
 
     var diagram =  new Diagram({

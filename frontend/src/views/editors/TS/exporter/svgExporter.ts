@@ -1,3 +1,4 @@
+import EventBus from 'diagram-js/lib/core/EventBus';
 import {
     query as domQuery,
 } from 'min-dom';
@@ -6,13 +7,32 @@ import {
     innerSVG
 } from 'tiny-svg';
 
-class SvgSaver {
+export type PREFIX = "exporting.svg."
+export type SUFFIX = "export"
+export type EVENTS = `${PREFIX}${SUFFIX}`
 
-    constructor(canvas){
-        this._canvas = canvas
+export default class SvgExporting {
+
+    static $inject = [ 
+        'eventBus',
+        'canvas'
+    ];
+
+    _bus: EventBus<any>;
+    _canvas: any;
+
+    constructor(eventBus: EventBus<any>, canvas: any) {
+        this._bus = eventBus;
+        this._canvas = canvas;
+
+        this._bus.on('exporting.svg.export', this.export.bind(this));
     }
 
-    save(){
+    fire(event: EVENTS) {
+        return this._bus.fire(event);
+    }
+
+    export() : string {
         var svg;
         try {        
             const contentNode = this._canvas.getActiveLayer(),
@@ -40,6 +60,5 @@ class SvgSaver {
           }
           return svg
     }
-}
 
-export default SvgSaver
+}

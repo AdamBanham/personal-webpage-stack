@@ -3,7 +3,7 @@ import {
     isInternalState,
     isEndingState,
     isStartingState
-} from "./elements/TSElementFactory"
+} from "../elements/TSElementFactory"
 
 import  {
     isLabel, isConnection
@@ -28,12 +28,31 @@ const XML_ILLEGALS = {
     '"' : '&quot;'
 }
 
+export type PREFIX = "exporting."
+export type SUFFIX = "export"
+export type EVENTS = `${PREFIX}${SUFFIX}`
 
-class TsXmlExporter {
+export default class Exporting {
 
-    constructor(registry){
+    static $inject = [
+        'eventBus',
+        'elementRegistry'
+    ]
+
+    _bus;
+    _registry;
+    _xml;
+
+    constructor(eventBus, registry){
+        this._bus = eventBus
         this._registry = registry
         this._xml = ""
+
+        this._bus.on('exporting.export', this.export.bind(this));
+    }
+
+    fire(event: EVENTS){    
+        return this._bus.fire(event)
     }
 
     encode(text){
@@ -112,5 +131,3 @@ return ret + `\t\t</waypoints>
         return `</transition-system>`
     }
 }
-
-export default TsXmlExporter

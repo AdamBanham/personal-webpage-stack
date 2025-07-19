@@ -47,7 +47,6 @@ export default class KeyboardController {
 
         // listeners 
         keyboard.addListener(this.triggerDist.bind(this));
-        keyboard.addListener(this.triggerCopy.bind(this));
         keyboard.addListener(this.triggerDelete.bind(this));
         keyboard.addListener(this.triggerConnect.bind(this));
 
@@ -111,21 +110,6 @@ export default class KeyboardController {
 
             event.preventDefault();
             event.stopPropagation();
-        }
-    }
-
-    triggerCopy(context:any) {
-        const event = context.keyEvent;
-
-        if (isKey(['c'], event) && event.ctrlKey) {
-            let selectedElements = this._selection.get();
-           
-            this._actions.trigger('copy');
-            this._actions.trigger('paste');
-
-            event.preventDefault();
-            event.stopPropagation();
-            return false;
         }
     }
 
