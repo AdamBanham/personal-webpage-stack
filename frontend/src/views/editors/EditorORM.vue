@@ -22,7 +22,7 @@
           But, there is a more actively developed version of the editor 
           available for vs-code: 
           <a
-            href="https://marketplace.visualstudio.com/items?itemName=qORMa.qorma&ssr=false#overview"
+            href="https://marketplace.visualstudio.com/items?itemName=qORMa.qorma"
             target="_blank"
           >
             qORMa
