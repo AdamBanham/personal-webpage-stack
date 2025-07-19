@@ -56,16 +56,13 @@ export default class SchemaImporter {
         reader.onload = (e) => {
             const content = e.target?.result as string;
             if (content) {
-                this.attemptToLoadDocument(content, file.name);
+                this.attemptToLoadDocument(content);
             }
         };
         reader.readAsText(file);
     }
 
-    attemptToLoadDocument(content: string, fileName: string): any {
-        // Process the loaded document content
-        //console.log('Loading document:', fileName);
-        //console.log('Content:', content);
+    attemptToLoadDocument(content: string): any {
         
         // clear the system, except for root
         var els = this._elementRegistry.getAll().filter(
