@@ -9,6 +9,22 @@ $detail-card-height-full: 150px
 $detail-card-height-medium: 200px
 $detail-card-height-small: 250px
 
+@keyframes pulse 
+  0%
+    opacity: 0
+    trasnform: translateX(5%) scale(0) rotateZ(-60deg)
+
+  50%
+    opacity: 0.25
+    transform: translateX(2.5%) scale(0.25) rotateZ(30deg)
+
+  90%
+    opacity: 0.5
+
+  100%
+    opacity: 1
+    transform: translateX(0) scale(1) rotateZ(0deg)
+
 .router-view
   margin-top: 75px
 
@@ -45,6 +61,7 @@ $detail-card-height-small: 250px
     margin-top: 50px
     border-radius: 15px
     position: relative
+    animation: 0.3s cubic-bezier(.1, .25, .25, 1.05) both  pulse
 
   .keyboard-palette
     position: absolute
