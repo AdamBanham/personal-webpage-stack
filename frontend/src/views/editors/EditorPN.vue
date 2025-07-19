@@ -91,13 +91,14 @@
 </template>
     
 <script>
-import EditorTS  from "./editor.js"
-import defaultSystem from "./system.js"
-import TsXmlImporter from "./importer.js"
+import EditorTS  from "./PN/editor.js"
+import defaultSystem from "./PN/system.js"
+import TsXmlImporter from "./PN/importer.js"
 
 import {
   getConnectionMid
 } from "diagram-js/lib/layout/LayoutUtil"
+
 export default {
   name: "EditorPN",
   data: function(){
@@ -428,5 +429,5 @@ export default {
 </script>
     
 <style lang="sass" scoped>
-@use "./scoped"
+@use "./PN/scoped"
 </style>
