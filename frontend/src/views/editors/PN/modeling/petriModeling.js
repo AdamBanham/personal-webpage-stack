@@ -45,6 +45,14 @@ class PetriModeling extends modeling {
     }
 
   }
+
+  removeElements(elements) {
+    this._eventBus.fire('elements.delete', {
+      elements: elements
+    });
+    return super.removeElements(elements);
+  }
+  
 }
 
 PetriModeling.$inject = [ 'eventBus', 'elementFactory', 'commandStack' ];

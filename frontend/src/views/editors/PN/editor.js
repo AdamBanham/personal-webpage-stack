@@ -14,9 +14,14 @@ import BendingModule from 'diagram-js/lib/features/bendpoints';
 import RulesModule from 'diagram-js/lib/features/rules';
 import SelectionModule from 'diagram-js/lib/features/selection';
 import ZoomScrollModule from 'diagram-js/lib/navigation/zoomscroll';
-import SnappingModule from 'diagram-js/lib/features/snapping'
-import LabelSupport from 'diagram-js/lib/features/label-support'
-import ChangeSupport from 'diagram-js/lib/features/change-support'
+import SnappingModule from 'diagram-js/lib/features/snapping';
+import LabelSupport from 'diagram-js/lib/features/label-support';
+import ChangeSupport from 'diagram-js/lib/features/change-support';
+import Rules from 'diagram-js/lib/features/rules';
+import KeyboardSupport from 'diagram-js/lib/features/keyboard';
+import EditorActions from 'diagram-js/lib/features/editor-actions';
+import CopyPaste from 'diagram-js/lib/features/copy-paste';
+import GlobalConnect from 'diagram-js/lib/features/global-connect'; 
 
 // custom providers
 import ProvidersModule from './providers';
@@ -31,6 +36,7 @@ import ImportingPetriNets from './importer';
 import ExportingPetriNets from './exporter';
 import LocalSessionStorage from './localStorage';
 import DocumentReflection from './document';
+import CustomCopyPaste from './copyPaste';
 
 /**
  * A module that changes the default diagram look.
@@ -57,6 +63,7 @@ export default function TSEditor(options) {
 
     // default modules provided by the toolbox
     const builtinModules = [
+        KeyboardSupport,
         ConnectModule,
         ConnectPreview,
         ContextPadModule,
@@ -73,7 +80,11 @@ export default function TSEditor(options) {
         ZoomScrollModule,
         SnappingModule,
         LabelSupport,
-        ChangeSupport
+        ChangeSupport,
+        Rules,
+        GlobalConnect,
+        EditorActions,
+        CopyPaste
     ];
 
     // our own modules, contributing controls, customizations, and more
@@ -88,7 +99,8 @@ export default function TSEditor(options) {
         ImportingPetriNets,
         ExportingPetriNets,
         LocalSessionStorage,
-        DocumentReflection
+        DocumentReflection,
+        CustomCopyPaste
     ];
 
     var diagram =  new Diagram({

@@ -198,7 +198,7 @@ export default {
             this.editor.invoke(['eventBus', function(bus){
                 bus.on(
                   [
-                  'pad.delete'
+                  'pad.delete', 'elements.delete'
                   ],
                 50, (ev) => {
                   that.handleElementDelete(ev)
