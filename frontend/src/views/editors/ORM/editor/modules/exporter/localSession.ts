@@ -1,6 +1,6 @@
 import EventBus from "diagram-js/lib/core/EventBus";
 import VscodeMessageHandler from "../vscode/handler";
-
+import system from "./defaultSystem";
 
 export default class LocalSessionStorage {
     static $inject = ["eventBus" , "vscodeMessageHandler"];
@@ -43,6 +43,8 @@ export default class LocalSessionStorage {
             const document = localStorage.getItem("ormDocument");
             if (document) {
                 return document;
+            } else {
+                return system;
             }
         } catch (error) {
             console.error("Failed to retrieve document from local storage:", error);

@@ -1,9 +1,10 @@
 import SvgExporter from "../exporters/svgExporter";
 import { scaleToFitElements } from "../utils/canvasUtils";
+import system from "../exporter/defaultSystem";
 
 export default function ExamplePaletteProvider(
     create, elementFactory, lassoTool, spaceTool, palette, connect, registry,
-    modeling, canvas, eventBus, vscodeMessager) {
+    modeling, canvas, eventBus, vscodeMessager, importer) {
     this._create = create;
     this._elementFactory = elementFactory;
     this._lassoTool = lassoTool;
@@ -15,6 +16,7 @@ export default function ExamplePaletteProvider(
     this._canvas = canvas;
     this._bus = eventBus;
     this._vscodeMessager = vscodeMessager;
+    this._importer = importer
   
     palette.registerProvider(this);
   }
@@ -30,7 +32,8 @@ export default function ExamplePaletteProvider(
     'modeling',
     'canvas',
     'eventBus',
-    'vscodeMessager'
+    'vscodeMessager',
+    'importSchema'
   ];
   
   
@@ -43,7 +46,8 @@ export default function ExamplePaletteProvider(
         modeling = this._modeling,
         canvas = this._canvas,
         bus = this._bus,
-        vscodeMessager = this._vscodeMessager;
+        vscodeMessager = this._vscodeMessager,
+        importer = this._importer;
   
     return {
       'lasso-tool': {
@@ -213,6 +217,20 @@ export default function ExamplePaletteProvider(
                     els
                 );
             }
+          }
+        }
+      },
+      'load-default': {
+        group: 'clear',
+        className: 'mdi-restore mdi',
+        title: 'Load default system',
+        action: {
+          click: function(event) {
+            importer.attemptToLoadDocument(system, "medals.orm");
+            setTimeout(() => {
+              // After toggling fullscreen, fit the view to the screen
+              scaleToFitElements(canvas);
+            }, 100);
           }
         }
       },

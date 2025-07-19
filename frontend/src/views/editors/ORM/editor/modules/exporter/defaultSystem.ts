@@ -1,0 +1,317 @@
+const system = `system:
+  name: Unnamed System
+  type: ORM
+  entities:
+    - id: entity-1
+      type: entity
+      name: Country
+      ref: name
+      x: 340
+      'y': 279
+      referenceMode: reference
+      meta: ' '
+    - id: entity-4
+      type: entity
+      name: Quantity
+      ref: number
+      x: 568
+      'y': 434
+      referenceMode: unit-based
+      meta: ' '
+      constraints:
+        - id: value-constraint-3
+          x: 489
+          'y': 394
+          width: 50
+          height: 50
+          description: 0..
+    - id: entity-7
+      type: entity
+      name: Medals
+      ref: code
+      x: 758
+      'y': 279
+      referenceMode: reference
+      meta: ' '
+      constraints:
+        - id: value-constraint-5
+          x: 665
+          'y': 380
+          width: 75
+          height: 50
+          description: '"G", "S", "B"'
+  facts:
+    - id: fact-2
+      type: fact
+      roles: 3
+      factors:
+        - entity-1
+        - entity-4
+        - entity-7
+      x: 579
+      'y': 304
+      label: ... won ... ... medals
+      derived: false
+      objectified: true
+      objectifiedName: Winnings
+      uniqueness:
+        - id: constraint-10
+          type: constraint
+          mode: 0
+          over:
+            - 0
+            - 2
+      constraints:
+        - id: value-constraint-11
+          x: 685
+          'y': 222
+          width: 50
+          height: 50
+          factor: 1
+          description: 1..237
+    - id: fact-10
+      type: fact
+      roles: 1
+      factors:
+        - entity-1
+      x: 225
+      'y': 192.75
+      label: isReal
+      derived: false
+    - id: fact-12
+      type: fact
+      roles: 1
+      factors:
+        - entity-1
+      x: 225
+      'y': 406
+      label: stillExists
+      derived: false
+    - id: fact-15
+      type: fact
+      roles: 2
+      factors:
+        - entity-1
+        - entity-4
+      x: 439
+      'y': 459
+      label: ... had ... althetes attend
+      derived: false
+      uniqueness:
+        - id: constraint-27
+          type: constraint
+          mode: 0
+          over:
+            - 0
+    - id: fact-35
+      type: fact
+      roles: 2
+      factors:
+        - entity-1
+        - objectification-2
+      x: 489
+      'y': 164
+      label: ... contests ...
+      derived: false
+      uniqueness:
+        - id: constraint-28
+          type: constraint
+          mode: 0
+          over:
+            - 0
+            - 1
+    - id: fact-22
+      type: fact
+      roles: 2
+      factors:
+        - entity-1
+        - entity-1
+      x: 225
+      'y': 294
+      label: ... was ...
+      derived: false
+      towards: left
+      alignment: vertical
+      uniqueness:
+        - id: constraint-25
+          type: constraint
+          mode: 0
+          over:
+            - 1
+        - id: constraint-26
+          type: constraint
+          mode: 0
+          over:
+            - 0
+  connections:
+    - id: connection-7
+      mandatory: false
+      role: 0
+      lastEdit:
+        x: 566.5
+        'y': 316.5
+      waypoints:
+        - x: 440
+          'y': 316.5
+        - x: 566.5
+          'y': 316.5
+        - x: 579
+          'y': 316.5
+      source: entity-1
+      target: fact-2
+      type: connection
+    - id: connection-8
+      mandatory: false
+      role: 1
+      lastEdit:
+        x: 616.5
+        'y': 341.5
+      waypoints:
+        - x: 617.5673217773438
+          'y': 434
+        - x: 616.5
+          'y': 341.5
+        - x: 616.5
+          'y': 329
+      source: entity-4
+      target: fact-2
+      type: connection
+    - id: connection-9
+      mandatory: false
+      role: 2
+      lastEdit:
+        x: 666.5
+        'y': 316.5
+      waypoints:
+        - x: 758
+          'y': 316.5
+        - x: 666.5
+          'y': 316.5
+        - x: 654
+          'y': 316.5
+      source: entity-7
+      target: fact-2
+      type: connection
+    - id: connection-13
+      mandatory: false
+      role: 0
+      lastEdit: null
+      waypoints:
+        - x: 340
+          'y': 280.0392150878906
+        - x: 250
+          'y': 214.4098358154297
+      source: entity-1
+      target: fact-10
+      type: connection
+    - id: connection-15
+      mandatory: false
+      role: 0
+      lastEdit: null
+      waypoints:
+        - x: 340
+          'y': 349.9572448730469
+        - x: 250
+          'y': 410.1803283691406
+      source: entity-1
+      target: fact-12
+      type: connection
+    - id: connection-17
+      mandatory: true
+      role: 0
+      lastEdit:
+        x: 426.5
+        'y': 471.5
+      waypoints:
+        - x: 390
+          'y': 354
+        - x: 390
+          'y': 472
+        - x: 439
+          'y': 471.5
+      source: entity-1
+      target: fact-15
+      type: connection
+    - id: connection-18
+      mandatory: false
+      role: 1
+      lastEdit:
+        x: 501.5
+        'y': 471.5
+      waypoints:
+        - x: 568
+          'y': 471.5
+        - x: 501.5
+          'y': 471.5
+        - x: 489
+          'y': 471.5
+      source: entity-4
+      target: fact-15
+      type: connection
+    - id: connection-20
+      mandatory: false
+      role: 0
+      lastEdit:
+        x: 476.5
+        'y': 176.5
+      waypoints:
+        - x: 389.7311706542969
+          'y': 279
+        - x: 389
+          'y': 177
+        - x: 489
+          'y': 176.5
+      source: entity-1
+      target: fact-35
+      type: connection
+    - id: connection-21
+      mandatory: false
+      role: 1
+      lastEdit:
+        x: 551.5
+        'y': 176.5
+      waypoints:
+        - x: 616.8696899414062
+          'y': 284
+        - x: 618
+          'y': 177
+        - x: 539
+          'y': 176.5
+      source: objectification-2
+      target: fact-35
+      type: connection
+    - id: connection-24
+      mandatory: false
+      role: 1
+      lastEdit:
+        x: 237.5
+        'y': 356.5
+      waypoints:
+        - x: 340
+          'y': 329.61474609375
+        - x: 237.5
+          'y': 356.5
+        - x: 237.5
+          'y': 344
+      source: entity-1
+      target: fact-22
+      type: connection
+    - id: connection-23
+      mandatory: false
+      role: 0
+      lastEdit:
+        x: 237.5
+        'y': 281.5
+      waypoints:
+        - x: 340
+          'y': 305.02459716796875
+        - x: 237.5
+          'y': 281.5
+        - x: 237.5
+          'y': 294
+      source: entity-1
+      target: fact-22
+      type: connection
+`
+
+export default system;
