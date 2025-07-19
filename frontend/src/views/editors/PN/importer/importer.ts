@@ -5,8 +5,11 @@ import {
 import {
     getConnectionMid
 } from "diagram-js/lib/layout/LayoutUtil"
-import PetriElementFactory from './elements/pertiElementFactory'
-import PetriModeling from './modeling/petriModeling'
+
+import PetriElementFactory from '../elements/pertiElementFactory'
+import PetriModeling from '../modeling/petriModeling'
+import { Events } from 'diagram-js/lib/command/CommandInterceptor'
+import { EventBus } from 'bpmn-js/lib/BaseViewer'
 
 const XML_ILLEGALS = {
     '<' : '&lt;',
@@ -16,25 +19,67 @@ const XML_ILLEGALS = {
     '&' : '&amp;',
 }
 
+export type PREFIX = "importing."
+export type SUFFIX = "load"
+export type EVENTS = `${PREFIX}${SUFFIX}`
+export interface EventContext {
+    text?: string,
+}
 
-class TsXmlImporter {
+export default class Importing {
+
+    static $inject = [
+        'modeling',
+        'elementFactory',
+        'canvas',
+        'elementRegistry',
+        'eventBus',
+    ]
+
+    _modeling: PetriModeling
+    _factory: PetriElementFactory
+    _canvas: any
+    _registry: any
+    _bus: EventBus<any>
+
+    constructor(modeling:any, factory:any, canvas:any, 
+        registry:any, bus:any){
+        this._modeling = modeling ;
+        this._factory = factory;
+        this._canvas = canvas;
+        this._registry = registry;
+        this._bus = bus;
+
+        this._bus.on(
+            'importing.load', 
+            this.load.bind(this)
+        );
+    }
 
     /**
-     * 
-     * @param {PetriModeling} modeling 
-     * @param {PetriElementFactory} factory 
-     * @param {*} canvas 
-     * @param {*} registry 
-     * @param {*} bus 
-     * @param {*} txRenderer 
+     * Shortcut to fire events from this service.
+     * @param {EVENTS} event the type of event to fire
+     * @param {EventContext} context  the context payload for 
      */
-    constructor(modeling, factory, canvas, registry, bus, txRenderer){
-        this._modeling = modeling 
-        this._factory = factory
-        this._canvas = canvas
-        this._registry = registry
-        this._bus = bus
-        this._txRender = txRenderer
+    fire(event: EVENTS, context: EventContext){
+        return this._bus.fire(event, context);
+    }
+
+    load(context:EventContext){
+        if (context.text === undefined){
+            throw new Error("No text provided to load")
+        }
+        var parser = new DOMParser()
+        var system = parser.parseFromString(
+            this.decode(context.text), "application/xml"
+        )
+        if (system.getElementsByTagName("parsererror").length > 0){
+            throw new Error("Failed to parse XML ::"
+                + system.getElementsByTagName("parsererror")[0]
+                    .textContent.trim()
+            )
+        }
+        this.import(system)
     }
 
     decode(text){
@@ -204,5 +249,3 @@ class TsXmlImporter {
         }
     }
 }
-
-export default TsXmlImporter

@@ -77,7 +77,7 @@ export default class PetriRenderer extends  BaseRenderer {
         });
 
         this.CONNECTION_STYLE = styles.style(
-            { strokeWidth: 3, stroke: 'var(--petri-net-connection-fill)', strokeLinecap: 'round',
+            { strokeWidth: 3, stroke: '#222222', strokeLinecap: 'round',
                 strokeLinejoin: 'round', fill: 'none'});
         this.PLACE_STYLE = styles.style(
             { fill: '#f5f5f5', stroke: '#222222', strokeWidth: 2 }
@@ -106,8 +106,8 @@ export default class PetriRenderer extends  BaseRenderer {
             markerHeight: 5,
             strokeWidth: 0,
             orient: 'auto-start-reverse',
-            stroke: 'var(--petri-net-connection-fill)',
-            fill: 'var(--petri-net-connection-fill)'
+            stroke: '#222222',
+            fill: '#222222'
         })
         xOffset = (((transitionSize/2)+8) * 2) / 5.0
         yOffset = ((((transitionSize/2)-8) / 2)) / 5
@@ -120,8 +120,8 @@ export default class PetriRenderer extends  BaseRenderer {
             markerHeight: 5,
             strokeWidth: 0,
             orient: 'auto-start-reverse',
-            stroke: 'var(--petri-net-connection-fill)',
-            fill: 'var(--petri-net-connection-fill)'
+            stroke: '#222222',
+            fill: '#222222'
         })
 
         xOffset = (((transitionSize/4) * 2.0) / 5.0) * 2.1
@@ -135,8 +135,8 @@ export default class PetriRenderer extends  BaseRenderer {
             markerHeight: 5,
             strokeWidth: 0,
             orient: 'auto-start-reverse',
-            stroke: 'var(--petri-net-connection-fill)',
-            fill: 'var(--petri-net-connection-fill)'
+            stroke: '#222222',
+            fill: '#222222'
         })
         var marker4 = svgCreate("marker", {
             id: 'connect-hover-arrow',
@@ -147,8 +147,8 @@ export default class PetriRenderer extends  BaseRenderer {
             markerHeight: 5,
             strokeWidth: 0,
             orient: 'auto-start-reverse',
-            stroke: 'var(--petri-net-connection-fill)',
-            fill: 'var(--petri-net-connection-fill)'
+            stroke: '#222222',
+            fill: '#222222'
         })
         var markerPath = svgCreate("path", {
             d: "M 0 0 L 5 2.5 L 0 5 z"
@@ -302,11 +302,12 @@ export default class PetriRenderer extends  BaseRenderer {
         )
         if (element.labelText.length > 0 && !element.silent)
             text.textContent = element.labelText
-        else 
+        else {
             text.textContent = "t" + element.id.split('-')[1]
             svgAttr(text, {
-                textLength: "none" 
-            })        
+                textLength: 0
+            });
+        }
         return text
     }
 

@@ -92,25 +92,19 @@
     
 <script>
 import EditorTS  from "./PN/editor.js"
-import defaultSystem from "./PN/system.js"
-import TsXmlImporter from "./PN/importer.js"
-
-import {
-  getConnectionMid
-} from "diagram-js/lib/layout/LayoutUtil"
 
 export default {
   name: "EditorPN",
   data: function(){
     return {
-                root: null,
-                editor: null,
-                diagramXML: null,
-                places : [],
-                flows: [],
-                transitions : [],
-                typesetPromise: Promise.resolve()
-            }
+      root: null,
+      editor: null,
+      diagramXML: null,
+      places : [],
+      flows: [],
+      transitions : [],
+      typesetPromise: Promise.resolve()
+    }
   },
   computed : {
           placesML : function(){
@@ -228,84 +222,13 @@ export default {
                   that.resetToEmpty()
               }, that)
             }]);
+
             // add default system
-            this.loadDefaultSystem()
-            this.editor.get('canvas').zoom('fit-viewport');
             this.triggerMathjax()
           },
         methods: {
           toggleFullscreen: function(){
             this.$refs.container.classList.toggle('fullscreen')
-          },
-          addDefaultSystem: function(){
-              this.editor.invoke([ 'eventBus', 'elementFactory', 'canvas', 'modeling', 
-                  function(events, factory, canvas, modeling) {
-                    var inc = factory.createPlace({
-                      x: 100,
-                      y: 100
-                    })
-                    var transition = factory.createTransition({
-                      x: 200,
-                      y: 100
-                    })
-                    var out = factory.createPlace({
-                      x: 300,
-                      y: 100
-                    })
-                    var arcInc = factory.createFlow({
-                      source: inc,
-                      target: transition,
-                      waypoints: [
-                        {x: inc.x, y: inc.y},
-                        {x: transition.x, y: transition.y}
-                      ]
-                    })
-                    var arcOut = factory.createFlow({
-                      source: transition,
-                      target: out,
-                      waypoints: [
-                        {x: transition.x, y: transition.y},
-                        {x: out.x, y: out.y},
-                      ]
-                    })
-                    var root = canvas.getRootElement()
-                    inc = modeling.createShape(inc, {
-                      x: inc.x, y:inc.y
-                    }, root)
-                    transition = modeling.createShape(transition, {
-                      x: transition.x, y:transition.y
-                    }, root)
-                    out = modeling.createShape(out, {
-                      x: out.x, y:out.y
-                    }, root)
-                    modeling.createConnection(
-                      inc, transition,
-                      arcInc, root) 
-                    modeling.layoutConnection(arcInc, root)
-                    modeling.createConnection(
-                      transition, out,
-                      arcOut, root) 
-                    modeling.layoutConnection(arcOut, root)
-                    modeling.moveShape(inc, {x: 0.01, y: 0.01})
-          }]);
-          },
-          loadDefaultSystem: function(){
-            this.editor.invoke([
-              'modeling', 'elementFactory', 'canvas', 'elementRegistry',
-              'eventBus', 'textRenderer'
-            ,function(modeling, factory, canvas, registry, bus, 
-                      textRenderer) {
-              //TODO: write load for default system
-              var parser = new TsXmlImporter(modeling, 
-                factory, canvas, registry, bus, textRenderer
-              );
-              var tree = new DOMParser().parseFromString(
-                            defaultSystem, "text/xml"
-              )
-              var system = tree.getElementsByTagName("net")[0]
-              parser.import(system)
-            }
-            ])
           },
           triggerMathjax: function(){
             const mathjax = window.MathJax

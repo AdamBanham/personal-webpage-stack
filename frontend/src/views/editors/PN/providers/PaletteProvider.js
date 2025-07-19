@@ -1,15 +1,13 @@
 
-import TsXmlExporter from "../exporter.js";
-import TsXmlImporter from "../importer.js";
 import {scaleToFitElements} from "../../base/utils/canvasUtils.js";
-import SvgSaver from "../svgSaver.js";
 
 /**
  * A example palette provider.
  */
 export default function ExamplePaletteProvider(
     create, elementFactory, lassoTool, palette, connect, registry,
-    modeling, canvas, eventBus, textRenderer) {
+    modeling, canvas, eventBus, textRenderer, 
+    importing, exporting, svgExporting) {
     this._create = create;
     this._elementFactory = elementFactory;
     this._lassoTool = lassoTool;
@@ -20,6 +18,9 @@ export default function ExamplePaletteProvider(
     this._canvas = canvas
     this._bus = eventBus
     this._textRenderer = textRenderer
+    this._importer = importing;
+    this._exporting = exporting; 
+    this._svgExporting = svgExporting;
   
     palette.registerProvider(this);
 
@@ -39,7 +40,10 @@ export default function ExamplePaletteProvider(
     'modeling',
     'canvas',
     'eventBus',
-    'textRenderer'
+    'textRenderer',
+    'importing',
+    'exporting',
+    'svgExporting'
   ];
   
   
@@ -52,7 +56,10 @@ export default function ExamplePaletteProvider(
         canvas = this._canvas,
         bus = this._bus,
         connect = this._connect,
-        textRenderer = this._textRenderer;
+        textRenderer = this._textRenderer,
+        importing = this._importer,
+        exporting = this._exporting,
+        svgExporting = this._svgExporting;
   
     return {
       'lasso-tool': {
@@ -106,37 +113,22 @@ export default function ExamplePaletteProvider(
         action: {
           click: function(event) {
             let input = document.createElement('input');
-            var parser = new TsXmlImporter(modeling,
-              elementFactory, canvas, registry, bus, textRenderer)
             input.type = 'file';
             input.accept = '.pnml';
             input.onchange = _ => {
               // you can use this method to get file and perform respective operations
-                      let xml =   Array.from(input.files)[0];
-                      xml.text()
-                        .then( content => 
-                        {
-                          input.remove()
-                          URL.revokeObjectURL(input)
-                          var tree = new DOMParser().parseFromString(
-                            content, "text/xml"
-                          )
-                          
-                          var errors = tree.getElementsByTagName("parsererror")
-                          if (errors.length > 0){
-                            alert(
-                              "Parsing failed :: "
-                              + errors[0].textContent
-                            )
-                            return
-                          }
-                          var system = tree.getElementsByTagName("page")
-                          if (system.length > 0){
-                            parser.import(system[0])
-                          }
-                        }
-                        )
-                  };
+              let xml =   Array.from(input.files)[0];
+              xml.text()
+                .then( text => 
+                {
+                  importing.fire('importing.load', { text });
+                  setTimeout(() => {
+                    scaleToFitElements(canvas)
+                    scaleToFitElements(canvas)
+                  }, 75);
+                }
+                );
+              };
             input.click();
           }
         }
@@ -148,7 +140,7 @@ export default function ExamplePaletteProvider(
         action: {
           click: function(event) {
             // Generate the content you want to download as a string
-            const content = new TsXmlExporter(registry).export()
+            const content = exporting.fire('exporting.export')
 
             // Create a Blob (Binary Large Object) from the content
             const blob = new Blob([content], { type: 'text/plain' });
@@ -174,15 +166,14 @@ export default function ExamplePaletteProvider(
         action: {
           click: function(event) {
             // Generate the content you want to download as a string
-            const content = new SvgSaver(canvas).save()
-
+            const content = svgExporting.fire('exporting.svg.export')
             // Create a Blob (Binary Large Object) from the content
             const blob = new Blob([content], { type: 'text/plain' });
 
             // Create a link element for downloading the file
             const a = document.createElement('a');
             a.href = URL.createObjectURL(blob);
-            a.download = 'transition_system.svg'; // Specify the default filename
+            a.download = 'petir_net.svg'; // Specify the default filename
 
             // Trigger a click event on the link to initiate the download
             a.click();
@@ -246,8 +237,27 @@ export default function ExamplePaletteProvider(
                     els
                 )
             }
+            bus.fire('local.storage.clear');
           }
         }
       },
+      'reset-model' : {
+        group: 'clear',
+        className: 'mdi-restore mdi',
+        title: 'Reset to Default Model',
+        action: {
+          click: function(event) {
+            bus.fire('local.storage.clear');
+            let system = bus.fire('local.storage.find');
+            if (system) {
+              importing.fire('importing.load', { text: system });
+            }
+            setTimeout(() => {
+              scaleToFitElements(canvas)
+              scaleToFitElements(canvas)
+            }, 75);
+          }
+        }
+      }
     };
   };

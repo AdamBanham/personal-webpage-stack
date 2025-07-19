@@ -1,8 +1,9 @@
+import EventBus from "diagram-js/lib/core/EventBus";
 import {
     isPlace,
     isTransition,
     isFlow
-} from "./elements/pertiElementFactory"
+} from "../elements/pertiElementFactory"
 
 import {v4 as uuidv4} from 'uuid';
 
@@ -105,12 +106,31 @@ const XML_ILLEGALS = {
     '"' : '&quot;'
 }
 
+export type PREFIX = "exporting."
+export type SUFFIX = "export"
+export type EVENTS = `${PREFIX}${SUFFIX}`
 
-class TsXmlExporter {
+export default class Exporting {
+    
+    static $inject = [
+        'eventBus',
+        'elementRegistry'
+    ]
 
-    constructor(registry){
+    _bus: EventBus<any> 
+    _registry: any
+    _xml: string
+
+    constructor(eventBus, registry){
+        this._bus = eventBus
         this._registry = registry
         this._xml = ""
+
+        this._bus.on('exporting.export', this.export.bind(this));
+    }
+
+    fire(event: EVENTS){
+        return this._bus.fire(event)
     }
 
     encode(text){
@@ -147,11 +167,11 @@ class TsXmlExporter {
             return that.serialise(that,el,gfx)
         }
         els.forEach(f)
+
+        //TODO
         // then add initial marking
-        // TODO
         // then add final marking
-        // TODO
-        // add tail and return
+
         return this._xml + this.createTail()
     }
 
@@ -180,10 +200,10 @@ class TsXmlExporter {
             y: parseInt(element.y),
             UUID: UUID
         })
+        // TODO
         // check for initial marking
-        // TODO
         // check for final marking
-        // TODO
+
         return placeSvg + PLACE_CLOSURE
     }
 
@@ -203,7 +223,6 @@ class TsXmlExporter {
 
     _serialiseFlow(self, element, gfx){
         var UUID = uuidv4()
-        //console.log(element)
         var flowSvg = ""+ FLOW_TEMPLATE({
             id: element.id,
             src: element.source.id,
@@ -223,5 +242,3 @@ class TsXmlExporter {
         return XML_TAIL
     }
 }
-
-export default TsXmlExporter

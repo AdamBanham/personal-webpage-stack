@@ -27,6 +27,10 @@ import PetriRules from './rules';
 import customConnect from './connect';
 import GridModule from '../base/grid';
 import PetriLayout from './layout';
+import ImportingPetriNets from './importer';
+import ExportingPetriNets from './exporter';
+import LocalSessionStorage from './localStorage';
+import DocumentReflection from './document';
 
 /**
  * A module that changes the default diagram look.
@@ -80,7 +84,11 @@ export default function TSEditor(options) {
         customModeling,
         PetriRules,
         GridModule,
-        PetriLayout
+        PetriLayout,
+        ImportingPetriNets,
+        ExportingPetriNets,
+        LocalSessionStorage,
+        DocumentReflection
     ];
 
     var diagram =  new Diagram({
