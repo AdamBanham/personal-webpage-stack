@@ -24,19 +24,19 @@ name: "FaceHolder"
     box-shadow: c.$green-1 0 0 25px 15px
 
     @media (min-width: brk.$desktop-width)
-      background-image: url("profiles/adam/adam-banham-graduation.jpeg")
+      background-image: url("/profiles/adam/adam-banham-graduation.jpeg")
       border-radius: 50px
       height: 500px
       width: 300px
 
     @media (max-width: calc(brk.$desktop-width - 1px)) and (min-width: brk.$tablet-width)
-      background-image: url("profiles/adam/adam-banham-circled.png")
+      background-image: url("/profiles/adam/adam-banham-circled.png")
       border-radius: 50%
       height: 200px
       width: 200px
 
     @media (max-width: calc(brk.$tablet-width - 1px))
-      background-image: url("profiles/adam/adam-banham-circled.png")
+      background-image: url("/profiles/adam/adam-banham-circled.png")
       border-radius: 50%
       height: 150px
       width: 150px
