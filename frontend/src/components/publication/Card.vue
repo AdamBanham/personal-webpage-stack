@@ -17,15 +17,16 @@
           <i>{{ authors.join(", ") }}</i> 
         </p>
       </div>
-      <div
-        class="pub-card-abstract"
+      <details class="pub-card-abstract"
         :class="{
           'hidden' : hidden
         }"
-        @click="toggleHidden"
       >
+        <summary
+          @click="toggleHidden"
+        > <span class="mdi mdi-magnify"></span><strong>Abstract:</strong> </summary>
         <p> {{ abstract }} </p>
-      </div>
+      </details>
       <div class="pub-card-fill" />
       <div
         class="pub-card-download"
@@ -141,6 +142,7 @@ export default {
 <style lang="sass" scoped>
 @use "@/styles/coloursAnt.sass" as c
 @use "@/styles/breakpoints.sass" as brk
+@use "sass:color"
 
 .pub-card
     margin-left: 3%
@@ -188,7 +190,7 @@ export default {
           &::after
               content: "+" !important
               font-size: 30px !important
-              top: -15% !important
+              top: -10px !important
 
       .pub-card-title
           margin-top: 10px
@@ -235,25 +237,45 @@ export default {
               color: c.$green-2
 
       .pub-card-abstract
+        padding: 0px 15px 15px 15px
         margin-top: 10px
         width: 90%
         margin-left: 5%
         margin-right: 5%
         min-height: 10px
-        flex: 1 0 250px
-        background-color: none
-        transition: all 1s ease
-        flex-grow: 20
+        flex: 1 0
+        transition: all .5s ease
+        flex-grow: 0
         grid-template-rows: 1fr
         position: relative
-        overflow: hidden
+        border-radius: 12.5px
+
+        &[closed]
+          overflow: hidden
+          flex-grow: 0.01
+
+        &[open]
+          flex-grow: 1
+          overflow: clip
+
+        summary
+          color: c.$green-2
+          list-style-type: none
+        
+          span
+            margin-right: 5px 
+            font-size: 18px
 
         p 
           color: c.$green-3
           font-size: 10px
-          
+          border: 1px c.$green-1 solid
+          border-radius: 5px
+          padding: 5px
+          text-align: center
+
         &:hover
-          background-color: #bfbfbf5e
+          background-color: color.adjust(c.$green-1, $alpha: -0.8)
           cursor: pointer
 
           &::after

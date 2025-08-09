@@ -52,21 +52,59 @@
             href="https://scholar.google.com/citations?hl=en&user=IyiPbEAAAAAJ"
             target="_blank"
           >Scholar</a>) <br><br>
-          Thanks to the fantastic support at the Queensland University of 
-          Technology, I am finishing a PhD focusing on Process Mining. I am 
-          deeply grateful for the significant impact my current supervisor 
-          team has had on my academic journey, their effort and patience have 
-          helped me grow from my undergraduate studies to the present. I am 
-          particularly thankful to Professor Moe T. Wynn, for taking me on 
-          during my undergraduate and creating opportunities to work with her 
-          and colleagues. Dr Robert Andrews, for giving me a chance to work 
-          alongside him during my undergraduate studies and for his continuing 
-          support. Finally, Prof. Sander J.J. Leemans, for giving me the 
-          opportunity to learn from him during my honours and PhD.
-          <br>
-          <br>
-          <b>Additional Info:</b>
         </p>
+        <p>
+          <strong>
+            I am an award-winning scholar and educator.
+          </strong> 
+          I have published
+          high-quality publications as a researcher and excelled as a 
+          teacher for undergraduates  and postgraduates studying either
+          computer science or information systems through their 
+          coursework at QUT.
+        </p>
+        <br>
+        <p>
+          I help organisations mature their processes and build 
+          process-aware informations to support their operational
+          excellence. 
+          Ideally, by the end of a project with me, you and your team 
+          will be 
+          <strong>
+            busier than ever!
+          </strong> 
+          <em>Doing more work that matters</em> rather than dealing with 
+          friction from the process.
+        </p>
+        <br>
+        <p>
+          I completed my doctoral studies at the Queensland University of 
+          Technology, focusing on 
+          <strong>
+            Process Mining
+          </strong>. 
+          My doctoral studies spanned several major events, the most 
+          prominent of which was the global outbreak of COVID-19 I am 
+          particularly thankful to 
+          <strong> Professor Moe T. Wynn </strong>
+          , for taking me on during my undergraduate years and 
+          creating opportunities to work with her and colleagues. 
+          <strong>
+            Dr. Robert Andrews,
+          </strong>  
+          for giving me a chance to work alongside him during my 
+          undergraduate studies and for his continuing support. 
+          Finally, 
+          <strong>
+            Prof. Sander J.J. Leemans
+          </strong>, 
+          for allowing me to learn from his passion for 
+          process mining and guidance through the troubling waters of a 
+          doctoral journey.
+        </p>
+        <br>
+        <br>
+        <b>Additional Info:</b>
         <ul>
           <li>
             Born in Ipswich, Queensland, Australia.
@@ -114,11 +152,27 @@
             External examination completed, 13/03/2025, passed with minor revisions.
           </li>
           <li>
-            <strong style="color:yellowgreen">Offically Conferred PhD on 09/05/2025</strong>, see 
+            Offically Conferred PhD on 09/05/2025, see 
             <a
             href="/docs/education/Dr-Banham-Conferred.pdf"
             target="_blank">
               letter
+            </a>.
+          </li>
+          <li>
+            <strong style="color:yellowgreen">
+              Offically Graduated and 
+              Recieved Doctoral Testamur on 02/08/2025
+            </strong>, see 
+            <a
+            href="/docs/education/Dr-Banham-Testamur.pdf"
+            target="_blank">
+              testamur
+            </a>
+            <a
+            href="https://www.myequals.net/sharelink/bcbe292a-cb3c-4d27-a0f4-88170c6cab45/10305491-09a5-4884-87b2-3f8e9b6bf76c"
+            target="_blank">
+              (<em>offical record</em>)
             </a>.
           </li>
         </ul>
@@ -192,6 +246,9 @@ methods: {
   display: flex
   justify-content: center
   align-items: center
+
+  strong 
+    color: c.$green-7
 
   @media (min-width: brk.$desktop-width)
     margin-top: 50px

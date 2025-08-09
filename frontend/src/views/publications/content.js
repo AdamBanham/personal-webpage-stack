@@ -131,7 +131,9 @@ var papers = [
         Our results show that our approach can outperform existing data-aware techniques in unstructured processes.
         `,
         "papers/2025/Petri_Nets_2025___Exogenous_Influences_on_Processes.pdf",
-        "45th International Conference on Application and Theory of Petri Nets and Concurrency (Petri Nets 2025)"
+        "45th International Conference on Application and Theory of Petri Nets and Concurrency (Petri Nets 2025)",
+        "https://doi.org/10.1007/978-3-031-94634-9_3",
+        "bibtex/2025/PN2025.bib"
     ),
     new Paper(
         "BPMForum2025",
@@ -147,7 +149,7 @@ var papers = [
             Our analysis synthesises the project's design choices, deriving how the process mindset failed the owners and agents. 
             We posit that public process documentation is required to prevent similar failures in the future.
         `,
-        false,
+        "papers/2025/BPM_2025_Forum__A_Case_for_Public_Proces_Documentation.pdf",
         "23rd International Conference on Business Process Management, BPM Forum, 2025 (BPM 2025)"
     )
 ]
