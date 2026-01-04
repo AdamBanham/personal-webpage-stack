@@ -33,12 +33,25 @@
     </div>
     <div class="right">
       <div>
+        <img src="/images/au-email-signature-era.gif" style="width: 100%; border-radius: 10px;"></img>
         <p>
-          <b> 
-            I'm seeking opportunities in academia in computer science 
-            and information systems, specifically in process mining. 
-            Please get in touch if you have an openning.
-          </b> 
+            I am currently researching as a post-doctorate @ 
+            <a href="https://adelaideuni.edu.au/" target="_blank">
+              Adelaide University
+            </a> (part of the group of eight or 
+            <a href="https://go8.edu.au/" target="_blank">
+              G8
+            </a> in Australia),
+            exploring how conceptual modelling can be used to enhance the 
+            development of simulations for complex systems. 
+            Working with a growing team studying emergent behaviour in 
+            complex systems under 
+            <strong>
+              <a href="https://www.adelaide.edu.au/directory/claudia.szabo" target="_blank">
+              Prof Claudia Szabo
+              </a>
+            </strong>.
+              
         </p>
       </div>
       <div>
@@ -61,7 +74,7 @@
           high-quality publications as a researcher and excelled as a 
           teacher for undergraduates  and postgraduates studying either
           computer science or information systems through their 
-          coursework at QUT.
+          coursework.
         </p>
         <br>
         <p>
@@ -84,8 +97,10 @@
             Process Mining
           </strong>. 
           My doctoral studies spanned several major events, the most 
-          prominent of which was the global outbreak of COVID-19 I am 
-          particularly thankful to 
+          prominent was the global outbreak of COVID-19 for the first half 
+          of my studies.
+          I am particularly thankful to my supervisors that offered myself
+          a unique learning experience. 
           <strong> Professor Moe T. Wynn </strong>
           , for taking me on during my undergraduate years and 
           creating opportunities to work with her and colleagues. 
@@ -174,6 +189,9 @@
             target="_blank">
               (<em>offical record</em>)
             </a>.
+          </li>
+          <li>
+            Started a PostDoc Position @ Adelaide University in late of 2025.
           </li>
         </ul>
       </div>
