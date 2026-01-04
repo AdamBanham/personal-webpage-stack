@@ -1,9 +1,12 @@
 import content2024 from "./2024"
+import content2025 from "./2025"
 import phdcontent from "./phdcontent";
 
 const allcontent = []
     .concat(phdcontent.content)
-    .concat(content2024);
+    .concat(content2024)
+    .concat(content2025)
+    
 var contentkeys = []
 var contentDict = {}
 

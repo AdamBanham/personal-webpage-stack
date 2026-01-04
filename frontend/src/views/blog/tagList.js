@@ -10,7 +10,9 @@ const TAGS = {
     "pmd" : "Process Discovery",
     "pmc" : "Conformance Checking",
     "pme" : "Process Enhancement",
-    "rwth" : "RWTH Aachen"
+    "rwth" : "RWTH Aachen",
+    "csys" : "Complex Systems",
+    "au" : "Adelaide University"
 }
 
 export {
