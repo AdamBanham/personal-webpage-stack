@@ -30,16 +30,16 @@ const LABEL_COLOUR = "#01031b"
 const INNER_ICON_FILL_COLOUR = "#222222"
 const MARKED_COLOR = "#ebdf3f"
 const TEXT_STYLE = {
-      fontFamily: 'Arial, sans-serif',
-      fontSize: 8,
+      fontFamily: 'sans-serif',
+      fontSize: 16,
       fontWeight: 'normal',
       textLength: (transitionSize) - 10,
       textAnchor: 'middle',
       dominantBaseline: 'middle'
 }
 const PLACE_TEXT_STYLE = {
-    fontFamily: 'Arial, sans-serif',
-    fontSize: 8,
+    fontFamily: 'sans-serif',
+    fontSize: 10,
     fontWeight: 'normal',
     textAnchor: 'middle',
     dominantBaseline: 'middle'
@@ -99,8 +99,8 @@ export default class PetriRenderer extends  BaseRenderer {
         var yOffset = (((placeRadius-4) / 2)) / 5
         var marker = svgCreate("marker", {
             id: 'src-place-arrow',
-            viewbox: '0 0 10 10',
-            refX: 5,
+            viewbox: '0 0 5 5',
+            refX: 2.5,
             refY: 2.5,
             markerWidth: 5,
             markerHeight: 5,
@@ -113,8 +113,8 @@ export default class PetriRenderer extends  BaseRenderer {
         yOffset = ((((transitionSize/2)-8) / 2)) / 5
         var marker2 = svgCreate("marker", {
             id: 'src-trans-arrow',
-            viewbox: '0 0 10 10',
-            refX: 5,
+            viewbox: '0 0 5 5',
+            refX: 2.5,
             refY: 2.5,
             markerWidth: 5,
             markerHeight: 5,
@@ -128,8 +128,8 @@ export default class PetriRenderer extends  BaseRenderer {
         yOffset = (((transitionSize/2) / 2.0) / 5.0) * 0.9
         var marker3 = svgCreate("marker", {
             id: 'src-silent-trans-arrow',
-            viewbox: '0 0 10 10',
-            refX: 5,
+            viewbox: '0 0 5 5',
+            refX: 2.5,
             refY: 2.5,
             markerWidth: 5,
             markerHeight: 5,
@@ -140,15 +140,15 @@ export default class PetriRenderer extends  BaseRenderer {
         })
         var marker4 = svgCreate("marker", {
             id: 'connect-hover-arrow',
-            viewbox: '0 0 10 10',
-            refX: 5,
+            viewbox: '0 0 5 5',
+            refX: 2.5,
             refY: 2.5,
             markerWidth: 5,
             markerHeight: 5,
             strokeWidth: 0,
             orient: 'auto-start-reverse',
-            stroke: '#222222',
-            fill: '#222222'
+            stroke: '#5671e7',
+            fill: '#5671e7'
         })
         var markerPath = svgCreate("path", {
             d: "M 0 0 L 5 2.5 L 0 5 z"
@@ -195,7 +195,7 @@ export default class PetriRenderer extends  BaseRenderer {
                     place
                 )
                 svgElements.push(
-                    this.drawPlaceLabel(element)
+                    this.drawShapeId(element)
                 )
             } else if (isTransition(element)){
                 var trans = this.drawTransition(element, this.TRANSITION_STYLE)
@@ -205,8 +205,10 @@ export default class PetriRenderer extends  BaseRenderer {
                 svgElements.push(
                     trans
                 );
-                svgElements.push(
-                    this.drawTransitionLabel(element)
+                let label = this.drawTransitionLabel(element);
+                if (label) svgElements.push(label);
+                 svgElements.push(
+                    this.drawTransitionId(element)
                 );
                 
             } else if (isFlow(element)){
@@ -254,7 +256,20 @@ export default class PetriRenderer extends  BaseRenderer {
         return svg
     }
 
-    drawPlaceLabel(element){
+    drawTransitionId(element){
+        var text = svgCreate('text',
+            assign({
+                opacity: 0.75,
+                x: -1 * element.width * 0.1,
+                y: element.height * 1.1,
+                fill: LABEL_COLOUR,
+            }, PLACE_TEXT_STYLE)
+        )
+        text.textContent = this.trimId(element.id)
+        return text
+    }
+
+    drawShapeId(element){
         var text = svgCreate('text',
             assign({
                 opacity: 0.75,
@@ -293,6 +308,8 @@ export default class PetriRenderer extends  BaseRenderer {
     }
 
     drawTransitionLabel(element){
+        if (element.silent)
+            return null
         var text = svgCreate('text',
             assign({
                 x: element.silent ? transitionSize/-3 : transitionSize/2,

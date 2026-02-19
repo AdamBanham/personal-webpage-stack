@@ -37,6 +37,7 @@ import ExportingPetriNets from './exporter';
 import LocalSessionStorage from './localStorage';
 import DocumentReflection from './document';
 import CustomCopyPaste from './copyPaste';
+import CustomBendingModule from "./bendpoints"
 
 /**
  * A module that changes the default diagram look.
@@ -100,7 +101,8 @@ export default function TSEditor(options) {
         ExportingPetriNets,
         LocalSessionStorage,
         DocumentReflection,
-        CustomCopyPaste
+        CustomCopyPaste,
+        CustomBendingModule
     ];
 
     var diagram =  new Diagram({
