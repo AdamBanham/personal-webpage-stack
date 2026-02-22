@@ -48,10 +48,10 @@
     position: absolute;
     z-index: 1100;
     display: none;
-    top: calc(20px + (25%)/2);
+    top: calc(100px + (25%)/2);
     left: calc((100% - 50%)/2);
     width: 50%;
-    height: 75%;
+    height: 700px;
     border: 1px solid rgb(41, 40, 40);
     background: rgba(77, 76, 99, 0.726);
     padding: 10px;

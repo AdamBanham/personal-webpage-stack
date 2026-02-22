@@ -51,13 +51,15 @@ export default class OrmModelling extends Modeling {
             // TODO: I dont think I need this line anymore
             // this.moveElements([element], {x:0,y:0});
             // things usually fire on elements changed rather than element.changed
-            this._eventBus.fire('elements.changed', {elements: [element], layout:false});
-            this._eventBus.fire('element.changed', {element: element, layout:false}); 
-            if (isFact(element)){
-                if (element.objectified && element.objectification){
-                    this.sendUpdate(element.objectification);
-                }
-            }   
+            setTimeout( () => {
+                this._eventBus.fire('elements.changed', {elements: [element], layout:false});
+                this._eventBus.fire('element.changed', {element: element, layout:false}); 
+                if (isFact(element)){
+                    if (element.objectified && element.objectification){
+                        this.sendUpdate(element.objectification);
+                    }
+                }   
+            }, 5)
         }
     }
 
