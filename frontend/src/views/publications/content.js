@@ -150,7 +150,9 @@ var papers = [
             We posit that public process documentation is required to prevent similar failures in the future.
         `,
         "papers/2025/BPM_2025_Forum__A_Case_for_Public_Proces_Documentation.pdf",
-        "23rd International Conference on Business Process Management, BPM Forum, 2025 (BPM 2025)"
+        "23rd International Conference on Business Process Management, BPM Forum, 2025 (BPM 2025)",
+        "https://doi.org/10.1007/978-3-032-02929-4_19",
+        "bibtex/2025/BPMForum2025.bib"
     )
 ]
 
