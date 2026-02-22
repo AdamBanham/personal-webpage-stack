@@ -183,7 +183,7 @@ export default function OrmConnect(
       context.target = null;
       context.targetRole = null;
       context.canExecute = false;
-      helping.fire('help.clear');
+      // helping.fire('help.clear');
     });
 
     eventBus.on('connect.cleanup', function(event) {
