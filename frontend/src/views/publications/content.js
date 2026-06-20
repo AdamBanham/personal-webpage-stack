@@ -1,6 +1,6 @@
 
 class Paper {
-    constructor(key, title, authors, year, abstract, file, venue, doi, bibtex){
+    constructor(key, title, authors, year, abstract, file, venue, doi, bibtex, citations){
         this.key = key;
         this.title = title;
         this.authors = authors;
@@ -10,6 +10,7 @@ class Paper {
         this.venue = venue;
         this.doi = doi;
         this.bibtex = bibtex;
+        this.citations = citations;
     }
 }
 
@@ -41,7 +42,8 @@ var papers = [
         "papers/2021/EDBA/ICPM2021____EDBA___A_Framework_for_Process_Mining_with_Exogenous_Data.pdf",
         "EDBA @ ICPM",
         "https://doi.org/10.1007/978-3-030-98581-3_7",
-        "bibtex/2021/ICPM2021.bib"
+        "bibtex/2021/ICPM2021.bib",
+        22,
     ),
     new Paper(
         "AIIM2022a",
@@ -77,7 +79,8 @@ var papers = [
         "papers/2022/AIIM-SI/AIIM___VSI_KRR___Enhancing_Exogenous_Data_Visibility.pdf",
         "Artifical Intelligence in Medicine - Special Issue - Knowledge Representation and Reasoning for Healthcare Processes",
         "https://doi.org/10.1016/j.artmed.2022.102409",
-        "bibtex/2022/AIIM2022a.bib"
+        "bibtex/2022/AIIM2022a.bib",
+        19
     ),
     new Paper(
         "ACCESS2024",
@@ -113,7 +116,8 @@ var papers = [
         "papers/2024/ACCESS2024_Comparing_Conformance_Checking_For_Decision_Mining.pdf",
         "IEEE Access",
         "https://doi.org/10.1109/ACCESS.2024.3391234",
-        "bibtex/2024/ACCESS2024.bib"
+        "bibtex/2024/ACCESS2024.bib",
+        5
     ),
     new Paper(
         "PetriNet2025",
@@ -153,7 +157,44 @@ var papers = [
         "23rd International Conference on Business Process Management, BPM Forum, 2025 (BPM 2025)",
         "https://doi.org/10.1007/978-3-032-02929-4_19",
         "bibtex/2025/BPMForum2025.bib"
-    )
+    ),
+        new Paper(
+        "2026b-winter-sim",
+        "Emergence Patterns via Synchronization (Invited Paper)",
+        ["Adam Banham", "Claudia Szabo"],
+        2026,
+        `
+        Understanding how emergent behavior appears and unfolds in complex adaptive systems (CAS) can aid their design, development, and deployment. 
+        Existing work focuses on the intricate modeling of micro- and macro-states that lead to emergent behavior, without considering the engineering of emergent behavior in a principled and reusable manner.
+        In this paper, we focus on the potential of defining patterns of emergent behavior as collections and sequences of system states and CAS properties that facilitate the appearance of specific behaviors.
+        We build on the practice of workflow patterns, which are extensively used in process mining and business process management to abstract specific behaviors and to facilitate reasoning about behavior under complex, sophisticated conditions.
+        We propose a representation of emergent behavior patterns using Business Process Model and Notation (BPMN) and investigate the feasibility of this reasoning tool when analyzing several well-known models. 
+        `,
+        "papers/2026/2026b-winter-sim-emergence-patterns-via-synchronization.pdf",
+        "Winter Simulation Conference 2026",
+        undefined,
+        "bibtex/2026/2026b-winter-sim.bib"
+    ),
+    new Paper(
+        "2026a-sigsim-pads",
+        "On the Modelling of Aggregated Behaviour for Simulation: An Event–Based Architecture",
+        ["Adam Banham", "Ryan Beruldsen", "Claudia Szabo"],
+        2026,
+        `
+        Studying complex systems often requires simulation to confirm or test hypotheses about their behaviour.
+        Drawing insights from simulation studies can empower a large domain of applications, but only if realistic behaviour can be modelled.
+        Simulators are often bespoke and architectured without considering the long-term generalisation for simulation studies.
+        Furthermore, when studying complex systems, both modellers and simulation engineers need to support the modelling of systems where emergent, nonlinear, or self-organising behaviour may occur.
+        In this paper, we identify several modelling and simulation considerations that influence the simulation life-cycle within a large-scale discrete event simulator. 
+        We compare the suitability of various notations and formalisms against these considerations, and advocate for aggregated behaviour to develop and operationalise macro-level behaviour.
+        Through a novel simulation architecture, we investigate the capabilities of several notations to address our proposed considerations and their runtime performance.
+        `,
+        "papers/2026/2026a-sigsim-pads-On the Modelling of Aggregated Behaviour for Simulation.pdf",
+        "ACM SIGSIM International Conference on Principles of Advanced Discrete Simulation (SIGSIM-PADS ’26)",
+        "https://doi.org/10.1145/3806789.3810253",
+        "bibtex/2026/2026a-sigsim-pads.bib",
+        2
+    ),
 ]
 
 papers = papers.sort((a,b) => b.year- a.year)

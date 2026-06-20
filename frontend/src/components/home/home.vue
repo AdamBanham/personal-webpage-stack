@@ -47,7 +47,7 @@
             Working with a growing team studying emergent behaviour in 
             complex systems under 
             <strong>
-              <a href="https://www.adelaide.edu.au/directory/claudia.szabo" target="_blank">
+              <a href="https://researchers.adelaide.edu.au/profile/claudia.szabo" target="_blank">
               Prof Claudia Szabo
               </a>
             </strong>.
