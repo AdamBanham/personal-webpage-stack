@@ -8,6 +8,8 @@ import {
   isLabel
 } from 'diagram-js/lib/util/ModelUtil';
 
+import { getMid } from 'diagram-js/lib/layout/LayoutUtil';
+
 
 var AXIS_TO_DIMENSION = {
   x: 'width',

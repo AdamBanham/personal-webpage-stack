@@ -33,7 +33,7 @@
     </div>
     <div class="right">
       <div>
-        <img src="/images/au-email-signature-era.gif" style="width: 100%; border-radius: 10px;"></img>
+        <img src="/images/au-email-signature-era.gif" style="width: 100%; border-radius: 10px;">
         <p>
             I am currently researching as a post-doctorate @ 
             <a href="https://adelaideuni.edu.au/" target="_blank">

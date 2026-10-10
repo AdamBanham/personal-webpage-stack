@@ -1,6 +1,6 @@
 import ElementRegistry from "diagram-js/lib/core/ElementRegistry";
 import { isConnection } from "diagram-js/lib/util/ModelUtil";
-import { ShapeLike } from "diagram-js/lib/model";
+/** @typedef {import("diagram-js/lib/model").ShapeLike} ShapeLike */
 
 export default class Placer {
 

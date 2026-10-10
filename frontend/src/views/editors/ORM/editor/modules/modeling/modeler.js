@@ -338,6 +338,9 @@ export default class OrmModelling extends Modeling {
         this.sendUpdates(fact, ...fact.labels);
     }
 
+    // TODO(vue3-migration): this overrides the earlier removeElements above, so its
+    // clearConnection() handling for role connections never runs. Decide whether to merge them.
+    // eslint-disable-next-line no-dupe-class-members
     removeElements(elements){
         this._eventBus.fire('elements.removed', {elements: elements});
         super.removeElements(elements);

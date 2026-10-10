@@ -54,13 +54,13 @@ export default class ObjectificationReflection {
                     let objectification = fact.objectification;
                     objectification!.update();
                     that._modeling.sendUpdate(objectification);
-                    for(let out of objectification?.incoming) {
+                    for(let out of objectification.incoming) {
                         setTimeout(() => {
                             that._modeling.layoutConnection(out);
                             that._modeling.sendUpdate(out);
                         }, 19);
                     }
-                    for(let out of objectification?.outgoing) {
+                    for(let out of objectification.outgoing) {
                         setTimeout(() => {
                             that._modeling.layoutConnection(out);
                             that._modeling.sendUpdate(out);

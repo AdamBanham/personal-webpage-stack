@@ -2,7 +2,8 @@ import  {
     isLabel, isConnection
 } from "diagram-js/lib/util/ModelUtil";
 
-import { ShapeLike, Connection } from "diagram-js/lib/model";
+/** @typedef {import("diagram-js/lib/model").ShapeLike} ShapeLike */
+/** @typedef {import("diagram-js/lib/model").Connection} Connection */
 import { unitHeight, Fact } from "../model/facts";
 import { Entity, ValueEntity } from "../model/entities";
 import { isFact, isEntity, isConstraint, isExactlyEntity, } from "../model/util";

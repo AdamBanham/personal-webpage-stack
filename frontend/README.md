@@ -15,10 +15,20 @@ npm run dev
 npm run build
 ```
 
-### Lints and fixes files
+### Previews the production build
+```
+npm run preview
+```
+
+### Lints files
 ```
 npm run lint
 ```
 
+### Type-checks files
+```
+npm run type-check
+```
+
 ### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+See the [Vite configuration reference](https://vite.dev/config/).
