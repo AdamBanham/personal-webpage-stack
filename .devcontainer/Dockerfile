@@ -1,5 +1,5 @@
 # [Choice] Node.js version: 14, 12, 10
-ARG VARIANT=18
+ARG VARIANT=24
 FROM mcr.microsoft.com/vscode/devcontainers/javascript-node:${VARIANT}
 
 # bind your app to the gateway IP

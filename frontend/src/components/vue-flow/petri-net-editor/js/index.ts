@@ -1,0 +1,1 @@
+export const PetriEditorNamespace = "petri-net-editor"

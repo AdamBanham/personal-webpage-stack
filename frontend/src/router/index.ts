@@ -12,6 +12,7 @@ const EditorTS = () => import("@/views/editors/EditorTS.vue")
 const EditorPN = () => import("@/views/editors/EditorPN.vue")
 const EditorORM = () => import("@/views/editors/EditorORM.vue")
 const EditorBPMN = () => import("@/views/editors/EditorBPMN.vue")
+const VueFlowPnEditor = () => import("@/views/editors/VueFlowPnEditor.vue")
 
 const routes: RouteRecordRaw[] = [
   {
@@ -59,6 +60,11 @@ const routes: RouteRecordRaw[] = [
     path: '/editor/pn',
     name: 'editor-pn',
     component: EditorPN
+  },
+  {
+    path: '/editor/test-pn',
+    name: 'editor-test-pn',
+    component: VueFlowPnEditor
   },
   {
     path: '/editor/orm',
