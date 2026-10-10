@@ -1,6 +1,4 @@
-<!DOCTYPE html>
-<html lang="">
-  <head>
+<!DOCTYPE html><html lang=""><head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -10,31 +8,398 @@
     <link rel="icon" href="/favicon.ico">
     <title>Adam Banham</title>
     <link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" rel="stylesheet">
-    <script type="module" crossorigin src="/assets/index-BCCfIBey.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-CftAkTv3.css">
-  </head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <script type="module" src="https://cdn.jsdelivr.net/npm/bootstrap@6.0.0-alpha.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-1a/pXj49ZQ1aHEmrJ+gMw1otqoVsYwlEnlD8mIfY2TV03r20Y0CN7uqx1tQogjPL" crossorigin="anonymous"></script>
+    <script type="module" crossorigin="" src="/assets/app-bSaJObPU.js"></script>
+    <link rel="stylesheet" crossorigin="" href="/assets/app-gWChTjPI.css">
+  <style id="vuetify-theme-stylesheet">:root {
+      color-scheme: dark;
+    }
+    :root {
+      --v-theme-background: 18,18,18;
+      --v-theme-background-overlay-multiplier: 1;
+      --v-theme-surface: 33,33,33;
+      --v-theme-surface-overlay-multiplier: 1;
+      --v-theme-surface-bright: 204,191,214;
+      --v-theme-surface-bright-overlay-multiplier: 2;
+      --v-theme-surface-light: 66,66,66;
+      --v-theme-surface-light-overlay-multiplier: 1;
+      --v-theme-surface-variant: 200,200,200;
+      --v-theme-surface-variant-overlay-multiplier: 2;
+      --v-theme-on-surface-variant: 0,0,0;
+      --v-theme-primary: 33,150,243;
+      --v-theme-primary-overlay-multiplier: 2;
+      --v-theme-primary-darken-1: 39,124,193;
+      --v-theme-primary-darken-1-overlay-multiplier: 2;
+      --v-theme-secondary: 84,182,178;
+      --v-theme-secondary-overlay-multiplier: 2;
+      --v-theme-secondary-darken-1: 72,169,166;
+      --v-theme-secondary-darken-1-overlay-multiplier: 2;
+      --v-theme-error: 207,102,121;
+      --v-theme-error-overlay-multiplier: 2;
+      --v-theme-info: 33,150,243;
+      --v-theme-info-overlay-multiplier: 2;
+      --v-theme-success: 76,175,80;
+      --v-theme-success-overlay-multiplier: 2;
+      --v-theme-warning: 251,140,0;
+      --v-theme-warning-overlay-multiplier: 2;
+      --v-theme-on-background: 255,255,255;
+      --v-theme-on-surface: 255,255,255;
+      --v-theme-on-surface-bright: 0,0,0;
+      --v-theme-on-surface-light: 255,255,255;
+      --v-theme-on-primary: 255,255,255;
+      --v-theme-on-primary-darken-1: 255,255,255;
+      --v-theme-on-secondary: 255,255,255;
+      --v-theme-on-secondary-darken-1: 255,255,255;
+      --v-theme-on-error: 255,255,255;
+      --v-theme-on-info: 255,255,255;
+      --v-theme-on-success: 255,255,255;
+      --v-theme-on-warning: 255,255,255;
+      --v-border-color: 255, 255, 255;
+      --v-border-opacity: 0.12;
+      --v-high-emphasis-opacity: 1;
+      --v-medium-emphasis-opacity: 0.7;
+      --v-disabled-opacity: 0.5;
+      --v-idle-opacity: 0.1;
+      --v-hover-opacity: 0.04;
+      --v-focus-opacity: 0.12;
+      --v-selected-opacity: 0.08;
+      --v-activated-opacity: 0.12;
+      --v-pressed-opacity: 0.16;
+      --v-dragged-opacity: 0.08;
+      --v-theme-kbd: 66, 66, 66;
+      --v-theme-on-kbd: 255, 255, 255;
+      --v-theme-code: 52, 52, 52;
+      --v-theme-on-code: 204, 204, 204;
+    }
+    .v-theme--light {
+      color-scheme: normal;
+      --v-theme-background: 255,255,255;
+      --v-theme-background-overlay-multiplier: 1;
+      --v-theme-surface: 255,255,255;
+      --v-theme-surface-overlay-multiplier: 1;
+      --v-theme-surface-bright: 255,255,255;
+      --v-theme-surface-bright-overlay-multiplier: 1;
+      --v-theme-surface-light: 238,238,238;
+      --v-theme-surface-light-overlay-multiplier: 1;
+      --v-theme-surface-variant: 66,66,66;
+      --v-theme-surface-variant-overlay-multiplier: 2;
+      --v-theme-on-surface-variant: 238,238,238;
+      --v-theme-primary: 24,103,192;
+      --v-theme-primary-overlay-multiplier: 2;
+      --v-theme-primary-darken-1: 31,85,146;
+      --v-theme-primary-darken-1-overlay-multiplier: 2;
+      --v-theme-secondary: 72,169,166;
+      --v-theme-secondary-overlay-multiplier: 1;
+      --v-theme-secondary-darken-1: 1,135,134;
+      --v-theme-secondary-darken-1-overlay-multiplier: 1;
+      --v-theme-error: 176,0,32;
+      --v-theme-error-overlay-multiplier: 2;
+      --v-theme-info: 33,150,243;
+      --v-theme-info-overlay-multiplier: 1;
+      --v-theme-success: 76,175,80;
+      --v-theme-success-overlay-multiplier: 1;
+      --v-theme-warning: 251,140,0;
+      --v-theme-warning-overlay-multiplier: 1;
+      --v-theme-on-background: 0,0,0;
+      --v-theme-on-surface: 0,0,0;
+      --v-theme-on-surface-bright: 0,0,0;
+      --v-theme-on-surface-light: 0,0,0;
+      --v-theme-on-primary: 255,255,255;
+      --v-theme-on-primary-darken-1: 255,255,255;
+      --v-theme-on-secondary: 255,255,255;
+      --v-theme-on-secondary-darken-1: 255,255,255;
+      --v-theme-on-error: 255,255,255;
+      --v-theme-on-info: 255,255,255;
+      --v-theme-on-success: 255,255,255;
+      --v-theme-on-warning: 255,255,255;
+      --v-border-color: 0, 0, 0;
+      --v-border-opacity: 0.12;
+      --v-high-emphasis-opacity: 0.87;
+      --v-medium-emphasis-opacity: 0.6;
+      --v-disabled-opacity: 0.38;
+      --v-idle-opacity: 0.04;
+      --v-hover-opacity: 0.04;
+      --v-focus-opacity: 0.12;
+      --v-selected-opacity: 0.08;
+      --v-activated-opacity: 0.12;
+      --v-pressed-opacity: 0.12;
+      --v-dragged-opacity: 0.08;
+      --v-theme-kbd: 238, 238, 238;
+      --v-theme-on-kbd: 0, 0, 0;
+      --v-theme-code: 245, 245, 245;
+      --v-theme-on-code: 0, 0, 0;
+    }
+    .v-theme--dark {
+      color-scheme: dark;
+      --v-theme-background: 18,18,18;
+      --v-theme-background-overlay-multiplier: 1;
+      --v-theme-surface: 33,33,33;
+      --v-theme-surface-overlay-multiplier: 1;
+      --v-theme-surface-bright: 204,191,214;
+      --v-theme-surface-bright-overlay-multiplier: 2;
+      --v-theme-surface-light: 66,66,66;
+      --v-theme-surface-light-overlay-multiplier: 1;
+      --v-theme-surface-variant: 200,200,200;
+      --v-theme-surface-variant-overlay-multiplier: 2;
+      --v-theme-on-surface-variant: 0,0,0;
+      --v-theme-primary: 33,150,243;
+      --v-theme-primary-overlay-multiplier: 2;
+      --v-theme-primary-darken-1: 39,124,193;
+      --v-theme-primary-darken-1-overlay-multiplier: 2;
+      --v-theme-secondary: 84,182,178;
+      --v-theme-secondary-overlay-multiplier: 2;
+      --v-theme-secondary-darken-1: 72,169,166;
+      --v-theme-secondary-darken-1-overlay-multiplier: 2;
+      --v-theme-error: 207,102,121;
+      --v-theme-error-overlay-multiplier: 2;
+      --v-theme-info: 33,150,243;
+      --v-theme-info-overlay-multiplier: 2;
+      --v-theme-success: 76,175,80;
+      --v-theme-success-overlay-multiplier: 2;
+      --v-theme-warning: 251,140,0;
+      --v-theme-warning-overlay-multiplier: 2;
+      --v-theme-on-background: 255,255,255;
+      --v-theme-on-surface: 255,255,255;
+      --v-theme-on-surface-bright: 0,0,0;
+      --v-theme-on-surface-light: 255,255,255;
+      --v-theme-on-primary: 255,255,255;
+      --v-theme-on-primary-darken-1: 255,255,255;
+      --v-theme-on-secondary: 255,255,255;
+      --v-theme-on-secondary-darken-1: 255,255,255;
+      --v-theme-on-error: 255,255,255;
+      --v-theme-on-info: 255,255,255;
+      --v-theme-on-success: 255,255,255;
+      --v-theme-on-warning: 255,255,255;
+      --v-border-color: 255, 255, 255;
+      --v-border-opacity: 0.12;
+      --v-high-emphasis-opacity: 1;
+      --v-medium-emphasis-opacity: 0.7;
+      --v-disabled-opacity: 0.5;
+      --v-idle-opacity: 0.1;
+      --v-hover-opacity: 0.04;
+      --v-focus-opacity: 0.12;
+      --v-selected-opacity: 0.08;
+      --v-activated-opacity: 0.12;
+      --v-pressed-opacity: 0.16;
+      --v-dragged-opacity: 0.08;
+      --v-theme-kbd: 66, 66, 66;
+      --v-theme-on-kbd: 255, 255, 255;
+      --v-theme-code: 52, 52, 52;
+      --v-theme-on-code: 204, 204, 204;
+    }
+    .bg-background {
+      --v-theme-overlay-multiplier: var(--v-theme-background-overlay-multiplier);
+      background-color: rgb(var(--v-theme-background)) !important;
+      color: rgb(var(--v-theme-on-background)) !important;
+    }
+    .bg-surface {
+      --v-theme-overlay-multiplier: var(--v-theme-surface-overlay-multiplier);
+      background-color: rgb(var(--v-theme-surface)) !important;
+      color: rgb(var(--v-theme-on-surface)) !important;
+    }
+    .bg-surface-bright {
+      --v-theme-overlay-multiplier: var(--v-theme-surface-bright-overlay-multiplier);
+      background-color: rgb(var(--v-theme-surface-bright)) !important;
+      color: rgb(var(--v-theme-on-surface-bright)) !important;
+    }
+    .bg-surface-light {
+      --v-theme-overlay-multiplier: var(--v-theme-surface-light-overlay-multiplier);
+      background-color: rgb(var(--v-theme-surface-light)) !important;
+      color: rgb(var(--v-theme-on-surface-light)) !important;
+    }
+    .bg-surface-variant {
+      --v-theme-overlay-multiplier: var(--v-theme-surface-variant-overlay-multiplier);
+      background-color: rgb(var(--v-theme-surface-variant)) !important;
+      color: rgb(var(--v-theme-on-surface-variant)) !important;
+    }
+    .bg-primary {
+      --v-theme-overlay-multiplier: var(--v-theme-primary-overlay-multiplier);
+      background-color: rgb(var(--v-theme-primary)) !important;
+      color: rgb(var(--v-theme-on-primary)) !important;
+    }
+    .bg-primary-darken-1 {
+      --v-theme-overlay-multiplier: var(--v-theme-primary-darken-1-overlay-multiplier);
+      background-color: rgb(var(--v-theme-primary-darken-1)) !important;
+      color: rgb(var(--v-theme-on-primary-darken-1)) !important;
+    }
+    .bg-secondary {
+      --v-theme-overlay-multiplier: var(--v-theme-secondary-overlay-multiplier);
+      background-color: rgb(var(--v-theme-secondary)) !important;
+      color: rgb(var(--v-theme-on-secondary)) !important;
+    }
+    .bg-secondary-darken-1 {
+      --v-theme-overlay-multiplier: var(--v-theme-secondary-darken-1-overlay-multiplier);
+      background-color: rgb(var(--v-theme-secondary-darken-1)) !important;
+      color: rgb(var(--v-theme-on-secondary-darken-1)) !important;
+    }
+    .bg-error {
+      --v-theme-overlay-multiplier: var(--v-theme-error-overlay-multiplier);
+      background-color: rgb(var(--v-theme-error)) !important;
+      color: rgb(var(--v-theme-on-error)) !important;
+    }
+    .bg-info {
+      --v-theme-overlay-multiplier: var(--v-theme-info-overlay-multiplier);
+      background-color: rgb(var(--v-theme-info)) !important;
+      color: rgb(var(--v-theme-on-info)) !important;
+    }
+    .bg-success {
+      --v-theme-overlay-multiplier: var(--v-theme-success-overlay-multiplier);
+      background-color: rgb(var(--v-theme-success)) !important;
+      color: rgb(var(--v-theme-on-success)) !important;
+    }
+    .bg-warning {
+      --v-theme-overlay-multiplier: var(--v-theme-warning-overlay-multiplier);
+      background-color: rgb(var(--v-theme-warning)) !important;
+      color: rgb(var(--v-theme-on-warning)) !important;
+    }
+    .text-background {
+      color: rgb(var(--v-theme-background)) !important;
+    }
+    .border-background {
+      --v-border-color: var(--v-theme-background);
+    }
+    .text-surface {
+      color: rgb(var(--v-theme-surface)) !important;
+    }
+    .border-surface {
+      --v-border-color: var(--v-theme-surface);
+    }
+    .text-surface-bright {
+      color: rgb(var(--v-theme-surface-bright)) !important;
+    }
+    .border-surface-bright {
+      --v-border-color: var(--v-theme-surface-bright);
+    }
+    .text-surface-light {
+      color: rgb(var(--v-theme-surface-light)) !important;
+    }
+    .border-surface-light {
+      --v-border-color: var(--v-theme-surface-light);
+    }
+    .text-surface-variant {
+      color: rgb(var(--v-theme-surface-variant)) !important;
+    }
+    .border-surface-variant {
+      --v-border-color: var(--v-theme-surface-variant);
+    }
+    .on-surface-variant {
+      color: rgb(var(--v-theme-on-surface-variant)) !important;
+    }
+    .text-primary {
+      color: rgb(var(--v-theme-primary)) !important;
+    }
+    .border-primary {
+      --v-border-color: var(--v-theme-primary);
+    }
+    .text-primary-darken-1 {
+      color: rgb(var(--v-theme-primary-darken-1)) !important;
+    }
+    .border-primary-darken-1 {
+      --v-border-color: var(--v-theme-primary-darken-1);
+    }
+    .text-secondary {
+      color: rgb(var(--v-theme-secondary)) !important;
+    }
+    .border-secondary {
+      --v-border-color: var(--v-theme-secondary);
+    }
+    .text-secondary-darken-1 {
+      color: rgb(var(--v-theme-secondary-darken-1)) !important;
+    }
+    .border-secondary-darken-1 {
+      --v-border-color: var(--v-theme-secondary-darken-1);
+    }
+    .text-error {
+      color: rgb(var(--v-theme-error)) !important;
+    }
+    .border-error {
+      --v-border-color: var(--v-theme-error);
+    }
+    .text-info {
+      color: rgb(var(--v-theme-info)) !important;
+    }
+    .border-info {
+      --v-border-color: var(--v-theme-info);
+    }
+    .text-success {
+      color: rgb(var(--v-theme-success)) !important;
+    }
+    .border-success {
+      --v-border-color: var(--v-theme-success);
+    }
+    .text-warning {
+      color: rgb(var(--v-theme-warning)) !important;
+    }
+    .border-warning {
+      --v-border-color: var(--v-theme-warning);
+    }
+    .on-background {
+      color: rgb(var(--v-theme-on-background)) !important;
+    }
+    .on-surface {
+      color: rgb(var(--v-theme-on-surface)) !important;
+    }
+    .on-surface-bright {
+      color: rgb(var(--v-theme-on-surface-bright)) !important;
+    }
+    .on-surface-light {
+      color: rgb(var(--v-theme-on-surface-light)) !important;
+    }
+    .on-primary {
+      color: rgb(var(--v-theme-on-primary)) !important;
+    }
+    .on-primary-darken-1 {
+      color: rgb(var(--v-theme-on-primary-darken-1)) !important;
+    }
+    .on-secondary {
+      color: rgb(var(--v-theme-on-secondary)) !important;
+    }
+    .on-secondary-darken-1 {
+      color: rgb(var(--v-theme-on-secondary-darken-1)) !important;
+    }
+    .on-error {
+      color: rgb(var(--v-theme-on-error)) !important;
+    }
+    .on-info {
+      color: rgb(var(--v-theme-on-info)) !important;
+    }
+    .on-success {
+      color: rgb(var(--v-theme-on-success)) !important;
+    }
+    .on-warning {
+      color: rgb(var(--v-theme-on-warning)) !important;
+    }
+</style></head>
   <body>
     <noscript>
-      <strong>Sorry but this webpage doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+      <strong>Sorry but this webpage doesn't work properly without JavaScript
+        enabled. Please enable it to continue.</strong>
     </noscript>
     <script>
       MathJax = {
-          output: {
-              displayAlign: 'middle',
-              displayOverflow: 'linebreak',
-              linebreaks: {
-                  inline: true,
-                  width: '80%',
-              }
-    },
-          tex: {
-              inlineMath: [['$$', '$$'], ["\\(", "\\)"]],
-              processEscapes: true,
+        output: {
+          displayAlign: "middle",
+          displayOverflow: "linebreak",
+          linebreaks: {
+            inline: true,
+            width: "80%",
           },
+        },
+        tex: {
+          inlineMath: [
+            ["$$", "$$"],
+            ["\\(", "\\)"],
+          ],
+          processEscapes: true,
+        },
       };
-  </script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@4.0.0-alpha.1/es5/tex-mml-chtml.js"></script>
-    <div id="app"></div>
+    </script>
+    <script id="MathJax-script" async="" src="https://cdn.jsdelivr.net/npm/mathjax@4.0.0-alpha.1/es5/tex-mml-chtml.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <div id="app" data-server-rendered="true"><div class="v-application v-theme--dark v-layout v-layout--full-height v-locale--is-ltr" style=""><div class="v-application__wrap"><!--[--><div class="toolbar"><header class="v-toolbar v-toolbar--collapse-start v-toolbar--density-default elevation-5 v-theme--dark v-locale--is-ltr v-app-bar" style="top:0;z-index:1004;transform:translateY(0%);position:fixed;transition:none !important;"><!----><!--[--><div class="v-toolbar__content" style="height:64px;"><div class="v-toolbar__prepend"><!--[--><i class="mdi-graph-outline mdi v-icon notranslate v-theme--dark v-icon--size-large" style="margin-right:10px;" aria-hidden="true"></i><p style="color:whitesmoke;"><strong><i>Dr</i></strong> Adam P. Banham</p><!--]--></div><!----><!----><div class="v-toolbar__append"><!--[--><button type="button" class="v-btn v-theme--dark v-btn--density-default v-btn--size-default v-btn--variant-text" style="" id="menu-cv"><!--[--><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span><!--]--><!----><span class="v-btn__content" data-no-activator=""><!--[--><!--[--> CV <!--]--><!--]--></span><!----><!----></button><!--[--><!----><!----><!--]--><button type="button" class="v-btn v-theme--dark v-btn--density-default v-btn--size-default v-btn--variant-text" style=""><!--[--><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span><!--]--><!----><span class="v-btn__content" data-no-activator=""><!--[--><!--[--> Home <!--]--><!--]--></span><!----><!----></button><a href="/docs/education/adam-banham-phd-thesis-2025-1.pdf" class="v-btn v-theme--dark v-btn--density-default v-btn--size-default v-btn--variant-text" style="" target="_blank"><!--[--><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span><!--]--><!----><span class="v-btn__content" data-no-activator=""><!--[--><!--[--> Thesis <!--]--><!--]--></span><!----><!----></a><button type="button" class="v-btn v-theme--dark v-btn--density-default v-btn--size-default v-btn--variant-text" style=""><!--[--><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span><!--]--><!----><span class="v-btn__content" data-no-activator=""><!--[--><!--[--> Blog <!--]--><!--]--></span><!----><!----></button><button type="button" class="v-btn v-theme--dark v-btn--density-default v-btn--size-default v-btn--variant-text" style=""><!--[--><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span><!--]--><!----><span class="v-btn__content" data-no-activator=""><!--[--><!--[--> Publications <!--]--><!--]--></span><!----><!----></button><button type="button" class="v-btn v-theme--dark v-btn--density-default v-btn--size-default v-btn--variant-text" style="" id="menu-process-mining"><!--[--><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span><!--]--><!----><span class="v-btn__content" data-no-activator=""><!--[--><!--[--> Process mining <!--]--><!--]--></span><!----><!----></button><!--[--><!----><!----><!--]--><button type="button" class="v-btn v-theme--dark v-btn--density-default v-btn--size-default v-btn--variant-text" style=""><!--[--><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span><!--]--><!----><span class="v-btn__content" data-no-activator=""><!--[--><!--[--> Coding <!--]--><!--]--></span><!----><!----></button><button type="button" class="v-btn v-theme--dark v-btn--density-default v-btn--size-default v-btn--variant-text" style="" id="menu-editors"><!--[--><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span><!--]--><!----><span class="v-btn__content" data-no-activator=""><!--[--><!--[--> Editors <!--]--><!--]--></span><!----><!----></button><!--[--><!----><!----><!--]--><button type="button" class="v-btn v-theme--dark v-btn--density-default v-btn--size-default v-btn--variant-text" style=""><!--[--><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span><!--]--><!----><span class="v-btn__content" data-no-activator=""><!--[--><!--[--> Contact <!--]--><!--]--></span><!----><!----></button><!--]--></div></div><!--]--><!--[--><!----><!--]--></header></div><div class="home" data-v-0b47d70a=""><div class="home-page" data-v-0b47d70a="" data-v-7d2078ba=""><div class="left" data-v-7d2078ba=""><div class="face-holder" data-v-7d2078ba="" data-v-6e2dfa49=""><div class="fader" data-v-6e2dfa49=""></div></div><!--[--><!--]--><!--[--><!--]--><!--[--><!--]--></div><div class="right" data-v-7d2078ba=""><div data-v-7d2078ba=""><img src="/images/au-email-signature-era.gif" style="width:100%;border-radius:10px;" data-v-7d2078ba=""><p data-v-7d2078ba=""> I am currently researching as a post-doctorate @ <a href="https://adelaideuni.edu.au/" target="_blank" data-v-7d2078ba=""> Adelaide University </a> (part of the group of eight or <a href="https://go8.edu.au/" target="_blank" data-v-7d2078ba=""> G8 </a> in Australia), exploring how conceptual modelling can be used to enhance the development of simulations for complex systems. Working with a growing team studying emergent behaviour in complex systems under <strong data-v-7d2078ba=""><a href="https://researchers.adelaide.edu.au/profile/claudia.szabo" target="_blank" data-v-7d2078ba=""> Prof Claudia Szabo </a></strong>. </p></div><div data-v-7d2078ba=""><p data-v-7d2078ba=""><b data-v-7d2078ba=""><strong style="color:yellowgreen;" data-v-7d2078ba="">Dr.</strong> Adam Banham </b> (<a href="https://orcid.org/0000-0001-9912-8220" target="_blank" data-v-7d2078ba="">ORCID</a>) (<a href="https://scholar.google.com/citations?hl=en&amp;user=IyiPbEAAAAAJ" target="_blank" data-v-7d2078ba="">Scholar</a>) <br data-v-7d2078ba=""><br data-v-7d2078ba=""></p><p data-v-7d2078ba=""><strong data-v-7d2078ba=""> I am an award-winning scholar and educator. </strong> I have published high-quality publications as a researcher and excelled as a teacher for undergraduates and postgraduates studying either computer science or information systems through their coursework. </p><br data-v-7d2078ba=""><p data-v-7d2078ba=""> I help organisations mature their processes and build process-aware informations to support their operational excellence. Ideally, by the end of a project with me, you and your team will be <strong data-v-7d2078ba=""> busier than ever! </strong><em data-v-7d2078ba="">Doing more work that matters</em> rather than dealing with friction from the process. </p><br data-v-7d2078ba=""><p data-v-7d2078ba=""> I completed my doctoral studies at the Queensland University of Technology, focusing on <strong data-v-7d2078ba=""> Process Mining </strong>. My doctoral studies spanned several major events, the most prominent was the global outbreak of COVID-19 for the first half of my studies. I am particularly thankful to my supervisors that offered myself a unique learning experience. <strong data-v-7d2078ba=""> Professor Moe T. Wynn </strong> , for taking me on during my undergraduate years and creating opportunities to work with her and colleagues. <strong data-v-7d2078ba=""> Dr. Robert Andrews, </strong> for giving me a chance to work alongside him during my undergraduate studies and for his continuing support. Finally, <strong data-v-7d2078ba=""> Prof. Sander J.J. Leemans </strong>, for allowing me to learn from his passion for process mining and guidance through the troubling waters of a doctoral journey. </p><br data-v-7d2078ba=""><br data-v-7d2078ba=""><b data-v-7d2078ba="">Additional Info:</b><ul data-v-7d2078ba=""><li data-v-7d2078ba=""> Born in Ipswich, Queensland, Australia. </li><li data-v-7d2078ba=""> Completed Bachelor (Honours) of Information Technology at QUT in 2020 with Second Class honours - Division A </li><li data-v-7d2078ba=""> Started PhD on Feburary 22 in 2021 with the school of Information Systems at QUT. </li><li data-v-7d2078ba=""> Year One Milestone - Research Plan - Confirmed with no changes </li><li data-v-7d2078ba=""> Brief overview of project: <a href="https://qut.to/cjvey" target="_blank" title="Project Description @ QUT" data-v-7d2078ba="">https://qut.to/cjvey</a></li><li data-v-7d2078ba=""> Check out the BPM group at QUT : <a href="https://research.qut.edu.au/bpm/" target="_blank" title="Process Science @ QUT Homepage" data-v-7d2078ba="">https://research.qut.edu.au/bpm/</a></li><li data-v-7d2078ba=""> Visited RWTH Aachen from November to March, working with Prof. Sander J. J. Leemans. <a href="/blog/rwthVist2023" class="" title="RWTH visit" data-v-7d2078ba="">More info.</a></li><li data-v-7d2078ba=""> Finished internally presenting Thesis work @ QUT - minor changes needed. <a href="/blog/FinalSeminar2024A" class="" title="blog about final seminar" data-v-7d2078ba="">Check out the presentation.</a></li><li data-v-7d2078ba=""> External examination completed, 13/03/2025, passed with minor revisions. </li><li data-v-7d2078ba=""> Offically Conferred PhD on 09/05/2025, see <a href="/docs/education/Dr-Banham-Conferred.pdf" target="_blank" data-v-7d2078ba=""> letter </a>. </li><li data-v-7d2078ba=""><strong style="color:yellowgreen;" data-v-7d2078ba=""> Offically Graduated and Recieved Doctoral Testamur on 02/08/2025 </strong>, see <a href="/docs/education/Dr-Banham-Testamur.pdf" target="_blank" data-v-7d2078ba=""> testamur </a><a href="https://www.myequals.net/sharelink/bcbe292a-cb3c-4d27-a0f4-88170c6cab45/10305491-09a5-4884-87b2-3f8e9b6bf76c" target="_blank" data-v-7d2078ba=""> (<em data-v-7d2078ba="">offical record</em>) </a>. </li><li data-v-7d2078ba=""> Started a PostDoc Position @ Adelaide University in late of 2025. </li></ul></div></div></div></div><!--]--></div></div></div>
     <!-- built files will be auto injected -->
-  </body>
-</html>
+  
+
+</body></html>
