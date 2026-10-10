@@ -29,15 +29,29 @@ async function writeSpaShell() {
 }
 
 // https://vitejs.dev/config/
-export default defineConfig({
+export default defineConfig(({ command }) => ({
   plugins: [
     vue(),
-    vuetify({ autoImport: true })
+    // Tree-shake Vuetify in builds only. In dev, per-component auto-imports are invisible to Vite's
+    // dependency scanner, so each newly visited route re-optimizes deps and forces a full reload.
+    // src/plugins/vuetify.ts registers every component globally in dev instead.
+    vuetify({ autoImport: command === 'build' })
   ],
+  optimizeDeps: {
+    // crawl every source file at startup so lazy routes (editors etc.) don't trigger re-optimization
+    entries: ['index.html', 'src/**/*.{vue,ts,js}'],
+    include: ['vuetify', 'vuetify/components', 'vuetify/directives', 'diagram-js']
+  },
   server: {
     watch: {
-      ignored: ['**/node_modules/**'],
-      usePolling: true
+      ignored: ['**/node_modules/**', '**/dist/**', '**/.git/**'],
+      // the workspace is a Windows drive mounted over 9p, where inotify events don't arrive
+      usePolling: true,
+      interval: 300,
+      binaryInterval: 1000
+    },
+    warmup: {
+      clientFiles: ['./src/main.ts', './src/App.vue', './src/router/index.ts']
     },
   },
   resolve: {
@@ -66,4 +80,4 @@ export default defineConfig({
     formatting: 'none',
     onFinished: writeSpaShell
   }
-})
+}))

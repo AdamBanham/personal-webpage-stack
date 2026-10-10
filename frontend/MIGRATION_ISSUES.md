@@ -61,6 +61,14 @@ Items marked **(left as is)** were deliberately not changed. Delete this file on
 
 ## Resolved
 
+- Dev server performance: `vite-plugin-vuetify`'s `autoImport` is **build-only** on purpose. In dev, its per-component
+  imports (`vuetify/components/VBtn`, ...) can't be seen by Vite's dependency scanner. Every newly visited route
+  re-ran pre-bundling and forced a full page reload. Dev now registers all of Vuetify globally
+  (`src/plugins/vuetify.ts`, guarded by `import.meta.env.DEV`, so it's dropped from builds), and `optimizeDeps.entries`
+  crawls all of `src/` at startup. Don't turn `autoImport` back on for dev. The workspace sits on a Windows drive
+  mounted over 9p, so the dev container keeps `node_modules` on a named volume. For the fastest setup, clone the repo
+  into the WSL filesystem or use "Dev Containers: Clone Repository in Container Volume".
+
 - Phase 1: Vue CLI residue removed. Type-only imports in JS (`ShapeLike`, `Connection`) that the old
   JS-as-TS esbuild hack hid were turned into JSDoc typedefs. Fixed the missing `getMid` import in the ORM space tool.
   Deleted the unused, broken `PopupMenuProvider.js` stubs (PN, TS).

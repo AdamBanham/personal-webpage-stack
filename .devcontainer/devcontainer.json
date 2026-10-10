@@ -27,8 +27,14 @@
 		8080
 	],
 	
+	// The workspace is bind-mounted from a Windows drive (9p/drvfs), where file I/O is slow.
+	// Keep node_modules (and Vite's .vite pre-bundle cache inside it) on a native Linux volume.
+	"mounts": [
+		"source=pws-frontend-node_modules,target=${containerWorkspaceFolder}/frontend/node_modules,type=volume"
+	],
+
 	// Use 'postCreateCommand' to run commands after the container is created.
-	// "postCreateCommand": "uname -a",
+	"postCreateCommand": "sudo chown node frontend/node_modules && cd frontend && npm ci",
 	
 	// Comment out connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
 	"remoteUser": "node"
