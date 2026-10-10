@@ -23,16 +23,12 @@ Items marked **(left as is)** were deliberately not changed. Delete this file on
 
 ## Open – deployment (SSG, Phase 3)
 
-- **`npm run build` now writes `dist/<route>/index.html`** for `/`, `/contact`, `/pubs` and `/blog`.
-  How these are served depends on the AWS setup:
-  - *S3 website endpoint:* `/contact` redirects to `/contact/` and serves the prerendered page.
-  - *CloudFront + S3 REST origin:* sub-folder `index.html` files aren't resolved automatically, so `/contact` falls
-    through to the error document (`index.html`). That still works, but as a plain SPA without the prerendered HTML.
-    A CloudFront function that appends `index.html` would fix it.
-  - Either way, non-prerendered routes (`/editor/*`, `/blog/:id`, `/process-mining/*`) still need the existing
-    "error document = index.html" SPA fallback.
-- **`dist/.vite/ssr-manifest.json` is now emitted** and will be synced to S3. It's harmless, since it only lists
-  asset file names, but it's publicly readable.
+- **CloudFront changes needed before prerendering takes effect (manual, AWS).** Distribution `E39RMER8LDSMTX` uses the
+  S3 REST origin, which doesn't resolve `<route>/index.html`. Until it's configured, the site works exactly as before,
+  but there's one visible side effect: deep links such as `/editor/orm` get the 403/404 → `/index.html` fallback,
+  which is now the prerendered home page, so its markup flashes until the app mounts. The fix is to attach
+  `infra/cloudfront/index-rewrite.js` and point the error pages at `/spa.html`; steps are in `infra/cloudfront/README.md`.
+  **Do this together with the first release from this branch.**
 - **vite-ssg ignores `--outDir` on the CLI.** Use `build.outDir` in `vite.config.ts` if the output folder ever needs to change.
 - **vite-ssg pinned to 0.24.x.** That's the last line supporting Vite 6. Newer releases need Vite 7 and a newer Node.
 
@@ -58,4 +54,5 @@ Items marked **(left as is)** were deliberately not changed. Delete this file on
   them on unmount. The ORM `HelpProvider` now removes its `window` click listener on `diagram.destroy`.
 - Phase 3: static prerendering is back via vite-ssg (it had been broken since the move to Vite). This needed
   `"type": "module"` in `package.json` and `ssr.noExternal: ['vuetify']`. The home-page floaters use `Math.random()`,
-  but only in `mounted()`, so there's no hydration mismatch.
+  but only in `mounted()`, so there's no hydration mismatch. The build also writes `dist/spa.html` (empty app shell for
+  non-prerendered routes) and removes the build-only `dist/.vite/` manifest so it isn't published.
