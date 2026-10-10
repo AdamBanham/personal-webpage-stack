@@ -1,4 +1,3 @@
-import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 
 // lazy-loaded so heavy pages (diagram-js/bpmn-js editors) stay out of the landing bundle
@@ -88,17 +87,14 @@ const routes = [
   }
 ]
 
-const router = createRouter({
-  history: createWebHistory(),
-  scrollBehavior: function(to, from, savedPosition) {
-    if (to.hash) {
-      return {
-        el: to.hash,
-        behavior: 'smooth',
-      }
+export function scrollBehavior(to) {
+  if (to.hash) {
+    return {
+      el: to.hash,
+      behavior: 'smooth',
     }
-  },
-  routes
-})
+  }
+}
 
-export default router
+// vite-ssg creates the router itself (memory history while prerendering, web history in the browser)
+export { routes }

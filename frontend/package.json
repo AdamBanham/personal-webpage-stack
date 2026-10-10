@@ -2,9 +2,10 @@
   "name": "adambanham",
   "version": "0.0.4",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite-ssg build",
     "preview": "vite preview",
     "serve": "vite preview",
     "lint": "eslint src",
@@ -37,6 +38,7 @@
     "typescript-eslint": "^8.71.1",
     "vite": "^6.0.11",
     "vite-plugin-vuetify": "^2.0.4",
+    "vite-ssg": "^0.24.3",
     "vue-tsc": "^2.2.12"
   },
   "browserslist": [

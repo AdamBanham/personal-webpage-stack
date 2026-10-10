@@ -18,6 +18,24 @@ Items marked **(left as is)** were deliberately not changed. Delete this file on
 - **~1,500 lint warnings (left as is; ~1,000 auto-fixable with `eslint --fix`).** These are style rules (`prefer-const`, `no-var`, unused vars, etc.)
   that were downgraded to warnings. Most will go away as components are converted in Phase 4.
 
+- **CSS typo `trasnform` (left as is).** `src/styles/content.sass:15` has `trasnform: translateX(5%) scale(0) rotateZ(-60deg)`,
+  so that keyframe's transform never applies. Fixing it will change how the animation looks.
+
+## Open – deployment (SSG, Phase 3)
+
+- **`npm run build` now writes `dist/<route>/index.html`** for `/`, `/contact`, `/pubs` and `/blog`.
+  How these are served depends on the AWS setup:
+  - *S3 website endpoint:* `/contact` redirects to `/contact/` and serves the prerendered page.
+  - *CloudFront + S3 REST origin:* sub-folder `index.html` files aren't resolved automatically, so `/contact` falls
+    through to the error document (`index.html`). That still works, but as a plain SPA without the prerendered HTML.
+    A CloudFront function that appends `index.html` would fix it.
+  - Either way, non-prerendered routes (`/editor/*`, `/blog/:id`, `/process-mining/*`) still need the existing
+    "error document = index.html" SPA fallback.
+- **`dist/.vite/ssr-manifest.json` is now emitted** and will be synced to S3. It's harmless, since it only lists
+  asset file names, but it's publicly readable.
+- **vite-ssg ignores `--outDir` on the CLI.** Use `build.outDir` in `vite.config.ts` if the output folder ever needs to change.
+- **vite-ssg pinned to 0.24.x.** That's the last line supporting Vite 6. Newer releases need Vite 7 and a newer Node.
+
 ## Open – environment / dependencies
 
 - **Node 18 dev container.** Node 18 is end-of-life. Some current deps already declare Node 20+,
@@ -38,3 +56,6 @@ Items marked **(left as is)** were deliberately not changed. Delete this file on
   Deleted the unused, broken `PopupMenuProvider.js` stubs (PN, TS).
 - Phase 2: the four editors no longer keep diagram-js/bpmn-js instances in reactive `data()`, and they destroy
   them on unmount. The ORM `HelpProvider` now removes its `window` click listener on `diagram.destroy`.
+- Phase 3: static prerendering is back via vite-ssg (it had been broken since the move to Vite). This needed
+  `"type": "module"` in `package.json` and `ssr.noExternal: ['vuetify']`. The home-page floaters use `Math.random()`,
+  but only in `mounted()`, so there's no hydration mismatch.
