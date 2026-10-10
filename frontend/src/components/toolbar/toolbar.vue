@@ -122,14 +122,13 @@
   </div>
 </template>
 
-<script>
-export default {
-name: "ToolBar",
-methods : {
-    moveTo: function(name){
-        this.$router.push({name:name})
-    }
-}
+<script setup lang="ts">
+import { useRouter } from "vue-router"
+
+const router = useRouter()
+
+function moveTo(name: string) {
+  router.push({ name })
 }
 </script>
 

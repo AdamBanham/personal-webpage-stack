@@ -1,21 +1,12 @@
 <template>
   <v-app>
-    <toolbar />
+    <Toolbar />
     <router-view />
   </v-app>
 </template>
 
-<script>
-import toolbar from "@/components/toolbar/toolbar.vue"
-export default {
-name: "App",
-components: {
-    toolbar
-},
-mounted() {
-   document.dispatchEvent(new Event('x-app-rendered'))
-}
-}
+<script setup lang="ts">
+import Toolbar from "@/components/toolbar/toolbar.vue"
 </script>
 
 <style lang="sass">

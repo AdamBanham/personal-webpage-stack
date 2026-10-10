@@ -275,6 +275,8 @@ export default  class VscodeMessageHandler {
                 element.update();
                 this._handleCreationForFact(element, node.attributes);
                 this._modeling.sendUpdate(element);
+            // TODO(vue3-migration): unreachable, 'value' is already handled by the first branch.
+            // eslint-disable-next-line no-dupe-else-if
             } else if (node.attributes.get('type') === 'value') {
                 element = this._elementFactory.createDummyAttributesForEntities("value");
                 element = this._modeling.createShape(

@@ -14,11 +14,24 @@ npm run dev
 ```
 npm run build
 ```
+Uses [vite-ssg](https://github.com/antfu-collective/vite-ssg) to prerender the static pages listed in
+`ssgOptions.includedRoutes` (`vite.config.ts`) to `dist/<route>/index.html`; every other route is a
+client-rendered SPA page served from `dist/index.html`.
 
-### Lints and fixes files
+### Previews the production build
+```
+npm run preview
+```
+
+### Lints files
 ```
 npm run lint
 ```
 
+### Type-checks files
+```
+npm run type-check
+```
+
 ### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+See the [Vite configuration reference](https://vite.dev/config/).

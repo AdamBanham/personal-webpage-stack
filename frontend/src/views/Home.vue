@@ -4,14 +4,8 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import HomePage from "@/components/home/home.vue"
-export default {
-  name: 'Home',
-  components : {
-    HomePage
-  }
-}
 </script>
 
 <style lang="sass" scoped>

@@ -44,11 +44,11 @@ export default class HelpInteractions {
         this._contentDiv = document
             .getElementById(contentDivId)!;
         this._contentText = this._contentDiv
-            ?.getElementsByClassName("content")[0]!;
+            ?.getElementsByClassName("content")[0];
         this._errorDiv = document
             .getElementById(errorDivId)!;
         this._errorText = this._errorDiv
-            ?.getElementsByClassName("content")[0]!;
+            ?.getElementsByClassName("content")[0];
     }
 
     reset(force: boolean = false) {

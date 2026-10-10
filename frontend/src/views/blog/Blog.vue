@@ -6,7 +6,8 @@
         <h3> Tags </h3>
         <div 
           class="options" 
-          v-for:="tag in blogtags"
+          v-for="tag in blogtags"
+          :key="tag"
         >
           <input
             :id="tag"
@@ -22,7 +23,8 @@
         <h3> Year </h3>
         <div
           class="options"
-          v-for:="year in years"
+          v-for="year in years"
+          :key="year"
         >
           <input
             :id="year"
@@ -36,7 +38,8 @@
         <h3> Month </h3>
         <div
           class="options"
-          v-for:="month in months"
+          v-for="month in months"
+          :key="month"
         >
           <input
             :id="month"
@@ -50,7 +53,8 @@
         <h3> Author </h3>
         <div
           class="options"
-          v-for:="author in authors"
+          v-for="author in authors"
+          :key="author"
         >
           <input
             :id="author"
@@ -95,50 +99,34 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
+import { ref } from "vue"
+import { useRoute, useRouter } from "vue-router"
 import { manager } from "./contentManager"
 import { TAGS } from "./tagList"
 
-export default {
-name: "BlogPage",
-data : function() {
-  return {
-    manager : manager,
-    infos : manager.getInfo(),
-    blogtags : Object.values(TAGS)
-  }
-},
-computed : {
-    titles : function() {
-        return manager.getTitles();
-    },
-    years : function() {
-        return manager.getYears();
-    },
-    months : function() {
-        return manager.getMonths();
-    },
-    authors : function() {
-        return manager.getAuthors();
-    },
-},
-methods: {
-  moveToExpansion(expansionId){
-    // debugger;
-    this.$router.push(
-      this.$router.currentRoute.value.path + 
-      "/" + expansionId
-    )
-  },
-  checkFilter(event, mode, value){
-    if (event.target.checked){
-      this.manager.addFilter(mode, value)
-    } else {
-      this.manager.removeFilter(mode,value)
-    }
-    this.infos = this.manager.getInfo()
-  }
+const router = useRouter()
+const route = useRoute()
+
+// filter options are static; only the filtered list changes
+const blogtags = Object.values(TAGS)
+const years = manager.getYears()
+const months = manager.getMonths()
+const authors = manager.getAuthors()
+
+const infos = ref(manager.getInfo())
+
+function moveToExpansion(expansionId: string) {
+  router.push(route.path + "/" + expansionId)
 }
+
+function checkFilter(event: Event, mode: number, value: string) {
+  if ((event.target as HTMLInputElement).checked) {
+    manager.addFilter(mode, value)
+  } else {
+    manager.removeFilter(mode, value)
+  }
+  infos.value = manager.getInfo()
 }
 </script>
 

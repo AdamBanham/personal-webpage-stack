@@ -91,7 +91,7 @@ export class Fact implements fact {
         this.y = y;
         this.hovered = false;
         this.hoveredRole = undefined;
-        this.uniqueness = new Array();
+        this.uniqueness = [];
         this.objectifiedName = "foobar";
         this.derived = false;
         this.labels = [];

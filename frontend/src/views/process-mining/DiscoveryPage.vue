@@ -37,7 +37,7 @@
         >
           <section 
             v-for="(info, idx) in algos"
-            :id="idx"
+            :id="String(idx)"
             :key="idx"
             :class="{
               hide : idx != curr && idx != (curr - 1) && idx != (curr + 1),
@@ -235,96 +235,71 @@
   </div>
 </template>
 
-<script>
-import  discCards  from "./discovery-data/discoveryData.js"
+<script setup lang="ts">
+import { computed, ref } from "vue"
+import discCards from "./discovery-data/discoveryData.js"
 import VCodeBlock from '@wdns/vue-code-block';
 
-export default {
-    name: "PMDiscoveryPage",
-    components: {
-      VCodeBlock
-    },
-    data: function() {
-        return {
-            curr: 0,//Math.floor(Math.random() * (discCards.length -1 )),
-            algos: discCards,
-            histYearsMin: discCards
-              .map(a => a.year)
-              .reduce((a,b) => a < b ? a : b),
-            histYearsMax: discCards
-              .map(a => a.year)
-              .reduce((a,b) => a > b ? a : b),
-        }
-    },
-    computed: {
-        selectInfo: function(){
-            return this.algos[this.curr]
-        },
-        lineOffset: function(){
-            return 150
-        },
-        timelineOffset: function() {
-            return this.curr * -76
-        },
-        snippetOffeset: function(){
-          var dis = this.curr * - 200
-          if (this.curr > 0){
-            dis = dis + ((this.curr) * -30)
-          }
-          return dis
-        },
-        histYears: function(){
-          var years = {}
-          var min = this.histYearsMin
-          var max = this.histYearsMax
-          years[min] = 0
-          while(min != max){
-            min += 1
-            years[min] = 0
-          }
-          for(var info of this.algos){
-              years[info.year] += 1
-          }
-          return years
-        },
-        histCountMax: function(){
-          if (this.histYears != null){
-            var ret = 0;
-            for(var val in this.histYears){
-              val = this.histYears[val]
-              ret = val > ret ? val : ret
-            }
-            return ret;
-          } else {
-            return 10;
-          }
-        }
-    },
-    methods: {
-        moveTo: function(idx) {
-            this.curr = idx
-        },
-        moveIncr: function() {
-            this.curr += 1 
-            if (this.curr >= this.algos.length){
-                this.curr = 0
-            }
-        },
-        moveDecr: function() {
-            this.curr -= 1
-            if (this.curr < 0){
-                this.curr = this.algos.length - 1
-            }
-        },
-        calcHistBarHeight: function(count){
-          var prec = count / this.histCountMax
-          return 95 * prec
-        },
-        calcHistBarMargin: function(count){
-          var prec = 1 - (count / this.histCountMax)
-          return 95 * prec
-        }
-    }
+const algos = discCards
+const curr = ref(0) //Math.floor(Math.random() * (discCards.length -1 )),
+
+const histYearsMin: number = discCards
+  .map(a => a.year)
+  .reduce((a, b) => a < b ? a : b)
+const histYearsMax: number = discCards
+  .map(a => a.year)
+  .reduce((a, b) => a > b ? a : b)
+
+const selectInfo = computed(() => algos[curr.value])
+
+const timelineOffset = computed(() => curr.value * -76)
+
+const snippetOffeset = computed(() => {
+  let dis = curr.value * -200
+  if (curr.value > 0) {
+    dis = dis + (curr.value * -30)
+  }
+  return dis
+})
+
+// number of algorithms per year, including years without any
+const histYears = computed(() => {
+  const years: Record<number, number> = {}
+  for (let year = histYearsMin; year <= histYearsMax; year += 1) {
+    years[year] = 0
+  }
+  for (const info of algos) {
+    years[info.year] += 1
+  }
+  return years
+})
+
+const histCountMax = computed(() => Math.max(0, ...Object.values(histYears.value)))
+
+function moveTo(idx: number) {
+  curr.value = idx
+}
+
+function moveIncr() {
+  curr.value += 1
+  if (curr.value >= algos.length) {
+    curr.value = 0
+  }
+}
+
+function moveDecr() {
+  curr.value -= 1
+  if (curr.value < 0) {
+    curr.value = algos.length - 1
+  }
+}
+
+function calcHistBarHeight(count: number): number {
+  return 95 * (count / histCountMax.value)
+}
+
+function calcHistBarMargin(count: number): number {
+  return 95 * (1 - (count / histCountMax.value))
 }
 </script>
 

@@ -44,102 +44,90 @@
 </div>
 </template>
     
-<script>
+<script setup lang="ts">
+import { onBeforeUnmount, onMounted, useTemplateRef } from "vue"
+import type BpmnModeler from 'bpmn-js/lib/Modeler';
 import { scaleToFitElements } from './base/utils/canvasUtils';
 import createEditor from './BPMN/editor'
 
-export default {
-name: "BPMNEditor",
-data: function(){
-  return{
-    container: null,
-    canvas: null,
-    editor: null
+const container = useTemplateRef<HTMLElement>("container")
+const canvas = useTemplateRef<HTMLElement>("canvas")
+
+// bpmn-js modeler: deliberately not reactive
+let editor: BpmnModeler | null = null
+let fitTimers: ReturnType<typeof setTimeout>[] = []
+
+function toggleFullSceen() {
+  if (container.value) {
+    container.value.classList.toggle("fullscreen");
+    container.value.focus();
   }
-},
-mounted: function() {
-  this.container = this.$refs.container;
-  this.canvas = this.$refs.canvas; 
+}
 
-  var that = this;
+function handleExport() {
+  if (!editor) {
+    return
+  }
+  editor.saveXML().then((xml) => {
+    const a = document.createElement('a');
+    a.href = 'data:application/xml;charset=utf-8,' + encodeURIComponent(xml.xml ?? '');
+    a.download = 'diagram.bpmn';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+  }).catch((err) => {
+    console.error('Error exporting BPMN XML:', err);
+  });
+}
 
-  this.editor = createEditor(this.canvas);
-
-  this.editor.invoke(['eventBus', function(eventBus) {
-    eventBus.on('editor.toggle.fullScreen', function() {
-      that.toggleFullSceen();
-    });
-  }]);
-
-  this.editor.invoke(['eventBus', function(eventBus) {
-    eventBus.on('editor.export', function() {
-      that.handleExport();
-    });
-  }]);
-
-  this.editor.invoke(['eventBus', function(eventBus) {
-    eventBus.on('editor.import', function() {
-      that.handleImport();
-    });
-  }]);
-
-  this.editor.invoke(['canvas', function(canvas) {
-    setTimeout( () => scaleToFitElements(canvas), 150);
-    setTimeout( () => scaleToFitElements(canvas), 175);
-  }]);
-
-},
-methods: {
-  toggleFullSceen: function() {
-    if (this.container){
-      this.container.classList.toggle("fullscreen");
-      this.container.focus();
+function handleImport() {
+  if (!editor) {
+    return
+  }
+  const fileDialog = document.createElement('input');
+  fileDialog.type = 'file';
+  fileDialog.accept = '.bpmn';
+  document.body.appendChild(fileDialog);
+  fileDialog.click()
+  fileDialog.onchange = () => {
+    const file = fileDialog.files?.[0];
+    if (!file) {
+      return
     }
-  },
-  handleExport: function() {
-    if (this.editor) {
-      const bpmnXML = this.editor.saveXML();
-      bpmnXML.then((xml) => {
-        let a = document.createElement('a');
-        let uri = encodeURIComponent(xml.xml)
-        a.href = 'data:application/xml;charset=utf-8,' + uri;
-        a.download = 'diagram.bpmn';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        a.remove();
-      }).catch((err) => {
-        console.error('Error exporting BPMN XML:', err);
+    const reader = new FileReader();
+    reader.onload = () => {
+      editor?.importXML(reader.result as string).catch((err) => {
+        console.error('Error importing BPMN XML:', err);
       });
-      // You can handle the export logic here, e.g., save to a file or send to a server
-    }
-  },
-  handleImport: function() {
-    if (this.editor) {
-      let fileDialog = document.createElement('input');
-      fileDialog.type = 'file';
-      fileDialog.accept = '.bpmn';
-      document.body.appendChild(fileDialog);
-      fileDialog.click()
-      fileDialog.onchange = (event) => {
-        const file = event.target.files[0];
-        if (file) {
-          const reader = new FileReader();
-          reader.onload = (e) => {
-            const xml = e.target.result;
-            this.editor.importXML(xml).then(() => {
-              //console.log('BPMN XML imported successfully');
-            }).catch((err) => {
-              console.error('Error importing BPMN XML:', err);
-            });
-          };
-          reader.readAsText(file);
-        }
-      };
-    }
+    };
+    reader.readAsText(file);
+  };
+}
+
+onMounted(() => {
+  editor = createEditor(canvas.value!);
+
+  editor.invoke(['eventBus', function (eventBus: any) {
+    eventBus.on('editor.toggle.fullScreen', () => { toggleFullSceen() });
+    eventBus.on('editor.export', () => { handleExport() });
+    eventBus.on('editor.import', () => { handleImport() });
+  }]);
+
+  editor.invoke(['canvas', function (canvas: any) {
+    fitTimers = [
+      setTimeout(() => scaleToFitElements(canvas), 150),
+      setTimeout(() => scaleToFitElements(canvas), 175)
+    ];
+  }]);
+})
+
+onBeforeUnmount(() => {
+  fitTimers.forEach(clearTimeout);
+  if (editor) {
+    editor.destroy();
+    editor = null;
   }
-}
-}
+})
 </script>
 
 <style lang ="sass">

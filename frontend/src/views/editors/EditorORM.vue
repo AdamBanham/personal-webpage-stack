@@ -234,44 +234,41 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
+import { onBeforeUnmount, onMounted, useTemplateRef } from "vue"
 import EditorORM from "./ORM/editor"
 
-export default {
-  name: "EditorORM",
-  data() {
-    return {
-      root: null,
-      container: null,
-      editor: null
-    }
-  },
-  methods: {
-    toggleFullscreen: function () {
-      this.container.classList.toggle("fullscreen");
-      setTimeout(
-        () => this.editor.get('canvas').zoom('fit-viewport'),
-        50
-      );
-    },
-  },
-  mounted: function () {
-    this.root = this.$refs.canvas;
-    this.container = this.$refs.container;
-    this.editor = new EditorORM(
-      this.root
-    );
+const container = useTemplateRef<HTMLElement>("container")
+const canvas = useTemplateRef<HTMLElement>("canvas")
 
-    var that = this;
-    this.editor.invoke(['eventBus', function (bus) {
-      bus.on(
-        'editor.fullscreen.toggle',
-        50, (ev) => {
-          that.toggleFullscreen()
-        }, that)
-    }]);
-  }
+// diagram-js instance: deliberately not reactive
+let editor: ReturnType<typeof EditorORM> | null = null
+let fitTimer: ReturnType<typeof setTimeout> | undefined
+
+function toggleFullscreen() {
+  container.value?.classList.toggle("fullscreen");
+  clearTimeout(fitTimer);
+  fitTimer = setTimeout(
+    () => editor?.get<any>('canvas').zoom('fit-viewport'),
+    50
+  );
 }
+
+onMounted(() => {
+  editor = EditorORM(canvas.value!);
+
+  editor.invoke(['eventBus', function (bus: any) {
+    bus.on('editor.fullscreen.toggle', 50, () => { toggleFullscreen() })
+  }]);
+})
+
+onBeforeUnmount(() => {
+  clearTimeout(fitTimer);
+  if (editor) {
+    editor.destroy();
+    editor = null;
+  }
+})
 </script>
 
 <style lang="css">

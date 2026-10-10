@@ -23,27 +23,27 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import MailIcon from "@/assets/icons/mail.png";
 import LinkedInIcon from "@/assets/icons/linkedinLogo.png";
 import GithubIcon from "@/assets/icons/GitHub-Mark-64px.png";
 import ORCID from "@/assets/icons/orcidLogo.png";
-export default {
-  name: "ContactPage",
-  data: function () {
-    return {
-      cards: [
-        { 
-          title: "Contact me via a email", 
-          icon: MailIcon, 
-          info: "I am usually available between 9am to 5pm (GMT+10), monday to friday. <br> <b>Contact : <a href='mailto:adam.banham@outlook.com.au' target='_blank'>adam.banham@outlook.com.au</a></b> or via <b><a href='mailto:adam.banham@adelaide.edu.au' target='_blank'>adam.banham@adelaide.edu.au</a></b>" },
-        { title: "Add me on LinkedIn", icon: LinkedInIcon, info: "Send me a contact invite via LinkedIn or drop me a message for collaboration ideas.<br> <b> Profile: <a href='https://www.linkedin.com/in/adam-banham/' target='_blank'>https://www.linkedin.com/in/adam-banham/</a></b>" },
-        { title: "Join me on GitHub", icon: GithubIcon, info: "Star some repos and drop me a follow if you would like to follow my software development.<br> <b>Profile: <a href='https://github.com/adambanham/' target='_blank'>https://github.com/adambanham/</a></b>" },
-        { title: "Check out my academic history", icon: ORCID, info: "In case you need to find my published work or position history.<br> <b> Profile: <a href='https://orcid.org/0000-0001-9912-8220' target='_blank'>https://orcid.org/0000-0001-9912-8220 </a> </b>" }
-      ]
-    }
-  }
+
+interface ContactCard {
+  title: string
+  icon: string
+  info: string
 }
+
+const cards: ContactCard[] = [
+  {
+    title: "Contact me via a email",
+    icon: MailIcon,
+    info: "I am usually available between 9am to 5pm (GMT+10), monday to friday. <br> <b>Contact : <a href='mailto:adam.banham@outlook.com.au' target='_blank'>adam.banham@outlook.com.au</a></b> or via <b><a href='mailto:adam.banham@adelaide.edu.au' target='_blank'>adam.banham@adelaide.edu.au</a></b>" },
+  { title: "Add me on LinkedIn", icon: LinkedInIcon, info: "Send me a contact invite via LinkedIn or drop me a message for collaboration ideas.<br> <b> Profile: <a href='https://www.linkedin.com/in/adam-banham/' target='_blank'>https://www.linkedin.com/in/adam-banham/</a></b>" },
+  { title: "Join me on GitHub", icon: GithubIcon, info: "Star some repos and drop me a follow if you would like to follow my software development.<br> <b>Profile: <a href='https://github.com/adambanham/' target='_blank'>https://github.com/adambanham/</a></b>" },
+  { title: "Check out my academic history", icon: ORCID, info: "In case you need to find my published work or position history.<br> <b> Profile: <a href='https://orcid.org/0000-0001-9912-8220' target='_blank'>https://orcid.org/0000-0001-9912-8220 </a> </b>" }
+]
 </script>
 
 <style lang="sass" scoped>
