@@ -10,11 +10,6 @@
 </div>
 </template>
 
-<script>
-export default {
-name: "NotReady"
-}
-</script>
 
 <style lang="sass" scoped>
 @use "@/styles/coloursAnt.sass" as c

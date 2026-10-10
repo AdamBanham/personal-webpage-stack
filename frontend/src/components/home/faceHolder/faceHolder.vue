@@ -4,11 +4,6 @@
   </div>
 </template>
 
-<script>
-export default {
-name: "FaceHolder"
-}
-</script>
 
 <style lang="sass" scoped>
 @use "@/styles/coloursAnt.sass" as c

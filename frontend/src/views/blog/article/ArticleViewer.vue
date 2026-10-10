@@ -226,48 +226,33 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
+import { computed } from "vue"
 import ArticleContent from "./content/allContent.js"
 import VCodeBlock from '@wdns/vue-code-block';
 
-export default {
-    name: "ArticleViewer",
-    components:{
-      VCodeBlock
-    },
-    props: {
-      articleId : {
-        default : "dummy",
-        type: String
-      }
-    },
-    data : function() {
-      return {
-        dummy : ["Article", "Article Title"],
-        contentDict: ArticleContent.contentDict
-      }
-    },
-    computed : {
-      articleInfo: function(){
-        return this.contentDict[this.articleId]
-      },
-      articleCrumbs: function(){
-        if (this.articleInfo == null){
-          return this.dummy
-        }
-        return [
-          {title: "Blogs", disabled: false, to : "/blog", link: true}, 
-          {title: this.articleInfo.title, disabled: false, link: false}
-        ]
-      }
-    },
-    methods: {
-      moveToBlogs() {
-        this.$router.back()
-      }
-    }
-}
+const props = withDefaults(defineProps<{
+  articleId?: string
+}>(), {
+  articleId: "dummy"
+})
 
+type Crumb = string | { title: string, disabled?: boolean, to?: string, link?: boolean }
+
+const dummy: Crumb[] = ["Article", "Article Title"]
+const contentDict = ArticleContent.contentDict
+
+const articleInfo = computed(() => contentDict[props.articleId])
+
+const articleCrumbs = computed<Crumb[]>(() => {
+  if (articleInfo.value == null) {
+    return dummy
+  }
+  return [
+    { title: "Blogs", disabled: false, to: "/blog", link: true },
+    { title: articleInfo.value.title, disabled: false, link: false }
+  ]
+})
 </script>
 
 <style lang="sass">

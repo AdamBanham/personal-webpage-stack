@@ -18,6 +18,13 @@ Items marked **(left as is)** were deliberately not changed. Delete this file on
 - **~1,500 lint warnings (left as is; ~1,000 auto-fixable with `eslint --fix`).** These are style rules (`prefer-const`, `no-var`, unused vars, etc.)
   that were downgraded to warnings. Most will go away as components are converted in Phase 4.
 
+- **Blog filters persist but checkboxes reset (left as is, pre-existing).** `src/views/blog/contentManager.js` keeps
+  filter state in a module-level `manager`. If you leave `/blog` with filters ticked and come back, the list is still
+  filtered but every checkbox shows unticked. Fix by clearing the filters on mount, or by deriving the checkbox state
+  from the manager.
+- **Process-discovery cards without a year get a random one (left as is, pre-existing).**
+  `discovery-data/discoveryData.js` calls `getRandomYear()` for `year == null`, so their timeline position changes on
+  every load. This would matter if that page were ever prerendered.
 - **CSS typo `trasnform` (left as is).** `src/styles/content.sass:15` has `trasnform: translateX(5%) scale(0) rotateZ(-60deg)`,
   so that keyframe's transform never applies. Fixing it will change how the animation looks.
 
@@ -56,3 +63,7 @@ Items marked **(left as is)** were deliberately not changed. Delete this file on
   `"type": "module"` in `package.json` and `ssr.noExternal: ['vuetify']`. The home-page floaters use `Math.random()`,
   but only in `mounted()`, so there's no hydration mismatch. The build also writes `dist/spa.html` (empty app shell for
   non-prerendered routes) and removes the build-only `dist/.vite/` manifest so it isn't published.
+- Phase 4a: removed the unused Vuex store; `main`, `router` and `plugins` are now TypeScript. All non-editor components use
+  `<script setup lang="ts">`. The duplicated clipboard/share-link code is in `src/composables/useShareLink.ts`.
+  Fixed `v-for:=` typos (no `:key`) in the blog filter bar. Removed unused code: `moveTo` in home,
+  `moveToBlogs` in ArticleViewer, `lineOffset` in DiscoveryPage. `type-check` is clean outside `views/editors/`.

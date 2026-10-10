@@ -145,212 +145,201 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
+import { computed, ref } from "vue"
 import PubCard from "@/components/publication/Card.vue"
 import PubContent from "./content.js"
-export default {
-name: "PublicationsPage",
-components: {
-    PubCard
-},
-data: function() {
-    return {
-    papers: PubContent.Papers,
-    copiedAnchorId: null,
-    selectedPaperId: null
-    }
-},
-computed: {
-  citationPapers: function() {
-    return this.papers
-      .map((paper) => this.toCitationCount(paper.citations))
-      .filter((value) => value > 0)
-      .sort((a, b) => b - a)
-  },
-  totalCitations: function() {
-    return this.citationPapers.reduce((total, citations) => total + citations, 0)
-  },
-  papersWithCitationData: function() {
-    return this.papers.filter((paper) => this.hasCitationValue(paper.citations)).length
-  },
-  hIndex: function() {
-    let index = 0
-    this.citationPapers.forEach((citations, position) => {
-      const rank = position + 1
-      if (citations >= rank) {
-        index = rank
-      }
-    })
-    return index
-  },
-  citationBreakdown: function() {
-    const groups = {}
+import { useShareLink } from "@/composables/useShareLink"
 
-    this.papers.forEach((paper) => {
-      const yearKey = String(paper.year ?? "TBA")
-      if (!groups[yearKey]) {
-        groups[yearKey] = {
-          year: yearKey,
-          totalCitations: 0,
-          totalPapers: 0
-        }
-      }
+type Citations = string | number | boolean | null | undefined
 
-      groups[yearKey].totalPapers += 1
-      groups[yearKey].totalCitations += this.toCitationCount(paper.citations)
-    })
-
-    return Object.values(groups).sort((a, b) => Number(b.year) - Number(a.year))
-  },
-  maxYearCitations: function() {
-    if (this.citationBreakdown.length === 0) {
-      return 0
-    }
-    return this.citationBreakdown.reduce((maxValue, yearData) => {
-      return Math.max(maxValue, yearData.totalCitations)
-    }, 0)
-  },
-  histogramLayout: function() {
-    return {
-      left: 56,
-      right: 690,
-      top: 16,
-      bottom: 250
-    }
-  },
-  histogramTicks: function() {
-    const maxValue = this.maxYearCitations
-    if (maxValue <= 0) {
-      return [
-        { value: 0, y: this.histogramLayout.bottom }
-      ]
-    }
-
-    const steps = 4
-    const interval = Math.ceil(maxValue / steps)
-    const values = []
-
-    for (let step = 0; step <= steps; step += 1) {
-      values.push(step * interval)
-    }
-
-    return values.map((value) => ({
-      value,
-      y: this.histogramY(value)
-    }))
-  },
-  histogramBars: function() {
-    const count = this.citationBreakdown.length
-    if (count === 0) {
-      return []
-    }
-
-    const chartWidth = this.histogramLayout.right - this.histogramLayout.left
-    const gap = 12
-    const barWidth = Math.max(16, (chartWidth - gap * (count - 1)) / count)
-
-    return this.citationBreakdown
-      .slice()
-      .sort((a, b) => Number(a.year) - Number(b.year))
-      .map((yearData, index) => {
-        const value = Number(yearData.totalCitations)
-        const x = this.histogramLayout.left + index * (barWidth + gap)
-        const y = this.histogramY(value)
-        const height = Math.max(0, this.histogramLayout.bottom - y)
-        return {
-          year: yearData.year,
-          value,
-          x,
-          y,
-          width: barWidth,
-          height,
-          centerX: x + barWidth / 2
-        }
-      })
-  },
-  yearSections: function() {
-    const groups = {}
-    this.papers.forEach((paper) => {
-      const yearKey = String(paper.year ?? "TBA")
-      if (!groups[yearKey]) {
-        groups[yearKey] = []
-      }
-      groups[yearKey].push({
-        ...paper,
-        anchorId: this.toAnchorId(`paper-${paper.key || paper.title}`)
-      })
-    })
-
-    return Object.keys(groups)
-      .sort((a, b) => Number(b) - Number(a))
-      .map((year) => ({
-        year,
-        anchorId: this.toAnchorId(`year-${year}`),
-        papers: groups[year]
-      }))
-  }
-},
-methods: {
-  histogramY: function(totalCitations) {
-    if (this.maxYearCitations <= 0) {
-      return this.histogramLayout.bottom
-    }
-
-    const chartHeight = this.histogramLayout.bottom - this.histogramLayout.top
-    const ratio = Number(totalCitations) / this.maxYearCitations
-    return this.histogramLayout.bottom - ratio * chartHeight
-  },
-  hasCitationValue: function(citations) {
-    if (citations === false || citations === null || citations === undefined || citations === "") {
-      return false
-    }
-    const parsed = Number(citations)
-    return Number.isFinite(parsed) && parsed >= 0
-  },
-  toCitationCount: function(citations) {
-    if (!this.hasCitationValue(citations)) {
-      return 0
-    }
-    return Number(citations)
-  },
-  toAnchorId: function(value) {
-    return String(value)
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, "-")
-      .replace(/^-+|-+$/g, "")
-  },
-  copyToClipboard: async function(text) {
-    if (navigator.clipboard && window.isSecureContext) {
-      await navigator.clipboard.writeText(text)
-      return
-    }
-
-    const helper = document.createElement("textarea")
-    helper.value = text
-    helper.style.position = "fixed"
-    helper.style.left = "-9999px"
-    document.body.appendChild(helper)
-    helper.focus()
-    helper.select()
-    document.execCommand("copy")
-    document.body.removeChild(helper)
-  },
-  copySectionLink: async function(anchorId) {
-    try {
-      const fullPath = this.$route.fullPath.split("#")[0]
-      const shareUrl = `${window.location.origin}${fullPath}#${anchorId}`
-      await this.copyToClipboard(shareUrl)
-      this.copiedAnchorId = anchorId
-      window.setTimeout(() => {
-        if (this.copiedAnchorId === anchorId) {
-          this.copiedAnchorId = null
-        }
-      }, 1800)
-    } catch (error) {
-      console.error("Failed to copy year link", error)
-    }
-  }
+interface YearCitations {
+  year: string
+  totalCitations: number
+  totalPapers: number
 }
+
+const papers = PubContent.Papers
+const copiedAnchorId = ref<string | null>(null)
+const selectedPaperId = ref<string | null>(null)
+
+const { copyShareLink } = useShareLink()
+
+const histogramLayout = {
+  left: 56,
+  right: 690,
+  top: 16,
+  bottom: 250
+}
+
+function hasCitationValue(citations: Citations): boolean {
+  if (citations === false || citations === null || citations === undefined || citations === "") {
+    return false
+  }
+  const parsed = Number(citations)
+  return Number.isFinite(parsed) && parsed >= 0
+}
+
+function toCitationCount(citations: Citations): number {
+  if (!hasCitationValue(citations)) {
+    return 0
+  }
+  return Number(citations)
+}
+
+function toAnchorId(value: unknown): string {
+  return String(value)
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+}
+
+const citationPapers = computed(() =>
+  papers
+    .map((paper) => toCitationCount(paper.citations))
+    .filter((value) => value > 0)
+    .sort((a, b) => b - a)
+)
+
+const totalCitations = computed(() =>
+  citationPapers.value.reduce((total, citations) => total + citations, 0)
+)
+
+const papersWithCitationData = computed(() =>
+  papers.filter((paper) => hasCitationValue(paper.citations)).length
+)
+
+const hIndex = computed(() => {
+  let index = 0
+  citationPapers.value.forEach((citations, position) => {
+    const rank = position + 1
+    if (citations >= rank) {
+      index = rank
+    }
+  })
+  return index
+})
+
+const citationBreakdown = computed(() => {
+  const groups: Record<string, YearCitations> = {}
+
+  papers.forEach((paper) => {
+    const yearKey = String(paper.year ?? "TBA")
+    if (!groups[yearKey]) {
+      groups[yearKey] = {
+        year: yearKey,
+        totalCitations: 0,
+        totalPapers: 0
+      }
+    }
+
+    groups[yearKey].totalPapers += 1
+    groups[yearKey].totalCitations += toCitationCount(paper.citations)
+  })
+
+  return Object.values(groups).sort((a, b) => Number(b.year) - Number(a.year))
+})
+
+const maxYearCitations = computed(() =>
+  citationBreakdown.value.reduce((maxValue, yearData) => Math.max(maxValue, yearData.totalCitations), 0)
+)
+
+function histogramY(totalCitations: number): number {
+  if (maxYearCitations.value <= 0) {
+    return histogramLayout.bottom
+  }
+
+  const chartHeight = histogramLayout.bottom - histogramLayout.top
+  const ratio = Number(totalCitations) / maxYearCitations.value
+  return histogramLayout.bottom - ratio * chartHeight
+}
+
+const histogramTicks = computed(() => {
+  const maxValue = maxYearCitations.value
+  if (maxValue <= 0) {
+    return [
+      { value: 0, y: histogramLayout.bottom }
+    ]
+  }
+
+  const steps = 4
+  const interval = Math.ceil(maxValue / steps)
+  const values: number[] = []
+
+  for (let step = 0; step <= steps; step += 1) {
+    values.push(step * interval)
+  }
+
+  return values.map((value) => ({
+    value,
+    y: histogramY(value)
+  }))
+})
+
+const histogramBars = computed(() => {
+  const count = citationBreakdown.value.length
+  if (count === 0) {
+    return []
+  }
+
+  const chartWidth = histogramLayout.right - histogramLayout.left
+  const gap = 12
+  const barWidth = Math.max(16, (chartWidth - gap * (count - 1)) / count)
+
+  return citationBreakdown.value
+    .slice()
+    .sort((a, b) => Number(a.year) - Number(b.year))
+    .map((yearData, index) => {
+      const value = Number(yearData.totalCitations)
+      const x = histogramLayout.left + index * (barWidth + gap)
+      const y = histogramY(value)
+      const height = Math.max(0, histogramLayout.bottom - y)
+      return {
+        year: yearData.year,
+        value,
+        x,
+        y,
+        width: barWidth,
+        height,
+        centerX: x + barWidth / 2
+      }
+    })
+})
+
+const yearSections = computed(() => {
+  const groups: Record<string, Array<(typeof papers)[number] & { anchorId: string }>> = {}
+  papers.forEach((paper) => {
+    const yearKey = String(paper.year ?? "TBA")
+    if (!groups[yearKey]) {
+      groups[yearKey] = []
+    }
+    groups[yearKey].push({
+      ...paper,
+      anchorId: toAnchorId(`paper-${paper.key || paper.title}`)
+    })
+  })
+
+  return Object.keys(groups)
+    .sort((a, b) => Number(b) - Number(a))
+    .map((year) => ({
+      year,
+      anchorId: toAnchorId(`year-${year}`),
+      papers: groups[year]
+    }))
+})
+
+async function copySectionLink(anchorId: string) {
+  try {
+    await copyShareLink(anchorId)
+    copiedAnchorId.value = anchorId
+    window.setTimeout(() => {
+      if (copiedAnchorId.value === anchorId) {
+        copiedAnchorId.value = null
+      }
+    }, 1800)
+  } catch (error) {
+    console.error("Failed to copy year link", error)
+  }
 }
 </script>
 

@@ -13,35 +13,29 @@
   </div>
 </template>
 
-<script>
-export default {
-    name: "TimelineBar",
-    data () {
-        return {
-            spots: Array(5).fill(false),
-            spotTitles: [ 
-                "The Early Years",
-                "Undergraduate Years",
-                "Postgraduate Training",
-                "????",
-                "????"
-            ],
-            spotTitle: null
+<script setup lang="ts">
+import { ref } from "vue"
 
-        }
-    },
-    methods: {
-        setSelected(idx) {
-            if (this.spots[idx]){
-                this.spots[idx] = false;
-                this.spotTitle = null;
-                return
-            }
-            this.spots = Array(5).fill(false)
-            this.spots[idx] = true
-            this.spotTitle = this.spotTitles[idx]
-        }
-    }
+const spotTitles = [
+  "The Early Years",
+  "Undergraduate Years",
+  "Postgraduate Training",
+  "????",
+  "????"
+]
+
+const spots = ref<boolean[]>(Array(5).fill(false))
+const spotTitle = ref<string | null>(null)
+
+function setSelected(idx: number) {
+  if (spots.value[idx]) {
+    spots.value[idx] = false
+    spotTitle.value = null
+    return
+  }
+  spots.value = Array(5).fill(false)
+  spots.value[idx] = true
+  spotTitle.value = spotTitles[idx]
 }
 </script>
 

@@ -60,7 +60,7 @@
           prepend-icon="mdi-web"
           size="x-small"
           elevation="2"
-          :href="doi"
+          :href="doiURL"
           target="_blank"
           variant="tonal"
         >
@@ -93,124 +93,72 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "PubCard",
-  props: {
-    title: {
-      type: String,
-      required: true,
-      default: "Working Title"
-    },
-    authors: {
-      type: Array,
-      required: true
-    },
-    year: {
-      type: [String, Number],
-      required: false,
-      default: "TBA"
-    },
-    venue: {
-      type: String,
-      required: false,
-      default: "TBA"
-    },
-    abstract: {
-      type: String,
-      required: true,
-      default: "Coming soon..."
-    },
-    file: {
-      type: [String, Boolean],
-      required: false,
-      default: false
-    },
-    doi: {
-      type: [Boolean, String],
-      required: false,
-      default: false
-    },
-    bibtex: {
-      type: [Boolean, String],
-      required: false,
-      default: false
-    },
-    paperId: {
-      type: String,
-      required: false,
-      default: ""
-    },
-    selected: {
-      type: Boolean,
-      required: false,
-      default: false
-    },
-    citations: {
-      type: [String, Number, Boolean],
-      required: false,
-      default: false
-    }
-  },
-  data: function() {
-    return {
-      hidden: true,
-      copied: false
-    }
-  },
-  computed: {
-    hasCitations: function() {
-      return this.citations !== false && this.citations !== null && this.citations !== undefined && this.citations !== ""
-    },
-    fileURL: function() {
-      if (this.file == false) return ""
-      return this.getPublic(this.file)
-    },
-    bibtexURL: function() {
-      if (this.bibtex == false) return ""
-      return this.getPublic(this.bibtex)
-    }
-  },
-  methods: {
-    selectCard: function() {
-      this.$emit("select-card", this.paperId)
-    },
-    getPublic: function(file) {
-      return `/${file}`
-    },
-    toggleHidden: function() {
-      this.hidden = !this.hidden
-    },
-    copyToClipboard: async function(text) {
-      if (navigator.clipboard && window.isSecureContext) {
-        await navigator.clipboard.writeText(text)
-        return
-      }
+<script setup lang="ts">
+import { computed, ref } from "vue"
+import { useShareLink } from "@/composables/useShareLink"
 
-      const helper = document.createElement("textarea")
-      helper.value = text
-      helper.style.position = "fixed"
-      helper.style.left = "-9999px"
-      document.body.appendChild(helper)
-      helper.focus()
-      helper.select()
-      document.execCommand("copy")
-      document.body.removeChild(helper)
-    },
-    copyPaperLink: async function() {
-      try {
-        this.selectCard()
-        const fullPath = this.$route.fullPath.split("#")[0]
-        const shareUrl = `${window.location.origin}${fullPath}#${this.paperId}`
-        await this.copyToClipboard(shareUrl)
-        this.copied = true
-        window.setTimeout(() => {
-          this.copied = false
-        }, 1800)
-      } catch (error) {
-        console.error("Failed to copy paper link", error)
-      }
-    }
+const props = withDefaults(defineProps<{
+  title: string
+  authors: string[]
+  year?: string | number
+  venue?: string
+  abstract: string
+  file?: string | boolean
+  doi?: boolean | string
+  bibtex?: boolean | string
+  paperId?: string
+  selected?: boolean
+  citations?: string | number | boolean
+}>(), {
+  year: "TBA",
+  venue: "TBA",
+  file: false,
+  doi: false,
+  bibtex: false,
+  paperId: "",
+  selected: false,
+  citations: false
+})
+
+const emit = defineEmits<{
+  (e: "select-card", paperId: string): void
+}>()
+
+const { copyShareLink } = useShareLink()
+
+const hidden = ref(true)
+const copied = ref(false)
+
+const hasCitations = computed(() =>
+  props.citations !== false && props.citations !== null && props.citations !== undefined && props.citations !== ""
+)
+
+const doiURL = computed(() => (typeof props.doi === "string" ? props.doi : ""))
+const fileURL = computed(() => (props.file == false ? "" : getPublic(props.file)))
+const bibtexURL = computed(() => (props.bibtex == false ? "" : getPublic(props.bibtex)))
+
+function getPublic(file: string | boolean): string {
+  return `/${file}`
+}
+
+function selectCard() {
+  emit("select-card", props.paperId)
+}
+
+function toggleHidden() {
+  hidden.value = !hidden.value
+}
+
+async function copyPaperLink() {
+  try {
+    selectCard()
+    await copyShareLink(props.paperId)
+    copied.value = true
+    window.setTimeout(() => {
+      copied.value = false
+    }, 1800)
+  } catch (error) {
+    console.error("Failed to copy paper link", error)
   }
 }
 </script>

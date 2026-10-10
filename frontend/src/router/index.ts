@@ -1,3 +1,4 @@
+import type { RouteRecordRaw, RouterScrollBehavior } from 'vue-router'
 import Home from '../views/Home.vue'
 
 // lazy-loaded so heavy pages (diagram-js/bpmn-js editors) stay out of the landing bundle
@@ -12,7 +13,7 @@ const EditorPN = () => import("@/views/editors/EditorPN.vue")
 const EditorORM = () => import("@/views/editors/EditorORM.vue")
 const EditorBPMN = () => import("@/views/editors/EditorBPMN.vue")
 
-const routes = [
+const routes: RouteRecordRaw[] = [
   {
     path: '/',
     name: 'home',
@@ -87,7 +88,7 @@ const routes = [
   }
 ]
 
-export function scrollBehavior(to) {
+export const scrollBehavior: RouterScrollBehavior = (to) => {
   if (to.hash) {
     return {
       el: to.hash,
