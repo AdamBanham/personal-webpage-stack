@@ -239,27 +239,20 @@ import EditorORM from "./ORM/editor"
 
 export default {
   name: "EditorORM",
-  data() {
-    return {
-      root: null,
-      container: null,
-      editor: null
-    }
-  },
+  // the diagram-js editor is assigned in mounted() and kept off data() so Vue does not proxy it
   methods: {
     toggleFullscreen: function () {
-      this.container.classList.toggle("fullscreen");
-      setTimeout(
+      this.$refs.container.classList.toggle("fullscreen");
+      clearTimeout(this.fitTimer);
+      this.fitTimer = setTimeout(
         () => this.editor.get('canvas').zoom('fit-viewport'),
         50
       );
     },
   },
   mounted: function () {
-    this.root = this.$refs.canvas;
-    this.container = this.$refs.container;
     this.editor = new EditorORM(
-      this.root
+      this.$refs.canvas
     );
 
     var that = this;
@@ -270,6 +263,13 @@ export default {
           that.toggleFullscreen()
         }, that)
     }]);
+  },
+  beforeUnmount: function () {
+    clearTimeout(this.fitTimer);
+    if (this.editor) {
+      this.editor.destroy();
+      this.editor = null;
+    }
   }
 }
 </script>

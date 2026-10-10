@@ -96,9 +96,8 @@ import EditorTS  from "./PN/editor.js"
 export default {
   name: "EditorPN",
   data: function(){
+    // the diagram-js editor is kept off data() so Vue does not proxy it
     return {
-      root: null,
-      editor: null,
       diagramXML: null,
       places : [],
       flows: [],
@@ -169,9 +168,8 @@ export default {
           },
         },
         mounted: function(){
-            this.root = this.$refs.canvas;
             var _options = {
-                container:  this.root
+                container:  this.$refs.canvas
             }
             this.editor = new EditorTS(
                 _options
@@ -226,6 +224,12 @@ export default {
             // add default system
             this.triggerMathjax()
           },
+        beforeUnmount: function(){
+            if (this.editor) {
+              this.editor.destroy();
+              this.editor = null;
+            }
+        },
         methods: {
           toggleFullscreen: function(){
             this.$refs.container.classList.toggle('fullscreen')

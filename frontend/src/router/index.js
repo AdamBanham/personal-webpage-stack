@@ -1,15 +1,17 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
-import ContactPage from "@/views/ContactPage.vue"
-import NotReady from "@/views/NotReady.vue"
-import BlogPage from "@/views/blog/Blog.vue"
-import ArticlePage from "@/views/blog/article/ArticleViewer.vue"
-import PublicationPage from "@/views/publications/Publications.vue"
-import PMDiscoveryPage from "@/views/process-mining/DiscoveryPage.vue"
-import EditorTS from "@/views/editors/EditorTS.vue"
-import EditorPN from "@/views/editors/EditorPN.vue"
-import EditorORM from "@/views/editors/EditorORM.vue"
-import EditorBPMN from "@/views/editors/EditorBPMN.vue"
+
+// lazy-loaded so heavy pages (diagram-js/bpmn-js editors) stay out of the landing bundle
+const ContactPage = () => import("@/views/ContactPage.vue")
+const NotReady = () => import("@/views/NotReady.vue")
+const BlogPage = () => import("@/views/blog/Blog.vue")
+const ArticlePage = () => import("@/views/blog/article/ArticleViewer.vue")
+const PublicationPage = () => import("@/views/publications/Publications.vue")
+const PMDiscoveryPage = () => import("@/views/process-mining/DiscoveryPage.vue")
+const EditorTS = () => import("@/views/editors/EditorTS.vue")
+const EditorPN = () => import("@/views/editors/EditorPN.vue")
+const EditorORM = () => import("@/views/editors/EditorORM.vue")
+const EditorBPMN = () => import("@/views/editors/EditorBPMN.vue")
 
 const routes = [
   {

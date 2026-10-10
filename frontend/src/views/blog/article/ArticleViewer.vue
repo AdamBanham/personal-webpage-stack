@@ -178,20 +178,16 @@
                 :key="t"
                 :src="pic.src"
               >
-                <v-responsive dark>
-                  <v-container fill-height>
-                    <v-layout align-center>
-                      <div class="flex">
-                        <h3 class="display-3">
-                          {{ pic.header }}
-                        </h3>
-                        <span class="subheading"> 
-                          {{ pic.subtitle }}
-                        </span>
-                      </div>
-                    </v-layout>
-                  </v-container>
-                </v-responsive>
+                <div class="d-flex fill-height align-center pa-4">
+                  <div>
+                    <h3 class="text-h3">
+                      {{ pic.header }}
+                    </h3>
+                    <span class="text-subtitle-1">
+                      {{ pic.subtitle }}
+                    </span>
+                  </div>
+                </div>
               </v-carousel-item>
             </v-carousel>
           </section>

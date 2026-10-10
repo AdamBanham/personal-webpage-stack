@@ -11,8 +11,7 @@ export default class HelpProvider {
             that.eventBus.fire('keyboard.controls.toggle');
         });
 
-        window.addEventListener(
-            'click', (event) => {
+        const closeOnOutsideClick = (event) => {
             if (
                 that.toggled &&
                 that._help_window &&
@@ -21,8 +20,13 @@ export default class HelpProvider {
             ) {
                 that.eventBus.fire('keyboard.controls.toggle');
             }
-        },);
-        
+        };
+        window.addEventListener('click', closeOnOutsideClick);
+        // the window outlives the editor, so drop the listener when the diagram is destroyed
+        this.eventBus.on('diagram.destroy', () => {
+            window.removeEventListener('click', closeOnOutsideClick);
+        });
+
         this.eventBus.on('keyboard.controls.toggle', () => {
             that.showHelp();
         });

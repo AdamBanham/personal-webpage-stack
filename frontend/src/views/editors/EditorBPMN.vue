@@ -50,20 +50,11 @@ import createEditor from './BPMN/editor'
 
 export default {
 name: "BPMNEditor",
-data: function(){
-  return{
-    container: null,
-    canvas: null,
-    editor: null
-  }
-},
+// the bpmn-js modeler is assigned in mounted() and kept off data() so Vue does not proxy it
 mounted: function() {
-  this.container = this.$refs.container;
-  this.canvas = this.$refs.canvas; 
-
   var that = this;
 
-  this.editor = createEditor(this.canvas);
+  this.editor = createEditor(this.$refs.canvas);
 
   this.editor.invoke(['eventBus', function(eventBus) {
     eventBus.on('editor.toggle.fullScreen', function() {
@@ -84,16 +75,26 @@ mounted: function() {
   }]);
 
   this.editor.invoke(['canvas', function(canvas) {
-    setTimeout( () => scaleToFitElements(canvas), 150);
-    setTimeout( () => scaleToFitElements(canvas), 175);
+    that.fitTimers = [
+      setTimeout( () => scaleToFitElements(canvas), 150),
+      setTimeout( () => scaleToFitElements(canvas), 175)
+    ];
   }]);
 
 },
+beforeUnmount: function() {
+  (this.fitTimers || []).forEach(clearTimeout);
+  if (this.editor) {
+    this.editor.destroy();
+    this.editor = null;
+  }
+},
 methods: {
   toggleFullSceen: function() {
-    if (this.container){
-      this.container.classList.toggle("fullscreen");
-      this.container.focus();
+    const container = this.$refs.container;
+    if (container){
+      container.classList.toggle("fullscreen");
+      container.focus();
     }
   },
   handleExport: function() {

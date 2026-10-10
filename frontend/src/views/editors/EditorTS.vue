@@ -89,10 +89,8 @@
     export default {
         name: "EditorTS",
         data: function(){
+            // the diagram-js editor is kept off data() so Vue does not proxy it
             return {
-                root: null,
-                editor: null,
-                container: null,
                 diagramXML: null,
                 states : [],
                 transitions : [],
@@ -160,10 +158,8 @@
           }
         },
         mounted: function(){
-            this.root = this.$refs.canvas;
-            this.container = this.$refs.container;  
             var _options = {
-                container:  this.root
+                container:  this.$refs.canvas
             }
             this.editor = new EditorTS(
                 _options
@@ -217,17 +213,24 @@
               }, that)
             }]);
             this.editor.invoke(['canvas', function(canvas){
-                setTimeout(() => {
+                that.fitTimer = setTimeout(() => {
                   scaleToFitElements(canvas);
                 }, 150);
             }]);
 
             this.triggerMathjax()
           },
+        beforeUnmount: function(){
+            clearTimeout(this.fitTimer);
+            if (this.editor) {
+              this.editor.destroy();
+              this.editor = null;
+            }
+        },
         methods: {
             toggleFullScreen: function() {
-              if (this.container) {
-                this.container.classList.toggle('fullscreen');
+              if (this.$refs.container) {
+                this.$refs.container.classList.toggle('fullscreen');
               }
             },
           triggerMathjax: function(){
