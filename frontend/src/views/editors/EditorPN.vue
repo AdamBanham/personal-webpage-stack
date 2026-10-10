@@ -90,269 +90,168 @@
   </div>
 </template>
     
-<script>
-import EditorTS  from "./PN/editor.js"
+<script setup lang="ts">
+import { computed, onBeforeUnmount, onMounted, ref, useTemplateRef } from "vue"
+import EditorPN from "./PN/editor.js"
+import { useMathJax } from "@/composables/useMathJax";
 
-export default {
-  name: "EditorPN",
-  data: function(){
-    // the diagram-js editor is kept off data() so Vue does not proxy it
-    return {
-      diagramXML: null,
-      places : [],
-      flows: [],
-      transitions : [],
-      typesetPromise: Promise.resolve()
-    }
-  },
-  computed : {
-          placesML : function(){
-            var ret = ""
-            this.places.forEach((place, index) => {
-              ret += place.label
-              if (index < this.places.length - 1){
-                ret += ", "
-              }
-            })
-            this.triggerMathjax()
-            return "\\begin{align*} \\{ " + ret + " \\}\\end{align*}"
-          },
-          labels : function(){
-            var ret = []
-            this.transitions.forEach((t) => {
-              var label = t.silent ? "silent" : t.label
-              if (ret.includes(label)){
-                return
-              }
-              ret.push(label)
-            })
-            return ret
-          },
-          transitionsML : function(){
-            var ret = ""
-            this.transitions.forEach((t, index) => {
-              ret += this.trimId(t.id)
-              if (index < this.transitions.length - 1){
-                ret += ", "
-              }
-            })
-            this.triggerMathjax()
-            return "\\begin{align*} \\{ " + ret + " \\}\\end{align*}"
-          },
-          labelsML: function(){
-            var ret = ""
-            this.transitions.forEach((t, index) => {
-              var label = t.silent ? "\\tau" : t.label
-              ret += this.trimId(t.id) 
-              ret += "\\rightarrow"
-              ret += t.silent ? label : "\\text{'"+label+"'}"
-              if (index < this.transitions.length - 1){
-                ret += ", "
-              }
-            })
-            this.triggerMathjax()
-            return "\\begin{align*} \\{ " + ret + " \\}\\end{align*}"
-          },
-          flowsML: function(){
-            var ret = ""
-            this.flows.forEach((flow, index) => {
-              ret += '('+this.trimId(flow.src) 
-              ret += ", "
-              ret += this.trimId(flow.tgt) + ')'
-              if (index < this.flows.length - 1){
-                ret += ", "
-              }
-            })
-            this.triggerMathjax()
-            return "\\begin{align*} \\{" + ret + " \\}\\end{align*}"
-          },
-        },
-        mounted: function(){
-            var _options = {
-                container:  this.$refs.canvas
-            }
-            this.editor = new EditorTS(
-                _options
-            );
-            // add hanlders to track net state
-            var that = this
-            this.editor.invoke(['eventBus', function(bus){
-              bus.on(
-                'editor.fullscreen.toggle',
-              50, (ev) => {
-                that.toggleFullscreen()
-              }, that)
-            }]);
-            this.editor.invoke(['eventBus', function(bus){
-              bus.on(
-                [
-                  'formal.create.place', 'formal.create.transition',
-                  'formal.create.flow',
-                ],
-              50, (ev) => {
-                that.handleElementCreate(ev)
-            }, that)
-            }]);
-            this.editor.invoke(['eventBus', function(bus){
-                bus.on(
-                  [
-                  'pad.delete', 'elements.delete'
-                  ],
-                50, (ev) => {
-                  that.handleElementDelete(ev)
-              }, that)
-            }]);
-            this.editor.invoke(['eventBus', function(bus){
-                bus.on(
-                  [
-                  'element.changed', 'elements.changed'
-                  ],
-                50, (ev) => {
-                  that.handleElementChange(ev)
-              }, that)
-            }]);
-            this.editor.invoke(['eventBus', function(bus){
-                bus.on(
-                  [
-                  'formal.clear',
-                  ],
-                50, (ev) => {
-                  that.resetToEmpty()
-              }, that)
-            }]);
-
-            // add default system
-            this.triggerMathjax()
-          },
-        beforeUnmount: function(){
-            if (this.editor) {
-              this.editor.destroy();
-              this.editor = null;
-            }
-        },
-        methods: {
-          toggleFullscreen: function(){
-            this.$refs.container.classList.toggle('fullscreen')
-          },
-          triggerMathjax: function(){
-            const mathjax = window.MathJax
-            const that = this
-            const math = this.$refs['editor-pn-math']
-            // using setTimeout, which can get the right result
-            that.$nextTick( () => {
-              that.typesetPromise = that.typesetPromise.then(() => {
-                return mathjax.typesetPromise([that.$refs['editor-pn-math']])
-              }
-            )})
-          },
-        trimId : function trimId(id){
-            return id.split('-')[0][0]+"_{" + id.split('-')[1] + "}"
-        },
-        handleElementCreate: function(event){
-          var that = this
-          function handleElement(el){
-            return {
-              id: el.id,
-              label: el.labelText || that.trimId(el.id),
-              silent: el.silent || false
-            }
-          }
-          function handleFlow(flow){
-            return {
-              id: flow.id,
-              src: flow.source.id,
-              tgt: flow.target.id
-            }
-          }
-          if (event.element.type === 'place'){
-            this.places.push(handleElement(event.element))
-          } else if (event.element.type === 'transition'){
-            this.transitions.push(handleElement(event.element))
-          } else if (event.element.type === 'flow'){
-            this.flows.push(handleFlow(event.element))
-          }
-          return event
-        },
-        handleElementDelete: function(event){
-          var deleted = event.elements;
-          var connected = []
-          deleted.forEach(el => {
-            if(el.type === 'place'){
-              connected = connected.concat(
-                this.flows.filter((f) => f.src === el.id || f.tgt === el.id)
-              )
-            } else if (el.type === 'transition'){
-              connected = connected.concat(
-                this.flows.filter((f) => f.src === el.id || f.tgt === el.id)
-              )
-            }
-          });
-          deleted.forEach(
-            (el) => {
-              if (el.type === 'place'){
-                this.places = this.places.filter((p) => p.id !== el.id)
-              } else if (el.type === 'transition'){
-                this.transitions = this.transitions.filter((t) => t.id !== el.id)
-              } else if (el.type === 'flow'){
-                this.flows = this.flows.filter((f) => f.id !== el.id)
-              }
-            }
-          )
-          connected.forEach(
-            (el) => {
-              this.flows = this.flows.filter((f) => f.id !== el.id)
-            }
-          )
-          
-        },
-        handleElementChange: function(event){
-          if (event.elements){
-            event.elements.forEach((el) => {
-              if (el.type === 'transition'){
-                var index = this.transitions.findIndex((t) => t.id === el.id)
-                if (index > -1){
-                  this.transitions[index].label = el.labelText
-                  this.transitions[index].silent = el.silent
-                }
-              }
-            })
-          } else {
-            if (event.element.type === 'transition'){
-              var index = this.transitions.findIndex((t) => t.id === event.element.id)
-              if (index > -1){
-                this.transitions[index].label = event.element.labelText
-                this.transitions[index].silent = event.element.silent
-              }
-            }
-          }
-        },  
-        copyToClip: function(hint){
-          if (hint === 'places'){
-            navigator.clipboard.writeText(this.placesML)
-          } else if (hint === 'transitions'){
-            navigator.clipboard.writeText(this.transitionsML)
-          } else if (hint === 'flow'){
-            navigator.clipboard.writeText(this.flowsML)
-          } else if (hint === 'labels'){
-            navigator.clipboard.writeText(this.labelsML)
-          }
-        },
-        findLabel : function(state){
-          let label;
-          if (state.label.length > 0){
-                label = state.label
-              } else {
-                label = state.id
-              }
-          return label
-        },
-        resetToEmpty: function(){
-          this.places = []
-          this.transitions = []
-          this.flows = []
-        }
-      }
+interface NodeInfo {
+  id: string
+  label: string
+  silent: boolean
 }
+
+interface FlowInfo {
+  id: string
+  src: string
+  tgt: string
+}
+
+const container = useTemplateRef<HTMLElement>("container")
+const canvas = useTemplateRef<HTMLElement>("canvas")
+const mathPanel = useTemplateRef<HTMLElement>("editor-pn-math")
+
+const places = ref<NodeInfo[]>([])
+const transitions = ref<NodeInfo[]>([])
+const flows = ref<FlowInfo[]>([])
+
+// diagram-js instance: deliberately not reactive
+let editor: any = null
+
+function trimId(id: string): string {
+  return id.split('-')[0][0] + "_{" + id.split('-')[1] + "}"
+}
+
+const placesML = computed(() => {
+  const ret = places.value.map((place) => place.label).join(", ")
+  return "\\begin{align*} \\{ " + ret + " \\}\\end{align*}"
+})
+
+const labels = computed(() => {
+  const ret: string[] = []
+  transitions.value.forEach((t) => {
+    const label = t.silent ? "silent" : t.label
+    if (!ret.includes(label)) {
+      ret.push(label)
+    }
+  })
+  return ret
+})
+
+const transitionsML = computed(() => {
+  const ret = transitions.value.map((t) => trimId(t.id)).join(", ")
+  return "\\begin{align*} \\{ " + ret + " \\}\\end{align*}"
+})
+
+const labelsML = computed(() => {
+  const ret = transitions.value.map((t) => {
+    const label = t.silent ? "\\tau" : t.label
+    return trimId(t.id) + "\\rightarrow" + (t.silent ? label : "\\text{'" + label + "'}")
+  }).join(", ")
+  return "\\begin{align*} \\{ " + ret + " \\}\\end{align*}"
+})
+
+const flowsML = computed(() => {
+  const ret = flows.value.map((flow) => '(' + trimId(flow.src) + ", " + trimId(flow.tgt) + ')').join(", ")
+  return "\\begin{align*} \\{" + ret + " \\}\\end{align*}"
+})
+
+const { typeset } = useMathJax(mathPanel, [placesML, transitionsML, labelsML, flowsML])
+
+function handleElementCreate(event: any) {
+  const el = event.element
+  if (el.type === 'place') {
+    places.value.push({ id: el.id, label: el.labelText || trimId(el.id), silent: el.silent || false })
+  } else if (el.type === 'transition') {
+    transitions.value.push({ id: el.id, label: el.labelText || trimId(el.id), silent: el.silent || false })
+  } else if (el.type === 'flow') {
+    flows.value.push({ id: el.id, src: el.source.id, tgt: el.target.id })
+  }
+}
+
+function handleElementDelete(event: any) {
+  const deleted: any[] = event.elements;
+  const removed = new Set<string>()
+  deleted.forEach((el) => {
+    removed.add(el.id)
+    if (el.type === 'place' || el.type === 'transition') {
+      // flows attached to a removed node go with it
+      flows.value
+        .filter((f) => f.src === el.id || f.tgt === el.id)
+        .forEach((f) => removed.add(f.id))
+    }
+  });
+  places.value = places.value.filter((p) => !removed.has(p.id))
+  transitions.value = transitions.value.filter((t) => !removed.has(t.id))
+  flows.value = flows.value.filter((f) => !removed.has(f.id))
+}
+
+function updateTransition(el: any) {
+  if (el.type !== 'transition') {
+    return
+  }
+  const transition = transitions.value.find((t) => t.id === el.id)
+  if (transition) {
+    transition.label = el.labelText
+    transition.silent = el.silent
+  }
+}
+
+function handleElementChange(event: any) {
+  if (event.elements) {
+    event.elements.forEach(updateTransition)
+  } else {
+    updateTransition(event.element)
+  }
+}
+
+function resetToEmpty() {
+  places.value = []
+  transitions.value = []
+  flows.value = []
+}
+
+function toggleFullscreen() {
+  container.value?.classList.toggle('fullscreen')
+}
+
+function copyToClip(hint: 'places' | 'transitions' | 'flow' | 'labels') {
+  const text = {
+    places: placesML,
+    transitions: transitionsML,
+    flow: flowsML,
+    labels: labelsML,
+  }[hint].value
+  navigator.clipboard.writeText(text)
+}
+
+onMounted(() => {
+  editor = EditorPN({
+    container: canvas.value
+  });
+
+  // track the net's state for the formal definition panel. Listeners must return
+  // undefined: a returned value would stop lower-priority diagram-js listeners.
+  editor.invoke(['eventBus', function (bus: any) {
+    bus.on('editor.fullscreen.toggle', 50, () => { toggleFullscreen() })
+    bus.on(
+      ['formal.create.place', 'formal.create.transition', 'formal.create.flow'],
+      50, (ev: any) => { handleElementCreate(ev) }
+    )
+    bus.on(['pad.delete', 'elements.delete'], 50, (ev: any) => { handleElementDelete(ev) })
+    bus.on(['element.changed', 'elements.changed'], 50, (ev: any) => { handleElementChange(ev) })
+    bus.on(['formal.clear'], 50, () => { resetToEmpty() })
+  }]);
+
+  typeset()
+})
+
+onBeforeUnmount(() => {
+  if (editor) {
+    editor.destroy();
+    editor = null;
+  }
+})
 </script>
     
 <style lang="sass" scoped>

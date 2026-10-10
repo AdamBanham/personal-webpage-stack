@@ -11,13 +11,20 @@ Items marked **(left as is)** were deliberately not changed. Delete this file on
 - **Unreachable `'value'` branch in the ORM vscode handler (left as is).**
   `src/views/editors/ORM/editor/modules/vscode/handler.ts`: `'value'` is already handled by the first
   `if`, so the later `else if` is dead. Marked `TODO(vue3-migration)`.
-- **`npm run type-check` reports 26 errors (left as is).** They're all in the editor internals:
-  ORM `model/entities.ts` property overrides, ORM `vscode/handler.ts` uses Node types (`process`, `NodeJS`),
-  `renderOptions.ts` imports a missing `../../../ormEditor`, and the PN `importer.ts` redeclares
+- **`npm run type-check` reports 26 errors (left as is).** They're all in the editor modules
+  (`src/views/editors/{ORM,PN}/…`): ORM `model/entities.ts` property overrides, ORM `vscode/handler.ts` uses Node types
+  (`process`, `NodeJS`), `renderOptions.ts` imports a missing `../../../ormEditor`, and the PN `importer.ts` redeclares
   `var`s with different types. These were never type-checked before, and they don't affect the build.
-- **~1,500 lint warnings (left as is; ~1,000 auto-fixable with `eslint --fix`).** These are style rules (`prefer-const`, `no-var`, unused vars, etc.)
-  that were downgraded to warnings. Most will go away as components are converted in Phase 4.
+  `tsconfig` `strict` stays off until these are fixed.
+- **~1,350 lint warnings (left as is).** They're all style rules (`prefer-const`, `no-var`, unused vars, etc.) in the
+  diagram-js editor modules under `src/views/editors/{ORM,PN,TS,BPMN}/`. Every `.vue` file is warning-free.
+  About two-thirds can be fixed with `npx eslint src --fix`. Do that as a separate commit and re-test the editors.
 
+## Open – pre-existing bugs found during the migration
+
+- **Transition-system states set has a trailing comma (left as is).** `EditorTS.vue#statesML` never sets `added`,
+  so `Q` renders as `\{ \text{a}, \text{b},  \}`. The other sets don't do this. Fixing it means setting `added = true`
+  in the loop.
 - **Blog filters persist but checkboxes reset (left as is, pre-existing).** `src/views/blog/contentManager.js` keeps
   filter state in a module-level `manager`. If you leave `/blog` with filters ticked and come back, the list is still
   filtered but every checkbox shows unticked. Fix by clearing the filters on mount, or by deriving the checkbox state
@@ -67,3 +74,8 @@ Items marked **(left as is)** were deliberately not changed. Delete this file on
   `<script setup lang="ts">`. The duplicated clipboard/share-link code is in `src/composables/useShareLink.ts`.
   Fixed `v-for:=` typos (no `:key`) in the blog filter bar. Removed unused code: `moveTo` in home,
   `moveToBlogs` in ArticleViewer, `lineOffset` in DiscoveryPage. `type-check` is clean outside `views/editors/`.
+- Phase 4b: the four editor views use `<script setup lang="ts">`, with the editor instance in a plain non-reactive
+  variable. The duplicated MathJax typesetting is in `src/composables/useMathJax.ts`, driven by a post-flush `watch`
+  on the LaTeX strings instead of side effects inside computeds. A failed typeset (e.g. MathJax still loading)
+  no longer silently stops all later typesets. Removed unused code: `diagramXML`, `getConnectionMid`, PN `findLabel`.
+  Removed the `*.vue` type shim (every component is now typed).

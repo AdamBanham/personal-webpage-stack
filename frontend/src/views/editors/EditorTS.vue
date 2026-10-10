@@ -78,302 +78,229 @@
   </div>
 </template>
     
-<script>
-    import EditorTS  from "./TS/editor.js";
-    import { scaleToFitElements } from "./base/utils/canvasUtils.js";
+<script setup lang="ts">
+import { computed, onBeforeUnmount, onMounted, ref, useTemplateRef } from "vue"
+import EditorTS from "./TS/editor.js";
+import { scaleToFitElements } from "./base/utils/canvasUtils.js";
+import { useMathJax } from "@/composables/useMathJax";
 
-    import {
-      getConnectionMid
-    } from "diagram-js/lib/layout/LayoutUtil"
-    
-    export default {
-        name: "EditorTS",
-        data: function(){
-            // the diagram-js editor is kept off data() so Vue does not proxy it
-            return {
-                diagramXML: null,
-                states : [],
-                transitions : [],
-                typesetPromise: Promise.resolve()
-            }
-        },
-        computed : {
-          statesML : function(){
-            var ret = "\\begin{align*} \\{ ";
-            let added = false;
-            for(const state of this.states){
-              var label = this.findLabel(state)
-              ret += "\\text{"+ label + "}, "
-            }
-            this.triggerMathjax()
-            if (!added){
-              return ret + " \\} \\end{align*}"
-            }
-            return ret.substring(0, ret.length-2) + " \\} \\end{align*}"
-          },
-          actions : function(){
-            var ret = []
-            for(const trans of this.transitions){
-              if (!ret.includes(trans.label)){
-                ret.push(trans.label)
-              }
-            }
-            return ret
-          },
-          actionsML : function(){
-            var ret = "\\begin{align*} \\{ "
-            let added = false;
-            for(const act of this.actions){
-              if (act.startsWith("\\")){
-                ret += " " + act + ", "
-              } else {
-                ret += " \\textit{"+act+"}, "
-              }
-              added = true;
-            }
-            this.triggerMathjax()
-            if (!added){
-              return ret + " \\} \\end{align*}"
-            }
-            return ret.substring(0, ret.length-2) + " \\} \\end{align*}"
-          },
-          transitionsML : function(){
-            var ret = "\\begin{align*} \\{ ";
-            let added = false;
-            for(const trans of this.transitions){
-              var action = this.findLabel(trans)
-              if (!action.startsWith("\\")){
-                action = "\\textit{"+action+"}"
-              } 
-              var src = this.findLabel(trans.src)
-              var tgt = this.findLabel(trans.tgt)
-              ret += " (\\text{"+src+"}, "+action+", \\text{"+tgt+"}), "
-              added = true;
-            }
-            this.triggerMathjax()
-            if (!added){
-              return ret + " \\} \\end{align*}"
-            }
-            return ret.substring(0, ret.length-2) + " \\} \\end{align*}"
-          }
-        },
-        mounted: function(){
-            var _options = {
-                container:  this.$refs.canvas
-            }
-            this.editor = new EditorTS(
-                _options
-            );
-            // add hanlders to track net state
-            var that = this
-            this.editor.invoke(['eventBus', function(bus){
-              bus.on(
-                [
-                  'state.create','transition.create', 'action.create',
-                  'element.create', 'connect.end'
-                ],
-              50, (ev) => {
-                that.handleElementCreate(ev)
-            }, that)
-            }]);
-            this.editor.invoke(['eventBus', function(bus){
-                bus.on(
-                  [
-                  'pad.delete', 'elements.delete'
-                  ],
-                50, (ev) => {
-                  that.handleElementDelete(ev)
-              }, that)
-            }]);
-            this.editor.invoke(['eventBus', function(bus){
-                bus.on(
-                  [
-                  'editor.fullscreen.toggle'
-                  ],
-                50, (ev) => {
-                  that.toggleFullScreen()
-              }, that)
-            }]);
-            this.editor.invoke(['eventBus', function(bus){
-                bus.on(
-                  [
-                  'element.changed', 'elements.changed'
-                  ],
-                50, (ev) => {
-                  that.handleElementChange(ev)
-              }, that)
-            }]);
-            this.editor.invoke(['eventBus', function(bus){
-                bus.on(
-                  [
-                  'formal.clear',
-                  ],
-                50, (ev) => {
-                  that.resetToEmpty()
-              }, that)
-            }]);
-            this.editor.invoke(['canvas', function(canvas){
-                that.fitTimer = setTimeout(() => {
-                  scaleToFitElements(canvas);
-                }, 150);
-            }]);
+interface StateInfo {
+  id: string
+  label: string
+}
 
-            this.triggerMathjax()
-          },
-        beforeUnmount: function(){
-            clearTimeout(this.fitTimer);
-            if (this.editor) {
-              this.editor.destroy();
-              this.editor = null;
-            }
-        },
-        methods: {
-            toggleFullScreen: function() {
-              if (this.$refs.container) {
-                this.$refs.container.classList.toggle('fullscreen');
-              }
-            },
-          triggerMathjax: function(){
-            const mathjax = window.MathJax
-            const that = this
-            const math = this.$refs['editor-ts-math']
-            // using setTimeout, which can get the right result
-            that.$nextTick( () => {
-              that.typesetPromise = that.typesetPromise.then(() => {
-                return mathjax.typesetPromise([that.$refs['editor-ts-math']])
-              }
-            )})
-          },
-        handleElementCreate: function(event){
-          
-          function handleState(el){
-            return  {
-              id: el.id,
-              label: el.stateLabel
-            }
-          }
+interface TransitionInfo extends StateInfo {
+  src: StateInfo
+  tgt: StateInfo
+}
 
-          function handleTransition(el){
-            var label;
-            if (el.arcLabel == null){
-              label = '\\tau'
-            } else if (el.arcLabel.length < 1){
-              label = '\\tau'
-            } else {
-              label = el.arcLabel
-            }
-            return {
-              id: el.id,
-              label: label,
-              src: handleState(el.source),
-              tgt: handleState(el.target)
-            }
-          }
+const container = useTemplateRef<HTMLElement>("container")
+const canvas = useTemplateRef<HTMLElement>("canvas")
+const mathPanel = useTemplateRef<HTMLElement>("editor-ts-math")
 
-          if (event.type.startsWith('state')){
-            this.states.push(handleState(event.element))
-          } else if (event.type.startsWith('transition')){
-            var trans = handleTransition(event.element)
-            this.transitions.push(trans)
-          } else {
-            if (event.context && event.context.connection){
-              var trans = handleTransition(event.context.connection)
-              this.transitions.push(trans)
-            }
-          }
-          return event
-        },
-        handleElementDelete: function(event){
-          var deleted;
-          if (event.type.startsWith("pad.")){
-            deleted = event.elements[0]
-            this.states = this.states.filter(
-              (v) => v.id != deleted.id
-            )
-            this.transitions = this.transitions.filter(
-              (v) => v.id != deleted.id
-            )
-            if (deleted.incoming.length){
-              for(const inc of deleted.incoming){
-                //console.log("removing ", inc.id)
-                this.transitions = this.transitions.filter(
-                  (v) => v.id != inc.id
-                )
-              }
-            }
-            if (deleted.outgoing.length){
-              for(const out of deleted.outgoing){
-                this.transitions = this.transitions.filter(
-                  (v) => v.id != out.id
-                )
-              }
-            }
-          } else {
+const states = ref<StateInfo[]>([])
+const transitions = ref<TransitionInfo[]>([])
 
-          }
-        },
-        handleElementChange: function(event){
-          var that = this
-          function update(el){
-            that.states.forEach((v) => {
-              if (v.id == el.id){
-                  v.label = el.stateLabel
-              }
-            })
-            that.transitions.forEach( (v) => {
-              if (v.id == el.id){
-                var label;
-                if (el.arcLabel == null){
-                  label = '\\tau'
-                } else if (el.arcLabel.length < 1){
-                  label = '\\tau'
-                } else {
-                  label = el.arcLabel
-                }
-                v.label = label
-              }
-              if (v.src.id == el.id){
-                v.src.label = el.stateLabel
-              }
-              if (v.tgt.id == el.id){
-                v.tgt.label = el.stateLabel
-              }
-            })
-          }
-          
-          if(event.type.startsWith("element.")){
-            update(event.element)
-          } else {
-            for(const el of event.elements){
-              update(el)
-            }
-          }
-        },  
-        copyStates: function(){
-          navigator.clipboard.writeText(this.statesML);
-        },
-        copyActions: function(){
-          navigator.clipboard.writeText(this.actionsML);
-        },
-        copyTransitions: function(){
-          navigator.clipboard.writeText(this.transitionsML);
-        },
-        findLabel : function(state){
-          let label;
-          if (state.label.length > 0){
-                label = state.label
-              } else {
-                label = state.id
-              }
-          return label
-        },
-        resetToEmpty: function(){
-          this.states = []
-          this.transitions = []
-        }
-      },
+// diagram-js instance: deliberately not reactive
+let editor: any = null
+let fitTimer: ReturnType<typeof setTimeout> | undefined
 
+function findLabel(state: StateInfo): string {
+  return state.label.length > 0 ? state.label : state.id
+}
+
+// NOTE: `added` is never set here, so the set always keeps a trailing ", " (kept as-is)
+const statesML = computed(() => {
+  let ret = "\\begin{align*} \\{ ";
+  const added = false;
+  for (const state of states.value) {
+    ret += "\\text{" + findLabel(state) + "}, "
+  }
+  if (!added) {
+    return ret + " \\} \\end{align*}"
+  }
+  return ret.substring(0, ret.length - 2) + " \\} \\end{align*}"
+})
+
+const actions = computed(() => {
+  const ret: string[] = []
+  for (const trans of transitions.value) {
+    if (!ret.includes(trans.label)) {
+      ret.push(trans.label)
     }
+  }
+  return ret
+})
+
+const actionsML = computed(() => {
+  let ret = "\\begin{align*} \\{ "
+  let added = false;
+  for (const act of actions.value) {
+    if (act.startsWith("\\")) {
+      ret += " " + act + ", "
+    } else {
+      ret += " \\textit{" + act + "}, "
+    }
+    added = true;
+  }
+  if (!added) {
+    return ret + " \\} \\end{align*}"
+  }
+  return ret.substring(0, ret.length - 2) + " \\} \\end{align*}"
+})
+
+const transitionsML = computed(() => {
+  let ret = "\\begin{align*} \\{ ";
+  let added = false;
+  for (const trans of transitions.value) {
+    let action = findLabel(trans)
+    if (!action.startsWith("\\")) {
+      action = "\\textit{" + action + "}"
+    }
+    const src = findLabel(trans.src)
+    const tgt = findLabel(trans.tgt)
+    ret += " (\\text{" + src + "}, " + action + ", \\text{" + tgt + "}), "
+    added = true;
+  }
+  if (!added) {
+    return ret + " \\} \\end{align*}"
+  }
+  return ret.substring(0, ret.length - 2) + " \\} \\end{align*}"
+})
+
+const { typeset } = useMathJax(mathPanel, [statesML, actionsML, transitionsML])
+
+function arcLabel(el: any): string {
+  if (el.arcLabel == null || el.arcLabel.length < 1) {
+    return '\\tau'
+  }
+  return el.arcLabel
+}
+
+function toState(el: any): StateInfo {
+  return {
+    id: el.id,
+    label: el.stateLabel
+  }
+}
+
+function toTransition(el: any): TransitionInfo {
+  return {
+    id: el.id,
+    label: arcLabel(el),
+    src: toState(el.source),
+    tgt: toState(el.target)
+  }
+}
+
+function handleElementCreate(event: any) {
+  if (event.type.startsWith('state')) {
+    states.value.push(toState(event.element))
+  } else if (event.type.startsWith('transition')) {
+    transitions.value.push(toTransition(event.element))
+  } else if (event.context && event.context.connection) {
+    transitions.value.push(toTransition(event.context.connection))
+  }
+}
+
+function handleElementDelete(event: any) {
+  if (!event.type.startsWith("pad.")) {
+    return
+  }
+  const deleted = event.elements[0]
+  // connections have no incoming/outgoing
+  const removed = new Set<string>([
+    deleted.id,
+    ...(deleted.incoming || []).map((inc: any) => inc.id),
+    ...(deleted.outgoing || []).map((out: any) => out.id),
+  ])
+  states.value = states.value.filter((v) => v.id != deleted.id)
+  transitions.value = transitions.value.filter((v) => !removed.has(v.id))
+}
+
+function handleElementChange(event: any) {
+  function update(el: any) {
+    states.value.forEach((v) => {
+      if (v.id == el.id) {
+        v.label = el.stateLabel
+      }
+    })
+    transitions.value.forEach((v) => {
+      if (v.id == el.id) {
+        v.label = arcLabel(el)
+      }
+      if (v.src.id == el.id) {
+        v.src.label = el.stateLabel
+      }
+      if (v.tgt.id == el.id) {
+        v.tgt.label = el.stateLabel
+      }
+    })
+  }
+
+  if (event.type.startsWith("element.")) {
+    update(event.element)
+  } else {
+    for (const el of event.elements) {
+      update(el)
+    }
+  }
+}
+
+function resetToEmpty() {
+  states.value = []
+  transitions.value = []
+}
+
+function toggleFullScreen() {
+  container.value?.classList.toggle('fullscreen');
+}
+
+function copyStates() {
+  navigator.clipboard.writeText(statesML.value);
+}
+
+function copyActions() {
+  navigator.clipboard.writeText(actionsML.value);
+}
+
+function copyTransitions() {
+  navigator.clipboard.writeText(transitionsML.value);
+}
+
+onMounted(() => {
+  editor = EditorTS({
+    container: canvas.value
+  });
+
+  // track the system's state for the formal definition panel. Listeners must return
+  // undefined: a returned value would stop lower-priority diagram-js listeners.
+  editor.invoke(['eventBus', function (bus: any) {
+    bus.on(
+      ['state.create', 'transition.create', 'action.create', 'element.create', 'connect.end'],
+      50, (ev: any) => { handleElementCreate(ev) }
+    )
+    bus.on(['pad.delete', 'elements.delete'], 50, (ev: any) => { handleElementDelete(ev) })
+    bus.on(['editor.fullscreen.toggle'], 50, () => { toggleFullScreen() })
+    bus.on(['element.changed', 'elements.changed'], 50, (ev: any) => { handleElementChange(ev) })
+    bus.on(['formal.clear'], 50, () => { resetToEmpty() })
+  }]);
+  editor.invoke(['canvas', function (canvas: any) {
+    fitTimer = setTimeout(() => {
+      scaleToFitElements(canvas);
+    }, 150);
+  }]);
+
+  typeset()
+})
+
+onBeforeUnmount(() => {
+  clearTimeout(fitTimer);
+  if (editor) {
+    editor.destroy();
+    editor = null;
+  }
+})
 </script>
     
 <style lang="sass" scoped>
