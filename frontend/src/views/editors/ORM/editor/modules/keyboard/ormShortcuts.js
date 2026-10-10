@@ -1,4 +1,4 @@
-import Keyboard from "diagram-js/lib/features/keyboard/keyboard";
+import Keyboard from "diagram-js/lib/features/keyboard/Keyboard";
 import Canvas from "diagram-js/lib/core/Canvas";
 import {
     isCmd,

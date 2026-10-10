@@ -271,6 +271,10 @@ onBeforeUnmount(() => {
 })
 </script>
 
+<style lang="sass" scoped>
+@import "./PN/scoped.sass"
+</style>
+
 <style lang="css">
 @import "./ORM/media/editor.css";
 @import "./ORM/media/render.css";
