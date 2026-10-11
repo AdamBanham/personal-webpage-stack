@@ -58,6 +58,7 @@ import OrthogonalEdge from '../base/components/OrthogonalEdge.vue'
 import OrthogonalConnectionLine from '../base/components/OrthogonalConnectionLine.vue'
 import type { ShapeResolver } from '../base/js/orthogonalRouting.ts'
 import useIdentities from './js/useIdentities.ts'
+import useConnectMode from './js/useConnectMode.ts'
 import TokenNode from './components/nodes/TokenNode.vue'
 
 const PetriEditorNamespace = "petri-net-editor"
@@ -66,8 +67,9 @@ const PetriEditorNamespace = "petri-net-editor"
 const petriShapeOf: ShapeResolver = (node) =>
     node.type === 'place' ? { kind: 'ellipse' } : { kind: 'rect', radius: 6 }
 
-const { setNodes, onConnect, addEdges, onNodesChange, onEdgesChange, findEdge, applyEdgeChanges } = useVueFlow(PetriEditorNamespace)
+const { setNodes, onConnect, addEdges, removeNodes, getNodes, onNodesChange, onEdgesChange, findEdge, applyEdgeChanges } = useVueFlow(PetriEditorNamespace)
 const { freeIdentity, getNextPlace, getNextTransition, getNext } = useIdentities()
+useConnectMode(PetriEditorNamespace)
 const { onDragLeave, onDragOver, onDragStart, isDragOver, onDrop } = useDragAndDrop(PetriEditorNamespace, getNext)
 
 
@@ -114,13 +116,20 @@ onConnect((conn: Edge) => {
     addEdges(conn)
 })
 
-// removal of identities
+// removal of identities, and of the tokens held by a removed place
 onNodesChange(
     (changes) => {
+        const removed = new Set(changes.filter((c) => c.type === 'remove').map((c) => c.id))
+        const orphans = getNodes.value.filter((n) => n.parentNode && removed.has(n.parentNode) && !removed.has(n.id))
+
         for (const change of changes) {
             if (change.type === 'remove') {
                 freeIdentity(change.id)
             }
+        }
+
+        if (orphans.length) {
+            removeNodes(orphans, false, true)
         }
     }
 )
