@@ -23,7 +23,7 @@ const state = {
   isDragging: ref(false),
 }
 
-export default function useDragAndDrop(namespace:string) {
+export default function useDragAndDrop(namespace:string, identityCallback?: ((type:string) => string)) {
   const { draggedType, isDragOver, isDragging } = state
 
   const { addNodes, screenToFlowCoordinate, onNodesInitialized, updateNode } = useVueFlow(namespace)
@@ -83,7 +83,7 @@ export default function useDragAndDrop(namespace:string) {
       y: event.clientY,
     })
 
-    const nodeId = getId()
+    const nodeId = identityCallback ? identityCallback(draggedType.value) : getId()
 
     const newNode = {
       id: nodeId,

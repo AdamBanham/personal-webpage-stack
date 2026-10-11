@@ -25,13 +25,15 @@ import PetriNetEditorVF from '@/components/vue-flow/petri-net-editor/PetriNetEdi
 
 </script>
 
-<style scoped>
-h2 {
-    color: black;
-}
+<style scoped lang="sass">
+@use "@/styles/content.sass" as cont
+    
+h2 
+    color: black
 
-.canvas {
-    width: 100%;
-    height: 100%;
-}
+
+.canvas 
+    width: 100%
+    height: 100%
+
 </style>

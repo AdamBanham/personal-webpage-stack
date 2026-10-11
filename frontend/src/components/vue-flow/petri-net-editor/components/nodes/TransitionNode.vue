@@ -1,17 +1,5 @@
 <template>
-    <NodeToolbar :is-visible="data.toolbarVisible" :position="Position.Right">
-        <div class="ms-3 row g-5 flex-grow-1">
-            <div class="col-2">
-                <button class="btn btn-light">D</button>
-            </div>
-            <div class="col-2">
-                <button class="btn btn-light">C</button>
-            </div>
-            <div class="col-2">
-                <button class="btn btn-light">E</button>
-            </div>
-        </div>
-    </NodeToolbar>
+    <PetriNetNodeToolbar/>
 
     <!-- visual content -->
     <div class="text-bg-light transition rounded-2 shadow-sm">
@@ -19,8 +7,8 @@
 
         <!-- label -->
         <div class="floating-label text-center">
-            <p>
-                {{ label }}
+            <p class="fw-lighter small" style="font-size: 6px; width: fit-content;">
+                ({{ node.id }})
             </p>
         </div>
     </div>
@@ -32,8 +20,8 @@
 
 <script lang="ts" setup>
 import { Handle, Position, useNode, useVueFlow } from '@vue-flow/core'
-import { NodeToolbar } from '@vue-flow/node-toolbar'
 import { PetriEditorNamespace } from '../../js'
+import PetriNetNodeToolbar from '../PetriNetNodeToolbar.vue'
 
 
 const { } = useVueFlow(PetriEditorNamespace)
@@ -51,8 +39,10 @@ const label = "Transition"
 
     .floating-label {
         position: absolute;
-        top: 100%;
+        top: calc(100% + 5px);
         left: 50%;
+        width: fit-content;
+        text-wrap: nowrap;
     }
 }
 </style>
