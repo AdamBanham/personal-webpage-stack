@@ -2,7 +2,7 @@
     <PetriNetNodeToolbar/>
 
     <!-- visual content -->
-    <div class="text-bg-light transition rounded-2 shadow-sm">
+    <div class="text-bg-light transition rounded-2 shadow-sm border">
 
 
         <!-- label -->

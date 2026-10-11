@@ -2,7 +2,7 @@
     <PetriNetNodeToolbar/>
 
     <!-- visual content -->
-    <div class="text-bg-light place shadow-sm">
+    <div class="text-bg-light place shadow-sm border">
 
         <!-- label -->
         <div class="floating-label text-center">

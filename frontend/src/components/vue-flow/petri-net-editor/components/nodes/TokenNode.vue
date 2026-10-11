@@ -1,7 +1,7 @@
 <template>
 
     <!-- visual content -->
-    <div class="token text-bg-success shadow">
+    <div class="token text-bg-success shadow border">
 
     </div>
 </template>
