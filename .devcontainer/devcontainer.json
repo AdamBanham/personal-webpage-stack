@@ -6,36 +6,33 @@
 		"dockerfile": "Dockerfile",
 		"context": "..",
 		// Update 'VARIANT' to pick a Node version: 10, 12, 14
-		"args": { "VARIANT": "24" }
+		"args": {
+			"VARIANT": "24"
+		}
 	},
-
 	// Set *default* container specific settings.json values on container create.
 	"settings": {
 		"terminal.integrated.shell.linux": "/bin/zsh"
 	},
-	
 	// Add the IDs of extensions you want installed when the container is created.
 	"extensions": [
 		"dbaeumer.vscode-eslint",
 		"Vue.volar",
 		"mariorodeghiero.vue-theme",
-		"syler.sass-indented"
+		"syler.sass-indented",
+		"anthropic.claude-code"
 	],
-	
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	"forwardPorts": [
 		8080
 	],
-	
 	// The workspace is bind-mounted from a Windows drive (9p/drvfs), where file I/O is slow.
 	// Keep node_modules (and Vite's .vite pre-bundle cache inside it) on a native Linux volume.
 	"mounts": [
 		"source=pws-frontend-node_modules,target=${containerWorkspaceFolder}/frontend/node_modules,type=volume"
 	],
-
 	// Use 'postCreateCommand' to run commands after the container is created.
 	"postCreateCommand": "sudo chown node frontend/node_modules && cd frontend && npm ci",
-	
 	// Comment out connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
 	"remoteUser": "node"
 }
