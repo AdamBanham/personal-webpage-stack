@@ -42,21 +42,21 @@ export default class ValueRenderer extends TemplateRenderer<ValueConstraint> {
     }
 
     draw(visuals: SVGElement, shape: ValueConstraint) : SVGElement {
-        let g = svgCreate('g');
+        const g = svgCreate('g');
         svgClasses(g).add(RenderingConstants.classes.VISUAL_GROUP_CLASS);
 
         // draw the constraint box
-        let lines = svgCreate('g', {});
+        const lines = svgCreate('g', {});
         let head = 0;
         let mut = 0;
         let y_curr = 0;
-        let textContent = `${shape.description || '...'}`;
+        const textContent = `${shape.description || '...'}`;
 
         while (head < textContent.length) {
             y_curr += TEXT_Y_OFFSET;
             mut += 1;
-            let workingText = textContent.substring(head);
-            let text = svgCreate('text');
+            const workingText = textContent.substring(head);
+            const text = svgCreate('text');
             svgAttr(text, {
                 x: TEXT_X_OFFSET,
                 y: y_curr - TEXT_Y_OFFSET * 0.25,
@@ -65,16 +65,16 @@ export default class ValueRenderer extends TemplateRenderer<ValueConstraint> {
                 fill: RenderingConstants.css.CONSTRAINT_TEXT_COLOUR,
                 fontSize: '12px',
             });
-            let nextStep = this.workoutLongestSequenceOfLetters(
+            const nextStep = this.workoutLongestSequenceOfLetters(
                 workingText, shape.width - (TEXT_X_OFFSET * 2));
             text.textContent = workingText.substring(0, nextStep);
             head += text.textContent.length;
             svgAppend(lines, text);
         }
 
-        let fontSize = Math.max(24, 12 * mut);
+        const fontSize = Math.max(24, 12 * mut);
         y_curr -= (mut > 1) ? TEXT_Y_OFFSET : 0;
-        let leftBang = svgCreate('text',
+        const leftBang = svgCreate('text',
             {
                 x: -TEXT_X_OFFSET * 0.5,
                 y: y_curr,
@@ -87,7 +87,7 @@ export default class ValueRenderer extends TemplateRenderer<ValueConstraint> {
         leftBang.textContent = '{';
         
         
-        let rightBang = svgCreate('text',
+        const rightBang = svgCreate('text',
             {
                 x: shape.width - TEXT_X_OFFSET * 0.5,
                 y: y_curr,
@@ -110,8 +110,8 @@ export default class ValueRenderer extends TemplateRenderer<ValueConstraint> {
         // there is a probably a case for this to handled as 
         // connection instead of hard-coded lines
         if (isRoleValueConstraint(shape) && isFact(source)) {
-            let role = shape.factor? shape.factor : 0;
-            let center = source.getCenterForRole(role);
+            const role = shape.factor? shape.factor : 0;
+            const center = source.getCenterForRole(role);
             x2 = (center.x - shape.x);
             y2 = (center.y - shape.y);
             let offset;
@@ -141,8 +141,8 @@ export default class ValueRenderer extends TemplateRenderer<ValueConstraint> {
             segments[0].x = shape.width + TEXT_X_OFFSET;
         }
 
-        let line = createLine(segments);
-        let lineStyle = this._styles.style({
+        const line = createLine(segments);
+        const lineStyle = this._styles.style({
             strokeWidth: 3, stroke: RenderingConstants.css.CONSTRAINT_COLOUR,
             opacity: 0.75,
             fill: 'none', 
@@ -159,7 +159,7 @@ export default class ValueRenderer extends TemplateRenderer<ValueConstraint> {
     }
 
     workoutLetterWidth(text: string): number {
-        let code = text.charCodeAt(0);
+        const code = text.charCodeAt(0);
         // handle spaces and number differently
         if (code >= 35 && code <= 38) {
             return 5;
@@ -179,8 +179,8 @@ export default class ValueRenderer extends TemplateRenderer<ValueConstraint> {
     workoutLongestSequenceOfLetters(text: string, max: number): number {
         let length = 0;
         let last = 0;
-        for (let letter of text) {
-            let width = this.workoutLetterWidth(letter);
+        for (const letter of text) {
+            const width = this.workoutLetterWidth(letter);
             if (length + width <= max) {
                 length += width;
                 last += 1;

@@ -97,7 +97,7 @@ export default  class VscodeMessageHandler {
     }
 
     poolMessages(type:string, context:object) {
-        var that = this;
+        const that = this;
         if (!this.pushInterval) {
             this.pushInterval = setTimeout(() => {
                 that.handleMessage(type, context);
@@ -123,7 +123,7 @@ export default  class VscodeMessageHandler {
         try {
             this.state.status = "working";
             const parsedDocument = parser.parseDocument(document);
-            let changed = this._findChangedElements(parsedDocument);
+            const changed = this._findChangedElements(parsedDocument);
             this._fireChangedElementsinDocument(changed);
             this.oldDocuments.set(parsedDocument.name, parsedDocument);
             this.currentDocument = parsedDocument;
@@ -197,7 +197,7 @@ export default  class VscodeMessageHandler {
                 } else {
                 //    check if the values are different
                     let isDifferent = false;
-                    let changes = new Map<string, any>();
+                    const changes = new Map<string, any>();
                     oldNode.attributes.forEach((value, key) => {
                         const oldJson = JSON.stringify(newNode.attributes.get(key));
                         const newJson = JSON.stringify(value);
@@ -209,7 +209,7 @@ export default  class VscodeMessageHandler {
                     if (isDifferent) {
                         // Node is updated
                         changes.set('id', oldNode.id);
-                        let diffNode = Object.assign({}, newNode);
+                        const diffNode = Object.assign({}, newNode);
                         diffNode.attributes = changes;
                         changedNodes.push(diffNode);
                     }
@@ -235,7 +235,7 @@ export default  class VscodeMessageHandler {
         this._seenCons = new Set<any>();
         diff.additions.forEach((node) => {
             let element: any;
-            let pos = {
+            const pos = {
                 x: node.attributes.get('x') || centerX, 
                 y: node.attributes.get('y') || centerY
             };
@@ -244,7 +244,7 @@ export default  class VscodeMessageHandler {
                 element = this._elementFactory.createDummyAttributesForEntities("entity");
                 pos.x = pos.x + (entityWidth / 2);
                 pos.y = pos.y + (entityHeight / 2) + 0.5;
-                let docData = Object.fromEntries(node.attributes);
+                const docData = Object.fromEntries(node.attributes);
                 delete docData['constraints'];
                 element = this._modeling.createShape(
                     Object.assign(element, docData),
@@ -264,7 +264,7 @@ export default  class VscodeMessageHandler {
                     ) / 2
                 );
                 pos.y = pos.y + (factHeight/2) + 0.5;
-                let docData = Object.fromEntries(node.attributes);
+                const docData = Object.fromEntries(node.attributes);
                 delete docData['uniqueness'];
                 delete docData['constraints'];
                 element = this._modeling.createShape(
@@ -286,7 +286,7 @@ export default  class VscodeMessageHandler {
                 );
                 element.update();
             } else if (node.attributes.get('type') === 'connection') {
-                let con = this._handleCreationForConnection(node.attributes);
+                const con = this._handleCreationForConnection(node.attributes);
                 if (con){
                     this._modeling.sendUpdate(con);
                 }
@@ -299,7 +299,7 @@ export default  class VscodeMessageHandler {
 
         diff.changes.forEach((node) => {
             let element = this._elementRegistry.get(node.id);
-            let diff = Object.assign({}, Object.fromEntries(node.attributes));
+            const diff = Object.assign({}, Object.fromEntries(node.attributes));
             delete diff['id'];
             delete diff['type'];
             delete diff['source'];
@@ -327,7 +327,7 @@ export default  class VscodeMessageHandler {
         });
 
         diff.removals.forEach((node) => {
-            let element = this._elementRegistry.get(node.id);
+            const element = this._elementRegistry.get(node.id);
             if (element) {
                 this._modeling.removeElements([element]);
             }
@@ -336,7 +336,7 @@ export default  class VscodeMessageHandler {
 
     _handleCreationForEntity(element:Entity, attributes:Map<string, any>) {
 
-        let constraints = attributes.get('constraints') || [];
+        const constraints = attributes.get('constraints') || [];
 
         if (constraints.length > 0) {
             constraints.forEach((data: any) => {
@@ -347,7 +347,7 @@ export default  class VscodeMessageHandler {
                 let offset = data.width - 50;
                 offset = offset / 25;
                 offset = offset * 12.5 * -1.0;
-                let pos = {
+                const pos = {
                     x: data.x + (data.width / 2) + offset, 
                     y: data.y + data.height / 2
                 };
@@ -372,15 +372,15 @@ export default  class VscodeMessageHandler {
     }
 
     _handleCreationForConnection(attributes:Map<string, any>) {
-        let src = this._elementRegistry.get(attributes.get('source'));
-        let target = this._elementRegistry.get(attributes.get('target'));
+        const src = this._elementRegistry.get(attributes.get('source'));
+        const target = this._elementRegistry.get(attributes.get('target'));
         let con = null;
         if (!src || !target) {
             console.error("Source or target not found: ", attributes.get('source'), attributes.get('target'));
             return null;
         }
 
-        for(let other of src.outgoing){
+        for(const other of src.outgoing){
             if (other.target.id === target.id){
                 if (other.role === attributes.get('role')){
                     con = other;
@@ -413,7 +413,7 @@ export default  class VscodeMessageHandler {
         // handling for subtyping
         else {
             if ( isExactlyEntity(src) && isExactlyEntity(target) ){
-                let con = this._modeling.createSubtypeBetween(
+                const con = this._modeling.createSubtypeBetween(
                     src,
                     target
                 );
@@ -440,12 +440,12 @@ export default  class VscodeMessageHandler {
      */
     _handleCreationForFact(element:Fact, attributes:Map<string, any>) {
         element.factors = new Array(element.roles).fill(null);
-        let factors = attributes.get('factors') || [null];
-        let factLabel = attributes.get('label') || false;
-        let derived = attributes.get('derived') || false;
-        let derivedLabel = attributes.get('derivedLabel') || undefined;
-        let uniqueness = attributes.get('uniqueness') || [];
-        let constraints = attributes.get('constraints') || [];
+        const factors = attributes.get('factors') || [null];
+        const factLabel = attributes.get('label') || false;
+        const derived = attributes.get('derived') || false;
+        const derivedLabel = attributes.get('derivedLabel') || undefined;
+        const uniqueness = attributes.get('uniqueness') || [];
+        const constraints = attributes.get('constraints') || [];
 
         // Ensure dimensions are updated for alignment after loading
         if (element.alignment) {
@@ -456,7 +456,7 @@ export default  class VscodeMessageHandler {
             if (role === null) {
                 return;
             }
-            let entity = this._elementRegistry.get(role);
+            const entity = this._elementRegistry.get(role);
             if (!entity) {
                 console.error("Entity not found: ", role);
                 return;
@@ -481,12 +481,12 @@ export default  class VscodeMessageHandler {
 
         if (uniqueness){
             uniqueness.forEach((unique: any) => {
-                var attrs = this._elementFactory
+                const attrs = this._elementFactory
                     .createDummyAttributesForConstraintOverFact(element);
                 attrs.mode = unique.mode;
                 attrs.over = unique.over;
-                let pos = element.getNextFreeContraintPosition();
-                var constraint = this._modeling.createShape(
+                const pos = element.getNextFreeContraintPosition();
+                const constraint = this._modeling.createShape(
                     Object.assign({}, attrs),
                     pos,
                     element.parent
@@ -505,7 +505,7 @@ export default  class VscodeMessageHandler {
                 let offset = data.width - 50;
                 offset = offset / 25;
                 offset = offset * 12.5 * -1.0;
-                let pos = {
+                const pos = {
                     x: data.x + (data.width / 2) + offset, 
                     y: data.y + data.height / 2
                 };
@@ -533,7 +533,7 @@ export default  class VscodeMessageHandler {
     _handleUpdatesForFact(element:any, attributes:Map<string, any>) {
 
         if (element.roles > attributes.get('roles')) {
-            let diff = element.roles - attributes.get('roles');
+            const diff = element.roles - attributes.get('roles');
             if (diff > 0) {
                 for (let i = 0; i < diff; i++) {
                     this._modeling.reduceFact(element);
@@ -569,7 +569,7 @@ export default  class VscodeMessageHandler {
             return;
         }
         try {
-            var that = this;
+            const that = this;
             if (this.vscodeInterval === null) {
                 this.vscodeInterval = setTimeout(() => {
                     that.updateDocumentWithYaml(that.currentDocument);
@@ -617,9 +617,9 @@ export default  class VscodeMessageHandler {
             if (!isFact(element) && !isEntity(element) && !isConnection(element)) {
                 return;
             }
-            let attributes = element.buildAttributes();
+            const attributes = element.buildAttributes();
             if (isFact(element) || isEntity(element)) {
-                let docElement = this.currentDocument.getNodeById(element.id);
+                const docElement = this.currentDocument.getNodeById(element.id);
                 if (docElement) {
                     docElement.attributes = attributes;
                 }
@@ -628,7 +628,7 @@ export default  class VscodeMessageHandler {
                 if (!element.source || !element.target) {
                     return;
                 }
-                let connection = this.currentDocument.findConnectionBetween(
+                const connection = this.currentDocument.findConnectionBetween(
                     element.source.id, element.target.id, element.role
                 );
                 if (connection) {
@@ -648,15 +648,15 @@ export default  class VscodeMessageHandler {
             return;
         }
         if (isEntity(element)) {
-            let id = element.id;
-            let attributes = element.buildAttributes();
+            const id = element.id;
+            const attributes = element.buildAttributes();
             this.currentDocument.addElement(new DocumentEntity(
                 id, attributes
             ));
         }
         if (isFact(element)) {
-            let id = element.id;
-            let attributes = element.buildAttributes();
+            const id = element.id;
+            const attributes = element.buildAttributes();
             this.currentDocument.addFact(
             new DocumentFact(
                 id,
@@ -665,11 +665,11 @@ export default  class VscodeMessageHandler {
             );
         }
         if (isConnection(element)) {
-            let id = element.id;
+            const id = element.id;
             if (!element.source || !element.target) {
                 return;
             }
-            let attributes = element.buildAttributes();
+            const attributes = element.buildAttributes();
             this.currentDocument.addConnection(new DocumentConnection(
                 id,
                 attributes
@@ -685,7 +685,7 @@ export default  class VscodeMessageHandler {
         }
         elements.forEach((element) => {
             if (isConnection(element)){
-                let temp = this.currentDocument.findConnectionBetween(
+                const temp = this.currentDocument.findConnectionBetween(
                     element.source.id, element.target.id, element.role
                 );
                 if (!temp){

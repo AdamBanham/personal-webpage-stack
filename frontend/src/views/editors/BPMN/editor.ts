@@ -96,7 +96,7 @@ export const defaultModel = `
 `;
 
 export default function(container: HTMLElement) : BpmnModeler {
-    let editor = new BpmnModeler({
+    const editor = new BpmnModeler({
         container: "#editor",
         
         additionalModules: [

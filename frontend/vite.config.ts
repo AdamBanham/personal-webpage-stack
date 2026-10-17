@@ -3,6 +3,7 @@
 import { defineConfig } from 'vite'
 import { fileURLToPath } from 'node:url'
 import { readFile, writeFile, rm } from 'node:fs/promises'
+import vueDevTools from 'vite-plugin-vue-devtools'
 import vue from '@vitejs/plugin-vue'
 
 // https://github.com/vuetifyjs/vuetify-loader/tree/next/packages/vite-plugin
@@ -32,6 +33,7 @@ async function writeSpaShell() {
 export default defineConfig(({ command }) => ({
   plugins: [
     vue(),
+    vueDevTools(),
     // Tree-shake Vuetify in builds only. In dev, per-component auto-imports are invisible to Vite's
     // dependency scanner, so each newly visited route re-optimizes deps and forces a full reload.
     // src/plugins/vuetify.ts registers every component globally in dev instead.
@@ -79,5 +81,14 @@ export default defineConfig(({ command }) => ({
     dirStyle: 'nested',
     formatting: 'none',
     onFinished: writeSpaShell
-  }
+  },
+  devtools: {
+    apply: 'serve',
+    builtinDevTools: false,
+    embeddedVisibility: 'passive',
+    dockPreferences: {
+      defaultMode: 'edge',
+      defaultPosition: 'bottom',
+    },
+  },
 }))

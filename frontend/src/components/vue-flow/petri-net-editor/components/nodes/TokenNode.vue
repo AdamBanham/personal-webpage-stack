@@ -1,7 +1,7 @@
 <template>
 
     <!-- visual content -->
-    <div class="token shadow border" :class="previewed ? 'text-bg-warning' : 'text-bg-success'">
+    <div class="token shadow border" :class="previewed ? 'text-bg-warning' : 'text-bg-dark'">
 
     </div>
 </template>

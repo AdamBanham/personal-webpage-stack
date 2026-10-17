@@ -98,7 +98,7 @@ export class TSElementFactory extends ElementFactory {
 
     getNextStateId(){
         this._lastStateId += 1;
-        var id = "b"+this._lastStateId;
+        const id = "b"+this._lastStateId;
         if (this.checkIdentifer(id)){
             return id
         }
@@ -107,7 +107,7 @@ export class TSElementFactory extends ElementFactory {
 
     getNextConnectionId(){
         this._lastConnectionId += 1
-        var id = "a"+this._lastConnectionId;
+        const id = "a"+this._lastConnectionId;
         if (this.checkIdentifer(id)){
             return id
         }
@@ -139,7 +139,7 @@ export class TSElementFactory extends ElementFactory {
         attrs.stateType = type
         attrs.group = "states"
         attrs.selected = false
-        var ret = this.createShape(attrs)
+        const ret = this.createShape(attrs)
         this.fireCreateState(ret)
         return ret
     }
@@ -148,8 +148,8 @@ export class TSElementFactory extends ElementFactory {
         if (!label){
             label = ''
         }
-        var selfLoop = src.id == tgt.id;
-        var waypoints;
+        const selfLoop = src.id == tgt.id;
+        let waypoints;
         if (selfLoop){
             waypoints = [
                 { x: src.x + src.r, y: src.y + src.r },
@@ -169,7 +169,7 @@ export class TSElementFactory extends ElementFactory {
                 { x: tgt.x + tgt.r, y: tgt.y + src.r}
             ]
         }
-        var attrs = {
+        const attrs = {
             id: id,
             source: src,
             target: tgt,
@@ -178,7 +178,7 @@ export class TSElementFactory extends ElementFactory {
             arcLabel: label,
             group: "connections"
         }
-        var ret = this.createConnection(attrs)
+        const ret = this.createConnection(attrs)
         this.fireCreateTransition(ret)
         return ret
     }

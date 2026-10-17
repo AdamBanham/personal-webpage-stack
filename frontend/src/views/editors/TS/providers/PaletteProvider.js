@@ -45,7 +45,7 @@ export default function ExamplePaletteProvider(
   
   
   ExamplePaletteProvider.prototype.getPaletteEntries = function() {
-    var create = this._create,
+    const create = this._create,
         elementFactory = this._elementFactory,
         lassoTool = this._lassoTool,
         registry = this._registry,
@@ -80,7 +80,7 @@ export default function ExamplePaletteProvider(
         title: 'Create Internal State',
         action: {
           click: function(event) {
-            var shape = elementFactory.createInternalState({
+            const shape = elementFactory.createInternalState({
               x: 0, y:0, stateLabel: "",
               id: elementFactory.getNextStateId()
             });
@@ -95,7 +95,7 @@ export default function ExamplePaletteProvider(
         title: 'Create Starting State',
         action: {
           click: function(event) {
-            var shape = elementFactory.createStartingState({
+            const shape = elementFactory.createStartingState({
               x: 0, y:0, stateLabel: "", 
               id: elementFactory.getNextStateId()
             });
@@ -110,7 +110,7 @@ export default function ExamplePaletteProvider(
         title: 'Create Ending State',
         action: {
           click: function(event) {
-            var shape = elementFactory.createEndingState({
+            const shape = elementFactory.createEndingState({
               x: 0, y:0, stateLabel: "",
               id: elementFactory.getNextStateId()
             });
@@ -129,11 +129,11 @@ export default function ExamplePaletteProvider(
         title: 'Import Model',
         action: {
           click: function(event) {
-            let input = document.createElement('input');
+            const input = document.createElement('input');
             input.type = 'file';
             input.accept = '.tsxml'
             input.onchange = _ => {
-              let xml =   Array.from(input.files)[0];
+              const xml =   Array.from(input.files)[0];
               xml.text()
                 .then( content => 
                 {
@@ -236,7 +236,7 @@ export default function ExamplePaletteProvider(
         action: {
           click: function(event) {
             // clear the system, except for root
-            var els = registry.getAll().filter(
+            const els = registry.getAll().filter(
                 (v) => {
                     return !v.id.includes("implicitroot")
                 }
@@ -257,7 +257,7 @@ export default function ExamplePaletteProvider(
         action: {
           click: function(event) {
             // clear the system, except for root
-            var els = registry.getAll().filter(
+            const els = registry.getAll().filter(
                 (v) => {
                     return !v.id.includes("implicitroot")
                 }
@@ -269,7 +269,7 @@ export default function ExamplePaletteProvider(
                 )
             }
             local.fire('local.storage.clear');
-            let system = bus.fire('local.storage.find');
+            const system = bus.fire('local.storage.find');
             importing.fire('importing.load', { text: system });
           }
         }

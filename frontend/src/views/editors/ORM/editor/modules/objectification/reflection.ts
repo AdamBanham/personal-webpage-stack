@@ -11,8 +11,8 @@ export default class ObjectificationReflection {
         this._modeling = modeling;  
 
         eventBus.on('shape.move.end', (event) => {
-            let data = event as any;
-            let shape = data.shape;
+            const data = event as any;
+            const shape = data.shape;
             if (this.checkFact(shape)) {
                 setTimeout(() => this.processObjectification(shape), 5);
             }
@@ -20,8 +20,8 @@ export default class ObjectificationReflection {
         });
 
         eventBus.on('constraint.builder.simple.end', (event) => {
-            let data = event as any;
-            let shape = data.source;
+            const data = event as any;
+            const shape = data.source;
             if (this.checkFact(shape)) {
                 setTimeout(() => this.processObjectification(shape), 5);
             }
@@ -29,8 +29,8 @@ export default class ObjectificationReflection {
         });
 
         eventBus.on('elements.changed', (event) => {
-            let data = event as any;
-            for (let shape of data.elements) {
+            const data = event as any;
+            for (const shape of data.elements) {
                 if (this.checkFact(shape)) {
                     setTimeout( () => this.processObjectification(shape), 5);
                 }
@@ -48,19 +48,19 @@ export default class ObjectificationReflection {
 
     processObjectification(fact:Fact) {
         if (fact.objectification){
-            let that = this;
+            const that = this;
             setTimeout(
                 () => {
-                    let objectification = fact.objectification;
+                    const objectification = fact.objectification;
                     objectification!.update();
                     that._modeling.sendUpdate(objectification);
-                    for(let out of objectification.incoming) {
+                    for(const out of objectification.incoming) {
                         setTimeout(() => {
                             that._modeling.layoutConnection(out);
                             that._modeling.sendUpdate(out);
                         }, 19);
                     }
-                    for(let out of objectification.outgoing) {
+                    for(const out of objectification.outgoing) {
                         setTimeout(() => {
                             that._modeling.layoutConnection(out);
                             that._modeling.sendUpdate(out);

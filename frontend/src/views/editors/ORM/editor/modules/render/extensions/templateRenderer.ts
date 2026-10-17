@@ -42,13 +42,13 @@ export default abstract class TemplateRenderer<T> extends BaseRenderer {
         if (shapeType) {
             this.shapeType = shapeType;
         }
-        var that = this;
+        const that = this;
 
-        let rSuffix = renderSuffix || "shape";
+        const rSuffix = renderSuffix || "shape";
         
         eventBus.on([ `render.${rSuffix}` ], 2000, function(evt, context) {
 
-            var element = context.element,
+            let element = context.element,
                 visuals = context.gfx;
 
             if (that.canRender(element)) {
@@ -61,7 +61,7 @@ export default abstract class TemplateRenderer<T> extends BaseRenderer {
                     visuals = that.drawDebug(visuals, element);
                 } 
                 // @ts-ignore
-                let opacity = that._renderingOptions.computeShapeOpacity(that.shapeType);
+                const opacity = that._renderingOptions.computeShapeOpacity(that.shapeType);
                 if (opacity < 1) {
                     visuals = that.handleOpacity(visuals, opacity);
                 }
@@ -103,7 +103,7 @@ export default abstract class TemplateRenderer<T> extends BaseRenderer {
      * @param element 
      */
     drawDebug(visuals:any, element:any): any {
-        let dot = this._drawDebugDot(
+        const dot = this._drawDebugDot(
             (element.width / 2),
             (element.height / 2),
         );
@@ -122,7 +122,7 @@ export default abstract class TemplateRenderer<T> extends BaseRenderer {
      * @returns the debug dot element
      */
     _drawDebugDot(cx:number, cy:number): SVGElement {
-        let dot = svgCreate("circle", {
+        const dot = svgCreate("circle", {
             cx: cx,
             cy: cy,
             r: 5,
@@ -155,7 +155,7 @@ export default abstract class TemplateRenderer<T> extends BaseRenderer {
      * @return the SVG element with the shadow applied
      */
     createShadowForShape(svgElement: any): any {
-        var svg = svgClone(svgElement);
+        const svg = svgClone(svgElement);
         svgAttr(svg,{
             opacity: 0.125,
             transform: "translate(2.5, 3.5)",

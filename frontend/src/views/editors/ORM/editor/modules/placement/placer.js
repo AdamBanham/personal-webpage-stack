@@ -20,7 +20,7 @@ export default class Placer {
      * @param {ShapeLike} target 
      */
     place(source, target) {
-        let toRight = this._elementRegistry.filter(
+        const toRight = this._elementRegistry.filter(
             (item) => 
                 source.x < item.x 
                 && item.id !== source.id 
@@ -28,13 +28,13 @@ export default class Placer {
                 && !isConnection(item)
         );
         let pos = {x: target.x, y: target.y};
-        let min_dist = target.height * 1.25;
+        const min_dist = target.height * 1.25;
         let close = toRight.filter((item) => {
-            let dist = this.getDistanceTo(pos, item);
+            const dist = this.getDistanceTo(pos, item);
             return dist <= min_dist;
         });
-        let upper = Object.assign({}, pos);
-        let lower = Object.assign({}, pos);
+        const upper = Object.assign({}, pos);
+        const lower = Object.assign({}, pos);
         if (!this.last_right[source.id]){
             this.last_right[source.id] = 0;
         }
@@ -43,7 +43,7 @@ export default class Placer {
             if ((side % 2) === 0){
                 upper.y -= min_dist;
                 close = toRight.filter((item) => {
-                    let dist = this.getDistanceTo(upper, item);
+                    const dist = this.getDistanceTo(upper, item);
                     return dist <= min_dist;
                 });
                 if (close.length === 0) {
@@ -52,7 +52,7 @@ export default class Placer {
             } else {
                 lower.y += min_dist;
                 close = toRight.filter((item) => {
-                    let dist = this.getDistanceTo(lower, item);
+                    const dist = this.getDistanceTo(lower, item);
                     return dist <= min_dist;
                 });
                 if (close.length === 0) {

@@ -31,10 +31,10 @@ export default class CopyPasteHandler extends CopyPaste {
     }
 
     createShape(attrs: any): any {
-        var newAttrs = Object.assign({}, attrs,);
+        const newAttrs = Object.assign({}, attrs,);
         console.log('createShape', newAttrs);
 
-        var shape;
+        let shape;
         if (isPlace(attrs)) {
             newAttrs.id = this._elementFactory.getNextPlaceId();
             shape = this._elementFactory.createPlace(newAttrs);
@@ -50,7 +50,7 @@ export default class CopyPasteHandler extends CopyPaste {
 
     copyElementData(context) {
 
-        let descriptor = context.descriptor,
+        const descriptor = context.descriptor,
             element = context.element;
         
         descriptor.type = element.type;

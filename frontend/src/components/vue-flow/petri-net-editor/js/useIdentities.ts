@@ -75,7 +75,16 @@ export default function useIdentities(){
         _free(type, identity)
     }
 
+    /** forget every handed out identity, e.g. before loading a whole new net */
+    function resetIdentities(){
+        for (const counter of Object.values(state.value.identities)){
+            counter.current = 0
+            counter.freed = []
+        }
+    }
+
     return {
+        resetIdentities,
         getNext,
         getNextPlace,
         getNextTransition,

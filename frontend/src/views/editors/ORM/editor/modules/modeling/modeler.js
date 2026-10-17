@@ -34,14 +34,14 @@ export default class OrmModelling extends Modeling {
     }
 
     getHandlers() {
-        let handlers = super.getHandlers();
+        const handlers = super.getHandlers();
         // need to adjust the default space tool handler
         handlers['spaceTool'] = SpaceToolHandler2;
         return handlers;
     }
 
     createShape(shape, position, target, parentIndex, hints){
-        let ret = super.createShape(shape, position, target, parentIndex, hints);
+        const ret = super.createShape(shape, position, target, parentIndex, hints);
         this._eventBus.fire('shape.created', {shape: ret});
         return ret;
     }
@@ -79,7 +79,7 @@ export default class OrmModelling extends Modeling {
         }
         fact.update();
         if (fact.incoming){
-            for(let con of fact.incoming){
+            for(const con of fact.incoming){
                 this.layoutConnection(con);
             }
         }
@@ -92,13 +92,13 @@ export default class OrmModelling extends Modeling {
      * @returns {Entity | ValueEntity | null} the removed entity
      */
     reduceFact(fact){
-        let remove = fact.removeRole();
+        const remove = fact.removeRole();
         if (remove){
             this.removeConnectionFromFact(fact, remove);
         }
         fact.update();
         if (fact.incoming){
-            for(let con of fact.incoming){
+            for(const con of fact.incoming){
                 this.layoutConnection(con);
             }
         }
@@ -119,8 +119,8 @@ export default class OrmModelling extends Modeling {
             }
             return;
         }
-        var fact = con.target;
-        var entity = con.source;
+        const fact = con.target;
+        const entity = con.source;
         fact.clearRole(entity,con.role);
     }
 
@@ -132,7 +132,7 @@ export default class OrmModelling extends Modeling {
      */
     removeConnectionFromFact(fact, entity){
         let con = null;
-        for(let inc in fact.incoming){
+        for(const inc in fact.incoming){
             if (fact.incoming[inc].source.id === entity.id){
                 con = fact.incoming[inc];
                 break;
@@ -155,7 +155,7 @@ export default class OrmModelling extends Modeling {
     connectToFact(fact, entity, pos=undefined){
         let added = false;
         if (pos === undefined){
-            let ret = fact.setNextMissingRole(entity);
+            const ret = fact.setNextMissingRole(entity);
             added = ret.found;
             pos = ret.role;
         } else {
@@ -169,7 +169,7 @@ export default class OrmModelling extends Modeling {
         }
         let con = null;
         if (added){
-            let attrs = this._elementFactory.createDummyAttributesForConnection(pos);
+            const attrs = this._elementFactory.createDummyAttributesForConnection(pos);
             con = this.connect(entity, fact, attrs);
             this.layoutConnection(con);
             this.sendUpdates(con,fact,entity);
@@ -182,7 +182,7 @@ export default class OrmModelling extends Modeling {
     }
 
     connect(source, target, attrs, hints){
-        let con = super.connect(source, target, attrs, hints);
+        const con = super.connect(source, target, attrs, hints);
         this._eventBus.fire('connection.created', {connection: con});
         return con;
     }
@@ -194,7 +194,7 @@ export default class OrmModelling extends Modeling {
      * @returns created label
      */
     createLabelForFact(fact, label){
-        let factLabel = this.createLabel(
+        const factLabel = this.createLabel(
             fact,
             { x: fact.x + fact.width / 2, 
                 y: fact.y + unitHeight * 1.5
@@ -260,9 +260,9 @@ export default class OrmModelling extends Modeling {
             this.removeElements([fact.objectification]);
             fact.objectification = null;
         } else {
-            let attrs = this._elementFactory
+            const attrs = this._elementFactory
                 .createDummyAttributesForObjectification(fact);
-            let objectification = this.createShape(
+            const objectification = this.createShape(
                 attrs, {x: 0, y: 0},
                 this._canvas.getRootElement(),);
             fact.objectified = true;
@@ -298,7 +298,7 @@ export default class OrmModelling extends Modeling {
      */
     changeDerivedLabel(fact, label){
         if (isFact(fact) && fact.derived) {
-            for(let labels in fact.labels){
+            for(const labels in fact.labels){
                 if (fact.labels[labels].derived){
                     fact.labels[labels].content = label;
                     this.sendUpdate(fact);
@@ -315,8 +315,8 @@ export default class OrmModelling extends Modeling {
      * @returns {} the created label
      */
     makeDerivedLabel(fact, label){
-        let attrs = this._elementFactory.createDummyAttributesForDerivedLabel();
-        let ret = this.createLabel(
+        const attrs = this._elementFactory.createDummyAttributesForDerivedLabel();
+        const ret = this.createLabel(
             fact,
             { x: fact.x + fact.width / 2, 
                 y: fact.y + unitHeight * 1.5 + 25
@@ -329,7 +329,7 @@ export default class OrmModelling extends Modeling {
     }
 
     removeDerivedLabel(fact){
-        for(let labels in fact.labels){
+        for(const labels in fact.labels){
             if (fact.labels[labels].derived){
                 this.removeElements([fact.labels[labels]]);
                 break;
@@ -358,7 +358,7 @@ export default class OrmModelling extends Modeling {
     removeFact(fact){
         if (isFact(fact)){
             if (fact.uniqueness.length > 0){
-                for(let constraint of fact.uniqueness){
+                for(const constraint of fact.uniqueness){
                     this.removeShape(constraint);
                 }
             }
@@ -384,7 +384,7 @@ export default class OrmModelling extends Modeling {
      * @param {Entity} tgt 
      */
     createSubtypeBetween(src, tgt){
-        let con = this.connect(src, tgt, {
+        const con = this.connect(src, tgt, {
             type: SUBTYPE_NAME,
             source: src,
             target: tgt
@@ -402,7 +402,7 @@ export default class OrmModelling extends Modeling {
      * @property {Fact} constraint.src
      */
     removeConstraint(constraint){
-        let src = constraint.src;
+        const src = constraint.src;
         src.removeUniqueness(constraint);
         src.update();
         this.removeElements([ constraint ]);
@@ -413,7 +413,7 @@ export default class OrmModelling extends Modeling {
     removeAllValueConstraint(shape){
         if (shape && shape.constraints) {
             let valueConstraint; 
-            for (let con of shape.constraints) {
+            for (const con of shape.constraints) {
                 if (con.type === VALUE_CONSTRAINT_TYPE) {
                     valueConstraint = con;
                     break;
@@ -431,7 +431,7 @@ export default class OrmModelling extends Modeling {
 
     removeValueConstraint(constraint){
         if (isValueConstraint(constraint)) {
-            let src = constraint.source;
+            const src = constraint.source;
             src.constraints = src.constraints.filter(
                 con => con.id !== constraint.id
             );
@@ -453,7 +453,7 @@ export default class OrmModelling extends Modeling {
                 ...fact.uniqueness, ...fact.constraints,
             );
             if (fact.incoming){
-                for(let con of fact.incoming){
+                for(const con of fact.incoming){
                     this.layoutConnection(con);
                     // for whatever reason, the source rect for layouting is offset
                     // without a move on the source element :/

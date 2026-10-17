@@ -160,7 +160,7 @@ class TabHistoryController implements TabHistory {
     }
 
     _recursivelyRemoveSplit(node: TabHistoryNode) {
-        var that = this;
+        const that = this;
 
         function remover(nodeToRemove: TabHistoryNode) {
             if (nodeToRemove.next) {
@@ -293,7 +293,7 @@ export default class TabModel {
      */
     tab(event:any) {
         // find the current selection
-        let current = this._selection.get();
+        const current = this._selection.get();
         let selected: ShapeLike | undefined = undefined;
         if (current && current.length > 0) {
             selected = current[0];
@@ -307,7 +307,7 @@ export default class TabModel {
                     this._elementRegistry.get(nextNode.id)
                 ]);
             } else {
-                let firstNode = this._tabGraph.first();
+                const firstNode = this._tabGraph.first();
                 if (firstNode) {
                     this._selection.select([
                         this._elementRegistry.get(firstNode.id)
@@ -315,7 +315,7 @@ export default class TabModel {
                 }
             }
         } else {
-            let firstNode = this._tabGraph.first();
+            const firstNode = this._tabGraph.first();
             if (firstNode) {
                 this._selection.select([
                     this._elementRegistry.get(firstNode.id)
@@ -397,7 +397,7 @@ export default class TabModel {
                 }
                 break;
             case 'elements.moved':
-                for(let element of event.elements) {
+                for(const element of event.elements) {
                     this._tabGraph.update(element);
                 }
                 this._tabGraph.sort();
@@ -426,7 +426,7 @@ export default class TabModel {
 
     handleSelectionChange(event:any) {
         // handle selection changes, update the tab graph and history accordingly
-        let lastSelected: Array<ShapeLike> = event.oldSelection,
+        const lastSelected: Array<ShapeLike> = event.oldSelection,
             newSelected: Array<ShapeLike> = event.newSelection;
 
         // handle the case when the selection contains connections 
@@ -464,7 +464,7 @@ export default class TabModel {
         } else if (newSelected.length === 1) {
             // need to work out if we are adding or between existing nodes 
             // of the history
-            let nextElement: ShapeLike = newSelected[0];
+            const nextElement: ShapeLike = newSelected[0];
             let lastElement: ShapeLike | undefined = undefined;
             if (lastSelected.length > 0) {
                 lastElement = lastSelected[0];

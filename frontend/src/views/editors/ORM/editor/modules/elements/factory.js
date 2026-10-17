@@ -53,7 +53,7 @@ export default class OrmElementFactory extends ElementFactory{
         }
         if (type === 'constraint'){
             attrs['type'] = 'constraint';
-            let el = createConstraint(
+            const el = createConstraint(
                 attrs.x, attrs.y, 
                 attrs.width, attrs.height,
                 attrs.over, attrs.roles
@@ -63,27 +63,27 @@ export default class OrmElementFactory extends ElementFactory{
         }
         if (type === 'connection'){
             attrs['type'] = 'connection';
-            let el = createConnection(attrs.role, attrs.mandatory);
+            const el = createConnection(attrs.role, attrs.mandatory);
             el.setByAttributes(attrs);
             this._eventBus.fire('factory.create', { element: el });
             return el; 
         }
         if (type === SUBTYPE_NAME){
             attrs['type'] = SUBTYPE_NAME;
-            let el = createSubtype();
+            const el = createSubtype();
             el.setByAttributes(attrs);
             this._eventBus.fire('factory.create', { element: el });
             return el; 
         }
         if (type === OBJECTIFICATION_TYPE){
             attrs['type'] = OBJECTIFICATION_TYPE;
-            let el = createObjectification(attrs.fact);
+            const el = createObjectification(attrs.fact);
             this._eventBus.fire('factory.create', { element: el });
             return el; 
         }
         if (type === VALUE_CONSTRAINT_TYPE){
             attrs['type'] = VALUE_CONSTRAINT_TYPE;
-            let el = createValueConstraint(attrs.x, attrs.y, attrs.source);
+            const el = createValueConstraint(attrs.x, attrs.y, attrs.source);
             return el;
         }
         if (type === 'label'){
@@ -149,7 +149,7 @@ export default class OrmElementFactory extends ElementFactory{
      * @returns 
      */
     createDummyAttributesForConstraintOverFact(fact){
-        let pos = fact.getNextFreeContraintPosition();
+        const pos = fact.getNextFreeContraintPosition();
         return {
             type: 'constraint',
             width: fact.width,

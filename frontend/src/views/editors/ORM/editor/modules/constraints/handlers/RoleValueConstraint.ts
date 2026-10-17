@@ -23,7 +23,7 @@ export interface RoleValueContext extends ConstraintContext {
 }
 
 import { HelpChainBuilder } from "../../help-interactions/model";
-let helper_title = `
+const helper_title = `
 <p> 
 Click on a role on the fact to create a value costraint on its popluation.
 </p>
@@ -31,7 +31,7 @@ Click on a role on the fact to create a value costraint on its popluation.
 <b style="color:red">ESC</b> to cancel.
 </p>
 `;
-let helper_title2 = `
+const helper_title2 = `
 <p> 
 Move the constraint to the desired position.
 </p>
@@ -83,13 +83,13 @@ export default class RoleValueConstraint extends ConstraintHandler {
     }
 
     prepareData(context: any): RoleValueContext {
-        let data = super.prepareData(context);
+        const data = super.prepareData(context);
 
-        let dummyState = this._factory
+        const dummyState = this._factory
             .createDummyAttributesForValueConstraint(
                 data.source,
             );
-        let constraint:ValueConstraint = this._modeling.createShape(
+        const constraint:ValueConstraint = this._modeling.createShape(
             Object.assign({}, dummyState),
             {x: dummyState.x, y: dummyState.y },
             data.source.parent
@@ -106,7 +106,7 @@ export default class RoleValueConstraint extends ConstraintHandler {
             chain: HelpChain
         });
 
-        let state:RoleValueConstruction = {
+        const state:RoleValueConstruction = {
             state: 'selecting',
             factor: context.factor || -1,
             constraint: constraint
@@ -123,7 +123,7 @@ export default class RoleValueConstraint extends ConstraintHandler {
     }
 
     move(event:RoleValueContext) {
-        let constraint = event.state.constraint;
+        const constraint = event.state.constraint;
 
         if (event.state.state !== "moving") {
             return;
@@ -139,14 +139,14 @@ export default class RoleValueConstraint extends ConstraintHandler {
     }
 
     click(event:RoleValueContext) {
-        let state = event.state,
+        const state = event.state,
             constraint = state.constraint,
             fact = event.source;
 
         if (state.state === "selecting") {
             event.stopPropagation();
             if (isWithinShape(event.source, {x: event.x, y: event.y})) {
-                let role = fact.findNearestRoleUsingPos(event.x, event.y);
+                const role = fact.findNearestRoleUsingPos(event.x, event.y);
 
                 if (role < 0) {
                     return;
@@ -195,7 +195,7 @@ export default class RoleValueConstraint extends ConstraintHandler {
     }
 
     cleanup(event: RoleValueContext) {
-        let constraint = event.state.constraint;
+        const constraint = event.state.constraint;
         this._modeling.resetHighlightFocus(event.source);
         this._modeling.removeElements([constraint]);
         this._eventBus.fire(
@@ -204,7 +204,7 @@ export default class RoleValueConstraint extends ConstraintHandler {
     }
 
     cancel(event: any): void {
-        let constraint = event.state.constraint;
+        const constraint = event.state.constraint;
         this._modeling.resetHighlightFocus(event.source);
         this._modeling.removeElements([constraint]);
         this._eventBus.fire(

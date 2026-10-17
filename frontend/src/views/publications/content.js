@@ -14,7 +14,7 @@ class Paper {
     }
 }
 
-var papers = [
+let papers = [
     new Paper(
         "ICPM2021-EDBA2021",
         "xPM: A Framework for Process Mining with Exogenous Data",

@@ -16,7 +16,7 @@ export default class Layouter extends BaseLayouter {
     }
 
     layoutConnection(connection, hints) {
-        let source = connection.source,
+        const source = connection.source,
             target = connection.target,
             waypoints = connection.waypoints || [];
 
@@ -24,12 +24,12 @@ export default class Layouter extends BaseLayouter {
             return super.layoutConnection(connection, hints);
         }
 
-        var midpoints = waypoints.slice(1, -1);
+        const midpoints = waypoints.slice(1, -1);
 
         // make the interections and enlarge them
-        let sourceRect = makeRect(source),
+        const sourceRect = makeRect(source),
             targetRect = makeRect(target);
-        for(let shape of [sourceRect, targetRect]){
+        for(const shape of [sourceRect, targetRect]){
             shape.x -= shapeOffset / 2 
             shape.y -= shapeOffset / 2 
             shape.width += shapeOffset
@@ -52,12 +52,12 @@ export default class Layouter extends BaseLayouter {
         }
         
         // find where the vertex is for the intersection
-        let srcIntersection = getAngleIntersection(justLeft, sourceRect).vertex,
+        const srcIntersection = getAngleIntersection(justLeft, sourceRect).vertex,
             tgtIntersection = getAngleIntersection(justRight, targetRect).vertex;
 
         // adjust waypoints so the first and last are not within or touching
         // the source and target shapes
-        let ret = [
+        const ret = [
             srcIntersection,
             ...midpoints,
             tgtIntersection

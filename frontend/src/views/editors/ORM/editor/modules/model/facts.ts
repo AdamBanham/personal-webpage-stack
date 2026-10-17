@@ -114,7 +114,7 @@ export class Fact implements fact {
      * @returns {entity | null} the entity that was removed
      */
     removeRole(){
-        let temp = this.factors[this.roles - 1];
+        const temp = this.factors[this.roles - 1];
         this.roles = this.roles - 1;
         this.factors = this.factors.slice(0, -1);
         this.updateDimensionsForAlignment();
@@ -137,7 +137,7 @@ export class Fact implements fact {
             }
         }
         if (entity){
-            let idx = this.factors.findIndex((i,_) => {
+            const idx = this.factors.findIndex((i,_) => {
                 if (i){
                     return i.id === entity.id;
                 } return false;
@@ -154,7 +154,7 @@ export class Fact implements fact {
      * @returns {boolean} is there any missing role
      */
     hasMissingRole(){
-        let missing = this.factors.filter( i => !i);
+        const missing = this.factors.filter( i => !i);
         return missing.length > 0;
     }
 
@@ -227,7 +227,7 @@ export class Fact implements fact {
 
     findNearestRoleUsingPos(posX:number, posY:number): number {
         if (this.isVertical()) {
-            let pos = Math.max(0, 
+            const pos = Math.max(0, 
                 Math.floor((posY + 5 - this.y) / unitHeight)
             );
             if (pos < this.roles){
@@ -236,7 +236,7 @@ export class Fact implements fact {
                 return -1;
             }
         } else {
-            let pos = Math.max(0, 
+            const pos = Math.max(0, 
                 Math.floor((posX + 5 - this.x) / unitWidth)
             );
             if (pos < this.roles){
@@ -262,12 +262,12 @@ export class Fact implements fact {
      */
     getNextFreeContraintPosition(): {x:number, y:number} {
         if (this.isVertical()) {
-            let x = this.x - (constraintDiff * (this.uniqueness.length + 1));
-            let y = this.y + this.height / 2;
+            const x = this.x - (constraintDiff * (this.uniqueness.length + 1));
+            const y = this.y + this.height / 2;
             return {x: x, y: y};
         } else {
-            let x = this.x + this.width / 2;
-            let y = this.y - (constraintDiff * (this.uniqueness.length + 1));
+            const x = this.x + this.width / 2;
+            const y = this.y - (constraintDiff * (this.uniqueness.length + 1));
             return {x: x, y: y};
         }
     }
@@ -286,26 +286,26 @@ export class Fact implements fact {
      * @param constraint the constraint to remove
      */
     removeUniqueness(constraint: SimpleConstraint): void {
-        let idx = this.uniqueness.findIndex((i,_) => {
+        const idx = this.uniqueness.findIndex((i,_) => {
             if (i){
                 return i.id === constraint.id;
             } return false;
         });
         if (idx >= 0){
-            let rem = this.uniqueness.splice(idx,1);
-            for(let removed of rem){
+            const rem = this.uniqueness.splice(idx,1);
+            for(const removed of rem){
                 removed.setSource(undefined);
             }
         }
         if (this.isVertical()) {
             let curr_x = this.x - constraintDiff;
-            for(let keeps of this.uniqueness){
+            for(const keeps of this.uniqueness){
                 keeps.x = curr_x;
                 curr_x = curr_x - constraintDiff;
             }
         } else {
             let curr_y = this.y - constraintDiff;
-            for(let keeps of this.uniqueness){
+            for(const keeps of this.uniqueness){
                 keeps.y = curr_y;
                 curr_y = curr_y - constraintDiff;
             }
@@ -318,14 +318,14 @@ export class Fact implements fact {
     refreshUniquenessPositions(): void {
         if (this.isVertical()) {
             let curr_x = this.x - constraintDiff;
-            for(let keeps of this.uniqueness){
+            for(const keeps of this.uniqueness){
                 keeps.x = curr_x;
                 keeps.y = this.y;
                 curr_x = curr_x - constraintDiff;
             }
         } else {
             let curr_y = this.y - constraintDiff;
-            for(let keeps of this.uniqueness){
+            for(const keeps of this.uniqueness){
                 keeps.y = curr_y;
                 keeps.x = this.x;
                 curr_y = curr_y - constraintDiff;
@@ -397,7 +397,7 @@ export class Fact implements fact {
     update(){
         this.updateDimensionsForAlignment();
         if (this.labels.length > 0){
-            for(let labeler of this.labels){
+            for(const labeler of this.labels){
                 if (this.isVertical()) {
                     labeler.y = this.y + (this.height / 2);
                     labeler.x = this.x + (unitWidth * 1.5) + (labeler.derived ? 25 : 0);
@@ -416,8 +416,8 @@ export class Fact implements fact {
     }
 
     buildAttributes(): Map<string, any> {
-        var that:any = this;
-        let attributes = new Map<string, any>();
+        const that:any = this;
+        const attributes = new Map<string, any>();
         attributes.set("id", this.id);
         attributes.set("type", this.type);
         attributes.set("roles", this.roles);
@@ -425,7 +425,7 @@ export class Fact implements fact {
         attributes.set("x", Math.fround(this.x,));
         attributes.set("y", Math.fround(this.y));
         if (that.labels){
-            for(let labeler of that.labels){
+            for(const labeler of that.labels){
                 if (labeler.derived){
                     attributes.set("derivedLabel", labeler.content);
                 } else {
@@ -434,11 +434,11 @@ export class Fact implements fact {
             }
         }
         if (this.derived !== undefined){
-            let derivedValue = this.derived;
+            const derivedValue = this.derived;
             attributes.set("derived", derivedValue);
         }
         if (this.objectified !== undefined){
-            let objectifiedValue = this.objectified;
+            const objectifiedValue = this.objectified;
             attributes.set("objectified", objectifiedValue);
             attributes.set("objectifiedName", this.objectifiedName);
         }

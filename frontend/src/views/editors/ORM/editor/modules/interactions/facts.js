@@ -16,7 +16,7 @@ export default class FactInteractions {
      * @param {Canvas} canvas
      */
     constructor(events, modeling, canvas){
-        var that = this;
+        const that = this;
 
         // debouncer to prevent more than one refresh per 25 ms
         const updateDebouncer = new Debouncer((fact) => {
@@ -27,7 +27,7 @@ export default class FactInteractions {
         events.on('element.mousemove', 
             (event) => {
                 if (isFact(event.element)) {
-                    let transform = transformToViewbox(
+                    const transform = transformToViewbox(
                         canvas.viewbox(),
                         {
                             x: event.originalEvent.layerX,
@@ -35,8 +35,8 @@ export default class FactInteractions {
                         }
                     );
                     // handle higlight hover for fact availablity
-                    let fact = event.element;
-                    let hovered = 
+                    const fact = event.element;
+                    const hovered = 
                     fact.findNearestRoleUsingPos(
                         transform.x, transform.y
                     );
@@ -59,7 +59,7 @@ export default class FactInteractions {
         events.on('element.out', 
             (event) => {
                 if (isFact(event.element)) {
-                    let fact = event.element;
+                    const fact = event.element;
                     
                     fact.hovered = false;
                 }

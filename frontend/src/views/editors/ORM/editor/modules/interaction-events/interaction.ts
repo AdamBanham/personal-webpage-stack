@@ -12,7 +12,7 @@ export default class OrmInteractionEvents extends InteractionEvents {
         super(eventBus, elementRegistry, styles);
 
         this.createDefaultHit = (element: Element, gfx: SVGElement) => {
-            var waypoints = element.waypoints,
+            let waypoints = element.waypoints,
                 isFrame = element.isFrame,
                 boxType;
 
@@ -20,7 +20,7 @@ export default class OrmInteractionEvents extends InteractionEvents {
                 return this.createWaypointsHit(gfx, waypoints);
             } else {
                 boxType = isFrame ? 'stroke' : 'all';
-                let shape = (element as any).shape || element;
+                const shape = (element as any).shape || element;
                 if (isObjectification(shape) || isConstraint(shape)) {
                     boxType = 'no-move';
                 }

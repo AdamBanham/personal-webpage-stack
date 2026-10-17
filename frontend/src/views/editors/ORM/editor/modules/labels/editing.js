@@ -36,7 +36,7 @@ function getLabel(element ,context){
   } else if (context.touchingMode === 'meta'){
     return element.meta;
   } else if (context.touchingMode === 'derived'){
-    let derived = element.labels.filter(label => label.derived);
+    const derived = element.labels.filter(label => label.derived);
     if (derived.length > 0){
       return derived[0].content;
     } else {
@@ -58,7 +58,7 @@ function getLabel(element ,context){
   return "";
 }
   
-var HIGH_PRIORITY = 2500;
+const HIGH_PRIORITY = 2500;
 
 /**
  * 
@@ -88,7 +88,7 @@ export default function LabelEditingProvider(
     };
 
     directEditing.registerProvider(this);
-    var that = this;
+    const that = this;
   
     // listen to dblclick on non-root elements
     eventBus.on(
@@ -116,7 +116,7 @@ export default function LabelEditingProvider(
   
     eventBus.on('shape.created', HIGH_PRIORITY, function(event) {
   
-      var element = event.shape;
+      const element = event.shape;
       setTimeout( () => activateDirectEdit(element), 25);
     });
   
@@ -177,23 +177,23 @@ export default function LabelEditingProvider(
   LabelEditingProvider.prototype.activate = function(element) {
   
     // text
-    var text = getLabel(element, this._context);
+    const text = getLabel(element, this._context);
   
     if (text === undefined) {
       return;
     }
   
-    var context = {
+    const context = {
       text: text
     };
   
     // bounds
-    var bounds = this.getEditingBBox(element);
+    const bounds = this.getEditingBBox(element);
   
     assign(context, bounds);
   
-    var options = {};
-    var style = context.style || {};
+    const options = {};
+    const style = context.style || {};
   
     // Remove background and border
     assign(style, {
@@ -222,11 +222,11 @@ export default function LabelEditingProvider(
    * @return {DirectEditingContext}
    */
   LabelEditingProvider.prototype.getEditingBBox = function(element) {
-    var canvas = this._canvas;
+    const canvas = this._canvas;
   
-    var target = element;
+    const target = element;
   
-    var bbox = canvas.getAbsoluteBBox(target);
+    const bbox = canvas.getAbsoluteBBox(target);
     const vbox = canvas.viewbox();
     const transform = transformToViewbox(
         canvas.viewbox(),
@@ -235,21 +235,21 @@ export default function LabelEditingProvider(
         }
     );
     
-    var bounds = {
+    const bounds = {
       x: target.x * vbox.scale - vbox.x * vbox.scale,
       y: target.y * vbox.scale - vbox.y * vbox.scale,
       width: target.width * vbox.scale,
       height: target.height * vbox.scale
     };
 
-    var defaultStyle = this._textRenderer.getDefaultStyle();
+    const defaultStyle = this._textRenderer.getDefaultStyle();
   
     // take zoom into account
-    var defaultFontSize = Math.floor(Math.max(
+    const defaultFontSize = Math.floor(Math.max(
         24, defaultStyle.fontSize / (vbox.scale/2))) + 'px',
         defaultLineHeight = defaultStyle.lineHeight;
   
-    var style = Object.assign({},defaultStyle);
+    const style = Object.assign({},defaultStyle);
     style['fontSize'] = defaultFontSize;
     return { bounds: bounds, style: style };
   };
@@ -302,7 +302,7 @@ export default function LabelEditingProvider(
   LabelEditingProvider.prototype.handleFinishingFact = function(fact, context, label){
     if (context.touchingMode === 'label'){
       if (fact.labels && fact.labels.length > 0){
-        let factLabel = fact.labels.filter(label => label.factLabel);
+        const factLabel = fact.labels.filter(label => label.factLabel);
         if (factLabel.length > 0){
           factLabel[0].content = label;
         } else {
@@ -325,9 +325,9 @@ export default function LabelEditingProvider(
         setTimeout(() => this._directEditing.activate(fact), 5 );
       }
     } else if (context.touchingMode === 'derived'){
-      let derived = fact.labels.filter(label => label.derived);
+      const derived = fact.labels.filter(label => label.derived);
       if (derived.length > 0){
-        let derivedLabel = derived[0];
+        const derivedLabel = derived[0];
         derivedLabel.content = label;
       } else {
         this._modeling.makeDerivedLabel(

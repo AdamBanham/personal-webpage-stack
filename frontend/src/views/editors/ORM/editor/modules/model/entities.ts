@@ -165,7 +165,7 @@ export class Entity implements entity {
     }
 
     buildAttributes(): Map<string, any> {
-        let attributes = new Map<string, any>();
+        const attributes = new Map<string, any>();
         attributes.set("id", this.id);
         attributes.set("type", this.type);
         attributes.set("name", this.name);

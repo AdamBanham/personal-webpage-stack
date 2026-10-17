@@ -53,7 +53,7 @@ export default function ContextPadProvider(
      * @returns {Object} the options to show in the context pad
      */
     ContextPadProvider.prototype.getContextPadEntries = function(element){
-        var options = {};
+        let options = {};
         
         if (isConnection(element)){
             options = this.getConnectionOptions(element);
@@ -204,9 +204,9 @@ export default function ContextPadProvider(
      * @returns the options 
      */
     ContextPadProvider.prototype.getFactOptions = function(fact){
-        var that = this;
+        const that = this;
         
-        var options = {};
+        const options = {};
 
        
         options['expand'] = {
@@ -398,12 +398,12 @@ export default function ContextPadProvider(
      * @returns the options 
      */
     ContextPadProvider.prototype.getConnectionOptions = function(con){
-        var that = this;
-        var options = {};
+        const that = this;
+        const options = {};
 
-        let offMandatory = "alpha-m-box-outline";
-        let onMandatory = "alpha-m-box";
-        let included = con.mandatory ? onMandatory : offMandatory;
+        const offMandatory = "alpha-m-box-outline";
+        const onMandatory = "alpha-m-box";
+        const included = con.mandatory ? onMandatory : offMandatory;
 
         if (isSubtype(con)){
             // TODO: add the subtype connection options
@@ -439,7 +439,7 @@ export default function ContextPadProvider(
      * @param {Entity | ValueEntity} element the source entity
      */
     ContextPadProvider.prototype.createConnectedFact = function (that, element){
-        var fact = Object.assign(
+        let fact = Object.assign(
             that._elementFactory.createDummyAttributesForFacts(),
             { x: element.x+element.width+ 100, 
               y: element.y+element.height/2,}
@@ -449,11 +449,11 @@ export default function ContextPadProvider(
             element.parent
         );
         // find a free position
-        let pos = that._placement.place(element, fact);
+        const pos = that._placement.place(element, fact);
         fact.x = pos.x;
         fact.y = pos.y;
         // add entity as a role to the fact
-        let con = that._modeling.connectToFact(fact, element, 0);
+        const con = that._modeling.connectToFact(fact, element, 0);
         // silly updating to make sure the layering is correct
         // that._modeling.moveElements([con,element,fact], {x:0,y:0});
         that._modeling.sendUpdates(con,fact,element);
@@ -509,8 +509,8 @@ export default function ContextPadProvider(
      * @returns {object} the options for the entity
      */
     ContextPadProvider.prototype.getEntityOptions = function(entity){
-        var that = this;
-        var options = {};
+        const that = this;
+        const options = {};
 
         options['connect'] = {
             action: {
@@ -617,8 +617,8 @@ export default function ContextPadProvider(
      * @returns 
      */
     ContextPadProvider.prototype.getConstraintOptions = function(constraint){
-        var that = this;
-        var options = {};
+        const that = this;
+        const options = {};
 
         options['delete'] = {
             action: {
@@ -635,8 +635,8 @@ export default function ContextPadProvider(
 
 
     ContextPadProvider.prototype.getObjectificationOptions = function(objectification){
-        var that = this;
-        var options = {};
+        const that = this;
+        const options = {};
 
         options['connect'] = {
             action: {
@@ -683,13 +683,13 @@ export default function ContextPadProvider(
     };
 
     ContextPadProvider.prototype.removeValueConstraint = function(that, constraint){
-        let src = constraint.source;
+        const src = constraint.source;
         that._modeling.removeValueConstraint(constraint);
         that._pad.open(src, true);
     };
 
     ContextPadProvider.prototype.getValueConstraintOptions = function(constraint){
-        let options = {};
+        const options = {};
 
         options['increase-width'] = {
             action: {

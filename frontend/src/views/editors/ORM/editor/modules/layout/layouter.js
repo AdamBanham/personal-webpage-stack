@@ -41,7 +41,7 @@ export default class OrmLayouter extends BaseLayouter {
             return { mids: [pos], added: false};
         }
         if (bends.length === 1){
-            let last = bends[0];
+            const last = bends[0];
             if (this.nearlyEqual(last, pos)){
                 return { mids:bends, added:false};
             } else {
@@ -51,7 +51,7 @@ export default class OrmLayouter extends BaseLayouter {
                 return {mids:[last, pos], added:true};
             }
         }
-        let last = bends[bends.length - 1];
+        const last = bends[bends.length - 1];
         if (this.nearlyEqual(last, pos)){
             return {mids:bends, added:false};
         } else {
@@ -80,14 +80,14 @@ export default class OrmLayouter extends BaseLayouter {
         let bends = connection.waypoints || [];
         bends = bends.slice(1, -1);
 
-        let srcRect = makeRect(connection.source);
-        let srcPos = connection.waypoints[1];
-        let srcIntersection = getAngleIntersection(
+        const srcRect = makeRect(connection.source);
+        const srcPos = connection.waypoints[1];
+        const srcIntersection = getAngleIntersection(
             srcPos, srcRect
         );
-        let tgtRect = makeRect(connection.target);
-        let tgtPos = connection.waypoints[connection.waypoints.length - 2];
-        let tgtIntersection = getAngleIntersection(
+        const tgtRect = makeRect(connection.target);
+        const tgtPos = connection.waypoints[connection.waypoints.length - 2];
+        const tgtIntersection = getAngleIntersection(
             tgtPos, tgtRect
         );
 
@@ -107,10 +107,10 @@ export default class OrmLayouter extends BaseLayouter {
     handleEntityToFact(connection, hints){
         hints = hints || {};
 
-        let fact = connection.target;
-        let entity = connection.source;
-        let role = connection.role;
-        let lastEdit = connection.lastEdit || undefined;
+        const fact = connection.target;
+        const entity = connection.source;
+        const role = connection.role;
+        const lastEdit = connection.lastEdit || undefined;
 
         // has the connection been settled?
         if (!fact || !entity || role === undefined){
@@ -125,11 +125,11 @@ export default class OrmLayouter extends BaseLayouter {
         // }
         
         // handling to get intersecting on perimeters
-        let srcRect = makeRect(connection.source);
+        const srcRect = makeRect(connection.source);
         let srcPos = connection.waypoints[1];
         srcPos = getMid(connection.source);
         // I need to wait for pivot point before working out target
-        let tgtRect = Object.assign(
+        const tgtRect = Object.assign(
             fact.getCenterForRole(role),
             { width: unitWidth, height: unitHeight }
         );
@@ -155,11 +155,11 @@ export default class OrmLayouter extends BaseLayouter {
         if (fact.roles === 1){
             // if the fact has only one role then put the pivot
             // in the middle
-            let tgtIntersection = getAngleIntersection(
+            const tgtIntersection = getAngleIntersection(
                 srcPos, tgtRect
             );
             tgtPos = tgtIntersection.vertex;
-            let srcIntersection = getAngleIntersection(
+            const srcIntersection = getAngleIntersection(
                 tgtPos, srcRect
             );
             srcPos = srcIntersection.vertex;
@@ -200,18 +200,18 @@ export default class OrmLayouter extends BaseLayouter {
                 }
             }
             // update waypoints
-            let ret = this.suffixOrUpdate(bends, 
+            const ret = this.suffixOrUpdate(bends, 
                 factConnectionPoint
             );
             mids = ret.mids;
             added = ret.added;
             // now we have the fact connection point we can work out the target
-            let tgtIntersection = getAngleIntersection(
+            const tgtIntersection = getAngleIntersection(
                 Object.assign({},mids[mids.length - 1]), tgtRect
             );
             tgtPos = tgtIntersection.vertex;
             // but need to redo the srcpos as well if 
-            let srcIntersection = getAngleIntersection(
+            const srcIntersection = getAngleIntersection(
                 Object.assign({},mids[0]), srcRect
             );
             srcPos = srcIntersection.vertex;
@@ -226,9 +226,9 @@ export default class OrmLayouter extends BaseLayouter {
         if (lastEdit !== undefined){
             // check that we have a new pivot point and it has added
             if (factConnectionPoint !== undefined && added){
-                var remove = -1;
-                var found = false;
-                for (let wp of waypoints){
+                let remove = -1;
+                let found = false;
+                for (const wp of waypoints){
                     remove++;
                     if (this.nearlyEqual(wp, lastEdit)){
                         found = true;

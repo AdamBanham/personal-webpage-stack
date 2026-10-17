@@ -68,25 +68,25 @@ export function getAngleIntersection(point: Point, rect: Rect): IntersectionAngl
     let ret = null;
     if (!checkPointInRect(point, rect)) {
         // If the end point is inside the rectangle, we can calculate the angle
-        var w = rect.width / 2;
-        var h = rect.height / 2;
-        var B = {
+        const w = rect.width / 2;
+        const h = rect.height / 2;
+        const B = {
             x: rect.x + w,
             y: rect.y + h
         };
 
         // calculate the distance from the point to the center of the rectangle
-        var dx = point.x - B.x;
-        var dy = point.y - B.y;
+        const dx = point.x - B.x;
+        const dy = point.y - B.y;
 
         // calculat the intersection angle
-        var tan_phi = h / w;
-        var tan_theta = Math.abs(dy / dx);
+        const tan_phi = h / w;
+        const tan_theta = Math.abs(dy / dx);
 
         //tell me in which quadrant the A point is
-        var qx = Math.sign(dx);
-        var qy = Math.sign(dy);
-        var quad;
+        const qx = Math.sign(dx);
+        const qy = Math.sign(dy);
+        let quad;
         if (qx >= 0 && qy <= 0) {
             quad = 0; // Quadrant I
         } else if (qx < 0 && qy <= 0) {
@@ -99,7 +99,7 @@ export function getAngleIntersection(point: Point, rect: Rect): IntersectionAngl
         }
 
         // calculate the intersection point
-        let vertex = { x: 0, y: 0 };
+        const vertex = { x: 0, y: 0 };
         if (tan_theta > tan_phi) {
             vertex.x = B.x + (h / tan_theta) * qx;
             vertex.y = B.y + h * qy;
@@ -115,8 +115,8 @@ export function getAngleIntersection(point: Point, rect: Rect): IntersectionAngl
         } else if (tan_theta <0.01) {
             longside = w;
         } else {
-             let s1 = Math.pow(Math.abs(B.x - vertex.x), 2);
-            let s2 = Math.pow(Math.abs(B.y - vertex.y), 2);
+             const s1 = Math.pow(Math.abs(B.x - vertex.x), 2);
+            const s2 = Math.pow(Math.abs(B.y - vertex.y), 2);
             longside = Math.sqrt(s1 + s2);
         }
        

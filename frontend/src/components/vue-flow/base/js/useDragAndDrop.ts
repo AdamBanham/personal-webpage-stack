@@ -23,7 +23,11 @@ const state = {
   isDragging: ref(false),
 }
 
-export default function useDragAndDrop(namespace:string, identityCallback?: ((type:string) => string)) {
+export default function useDragAndDrop(
+  namespace:string,
+  identityCallback?: ((type:string) => string),
+  dataCallback?: ((type:string) => Record<string, any>),
+) {
   const { draggedType, isDragOver, isDragging } = state
 
   const { addNodes, screenToFlowCoordinate, onNodesInitialized, updateNode } = useVueFlow(namespace)
@@ -89,7 +93,7 @@ export default function useDragAndDrop(namespace:string, identityCallback?: ((ty
       id: nodeId,
       type: draggedType.value,
       position,
-      data: { label: nodeId },
+      data: { label: nodeId, ...dataCallback?.(draggedType.value) },
     }
 
     /**

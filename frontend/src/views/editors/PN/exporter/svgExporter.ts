@@ -33,7 +33,7 @@ export default class SvgExporting {
     }
 
     export() : string {
-        var svg;
+        let svg;
         try {        
             const contentNode = this._canvas.getActiveLayer(),
                   defsNode = domQuery(':scope > defs', this._canvas._svg);

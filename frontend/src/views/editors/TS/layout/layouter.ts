@@ -25,18 +25,18 @@ export default class Layouter extends BaseLayouter {
 
         waypoints = waypoints.slice(1, waypoints.length - 1);
 
-        let justLeft = waypoints.length > 0 ? 
+        const justLeft = waypoints.length > 0 ? 
             waypoints[0] : this.makePoint(target),
             justRight = waypoints.length > 0 ? 
             waypoints[waypoints.length - 1] : this.makePoint(source);
 
-        let sourceRect = makeRect(source),
+        const sourceRect = makeRect(source),
             targetRect = makeRect(target);
 
-        let srcIntersection = getAngleIntersection(justLeft, sourceRect).vertex,
+        const srcIntersection = getAngleIntersection(justLeft, sourceRect).vertex,
             tgtIntersection = getAngleIntersection(justRight, targetRect).vertex;
 
-        let ret = [
+        const ret = [
             srcIntersection,
             ...waypoints,
             tgtIntersection

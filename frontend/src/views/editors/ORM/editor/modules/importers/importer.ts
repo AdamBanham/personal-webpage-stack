@@ -65,7 +65,7 @@ export default class SchemaImporter {
     attemptToLoadDocument(content: string): any {
         
         // clear the system, except for root
-        var els = this._elementRegistry.getAll().filter(
+        const els = this._elementRegistry.getAll().filter(
             (v) => {
                 return !v.id.includes("implicitroot");
             }

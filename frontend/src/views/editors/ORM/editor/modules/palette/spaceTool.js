@@ -11,7 +11,7 @@ import {
 import { getMid } from 'diagram-js/lib/layout/LayoutUtil';
 
 
-var AXIS_TO_DIMENSION = {
+const AXIS_TO_DIMENSION = {
   x: 'width',
   y: 'height'
 };
@@ -35,17 +35,17 @@ export default class OrmSpaceTool extends SpaceTool {
     }
 
     calculateAdjustments(elements, axis, delta, start) {
-        let ret = this._cal(elements, axis, delta, start);
+        const ret = this._cal(elements, axis, delta, start);
         return ret;
     }
 
     _cal(elements, axis, delta, start) {
-        var rules = this._rules;
+        const rules = this._rules;
 
-        var movingShapes = [],
+        const movingShapes = [],
             resizingShapes = [];
 
-        var attachers = [],
+        const attachers = [],
             connections = [];
 
         function moveShape(shape) {
@@ -54,7 +54,7 @@ export default class OrmSpaceTool extends SpaceTool {
             }
 
             if (shape.labels && shape.labels.length > 0) {
-                for( let label of shape.labels) {
+                for( const label of shape.labels) {
                     // move external label if its label target is moving
                     if (label && !movingShapes.includes(label)) {
                         movingShapes.push(label);
@@ -81,7 +81,7 @@ export default class OrmSpaceTool extends SpaceTool {
                 return;
             }
 
-            var shapeStart = element[ axis ],
+            const shapeStart = element[ axis ],
                 shapeEnd = shapeStart + element[ AXIS_TO_DIMENSION[ axis ] ];
 
             // handle attachers separately
@@ -114,7 +114,7 @@ export default class OrmSpaceTool extends SpaceTool {
 
         // move attacher if its host is moving
         forEach(movingShapes, function(shape) {
-            var attachers = shape.attachers;
+            const attachers = shape.attachers;
 
             if (attachers) {
                 forEach(attachers, function(attacher) {
@@ -123,11 +123,11 @@ export default class OrmSpaceTool extends SpaceTool {
             }
         });
 
-        var allShapes = movingShapes.concat(resizingShapes);
+        let allShapes = movingShapes.concat(resizingShapes);
 
         // move attacher if its mid is after space tool and its host is moving or resizing
         forEach(attachers, function(attacher) {
-            var host = attacher.host;
+            const host = attacher.host;
 
             if (includes(allShapes, host)) {
                 moveShape(attacher);
@@ -138,7 +138,7 @@ export default class OrmSpaceTool extends SpaceTool {
 
         // move external label if its label target's (connection) source and target are moving
         forEach(connections, function(connection) {
-            var source = connection.source,
+            const source = connection.source,
                 target = connection.target,
                 label = connection.label;
 

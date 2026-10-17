@@ -30,7 +30,7 @@ export default class OrmRules extends RuleProvider{
     }
 
     checkConnectionCreation(context) {
-        var source = context.source,
+        const source = context.source,
         target = context.target,
         role = context.role;
         if ((isEntity(source) || isObjectification(source)) && isFact(target)){
@@ -50,8 +50,8 @@ export default class OrmRules extends RuleProvider{
      * @return {boolean} whether the subtyping is valid
      */
     checkSubtypeCreation(context) {
-        var src = context.source;
-        var tgt = context.target;
+        const src = context.source;
+        const tgt = context.target;
         // check if the src is already a subtype of the tgt
         if (src.isSubtypeOf(tgt)){
             return false;
@@ -68,7 +68,7 @@ export default class OrmRules extends RuleProvider{
     addConnectionRules(){
         // add a rule that checks that the source is an entity and
         // the target is a fact
-        var that = this;
+        const that = this;
         this.addRule(
             'connection.create',
             DEFAULT_PRIORITY,
@@ -97,7 +97,7 @@ export default class OrmRules extends RuleProvider{
     
 
     checkSimpleConstraintCreation(context) {
-        var fact = context.fact,
+        const fact = context.fact,
             constraint = context.constraint;
 
         if (constraint.editing){
@@ -108,7 +108,7 @@ export default class OrmRules extends RuleProvider{
     }
 
     handleConstraintCreation(context, that) {
-        var mode = context.mode; 
+        const mode = context.mode; 
 
         if (mode === 'simple') {
             return that.checkSimpleConstraintCreation(context);
@@ -121,7 +121,7 @@ export default class OrmRules extends RuleProvider{
      * Adds the rules for constraints.
      */
     addContraintRules(){
-        var that = this;
+        const that = this;
         this.addRule(
             'constraint.create',
             DEFAULT_PRIORITY,

@@ -3,7 +3,7 @@ import { getNextIdentifier } from "./util";
 import { Point } from "diagram-js/lib/util/Types";
 
 import { Refs } from 'object-refs';
-var parentRefs = new Refs({ name: 'children', enumerable: true, collection: true }, { name: 'parent' }),
+const parentRefs = new Refs({ name: 'children', enumerable: true, collection: true }, { name: 'parent' }),
     labelRefs = new Refs({ name: 'labels', enumerable: true, collection: true }, { name: 'labelTarget' }),
     attacherRefs = new Refs({ name: 'attachers', collection: true }, { name: 'host' }),
     outgoingRefs = new Refs({ name: 'outgoing', collection: true }, { name: 'source' }),
@@ -51,7 +51,7 @@ export class OrmConnection implements connection {
             },
             set: function(newLabel) {
         
-              var label = this.label,
+              const label = this.label,
                   labels = this.labels;
         
               if (!newLabel && label) {

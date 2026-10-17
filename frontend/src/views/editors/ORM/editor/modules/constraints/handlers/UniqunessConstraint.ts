@@ -15,7 +15,7 @@ import Rules from 'diagram-js/lib/features/rules/Rules.js';
 import { HelpChainBuilder } from '../../help-interactions/model';
 import { isWithinShape } from '../../utils/canvasUtils';
 
-let helper_title = `
+const helper_title = `
 <p> 
 Click on a role of the fact to add a uniqueness constraint.
 </p>
@@ -87,10 +87,10 @@ export default class UniquenessConstraintHandler extends ConstraintHandler {
 
     prepareData(context: object)  {
         const data = super.prepareData(context);
-        let source:Fact = data.source as Fact;
-        var attrs = this._factory
+        const source:Fact = data.source as Fact;
+        const attrs = this._factory
             .createDummyAttributesForConstraintOverFact(data.source);
-        var constraint = this._modeling.createShape(
+        const constraint = this._modeling.createShape(
             Object.assign({}, attrs),
             {x: attrs.x, y: attrs.y },
             source.parent
@@ -108,19 +108,19 @@ export default class UniquenessConstraintHandler extends ConstraintHandler {
 
     click(event:UniquenessContext) {
         event.stopPropagation();
-        let point = { x: event.x, y: event.y };
+        const point = { x: event.x, y: event.y };
         if (!isWithinShape(event.source, point)) {
             return;
         }
 
-        let role = event.source.findNearestRoleUsingPos(
+        const role = event.source.findNearestRoleUsingPos(
             event.x, event.y
         );
         if (role < 0) {
             return;
         }
         event.constraint.flipRole(role);
-        let allowed = this._rules.allowed('constraint.create', {
+        const allowed = this._rules.allowed('constraint.create', {
             mode: event.mode,
             constraint: event.constraint,
             fact: event.source,
@@ -134,7 +134,7 @@ export default class UniquenessConstraintHandler extends ConstraintHandler {
     }
 
     end(event:UniquenessContext) {
-        let allowed = this._rules.allowed('constraint.create', {
+        const allowed = this._rules.allowed('constraint.create', {
             mode: event.mode,
             constraint: event.constraint,
             fact: event.source,

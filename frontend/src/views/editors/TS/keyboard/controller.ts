@@ -56,30 +56,30 @@ export default class KeyboardController {
         const event = context.keyEvent;
 
         if (isKey(['h', 'u'], event) && event.ctrlKey) {
-            let orientation = isKey(['h'], event) ? 'horizontal' : 'vertical';
+            const orientation = isKey(['h'], event) ? 'horizontal' : 'vertical';
             let selectedElements = this._selection.get();
             selectedElements = selectedElements.filter((el) => 
                 isState(el)
             );
 
-            let changes = [];
+            const changes = [];
 
             if (selectedElements.length > 1) {
                 let elements = [...selectedElements]
-                let num = selectedElements.length;
-                let selector = orientation === 'horizontal' ? 'x' : 'y';
-                let shapeSize = orientation === 'horizontal' ? 'width' : 'height';
-                let centering = orientation === 'horizontal' ? 'y' : 'x';
-                let padding = 50;
-                let min = Math.min(...elements.map(el => el[selector] - el[shapeSize] / 2));
-                let max = Math.max(...elements.map(el => el[selector] - el[shapeSize] / 2));
-                let center = elements.reduce((acc, el) => acc + el[centering], 0) / num;
+                const num = selectedElements.length;
+                const selector = orientation === 'horizontal' ? 'x' : 'y';
+                const shapeSize = orientation === 'horizontal' ? 'width' : 'height';
+                const centering = orientation === 'horizontal' ? 'y' : 'x';
+                const padding = 50;
+                const min = Math.min(...elements.map(el => el[selector] - el[shapeSize] / 2));
+                const max = Math.max(...elements.map(el => el[selector] - el[shapeSize] / 2));
+                const center = elements.reduce((acc, el) => acc + el[centering], 0) / num;
                 elements = elements.sort((a, b) => a[selector] - b[selector]);
-                let spacing = (Math.abs(max - min)) / (num - 1);
+                const spacing = (Math.abs(max - min)) / (num - 1);
                 let curr = min
                 
                 for (const element of elements) {
-                    let pos = curr;
+                    const pos = curr;
                     if (orientation === 'horizontal') {
                         element.x = pos + (element.width / 2);
                         element.y = center;
@@ -117,7 +117,7 @@ export default class KeyboardController {
         const event = context.keyEvent;
 
         if (isKey(['Delete', 'Backspace'], event)) {
-            let selectedElements = this._selection.get();
+            const selectedElements = this._selection.get();
 
             if (selectedElements.length > 0) {
                 this._modeling.removeElements(selectedElements);
@@ -131,9 +131,9 @@ export default class KeyboardController {
         const event = context.keyEvent;
 
         if (isKey(['c'], event) ) {
-            let selectedElements = this._selection.get();
+            const selectedElements = this._selection.get();
             if (selectedElements.length === 1) {
-                let element = selectedElements[0];
+                const element = selectedElements[0];
                 this._connect.start(this._mouse.getLastMoveEvent (), element, true);
             }
         }

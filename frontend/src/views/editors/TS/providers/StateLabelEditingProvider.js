@@ -34,7 +34,7 @@ function getLabel(element){
   return element.arcLabel || null
 }
   
-var HIGH_PRIORITY = 2000;
+const HIGH_PRIORITY = 2000;
   
 export default function LabelEditingProvider(
       eventBus, factory, canvas, directEditing,
@@ -92,7 +92,7 @@ export default function LabelEditingProvider(
   
     eventBus.on('create.end', 500, function(event) {
   
-      var context = event.context,
+      const context = event.context,
           element = context.shape,
           canExecute = event.context.canExecute,
           isTouch = event.isTouch;
@@ -151,23 +151,23 @@ export default function LabelEditingProvider(
   LabelEditingProvider.prototype.activate = function(element) {
   
     // text
-    var text = getLabel(element);
+    const text = getLabel(element);
   
     if (text === undefined) {
       return;
     }
   
-    var context = {
+    const context = {
       text: text
     };
   
     // bounds
-    var bounds = this.getEditingBBox(element);
+    const bounds = this.getEditingBBox(element);
   
     assign(context, bounds);
   
-    var options = {};
-    var style = context.style || {};
+    const options = {};
+    const style = context.style || {};
   
     // Remove background and border
     assign(style, {
@@ -195,32 +195,32 @@ export default function LabelEditingProvider(
    * @return {DirectEditingContext}
    */
   LabelEditingProvider.prototype.getEditingBBox = function(element) {
-    var canvas = this._canvas;
+    const canvas = this._canvas;
   
-    var target = element.label || element;
+    const target = element.label || element;
   
-    var bbox = canvas.getAbsoluteBBox(target);
+    const bbox = canvas.getAbsoluteBBox(target);
   
-    var mid = {
+    const mid = {
       x: bbox.x + bbox.width / 2,
       y: bbox.y + bbox.height / 2
     };
   
     // default position
-    var bounds = { x: bbox.x, y: bbox.y };
+    const bounds = { x: bbox.x, y: bbox.y };
   
-    var zoom = canvas.zoom();
+    const zoom = canvas.zoom();
   
-    var defaultStyle = this._textRenderer.getDefaultStyle(),
+    const defaultStyle = this._textRenderer.getDefaultStyle(),
         externalStyle = this._textRenderer.getExternalStyle();
   
     // take zoom into account
-    var externalFontSize = externalStyle.fontSize * zoom,
+    const externalFontSize = externalStyle.fontSize * zoom,
         externalLineHeight = externalStyle.lineHeight,
         defaultFontSize = defaultStyle.fontSize * zoom,
         defaultLineHeight = defaultStyle.lineHeight;
   
-    var style = defaultStyle;
+    const style = defaultStyle;
 
     return { bounds: bounds, style: style };
   };
@@ -230,14 +230,14 @@ export default function LabelEditingProvider(
       element, newLabel,
       activeContextText, bounds) {
   
-    var newBounds,
+    let newBounds,
         bbox;
   
     if (isEmptyText(newLabel)) {
       newLabel = "";
       return
     }
-    var position;
+    let position;
     if (isState(element)){
       element.stateLabel = newLabel
       this._bus.fire('elements.changed', {elements: [element]})
@@ -257,7 +257,7 @@ export default function LabelEditingProvider(
       position = getConnectionMid(element)
     }
     if (!element.label){
-      var label = this._factory.createLabel({
+      const label = this._factory.createLabel({
         text: newLabel,
         width: 50,
         height: 12,

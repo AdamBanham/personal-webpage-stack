@@ -45,9 +45,9 @@ export class HelpChainBuilder {
         if (!this._chain || this._chain.length === 0) {
             throw new Error("Chain is empty. Use create() to initialize it.");
         }
-        let first = this._chain[0];
+        const first = this._chain[0];
         let helper = this._chain[0];
-        for( let next of this._chain.slice(1) || [] ) {
+        for( const next of this._chain.slice(1) || [] ) {
             helper.next = next;
             helper = next;
         }

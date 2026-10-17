@@ -37,7 +37,7 @@ export default function ContextPadProvider(
 
     ContextPadProvider.prototype.getContextPadEntries = function(element){
         
-        var connect = this._connect,
+        const connect = this._connect,
             modeling = this._modeling,
             factory = this._elementFactory,
             create = this._create,
@@ -57,19 +57,19 @@ export default function ContextPadProvider(
         }
 
         function switchStateType(event, element, autoActivate){
-            var newType = toggleStateType(element)
+            const newType = toggleStateType(element)
             element.stateType = newType;
             bus.fire('elements.changed', {elements: [element]})
         }
 
         function jumpToInternal(event, element){
-            var ns = factory.createInternalState({
+            const ns = factory.createInternalState({
                 id: factory.getNextStateId(),
                 x: element.x + 100,
                 y: element.y + 100,
                 stateLabel: ''
             })
-            var nc = factory.createConnectionBetweenStates(
+            const nc = factory.createConnectionBetweenStates(
                 factory.getNextConnectionId(), 
                 element, 
                 ns
@@ -84,13 +84,13 @@ export default function ContextPadProvider(
         }
 
         function jumpToEnding(event, element){
-            var ns = factory.createEndingState({
+            const ns = factory.createEndingState({
                 id: factory.getNextStateId(),
                 x: element.x + 100,
                 y: element.y + 100,
                 stateLabel: ''
             })
-            var nc = factory.createConnectionBetweenStates(
+            const nc = factory.createConnectionBetweenStates(
                 factory.getNextConnectionId(), 
                 element, 
                 ns
@@ -105,9 +105,9 @@ export default function ContextPadProvider(
         }
 
         function flipConnection(event, element){
-            var src = element.source
-            var tgt = element.target
-            var waypoints = [
+            const src = element.source
+            const tgt = element.target
+            const waypoints = [
                 {x: tgt.x, y: tgt.y},
                 {x: src.x, y: src.y}
             ]
@@ -115,7 +115,7 @@ export default function ContextPadProvider(
             element.target = src 
             element.waypoints = waypoints
             modeling.removeConnection(element)
-            var connect = modeling.createConnection(tgt, src, element, src.parent)
+            const connect = modeling.createConnection(tgt, src, element, src.parent)
             modeling.layoutConnection (
                 connect,
             )
@@ -128,7 +128,7 @@ export default function ContextPadProvider(
                 element.selected = false 
                 bus.fire('elements.changed', {elements: [element]})
             } else {
-                var changed = [element]
+                const changed = [element]
                 registry.filter(isState).forEach(
                     (el) => {
                         if (el.selected){
@@ -144,7 +144,7 @@ export default function ContextPadProvider(
 
         function createSelfLoop(event, element){
             //console.log(element)
-            var nc = factory.createConnectionBetweenStates(
+            let nc = factory.createConnectionBetweenStates(
                 factory.getNextConnectionId(), 
                 element, 
                 element
@@ -155,7 +155,7 @@ export default function ContextPadProvider(
                 elements: [element,nc]}
             )
         }
-        var contextPadOptions = {}
+        const contextPadOptions = {}
 
         // alaways present
         contextPadOptions['delete'] = {

@@ -31,15 +31,15 @@ export default class CopyPasteHandler extends CopyPaste {
     }
 
     createShape(attrs: any): any {
-        var id = this._elementFactory.getNextStateId();
-        var newAttrs = Object.assign({}, attrs, { id: id });
-        var shape = this._elementFactory.createState(newAttrs, newAttrs.stateType);
+        const id = this._elementFactory.getNextStateId();
+        const newAttrs = Object.assign({}, attrs, { id: id });
+        const shape = this._elementFactory.createState(newAttrs, newAttrs.stateType);
         return shape;
     }
 
     copyElementData(context) {
 
-        let descriptor = context.descriptor,
+        const descriptor = context.descriptor,
             element = context.element;
         
         if (element.stateType){

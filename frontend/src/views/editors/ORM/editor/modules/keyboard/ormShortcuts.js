@@ -61,7 +61,7 @@ export default class OrmShortcuts {
         this._spaceTool = spaceTool;
         this._tabModel = tabModel;
 
-        var that = this;
+        const that = this;
 
         // debugger to work out key codes, albeit a bit silly
         // keyboard.addListener((context) => {
@@ -157,8 +157,8 @@ export default class OrmShortcuts {
     triggerDelete(that, context){
         const event = context.keyEvent;
         if (isKey([ 'Delete', 'Del', ], event)){
-            let selected = that._selection.get();
-            for(let select of selected){
+            const selected = that._selection.get();
+            for(const select of selected){
                 switch (true) {
                     case isValueConstraint(select):
                         that._modeling.removeValueConstraint(select);
@@ -189,7 +189,7 @@ export default class OrmShortcuts {
         if (event.ctrlKey){
             if (isKey(['+', '=', 'Plus', 'Equal'], event)){
                 const view = that._canvas.viewbox();
-                let scale = view.scale + 0.25;
+                const scale = view.scale + 0.25;
                 that._canvas.zoom(scale);
                 event.stopPropagation();
                 event.preventDefault();
@@ -208,7 +208,7 @@ export default class OrmShortcuts {
         if (event.ctrlKey){
             if (isKey(['-', '_', 'Minus'], event)){
                 const view = that._canvas.viewbox();
-                let scale = view.scale - ZoomPunch;
+                const scale = view.scale - ZoomPunch;
                 that._canvas.zoom(scale);
                 event.stopPropagation();
                 event.preventDefault();
@@ -359,7 +359,7 @@ export default class OrmShortcuts {
                     if (isEntity(select) && select.hasValueConstraint()){
                         that._modeling.removeAllValueConstraint(select);
                     } else {
-                        let mode = isFact(select) ? 
+                        const mode = isFact(select) ? 
                             ROLE_VALUE_MODE : CONSTRAINT_VALUE_MODE;
                         that._eventbus.fire(CONSTRAINT_BUS_TRIGGER, 
                             {source: select, mode: mode,
@@ -431,7 +431,7 @@ export default class OrmShortcuts {
         const event  = context.keyEvent;
         const selected = that._selection.get();
         if (selected.length === 1){
-            let select = selected[0];
+            const select = selected[0];
             if (event.ctrlKey){
                 return;
             }
@@ -554,7 +554,7 @@ export default class OrmShortcuts {
         const event = context.keyEvent;
         const selected = that._selection.get();
         if (selected.length === 1){
-            let select = selected[0];
+            const select = selected[0];
             if (event.ctrlKey){
                 return;
             }
@@ -572,13 +572,13 @@ export default class OrmShortcuts {
         const event = context.keyEvent;
         const selected = that._selection.get();
         if (selected.length === 1){
-            let select = selected[0];
+            const select = selected[0];
             if (event.ctrlKey){
                 return;
             }
             if (isEntity(select) || isObjectification(select)){
                 if (isKey(['f', 'F'], event)){
-                    var fact = Object.assign(
+                    let fact = Object.assign(
                     that._factory.createDummyAttributesForFacts(),
                         { x: select.x+select.width+ 100, 
                         y: select.y+select.height/2,}
@@ -588,11 +588,11 @@ export default class OrmShortcuts {
                         select.parent
                     );
                     // find a free position
-                    let pos = that._placement.place(select, fact);
+                    const pos = that._placement.place(select, fact);
                     fact.x = pos.x;
                     fact.y = pos.y;
                     // add entity as a role to the fact
-                    let con = that._modeling.connectToFact(fact, select, 0);
+                    const con = that._modeling.connectToFact(fact, select, 0);
                     that._modeling.sendUpdates(con,fact,select);
                     event.preventDefault();
                 }

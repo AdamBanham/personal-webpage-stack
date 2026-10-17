@@ -27,16 +27,16 @@ export default class ObjectificationRenderer extends TemplateRenderer<Objectifie
 
     draw(visuals: any, element: ObjectifiedRole) {
         svgClasses(visuals).add(RenderingConstants.classes.NO_HIT_CLASS);
-        let group = svgCreate("g", {
+        const group = svgCreate("g", {
             class: RenderingConstants.classes.VISUAL_GROUP_CLASS
         });
 
         // constants
-        let width = element.width,
+        const width = element.width,
             height = element.height;
 
         // create the objectification rectangle
-        let box = svgCreate("rect", {
+        const box = svgCreate("rect", {
                 x: 0,
                 y: 0,
                 rx: 2.5,

@@ -169,7 +169,7 @@ export class Document implements document{
 
     public findConnectionBetween(src:string, tgt:string, role:number): DocumentConnection | undefined{
         let ret;
-        for(let con of this.connections.values()){
+        for(const con of this.connections.values()){
             if (con.attributes.get('source') == src &&
                 con.attributes.get('target') == tgt &&
                 con.attributes.get('role') == role){
@@ -238,7 +238,7 @@ export default class DocumentParser {
                     + "'system' key is missing."
                 );
             }
-            let system = data.system;
+            const system = data.system;
             parsedDocument.setName(system.name|| "Unnamed System");
 
             if (!system.entities){
@@ -249,8 +249,8 @@ export default class DocumentParser {
             }
             // Parse entities
             if (system.entities) {
-                for(let entity of system.entities){                    
-                    let atttributes = new Map<string, any>();
+                for(const entity of system.entities){                    
+                    const atttributes = new Map<string, any>();
                     for (const key in entity) {
                         atttributes.set(key, entity[key]);
                     }
@@ -279,8 +279,8 @@ export default class DocumentParser {
             }
             // Parse facts
             if (system.facts) {
-                for(let fact of system.facts){
-                    let atttributes = new Map<string, any>();
+                for(const fact of system.facts){
+                    const atttributes = new Map<string, any>();
                     for (const key in fact) {
                         atttributes.set(key, fact[key]);
                     }
@@ -309,8 +309,8 @@ export default class DocumentParser {
                 );
             }
             if (system.connections) {
-                for(let connection of system.connections){
-                    let attributes = new Map<string, any>();
+                for(const connection of system.connections){
+                    const attributes = new Map<string, any>();
                     for (const key in connection) {
                         attributes.set(key, connection[key]);
                     }

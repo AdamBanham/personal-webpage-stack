@@ -70,7 +70,7 @@ export default function Bendpoints(
    * optional threshold
    */
   function isIntersectionMiddle(intersection, waypoints, treshold) {
-    var idx = intersection.index,
+    let idx = intersection.index,
         p = intersection.point,
         p0, p1, mid, aligned, xDelta, yDelta;
 
@@ -92,7 +92,7 @@ export default function Bendpoints(
    * Calculates the threshold from a connection's middle which fits the two-third-region
    */
   function calculateIntersectionThreshold(connection, intersection) {
-    var waypoints = connection.waypoints,
+    let waypoints = connection.waypoints,
         relevantSegment, alignment, segmentLength, threshold;
 
     if (intersection.index <= 0 || intersection.bendpoint) {
@@ -124,7 +124,7 @@ export default function Bendpoints(
   }
 
   function activateBendpointMove(event, connection) {
-    var waypoints = connection.waypoints,
+    let waypoints = connection.waypoints,
         intersection = getConnectionIntersection(canvas, waypoints, event),
         threshold;
 
@@ -158,7 +158,7 @@ export default function Bendpoints(
 
   function getBendpointsContainer(element, create) {
 
-    var layer = canvas.getLayer('overlays'),
+    let layer = canvas.getLayer('overlays'),
         gfx = domQuery('.djs-bendpoints[data-element-id="' + escapeCSS(element.id) + '"]', layer);
 
     if (!gfx && create) {
@@ -185,7 +185,7 @@ export default function Bendpoints(
 
   function createBendpoints(gfx, connection) {
     connection.waypoints.forEach(function(p, idx) {
-      var bendpoint = addBendpoint(gfx);
+      const bendpoint = addBendpoint(gfx);
 
       svgAppend(gfx, bendpoint);
 
@@ -198,13 +198,13 @@ export default function Bendpoints(
 
   function createSegmentDraggers(gfx, connection) {
 
-    var waypoints = connection.waypoints;
+    const waypoints = connection.waypoints;
 
-    var segmentStart,
+    let segmentStart,
         segmentEnd,
         segmentDraggerGfx;
 
-    for (var i = 1; i < waypoints.length; i++) {
+    for (let i = 1; i < waypoints.length; i++) {
 
       segmentStart = waypoints[i - 1];
       segmentEnd = waypoints[i];
@@ -237,7 +237,7 @@ export default function Bendpoints(
       return;
     }
 
-    var gfx = getBendpointsContainer(connection);
+    let gfx = getBendpointsContainer(connection);
 
     if (!gfx) {
       gfx = getBendpointsContainer(connection, true);
@@ -251,7 +251,7 @@ export default function Bendpoints(
 
   function updateHandles(connection) {
 
-    var gfx = getBendpointsContainer(connection);
+    const gfx = getBendpointsContainer(connection);
 
     if (gfx) {
       clearSegmentDraggers(gfx);
@@ -262,7 +262,7 @@ export default function Bendpoints(
   }
 
   function updateFloatingBendpointPosition(parentGfx, intersection) {
-    var floating = domQuery('.floating', parentGfx),
+    const floating = domQuery('.floating', parentGfx),
         point = intersection.point;
 
     if (!floating) {
@@ -275,7 +275,7 @@ export default function Bendpoints(
 
   function updateSegmentDraggerPosition(parentGfx, intersection, waypoints) {
 
-    var draggerGfx = getSegmentDragger(intersection.index, parentGfx),
+    let draggerGfx = getSegmentDragger(intersection.index, parentGfx),
         segmentStart = waypoints[intersection.index - 1],
         segmentEnd = waypoints[intersection.index],
         point = intersection.point,
@@ -311,7 +311,7 @@ export default function Bendpoints(
   });
 
   eventBus.on('connection.remove', function(event) {
-    var gfx = getBendpointsContainer(event.element);
+    const gfx = getBendpointsContainer(event.element);
 
     if (gfx) {
       svgRemove(gfx);
@@ -324,7 +324,7 @@ export default function Bendpoints(
         return;
       }
 
-    var element = event.element,
+    let element = event.element,
         bendpointsGfx;
     bendpointsGfx = addHandles(element);
 
@@ -341,7 +341,7 @@ export default function Bendpoints(
         return;
       }
 
-    var element = event.element,
+    let element = event.element,
         waypoints = element.waypoints,
         bendpointsGfx,
         intersection;
@@ -374,14 +374,14 @@ export default function Bendpoints(
       return;
     }
 
-    var originalEvent = event.originalEvent,
+    const originalEvent = event.originalEvent,
         element = event.element;
 
     return activateBendpointMove(originalEvent, element);
   });
 
   eventBus.on('selection.changed', function(event) {
-    var newSelection = event.newSelection,
+    const newSelection = event.newSelection,
         primary = newSelection[0];
 
     if (primary && primary.waypoints) {
@@ -394,7 +394,7 @@ export default function Bendpoints(
         return;
       }
 
-    var element = event.element;
+    const element = event.element;
     addHandles(element);
     interactionEvents.registerEvent(event.gfx, 'mousemove', 'element.mousemove');
   });
@@ -413,10 +413,10 @@ export default function Bendpoints(
         return;
     }
 
-    var element = context.element,
+    const element = context.element,
         newId = context.newId;
 
-    var bendpointContainer = getBendpointsContainer(element);
+    const bendpointContainer = getBendpointsContainer(element);
 
     if (bendpointContainer) {
     svgAttr(bendpointContainer, { 'data-element-id': newId });

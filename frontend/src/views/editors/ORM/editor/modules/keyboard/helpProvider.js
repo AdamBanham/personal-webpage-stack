@@ -6,7 +6,7 @@ export default class HelpProvider {
         this._help_window = document.getElementById('keyboard-window'); 
         this._keyboard_icon = document.getElementById('keyboard-controls-icon');
 
-        var that = this;
+        const that = this;
         this._keyboard_icon.addEventListener('click', () => {
             that.eventBus.fire('keyboard.controls.toggle');
         });

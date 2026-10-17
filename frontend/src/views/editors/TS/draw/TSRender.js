@@ -25,7 +25,7 @@ import {
   
 
 
-var RENDER_PRIORITY = 1500;
+const RENDER_PRIORITY = 1500;
 const LABEL_COLOUR = "#01031b"
 const INNER_ICON_FILL_COLOUR = "#222222"
 const MARKED_COLOR = "#ebdf3f"
@@ -42,13 +42,13 @@ export default class TSRenderer extends  BaseRenderer {
     
     constructor(eventBus, styles, canvas, textRender) {
         super(eventBus, 1)
-        var self = this;
+        const self = this;
         this._textRender = textRender
 
-        var renderPriority = RENDER_PRIORITY;
+        const renderPriority = RENDER_PRIORITY;
 
         eventBus.on([ 'render.shape' ], renderPriority, function(evt, context) {
-            var type = evt.type,
+            const type = evt.type,
                 element = context.element,
                 visuals = context.gfx,
                 attrs = context.attrs;
@@ -58,7 +58,7 @@ export default class TSRenderer extends  BaseRenderer {
             }
         });
         eventBus.on(['render.connection' ], renderPriority - 50, function(evt, context) {
-            var type = evt.type,
+            const type = evt.type,
                 element = context.element,
                 visuals = context.gfx,
                 attrs = context.attrs;
@@ -81,8 +81,8 @@ export default class TSRenderer extends  BaseRenderer {
             { fill: '#f58867', stroke: '#222222', strokeWidth: 2 }
         );
         
-        var defs = svgCreate("defs", {})
-        var marker = svgCreate("marker", {
+        const defs = svgCreate("defs", {})
+        const marker = svgCreate("marker", {
             id: 'arrow',
             viewbox: '0 0 10 10',
             refX: 4,
@@ -94,7 +94,7 @@ export default class TSRenderer extends  BaseRenderer {
             stroke: '#000000',
             fill: '#000000'
         })
-        var markerPath = svgCreate("path", {
+        const markerPath = svgCreate("path", {
             d: "M 0 0 L 5 2.5 L 0 5 z"
         })
         svgAppend(marker, markerPath)
@@ -108,8 +108,8 @@ export default class TSRenderer extends  BaseRenderer {
 
     drawShape(visuals, element, attrs) {
             // init
-            var svgElements;
-            var group = svgCreate("g", {})
+            let svgElements;
+            const group = svgCreate("g", {})
             
             // construct the svg elements for the state
             if (isStartingState(element)){
@@ -120,12 +120,12 @@ export default class TSRenderer extends  BaseRenderer {
                 svgElements = this.drawEndingState(element)
             } else {
                 if (!isState(element.labelTarget)){
-                    var labelAttrs = assign({
+                    const labelAttrs = assign({
                         x: 0,
                         fitBox: true
                     }, element)
                     labelAttrs.x = labelAttrs.x - labelAttrs.width
-                    var text = this._textRender.createText(
+                    const text = this._textRender.createText(
                         element.text || '', labelAttrs)
                     svgClasses(text).add('djs-label');
                     svgAppend(visuals, text);
@@ -142,7 +142,7 @@ export default class TSRenderer extends  BaseRenderer {
             }
             
             // append svgs and return the svg group
-            for(var svg of svgElements){
+            for(const svg of svgElements){
                 svgAppend(group, svg)
             }
             svgAppend(visuals, group)
@@ -150,7 +150,7 @@ export default class TSRenderer extends  BaseRenderer {
     };
 
     createCircleForState(element, style){
-        var svg = svgCreate("circle", style || {})
+        const svg = svgCreate("circle", style || {})
         svgAttr(svg, 
             {
                 cx: element.cx,
@@ -168,7 +168,7 @@ export default class TSRenderer extends  BaseRenderer {
     }
     
     createShadowForState(svgElement){
-        var svg = svgClone(svgElement)
+        const svg = svgClone(svgElement)
         svgAttr(svg,{
             opacity: 0.25,
             cx: parseFloat(svgElement.attributes.cx.nodeValue) + 2.5,
@@ -178,25 +178,25 @@ export default class TSRenderer extends  BaseRenderer {
     }
 
     drawInternalState(element){
-        var state = this.createCircleForState(
+        const state = this.createCircleForState(
             element, this.INTERNAL_SHAPE_STYLE)
-        var shadow = this.createShadowForState(state)
+        const shadow = this.createShadowForState(state)
 
         return [shadow, state]
     }
 
     drawStartingState(element){
-        var state = this.createCircleForState(
+        const state = this.createCircleForState(
             element, this.STARTING_SHAPE_STYLE)
-        var shadow = this.createShadowForState(state)
-        var icon = this.createStartingIcon(element)
+        const shadow = this.createShadowForState(state)
+        const icon = this.createStartingIcon(element)
 
         return [shadow, state, icon]
     }
 
     createStartingIcon(element){
-        var w = (element.r/ 2.0)
-        var svg = svgCreate('polygon', 
+        const w = (element.r/ 2.0)
+        const svg = svgCreate('polygon', 
             {
                 points: [
                     {x: element.cx + 2.5 - w, y: element.cy- w},
@@ -212,21 +212,21 @@ export default class TSRenderer extends  BaseRenderer {
     }
 
     drawEndingState(element){
-        var inner = this.createCircleForState(
+        const inner = this.createCircleForState(
             element, this.ENDING_SHAPE_STYLE)
-        var outer = svgClone(inner)
+        const outer = svgClone(inner)
         svgAttr(outer, {
             r: element.r + 4
         })
-        var shadow = this.createShadowForState(outer)
-        var icon = this.createEndingIcon(element)
+        const shadow = this.createShadowForState(outer)
+        const icon = this.createEndingIcon(element)
 
         return [shadow, outer, inner , icon]
     }
 
     createEndingIcon(element){
-        var w = (element.r/ 2.0)
-        var svg = svgCreate('polygon', 
+        const w = (element.r/ 2.0)
+        const svg = svgCreate('polygon', 
             {
                 points: [
                     {x: element.cx - w, y: element.cy - w},
@@ -243,7 +243,7 @@ export default class TSRenderer extends  BaseRenderer {
     }
 
     drawStateLabel(element){
-        var text = svgCreate('text',
+        const text = svgCreate('text',
             assign({
                 x: stateRadius,
                 y: stateRadius,
@@ -265,20 +265,20 @@ export default class TSRenderer extends  BaseRenderer {
     }
 
     _drawSimpleConnection(visuals, connection, attrs){
-        var line = createLine(
+        const line = createLine(
             connection.waypoints, assign({
                 id: connection.id
             }, 
             this.CONNECTION_STYLE, attrs || {}),
             5
         );
-        var waypoints = connection.waypoints.slice(0,2).map(p => {
+        const waypoints = connection.waypoints.slice(0,2).map(p => {
             return {x:p.x+5, y:p.y-5}
         })
         waypoints.sort(
             (a,b) => a.x - b.x
         )
-        var pather = createLine(
+        const pather = createLine(
             waypoints, {
                 id: "d"+connection.id
             })
@@ -287,8 +287,8 @@ export default class TSRenderer extends  BaseRenderer {
             line,
             {'marker-end' : "url(#arrow)",}
         )
-        var text = svgCreate('text', {})
-        var textPath = svgCreate('textPath', assign({
+        const text = svgCreate('text', {})
+        const textPath = svgCreate('textPath', assign({
             href: "#d"+connection.id,
             startOffset: "50%",
             side: "right",
@@ -304,15 +304,15 @@ export default class TSRenderer extends  BaseRenderer {
 
     _drawSelfLoopConnection(visuals, connection, attrs){
         // work out self loop from the src 
-        var d = "M "
-        var src = connection.source
+        let d = "M "
+        const src = connection.source
         //console.log(src)
         // add src
         d += "" + (src.x + src.cx)
         d += " " + (src.y + src.cy)
         // work out equal right sides
         //((src.r) ^ 2) .  sqrt(2) = s
-        var side = (src.r / 2.0) * Math.sqrt(2)
+        const side = (src.r / 2.0) * Math.sqrt(2)
         //console.log(side)
         d += " L "
         d += "" + (src.x + src.cx + side)
@@ -325,7 +325,7 @@ export default class TSRenderer extends  BaseRenderer {
         d += " Z"
         //console.log(d)
         // construct line
-        var line = svgCreate('path',
+        const line = svgCreate('path',
             {
                 id: connection.id,
                 d: d
@@ -354,13 +354,13 @@ export default class TSRenderer extends  BaseRenderer {
         //     waypoints, {
         //         id: "d"+connection.id
         //     })
-        var xOffset = ((side - 5) * 2.5) / 5.0
-        var yOffset = (((side + side + 10) / 2) / 5) * -1.0
-        var viewbox = "" + (src.x + src.cx + side)
+        const xOffset = ((side - 5) * 2.5) / 5.0
+        const yOffset = (((side + side + 10) / 2) / 5) * -1.0
+        let viewbox = "" + (src.x + src.cx + side)
         viewbox += " " + (src.y + src.cy + side)
         viewbox += " " + (src.x + src.cx + side + 10)
         viewbox += " " + (src.y + src.cy + side + 10)
-        var marker = svgCreate("marker", {
+        const marker = svgCreate("marker", {
             id: 'newArrow',
             viewbox: viewbox,
             refX: xOffset,
@@ -372,7 +372,7 @@ export default class TSRenderer extends  BaseRenderer {
             stroke: '#303c4a',
             fill: '#303c4a'
         })
-        var markerPath = svgCreate("path", {
+        const markerPath = svgCreate("path", {
             d: "M 0 0 L 5 2.5 L 0 5 z"
         })
         svgAppend(marker, markerPath)
@@ -380,8 +380,8 @@ export default class TSRenderer extends  BaseRenderer {
             line,
             {'marker-end' : "url(#newArrow)", 'stroke' : "#ba3d23"}
         )
-        var text = svgCreate('text', {})
-        var textPath = svgCreate('textPath', assign({
+        const text = svgCreate('text', {})
+        const textPath = svgCreate('textPath', assign({
             href: "#d"+connection.id,
             startOffset: "50%",
             side: "right",

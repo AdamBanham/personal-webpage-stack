@@ -12,7 +12,7 @@ import { isFact } from '../model/util';
 import { transformToViewbox } from "../utils/canvasUtils";
 import { HelpChainBuilder } from '../help-interactions/model';
 
-var MARKER_OK = 'connect-ok',
+const MARKER_OK = 'connect-ok',
 MARKER_NOT_OK = 'connect-not-ok',
 helper_title = `
 <p> 
@@ -96,7 +96,7 @@ export default function OrmConnect(
   
     // event handlers
     eventBus.on('connect.move', function(event) {
-      var context = event.context,
+      const context = event.context,
           start = context.start,
           hover = context.hover;
       // check for fact, otherwise cancel
@@ -107,14 +107,14 @@ export default function OrmConnect(
         return;
       }
       // check if the targeted role is available after transforming.
-      let transform = transformToViewbox(
+      const transform = transformToViewbox(
         canvas.viewbox(), 
         { x : event.originalEvent.layerX, 
           y: event.originalEvent.layerY
         }
       );
       context.targetRole = hover.findNearestRoleUsingPos(transform.x, transform.y);
-      var canExecute = context.canExecute = canConnect(
+      const canExecute = context.canExecute = canConnect(
         start, hover, context.targetRole
       );
       
@@ -131,7 +131,7 @@ export default function OrmConnect(
     });
   
     eventBus.on('connect.hover', function(event) {
-      var context = event.context,
+      let context = event.context,
           start = context.start,
           hover = event.hover,
           canExecute;
@@ -146,10 +146,10 @@ export default function OrmConnect(
   
       // cache hover state
       context.hover = hover;
-      var targetedRole = context.targetRole;
+      let targetedRole = context.targetRole;
       if (hover){
         // check if the targeted role is available after transforming.
-        let transform = transformToViewbox(
+        const transform = transformToViewbox(
           canvas.viewbox(),
           { x : event.originalEvent.layerX, 
             y: event.originalEvent.layerY
@@ -175,7 +175,7 @@ export default function OrmConnect(
     });
   
     eventBus.on([ 'connect.out', 'connect.cleanup' ], function(event) {
-      var context = event.context;
+      const context = event.context;
       recuriseRemoveMarkers(context.hover);
       recuriseRemoveMarkers(context.start);
       context.hover = null;
@@ -192,13 +192,13 @@ export default function OrmConnect(
     });
 
     eventBus.on(['connect.cancel','connect.canceled'], function(event) {
-      var context = event.context;
+      const context = event.context;
       recuriseRemoveMarkers(context.hover);
       recuriseRemoveMarkers(context.start);
     });
   
     eventBus.on('connect.end', function(event) {
-      var context = event.context,
+      const context = event.context,
           canExecute = context.canExecute,
           entity = context.source,
           role = context.targetRole,
@@ -210,7 +210,7 @@ export default function OrmConnect(
         return;
       }
       if (canConnect(entity, fact, role)){
-        let con = modeling.connectToFact(fact, entity, role);
+        const con = modeling.connectToFact(fact, entity, role);
         recuriseRemoveMarkers(con);
       } 
       
@@ -266,7 +266,7 @@ export default function OrmConnect(
   // helpers //////////
   
   export function isReverse(context) {
-    var hover = context.hover,
+    const hover = context.hover,
         source = context.source,
         target = context.target;
   

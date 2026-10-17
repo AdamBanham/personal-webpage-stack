@@ -26,7 +26,7 @@ export default class RoleConnectionRenderer extends TemplateRenderer<OrmConnecti
         super(eventBus, renderOptions, SHAPE_TYPE, "connection");
 
         // add definitions
-        let defs = svgCreate("defs",{});
+        const defs = svgCreate("defs",{});
         this._setupMarkers(defs);
         // @ts-ignore
         svgAppend(canvas.getActiveLayer(), defs);
@@ -42,7 +42,7 @@ export default class RoleConnectionRenderer extends TemplateRenderer<OrmConnecti
 
     _setupMarkers(defs:any) {
         // use a base of 20 (abaritary, feels selected)
-        let mandatory = svgCreate("marker", {
+        const mandatory = svgCreate("marker", {
             id: "mandatory-role",
             refX: 10,
             refY: 5,
@@ -67,12 +67,12 @@ export default class RoleConnectionRenderer extends TemplateRenderer<OrmConnecti
     draw(visuals: SVGElement, element: OrmConnection): SVGElement {
         // Placeholder for actual rendering logic
         // handle the role that is being targeted
-        let waypoints = Array.from(element.waypoints);
-        let group = svgCreate("g", {});
+        const waypoints = Array.from(element.waypoints);
+        const group = svgCreate("g", {});
 
         if (waypoints.length >= 2){
             // now create the line using the updated waypoints
-            var line = createLine(
+            const line = createLine(
                 waypoints, Object.assign({
                     id: element.id
                 }, 
@@ -105,7 +105,7 @@ export default class RoleConnectionRenderer extends TemplateRenderer<OrmConnecti
      */
     drawDebug(visuals: any, element: any) {
         for (let i = 0; i < element.waypoints.length; i++) {
-            let dot = this._drawDebugDot(
+            const dot = this._drawDebugDot(
                 element.waypoints[i].x,
                 element.waypoints[i].y
             );

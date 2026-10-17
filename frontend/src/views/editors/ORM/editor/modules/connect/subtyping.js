@@ -92,7 +92,7 @@ export default function OrmSubtyping(
   
     // event handlers
     eventBus.on(`${EMIT_NAME}.move`, function(event) {
-      var context = event.context,
+      const context = event.context,
           start = context.start,
           hover = context.hover;
       // check that hovered is a entity, otherwise cancel
@@ -108,7 +108,7 @@ export default function OrmSubtyping(
         return;
       }
       // check if the targeted entity is subtypable.
-      var canExecute = context.canExecute = canConnect(
+      const canExecute = context.canExecute = canConnect(
         start, hover
       );
       
@@ -125,7 +125,7 @@ export default function OrmSubtyping(
     });
   
     eventBus.on(`${EMIT_NAME}.hover`, function(event) {
-      var context = event.context,
+      let context = event.context,
           start = context.start,
           hover = event.hover,
           canExecute;
@@ -158,7 +158,7 @@ export default function OrmSubtyping(
     });
   
     eventBus.on([ `${EMIT_NAME}.out`, `${EMIT_NAME}.cleanup` ], function(event) {
-      var context = event.context;
+      const context = event.context;
       recuriseRemoveMarkers(context.hover);
       recuriseRemoveMarkers(context.start);
       context.hover = null;
@@ -173,13 +173,13 @@ export default function OrmSubtyping(
     });
 
     eventBus.on([`${EMIT_NAME}.cancel`,`${EMIT_NAME}.canceled`], function(event) {
-      var context = event.context;
+      const context = event.context;
       recuriseRemoveMarkers(context.hover);
       recuriseRemoveMarkers(context.start);
     });
   
     eventBus.on(`${EMIT_NAME}.end`, function(event) {
-      var context = event.context,
+      const context = event.context,
           canExecute = context.canExecute,
           src = context.source,
           tgt = context.target;
@@ -190,7 +190,7 @@ export default function OrmSubtyping(
         return;
       }
       if (canConnect(src, tgt)){
-        let con = modeling.createSubtypeBetween(src, tgt);
+        const con = modeling.createSubtypeBetween(src, tgt);
         recuriseRemoveMarkers(con);
       } 
       

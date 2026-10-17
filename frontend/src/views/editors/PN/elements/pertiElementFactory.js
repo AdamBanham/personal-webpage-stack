@@ -54,7 +54,7 @@ class PetriElementFactory extends ElementFactory {
     }
 
     getNextPlaceId(){
-        var id = `place-${this._lastStateId++}`
+        let id = `place-${this._lastStateId++}`
         while (!this.checkIdentifer(id)){
             id = `place-${this._lastStateId++}`
         }
@@ -63,7 +63,7 @@ class PetriElementFactory extends ElementFactory {
     }
 
     getNextTransitionId(){
-        var id = `transition-${this._lastStateId++}`
+        let id = `transition-${this._lastStateId++}`
         while (!this.checkIdentifer(id)){
             id = `transition-${this._lastStateId++}`
         }
@@ -72,7 +72,7 @@ class PetriElementFactory extends ElementFactory {
     }
 
     getNextFlowId(){
-        var id = `flow-${this._lastConnectionId++}`
+        let id = `flow-${this._lastConnectionId++}`
         while (!this.checkIdentifer(id)){
             id = `flow-${this._lastConnectionId++}`
         }
@@ -81,7 +81,7 @@ class PetriElementFactory extends ElementFactory {
     }
 
     createPlace(context){
-        var place = {
+        const place = {
             id: context.id ? context.id : this.getNextPlaceId(),
             type: 'place',
             x: context.x,
@@ -97,7 +97,7 @@ class PetriElementFactory extends ElementFactory {
     }
 
     createTransition(context, silent=false){
-        var transition = {
+        const transition = {
             id: context.id ? context.id : this.getNextTransitionId(),
             type: 'transition',
             x: context.x,
@@ -112,7 +112,7 @@ class PetriElementFactory extends ElementFactory {
     }
 
     createFlow(context){
-        var flow = {
+        const flow = {
             id: context.id ? context.id : this.getNextFlowId(),
             type: 'flow',
             waypoints: context.waypoints || [

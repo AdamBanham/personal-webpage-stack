@@ -38,7 +38,7 @@ export default function ExamplePaletteProvider(
   
   
   ExamplePaletteProvider.prototype.getPaletteEntries = function() {
-    var create = this._create,
+    const create = this._create,
         factory = this._elementFactory,
         lassoTool = this._lassoTool,
         spaceTool = this._spaceTool,
@@ -80,7 +80,7 @@ export default function ExamplePaletteProvider(
         title: 'Create Entity Type',
         action: {
           click: function(event) {
-            var s = Object.assign(
+            const s = Object.assign(
               factory.createDummyAttributesForEntities("entity"),
               { x: 200, y: 100,}
             );
@@ -94,7 +94,7 @@ export default function ExamplePaletteProvider(
         title: 'Create Value Type',
         action: {
           click: function(event) {
-            var s = Object.assign(
+            const s = Object.assign(
               factory.createDummyAttributesForEntities("value"),
               { x: 200, y: 100,}
             );
@@ -109,7 +109,7 @@ export default function ExamplePaletteProvider(
         title: 'Create Fact type',
         action: {
           click: function(event) {
-            var s = Object.assign(
+            const s = Object.assign(
               factory.createDummyAttributesForFacts(),
               { x: 200, y: 100,}
             );
@@ -207,7 +207,7 @@ export default function ExamplePaletteProvider(
         action: {
           click: function(event) {
             // clear the system, except for root
-            var els = registry.getAll().filter(
+            const els = registry.getAll().filter(
                 (v) => {
                     return !v.id.includes("implicitroot");
                 }

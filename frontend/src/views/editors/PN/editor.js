@@ -105,7 +105,7 @@ export default function TSEditor(options) {
         CustomBendingModule
     ];
 
-    var diagram =  new Diagram({
+    const diagram =  new Diagram({
         canvas: {
             container
         },

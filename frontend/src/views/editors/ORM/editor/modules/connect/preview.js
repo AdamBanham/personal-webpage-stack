@@ -1,7 +1,7 @@
-var HIGH_PRIORITY = 1100,
+const HIGH_PRIORITY = 1100,
     LOW_PRIORITY = 900;
 
-var MARKER_OK = 'connect-ok',
+const MARKER_OK = 'connect-ok',
     MARKER_NOT_OK = 'connect-not-ok';
 
 import { EMIT_NAME as SUBTYPE_EMIT_NAME } from './subtyping';
@@ -24,17 +24,17 @@ export default class OrmConnectPreview {
         this._eventBus = eventBus;
         this._canvas = canvas;
         
-        for (let connector of ConnectorNames){
+        for (const connector of ConnectorNames){
             this.addListenerFor(connector);
         }
     }
 
     addListenerFor(connector) {
-        var that = this;
-        var connectionPreview = this._injector.get('connectionPreview', false);
+        const that = this;
+        const connectionPreview = this._injector.get('connectionPreview', false);
 
         connectionPreview && this._eventBus.on(`${connector}.move`, function(event) {
-            var context = event.context,
+            const context = event.context,
                 canConnect = context.canExecute,
                 hover = context.hover,
                 source = context.source,
@@ -58,7 +58,7 @@ export default class OrmConnectPreview {
         });
 
         this._eventBus.on(`${connector}.hover`, LOW_PRIORITY, function(event) {
-            var context = event.context,
+            const context = event.context,
                 hover = event.hover,
                 canExecute = context.canExecute;
 
@@ -74,7 +74,7 @@ export default class OrmConnectPreview {
             `${connector}.out`,
             `${connector}.cleanup`
         ], HIGH_PRIORITY, function(event) {
-            var hover = event.hover;
+            const hover = event.hover;
 
             // if (hover) {
             //     that._canvas.removeMarker(hover, MARKER_OK);

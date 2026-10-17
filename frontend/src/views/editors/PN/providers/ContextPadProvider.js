@@ -43,7 +43,7 @@ export default function ContextPadProvider(
 
     ContextPadProvider.prototype.getContextPadEntries = function(element){
         
-        var connect = this._connect,
+        const connect = this._connect,
             modeling = this._modeling,
             factory = this._elementFactory,
             create = this._create,
@@ -68,9 +68,9 @@ export default function ContextPadProvider(
         }
 
         function flipConnection(event, element){
-            var src = element.source
-            var tgt = element.target
-            var waypoints = [
+            const src = element.source
+            const tgt = element.target
+            const waypoints = [
                 {x: tgt.x, y: tgt.y},
                 {x: src.x, y: src.y}
             ]
@@ -78,7 +78,7 @@ export default function ContextPadProvider(
             element.target = src 
             element.waypoints = waypoints
             modeling.removeConnection(element)
-            var connect = modeling.createConnection(tgt, src, element, src.parent)
+            const connect = modeling.createConnection(tgt, src, element, src.parent)
             modeling.layoutConnection (
                 connect,
             )
@@ -88,7 +88,7 @@ export default function ContextPadProvider(
         }
 
         function createConnectedTransition(event, element, silent=false){
-            var trans = factory.createTransition({
+            let trans = factory.createTransition({
                 x: element.x+150,
                 y: element.y + element.height/2,
             }, silent)
@@ -97,7 +97,7 @@ export default function ContextPadProvider(
                 trans, {x:trans.x, y:trans.y}, 
                 element.parent, 1
             )
-            var context = {
+            const context = {
                 source: element,
                 target: trans,
                 waypoints: [
@@ -105,7 +105,7 @@ export default function ContextPadProvider(
                     {x: trans.x, y:trans.y}
                 ]
             }
-            var shape = factory.createFlow(
+            const shape = factory.createFlow(
                 context
             )
             factory.logIdentifer(shape.id)
@@ -125,7 +125,7 @@ export default function ContextPadProvider(
         }
 
         function createConnectedPlace(event, element){
-            var place = factory.createPlace({
+            let place = factory.createPlace({
                 x: element.x + 150,
                 y: element.y + element.height/2
             })
@@ -134,7 +134,7 @@ export default function ContextPadProvider(
                 place, {x:place.x, y:place.y}, 
                 element.parent, 1
             )
-            var context = {
+            const context = {
                 source: element,
                 target: place,
                 waypoints: [
@@ -142,7 +142,7 @@ export default function ContextPadProvider(
                     {x: place.x, y:place.y}
                 ]
             }
-            var shape = factory.createFlow(
+            const shape = factory.createFlow(
                 context
             )
             factory.logIdentifer(shape.id)
@@ -161,7 +161,7 @@ export default function ContextPadProvider(
             select.select(place)
         }
 
-        var contextPadOptions = {}
+        const contextPadOptions = {}
 
         // alaways present
         contextPadOptions['delete'] = {

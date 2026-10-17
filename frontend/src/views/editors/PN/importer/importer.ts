@@ -69,8 +69,8 @@ export default class Importing {
         if (context.text === undefined){
             throw new Error("No text provided to load")
         }
-        var parser = new DOMParser()
-        var system = parser.parseFromString(
+        const parser = new DOMParser()
+        const system = parser.parseFromString(
             this.decode(context.text), "application/xml"
         )
         if (system.getElementsByTagName("parsererror").length > 0){
@@ -83,7 +83,7 @@ export default class Importing {
     }
 
     decode(text){
-        var ret = text
+        let ret = text
         for(const illegal in XML_ILLEGALS){
             ret = ret.replace(
                 XML_ILLEGALS[illegal], illegal
@@ -105,8 +105,8 @@ export default class Importing {
 
     _import(system){
         // clear the system, except for root
-        var that = this
-        var els = this._registry.getAll().filter(
+        const that = this
+        const els = this._registry.getAll().filter(
             (v) => {
                 return !v.id.includes("implicitroot")
             }
@@ -121,10 +121,10 @@ export default class Importing {
             )
         }
         // parse states
-        var named_els = {}
+        const named_els = {}
         
-        var places = system.getElementsByTagName("place")
-        for (var place of places){
+        const places = system.getElementsByTagName("place")
+        for (const place of places){
             var attrs = place.attributes
             var pos = place.getElementsByTagName("graphics")[0]
                 .getElementsByTagName("position")[0]
@@ -145,12 +145,12 @@ export default class Importing {
             named_els[mshape.id] = mshape
         }
         // parse transitions 
-        var trans = system.getElementsByTagName("transition")
-        for (var tran of trans){
+        const trans = system.getElementsByTagName("transition")
+        for (const tran of trans){
             var attrs = tran.attributes
             var pos = tran.getElementsByTagName("graphics")[0]
                 .getElementsByTagName("position")[0]
-            var label = this.decode(tran.getElementsByTagName("name")[0]
+            const label = this.decode(tran.getElementsByTagName("name")[0]
                 .textContent).trim()
             var context = {
                 id: attrs.id.value,
@@ -170,14 +170,14 @@ export default class Importing {
             named_els[mshape.id] = mshape
         }
         // parse flows
-        var arcs = system.getElementsByTagName("arc")
-        for (var arc of arcs){
+        const arcs = system.getElementsByTagName("arc")
+        for (const arc of arcs){
             var attrs = arc.attributes
-            var src = named_els[attrs.source.value]
-            var tgt = named_els[attrs.target.value]
+            const src = named_els[attrs.source.value]
+            const tgt = named_els[attrs.target.value]
             if (arc.getElementsByTagName("graphics").length > 0){
                 var points = []
-                var tmp = arc.getElementsByTagName("graphics")[0]
+                const tmp = arc.getElementsByTagName("graphics")[0]
                 .getElementsByTagName("position");
                 for(var pos of tmp){
                     points.push({
@@ -222,10 +222,10 @@ export default class Importing {
             // this._modeling.updateWaypoints(mshape, points)
         }
         // move all states to ensure a clean start
-        var bus = this._bus
-        var modeler = this._modeling
-        var push = 1
-        for(var k in named_els){
+        const bus = this._bus
+        const modeler = this._modeling
+        let push = 1
+        for(const k in named_els){
             const item = named_els[k]
             setTimeout( () => 
             {

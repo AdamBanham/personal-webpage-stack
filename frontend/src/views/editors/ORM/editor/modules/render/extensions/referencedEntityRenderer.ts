@@ -27,20 +27,20 @@ export default  class ReferencedEntityRenderer extends TemplateRenderer<Entity> 
 
     draw(visuals: SVGElement, element: Entity): SVGElement {
         // container for all visuals
-        var group = svgCreate("g", {
+        const group = svgCreate("g", {
                 class: RenderingConstants.classes.VISUAL_GROUP_CLASS
         });
 
         // draw constants
-        let rx = 10 ;
-        let strokeWidth = 3;
-        let dashType = "";
-        let centerText = Math.floor(element.width * 0.5);
-        let textUpper = (element.height / 2) - 3.75;
-        let textLower = (element.height / 2) + 15.5;
+        const rx = 10 ;
+        const strokeWidth = 3;
+        const dashType = "";
+        const centerText = Math.floor(element.width * 0.5);
+        const textUpper = (element.height / 2) - 3.75;
+        const textLower = (element.height / 2) + 15.5;
 
         // draw bounding box
-        let box = svgCreate("rect", {
+        const box = svgCreate("rect", {
             fill: RenderingConstants.css.SHAPE_FILL_COLOUR,
             stroke: RenderingConstants.css.BORDER_COLOUR,
             strokeWidth: strokeWidth,
@@ -59,7 +59,7 @@ export default  class ReferencedEntityRenderer extends TemplateRenderer<Entity> 
                 return "";
             }
             if (text.length > maxLetters){
-                let newText = text.substring(0, maxLetters - 1) + "...";
+                const newText = text.substring(0, maxLetters - 1) + "...";
                 return newText;
             } else {
                 return text;
@@ -67,7 +67,7 @@ export default  class ReferencedEntityRenderer extends TemplateRenderer<Entity> 
         };
         const adjustLowerText = (text:string) => {
             if (text.length > maxLetters){
-                let newText = text.substring(0, maxLetters - 1) + "...)";
+                const newText = text.substring(0, maxLetters - 1) + "...)";
                 return newText;
             } else {
                 return text;
@@ -79,7 +79,7 @@ export default  class ReferencedEntityRenderer extends TemplateRenderer<Entity> 
         style += `font-size: 12px;`;
 
         // draw upper text
-        let upperText = svgCreate("text", {
+        const upperText = svgCreate("text", {
             x: centerText, y: textUpper, 
             fill: RenderingConstants.css.SHAPE_LABEL_COLOUR,
             style: style,
@@ -88,7 +88,7 @@ export default  class ReferencedEntityRenderer extends TemplateRenderer<Entity> 
         svgAppend(group, upperText);
         // draw lower text
         if (isUnitReference(element)){
-            let lowerText = svgCreate("text", {
+            const lowerText = svgCreate("text", {
                 x: centerText, y: textLower,
                 fill: RenderingConstants.css.SHAPE_LABEL_COLOUR,
                 style: style,
@@ -97,7 +97,7 @@ export default  class ReferencedEntityRenderer extends TemplateRenderer<Entity> 
             lowerText.textContent = adjustLowerText(lowerText.textContent);
             svgAppend(group, lowerText);
         } else if (isReferredReference(element)){
-            let lowerText = svgCreate("text", {
+            const lowerText = svgCreate("text", {
                 x: centerText, y: textLower,
                 fill: RenderingConstants.css.SHAPE_LABEL_COLOUR,
                 style: style,

@@ -1,4 +1,4 @@
-var round = Math.round;
+const round = Math.round;
 
 import { assign } from 'min-dash';
 
@@ -36,7 +36,7 @@ import { isKey } from 'diagram-js/lib/features/keyboard/KeyboardUtil';
  * @typedef {import('../selection/Selection').default} Selection
  */
 
-var DRAG_ACTIVE_CLS = 'djs-drag-active';
+const DRAG_ACTIVE_CLS = 'djs-drag-active';
 
 
 function preventDefault(event) {
@@ -141,7 +141,7 @@ function getLength(point) {
  */
 export default function Dragging(eventBus, canvas, selection, elementRegistry) {
 
-  var defaultOptions = {
+  const defaultOptions = {
     threshold: 5,
     trapClick: true
   };
@@ -150,14 +150,14 @@ export default function Dragging(eventBus, canvas, selection, elementRegistry) {
   // dragging is active as soon as this context exists.
   //
   // it is visually _active_ only when a context.active flag is set to true.
-  var context;
+  let context;
 
   /* convert a global event into local coordinates */
   function toLocalPoint(globalPosition) {
 
-    var viewbox = canvas.viewbox();
+    const viewbox = canvas.viewbox();
 
-    var clientRect = canvas._container.getBoundingClientRect();
+    const clientRect = canvas._container.getBoundingClientRect();
 
     return {
       x: viewbox.x + (globalPosition.x - clientRect.left) / viewbox.scale,
@@ -170,7 +170,7 @@ export default function Dragging(eventBus, canvas, selection, elementRegistry) {
   function fire(type, dragContext) {
     dragContext = dragContext || context;
 
-    var event = eventBus.createEvent(
+    const event = eventBus.createEvent(
       assign(
         {},
         dragContext.payload,
@@ -187,7 +187,7 @@ export default function Dragging(eventBus, canvas, selection, elementRegistry) {
   }
 
   function restoreSelection(previousSelection) {
-    var existingSelection = previousSelection.filter(function(element) {
+    const existingSelection = previousSelection.filter(function(element) {
       return elementRegistry.get(element.id);
     });
 
@@ -197,14 +197,14 @@ export default function Dragging(eventBus, canvas, selection, elementRegistry) {
   // event listeners
 
   function move(event, activate) {
-    var payload = context.payload,
+    const payload = context.payload,
         displacement = context.displacement;
 
-    var globalStart = context.globalStart,
+    const globalStart = context.globalStart,
         globalCurrent = toPoint(event),
         globalDelta = deltaPos(globalCurrent, globalStart);
 
-    var localStart = context.localStart,
+    const localStart = context.localStart,
         localCurrent = toLocalPoint(globalCurrent),
         localDelta = deltaPos(localCurrent, localStart);
 
@@ -263,7 +263,7 @@ export default function Dragging(eventBus, canvas, selection, elementRegistry) {
   }
 
   function end(event) {
-    var previousContext,
+    let previousContext,
         returnValue = true;
 
     if (context.active) {
@@ -312,7 +312,7 @@ export default function Dragging(eventBus, canvas, selection, elementRegistry) {
 
   function trapClickAndEnd(event) {
 
-    var untrap;
+    let untrap;
 
     // trap the click in case we are part of an active
     // drag operation. This will effectively prevent
@@ -340,7 +340,7 @@ export default function Dragging(eventBus, canvas, selection, elementRegistry) {
   // respectively
 
   function hover(event) {
-    var payload = context.payload;
+    const payload = context.payload;
 
     payload.hoverGfx = event.gfx;
     payload.hover = event.element;
@@ -350,7 +350,7 @@ export default function Dragging(eventBus, canvas, selection, elementRegistry) {
 
   function out(event) {
     fire('out');
-    var payload = context.payload;
+    const payload = context.payload;
 
     payload.hoverGfx = null;
     payload.hover = null;
@@ -360,13 +360,13 @@ export default function Dragging(eventBus, canvas, selection, elementRegistry) {
   // life-cycle methods
 
   function cancel(restore) {
-    var previousContext;
+    let previousContext;
 
     if (!context) {
       return;
     }
 
-    var wasActive = context.active;
+    const wasActive = context.active;
 
     if (wasActive) {
       fire('cancel');
@@ -383,7 +383,7 @@ export default function Dragging(eventBus, canvas, selection, elementRegistry) {
   }
 
   function cleanup(restore) {
-    var previousContext,
+    let previousContext,
         endDrag;
 
     fire('cleanup');
@@ -420,7 +420,7 @@ export default function Dragging(eventBus, canvas, selection, elementRegistry) {
     canvas.removeMarker(canvas.getRootElement(), DRAG_ACTIVE_CLS);
 
     // restore selection, unless it has changed
-    var previousSelection = context.payload.previousSelection;
+    const previousSelection = context.payload.previousSelection;
 
     if (restore !== false && previousSelection && !selection.get().length) {
       restoreSelection(previousSelection);
@@ -459,7 +459,7 @@ export default function Dragging(eventBus, canvas, selection, elementRegistry) {
 
     options = assign({}, defaultOptions, options || {});
 
-    var data = options.data || {},
+    let data = options.data || {},
         originalEvent,
         globalStart,
         localStart,

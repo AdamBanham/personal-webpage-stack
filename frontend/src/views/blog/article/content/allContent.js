@@ -7,11 +7,11 @@ const allcontent = []
     .concat(content2024)
     .concat(content2025)
     
-var contentkeys = []
-var contentDict = {}
+const contentkeys = []
+const contentDict = {}
 
-for(let i in allcontent){
-    var cont = allcontent[i]
+for(const i in allcontent){
+    const cont = allcontent[i]
     if (cont.id in contentDict){
         throw Error("Found duplicated article id :: "+cont.id)
     }

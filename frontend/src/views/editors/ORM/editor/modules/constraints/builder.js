@@ -1,4 +1,4 @@
-var round = Math.round;
+const round = Math.round;
 
 import { assign } from 'min-dash';
 import {
@@ -32,7 +32,7 @@ import { SIMPLE_MODE } from './constraints';
  * @typedef {import('diagram-js/lib/features/selection/Selection').default} Selection
  */
 
-var DRAG_ACTIVE_CLS = 'djs-drag-active';
+const DRAG_ACTIVE_CLS = 'djs-drag-active';
 export const PREFIX = 'constraint.builder.';
 
 
@@ -121,7 +121,7 @@ function getLength(point) {
 export default function ConstraintBuilder(eventBus, canvas, selection, 
     elementRegistry) {
 
-  var defaultOptions = {
+  const defaultOptions = {
     threshold: 5,
     trapClick: true
   };
@@ -130,14 +130,14 @@ export default function ConstraintBuilder(eventBus, canvas, selection,
   // dragging is active as soon as this context exists.
   //
   // it is visually _active_ only when a context.active flag is set to true.
-  var context;
+  let context;
 
   /* convert a global event into local coordinates */
   function toLocalPoint(globalPosition) {
 
-    var viewbox = canvas.viewbox();
+    const viewbox = canvas.viewbox();
 
-    var clientRect = canvas._container.getBoundingClientRect();
+    const clientRect = canvas._container.getBoundingClientRect();
 
     return {
       x: viewbox.x + (globalPosition.x - clientRect.left) / viewbox.scale,
@@ -150,7 +150,7 @@ export default function ConstraintBuilder(eventBus, canvas, selection,
   function fire(type, dragContext) {
     dragContext = dragContext || context;
 
-    var event = eventBus.createEvent(
+    const event = eventBus.createEvent(
       assign(
         {},
         dragContext.payload,
@@ -167,7 +167,7 @@ export default function ConstraintBuilder(eventBus, canvas, selection,
   }
 
   function restoreSelection(previousSelection) {
-    var existingSelection = previousSelection.filter(function(element) {
+    const existingSelection = previousSelection.filter(function(element) {
       return elementRegistry.get(element.id);
     });
 
@@ -177,14 +177,14 @@ export default function ConstraintBuilder(eventBus, canvas, selection,
   // event listeners
 
   function move(event, activate) {
-    var payload = context.payload,
+    const payload = context.payload,
         displacement = context.displacement;
 
-    var globalStart = context.globalStart,
+    const globalStart = context.globalStart,
         globalCurrent = toPoint(event),
         globalDelta = deltaPos(globalCurrent, globalStart);
 
-    var localStart = context.localStart,
+    const localStart = context.localStart,
         localCurrent = toLocalPoint(globalCurrent),
         localDelta = deltaPos(localCurrent, localStart);
 
@@ -252,7 +252,7 @@ export default function ConstraintBuilder(eventBus, canvas, selection,
   }
 
   function end(event) {
-    var previousContext,
+    let previousContext,
         returnValue = true;
 
     if (context.active) {
@@ -309,7 +309,7 @@ export default function ConstraintBuilder(eventBus, canvas, selection,
 
   function trapClick(event) {
 
-    var untrap;
+    let untrap;
 
     // trap the click in case we are part of an active
     // drag operation. This will effectively prevent
@@ -349,7 +349,7 @@ export default function ConstraintBuilder(eventBus, canvas, selection,
   // respectively
 
   function hover(event) {
-    var payload = context.payload;
+    const payload = context.payload;
 
     payload.hoverGfx = event.gfx;
     payload.hover = event.element;
@@ -360,7 +360,7 @@ export default function ConstraintBuilder(eventBus, canvas, selection,
   function out(event) {
     fire('out');
 
-    var payload = context.payload;
+    const payload = context.payload;
 
     payload.hoverGfx = null;
     payload.hover = null;
@@ -370,13 +370,13 @@ export default function ConstraintBuilder(eventBus, canvas, selection,
   // life-cycle methods
 
   function cancel(restore) {
-    var previousContext;
+    let previousContext;
 
     if (!context) {
       return;
     }
 
-    var wasActive = context.active;
+    const wasActive = context.active;
 
     if (wasActive) {
       fire('cancel');
@@ -393,7 +393,7 @@ export default function ConstraintBuilder(eventBus, canvas, selection,
   }
 
   function cleanup(restore) {
-    var previousContext,
+    let previousContext,
         endDrag;
 
     fire('cleanup');
@@ -424,7 +424,7 @@ export default function ConstraintBuilder(eventBus, canvas, selection,
     canvas.removeMarker(canvas.getRootElement(), DRAG_ACTIVE_CLS);
 
     // restore selection, unless it has changed
-    var previousSelection = context.data.source;
+    const previousSelection = context.data.source;
     // always restore the selection back to the fact.
     if (previousSelection){
       restoreSelection([previousSelection]);
@@ -465,7 +465,7 @@ export default function ConstraintBuilder(eventBus, canvas, selection,
 
     options = assign({}, defaultOptions, options || {});
 
-    var data = options.data || {},
+    let data = options.data || {},
         originalEvent,
         globalStart,
         localStart,

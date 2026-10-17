@@ -56,7 +56,7 @@ export default class Exporting {
     }
 
     encode(text){
-        var ret = text
+        let ret = text
         for(const illegal in XML_ILLEGALS){
             ret = ret.replace(
                 illegal, XML_ILLEGALS[illegal]
@@ -67,11 +67,11 @@ export default class Exporting {
 
     export(){
         this._xml = this.createHead()
-        var that = this
+        const that = this
         // process states first
-        var check = isState
-        var els = this._registry.filter(check)
-        var f = function(el,gfx) {
+        let check = isState
+        let els = this._registry.filter(check)
+        const f = function(el,gfx) {
             return that.serialise(that,el,gfx)
         }
         els.forEach(f)
@@ -112,7 +112,7 @@ return `\t<state id="`+ state.id +`" type="` + state.stateType +`">
 
     serialiseArc(arc,gfx){
         // //console.log(arc, gfx)
-var ret = `\t<arc id="` + arc.id + `">
+let ret = `\t<arc id="` + arc.id + `">
 \t\t<label>`
 + (arc.arcLabel != null ? this.encode(arc.arcLabel.trim()) : "") + 
 `</label>

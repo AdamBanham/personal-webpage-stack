@@ -10,13 +10,13 @@ export default class OrmLabelEditor extends DirectEditing {
     }
     
     complete(){
-        var active = this._active;
+        const active = this._active;
 
         if (!active) {
             return;
         }
 
-        var containerBounds,
+        let containerBounds,
             previousBounds = active.context.bounds,
             newBounds = this.$textbox.getBoundingClientRect(),
             newText = this.getValue(),

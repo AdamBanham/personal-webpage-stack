@@ -51,6 +51,31 @@
                         <v-tooltip text="Delete (del)" activator="parent" location="bottom"></v-tooltip>
                     </button>
                 </div>
+                <div class="col-2">
+                    <button class="btn btn-light p-1" @click.stop>
+                        <span class="mdi mdi-palette"></span>
+                        <v-tooltip text="Background Colour" activator="parent" location="bottom"></v-tooltip>
+                        <v-menu activator="parent" :close-on-content-click="false" location="right"
+                            :transition="false">
+                            <v-card class="colour-picker nodrag nowheel" @click.stop @mousedown.stop>
+                                <v-color-picker v-model="backgroundColor" mode="hex" :modes="['hex', 'rgb', 'hsl']"
+                                    :swatches="swatches" show-swatches elevation="0" width="210"
+                                    canvas-height="105"></v-color-picker>
+                                <v-card-actions>
+                                    <v-btn size="small" variant="text" :ripple="false" :disabled="!data.color"
+                                        @click="backgroundColor = null">Reset</v-btn>
+                                    <v-spacer></v-spacer>
+                                    <v-btn size="small" variant="text" :ripple="false" :disabled="isDefaultColor"
+                                        @click="makeDefaultColor">
+                                        Set default
+                                        <v-tooltip :text="`Use this colour for new ${nodeType}s`" activator="parent"
+                                            location="bottom"></v-tooltip>
+                                    </v-btn>
+                                </v-card-actions>
+                            </v-card>
+                        </v-menu>
+                    </button>
+                </div>
             </div>
         </NodeToolbar>
     </div>
@@ -60,18 +85,45 @@
 import { Node, Position, useNode, useVueFlow } from '@vue-flow/core'
 import { NodeToolbar } from '@vue-flow/node-toolbar'
 import { NodeTypes, PetriEditorNamespace } from '../js'
-import { computed, onMounted, onUnmounted, toValue } from 'vue'
+import { computed, nextTick, onMounted, onUnmounted, toValue } from 'vue'
 import useIdentities from '../js/useIdentities'
 import useFiring from '../js/useFiring'
+import useLayout from '../../base/js/useLayout'
+import useNodeDefaults from '../js/useNodeDefaults'
 
 const node = useNode()
 const data = node.node.data
 const nodeType = node.node.type as NodeTypes
 const position = computed(() => node.node.position)
 
-const { connectionStartHandle, removeNodes, addNodes, addEdges, nodes } = useVueFlow(PetriEditorNamespace)
+const { 
+    connectionStartHandle, removeNodes, addNodes, 
+    addEdges, nodes, addSelectedNodes, findNode, onPaneReady 
+} = useVueFlow(PetriEditorNamespace)
+const {
+    focusNode
+} = useLayout(PetriEditorNamespace)
+
 const { getNext } = useIdentities()
 const { bindingsFor, isFiring, fire, previewBinding } = useFiring(PetriEditorNamespace)
+
+// each inner array is one swatch column
+const swatches = [
+    ['#E53935', '#FFFFFF'],
+    ['#FDD835', '#9E9E9E'],
+    ['#1E88E5', '#212121'],
+    ['#43A047', '#FB8C00'],
+]
+const { defaultColorFor, setDefaultColor, defaultDataFor } = useNodeDefaults()
+const isDefaultColor = computed(() => defaultColorFor(nodeType) === data.color)
+function makeDefaultColor() {
+    if (nodeType === 'token') return
+    setDefaultColor(nodeType, data.color)
+}
+const backgroundColor = computed<string | null>({
+    get: () => data.color ?? '#FFFFFF',
+    set: (value) => { data.color = value ?? undefined },
+})
 
 const firstBinding = computed(() => (nodeType === 'transition' ? bindingsFor(node.id)[0] ?? null : null))
 const canFire = computed(() => !!firstBinding.value && !isFiring.value)
@@ -119,7 +171,7 @@ function triggerAddToken() {
     addNodes(newNode)
 }
 function triggerClearTokens() {
-    let innerTokens = nodes.value.filter(
+    const innerTokens = nodes.value.filter(
         el => el.type === 'token'
     ).filter(
         el => el.parentNode === node.id
@@ -131,12 +183,23 @@ function triggerClearTokens() {
 function triggerAdd(type: NodeTypes) {
     const pos = toValue(position)
 
+    let yOffset = 0
+    switch (type) {
+        case ('place'):
+            yOffset = 7.5
+            break
+        case ('transition'):
+            yOffset = -7.5
+            break;
+    }
+
     const newNode = {
         id: getNext(type),
         type: type,
+        data: defaultDataFor(type),
         position: {
             x: pos.x + 100,
-            y: pos.y - 7.5
+            y: pos.y + yOffset
         }
     }
     addNodes(
@@ -149,6 +212,18 @@ function triggerAdd(type: NodeTypes) {
     }
     addEdges(
         newEdge
+    )
+
+    const { off } = onPaneReady((instance) => {
+        instance.fitView()
+        off()
+    })
+
+    nextTick(
+        () => {
+            addSelectedNodes([findNode(newNode.id)])
+            focusNode(newNode.id)
+        }
     )
 
 }
@@ -214,4 +289,14 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown))
 
 </script>
 
-<style scoped></style>
+<style scoped>
+/* shrink the text to match the narrower picker; the picker itself is sized through its props,
+   since scaling it with css throws off the canvas's pointer maths */
+.colour-picker {
+    font-size: 0.8rem;
+}
+
+.colour-picker :deep(.v-btn) {
+    font-size: 0.7rem;
+}
+</style>

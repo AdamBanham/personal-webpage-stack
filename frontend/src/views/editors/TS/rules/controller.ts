@@ -27,7 +27,7 @@ export default class TSRules extends RuleProvider {
                 return false;
             }
             // Allow connection creation only if both source and target are valid
-            let ret = isState(source) && isState(target);
+            const ret = isState(source) && isState(target);
             //console.log("TSRules connection.create", ret);
             return ret
         });

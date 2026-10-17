@@ -1,65 +1,114 @@
 <template>
-    <VueFlow class="rounded-2 editor-cont" :id="PetriEditorNamespace" @dragover="onDragOver" @dragleave="onDragLeave"
-        @drop="onDrop" fit-view-on-init :default-edge-options="{ type: 'arc' }" :connection-radius="30">
+    <div class="">
+        <VueFlow class="editor-canvas-ts-container editor-outter-box-shadow editor-canvas editor-cont"
+            :id="PetriEditorNamespace" :class="{
+                'fullscreen': fullscreen
+            }" @dragover="onDragOver" @dragleave="onDragLeave" @drop="onDrop" fit-view-on-init
+            :default-edge-options="{ type: 'arc' }" :connection-radius="30">
+            <template #node-place>
+                <PlaceNode></PlaceNode>
+            </template>
+            <template #node-transition>
+                <TransitionNode></TransitionNode>
+            </template>
+            <template #node-token>
+                <TokenNode></TokenNode>
+            </template>
 
-        <template #node-place>
-            <PlaceNode></PlaceNode>
-        </template>
-        <template #node-transition>
-            <TransitionNode></TransitionNode>
-        </template>
-        <template #node-token>
-            <TokenNode></TokenNode>
-        </template>
+            <template #edge-arc="props">
+                <OrthogonalEdge v-bind="props" :shape-of="petriShapeOf" style="z-index: 50;" />
+            </template>
+            <template #connection-line="props">
+                <OrthogonalConnectionLine v-bind="props" :shape-of="petriShapeOf" style="z-index: 50;" />
+            </template>
 
-        <template #edge-arc="props">
-            <OrthogonalEdge v-bind="props" :shape-of="petriShapeOf" />
-        </template>
-        <template #connection-line="props">
-            <OrthogonalConnectionLine v-bind="props" :shape-of="petriShapeOf" />
-        </template>
+            <Controls class="top-left shadow" :key="PetriEditorNamespace">
+                <template #top>
+                    <ControlButton :draggable="true" @click.stop="toggleFullscreen">
+                        <span class="mdi mdi-overscan text-dark"></span>
+                        <v-tooltip text="Toggle Fullscreen" activator="parent" />
+                    </ControlButton>
+                </template>
 
-        <Controls class="top-left shadow" :key="PetriEditorNamespace">
-            <ControlButton :draggable="true" @dragstart="onDragStart($event, 'place')">
-                <span class="mdi mdi-shape-circle-plus text-dark"></span>
-                <v-tooltip text="Add Place" activator="parent" />
-            </ControlButton>
-            <ControlButton :draggable="true" @dragstart="onDragStart($event, 'transition')">
-                <span class="mdi mdi-shape-rectangle-plus text-dark"></span>
-                <v-tooltip text="Add Transition" activator="parent" />
-            </ControlButton>
-        </Controls>
+                <template #default>
+                    <ControlButton :draggable="true" @dragstart="onDragStart($event, 'place')">
+                        <span class="mdi mdi-shape-circle-plus text-dark"></span>
+                        <v-tooltip text="Add Place" activator="parent" />
+                    </ControlButton>
+                    <ControlButton :draggable="true" @dragstart="onDragStart($event, 'transition')">
+                        <span class="mdi mdi-shape-rectangle-plus text-dark"></span>
+                        <v-tooltip text="Add Transition" activator="parent" />
+                    </ControlButton>
+                    <ControlButton :disabled="isLayingOut" @click.stop="layout({ direction: 'RIGHT' })">
+                        <span class="mdi mdi-sitemap mdi-rotate-270 text-dark"></span>
+                        <v-tooltip text="Layout Left to Right" activator="parent" />
+                    </ControlButton>
+                    <ControlButton :disabled="isLayingOut" @click.stop="layout({ direction: 'DOWN' })">
+                        <span class="mdi mdi-sitemap text-dark"></span>
+                        <v-tooltip text="Layout Top to Bottom" activator="parent" />
+                    </ControlButton>
+                    <ControlButton @click.stop="importNet">
+                        <span class="mdi mdi-import text-dark"></span>
+                        <v-tooltip text="Import Model (.pnml)" activator="parent" />
+                    </ControlButton>
+                    <ControlButton @click.stop="downloadPnml()">
+                        <span class="mdi mdi-export text-dark"></span>
+                        <v-tooltip text="Export Model (.pnml)" activator="parent" />
+                    </ControlButton>
+                    <ControlButton :disabled="isExporting" @click.stop="exportImage('png')">
+                        <span class="mdi mdi-file-image text-dark"></span>
+                        <v-tooltip text="Export Image (.png)" activator="parent" />
+                    </ControlButton>
+                    <ControlButton :disabled="isExporting" @click.stop="exportImage('svg')">
+                        <span class="mdi mdi-svg text-dark"></span>
+                        <v-tooltip text="Export Image (.svg)" activator="parent" />
+                    </ControlButton>
+                </template>
 
-        <div class="drop-zone-backing text-center" :style="dropZoneStyles">
-            <div class="text-content border p-1 rounded-2" v-if="isDragOver">
-                <p style="font-size: 48px" class="fw-lighter">Drop on the canvas to place</p>
+            </Controls>
+
+            <div class="drop-zone-backing text-center" :style="dropZoneStyles">
+                <div class="text-content border p-1 rounded-2" v-if="isDragOver">
+                    <p style="font-size: 48px" class="fw-lighter">Drop on the canvas to place</p>
+                </div>
             </div>
-        </div>
 
-        <HelperLines :distance="10" />
-        <Background variant="dots" pattern-color="#323650" :size="1" bg-color="#323650" style="z-index: -100" />
+            <HelperLines :distance="10" />
+            <FiringTokenLayer />
+            <FirePanel />
+            <FiringHistory />
+            <Background class="background-bg" variant="dots" :size="25" pattern-color="#cccccc" bg-color="#323650"
+                style="z-index: -100" />
 
-    </VueFlow>
+        </VueFlow>
+    </div>
 </template>
 
 <script setup lang="ts">
 import { Edge, EdgeMarker, MarkerType, Node, VueFlow, useVueFlow } from '@vue-flow/core'
-import { Background } from '@vue-flow/background'
+import Background from '../base/components/Background.vue'
 import { Controls, ControlButton } from '@vue-flow/controls'
 import TransitionNode from './components/nodes/TransitionNode.vue'
 import PlaceNode from './components/nodes/PlaceNode.vue'
 import useDragAndDrop from '../base/js/useDragAndDrop.ts'
+import useNodeDefaults from './js/useNodeDefaults'
+import useLayout from '../base/js/useLayout.ts'
+import useImageExport, { type ImageFormat } from '../base/js/useImageExport.ts'
 
 // import default controls styles
 import '@vue-flow/controls/dist/style.css'
-import { computed } from 'vue'
+import { computed, ref, toValue } from 'vue'
 import HelperLines from '../base/components/HelperLines.vue'
 import OrthogonalEdge from '../base/components/OrthogonalEdge.vue'
 import OrthogonalConnectionLine from '../base/components/OrthogonalConnectionLine.vue'
 import type { ShapeResolver } from '../base/js/orthogonalRouting.ts'
 import useIdentities from './js/useIdentities.ts'
 import useConnectMode from './js/useConnectMode.ts'
+import usePnml from './js/usePnml.ts'
 import TokenNode from './components/nodes/TokenNode.vue'
+import FiringTokenLayer from './components/firing/FiringTokenLayer.vue'
+import FirePanel from './components/firing/FirePanel.vue'
+import FiringHistory from './components/firing/FiringHistory.vue'
 
 const PetriEditorNamespace = "petri-net-editor"
 
@@ -69,8 +118,31 @@ const petriShapeOf: ShapeResolver = (node) =>
 
 const { setNodes, onConnect, addEdges, removeNodes, getNodes, onNodesChange, onEdgesChange, findEdge, applyEdgeChanges } = useVueFlow(PetriEditorNamespace)
 const { freeIdentity, getNextPlace, getNextTransition, getNext } = useIdentities()
+const { defaultDataFor } = useNodeDefaults()
 useConnectMode(PetriEditorNamespace)
-const { onDragLeave, onDragOver, onDragStart, isDragOver, onDrop } = useDragAndDrop(PetriEditorNamespace, getNext)
+const { onDragLeave, onDragOver, onDragStart, isDragOver, onDrop } = useDragAndDrop(PetriEditorNamespace, getNext, defaultDataFor)
+const { layout, isLayingOut } = useLayout(PetriEditorNamespace)
+const { openPnml, downloadPnml } = usePnml(PetriEditorNamespace)
+const { downloadImage, isExporting } = useImageExport(PetriEditorNamespace)
+
+async function exportImage(format: ImageFormat) {
+    try {
+        await downloadImage(format)
+    } catch (error) {
+        alert(`Failed to export the image :: ${error instanceof Error ? error.message : error}`)
+    }
+}
+
+async function importNet() {
+    try {
+        const result = await openPnml()
+        if (result?.skippedArcs) {
+            console.warn(`Skipped ${result.skippedArcs} arc(s) with unknown ends or joining two nodes of the same kind`)
+        }
+    } catch (error) {
+        alert(`Failed to import the model :: ${error instanceof Error ? error.message : error}`)
+    }
+}
 
 
 const dropZoneStyles = computed(
@@ -85,14 +157,27 @@ const nodes: Node[] = [
     {
         id: getNextPlace(),
         type: 'place',
-        position: { x: 250, y: 5 },
+        position: { x: 250, y: 15 },
+        data: {
+            ...defaultDataFor('place'),
+            label: "start",
+        }
     },
     {
         id: getNextTransition(),
         type: 'transition',
-        position: { x: 450, y: 5 },
+        position: { x: 450, y: 7.5 },
+        data: {
+            ...defaultDataFor('transition'),
+            label: "begin work"
+        }
     },
 ]
+
+const fullscreen = ref(false)
+function toggleFullscreen() {
+    fullscreen.value = !toValue(fullscreen)
+}
 
 // keep in sync with $arc-colour / $arc-selected-colour in the style block below
 const ARC_COLOUR = '#2c2e3a'
@@ -152,19 +237,30 @@ onEdgesChange((changes) => {
 </script>
 
 <style scoped lang="sass">
+@use "@/styles/content.sass"
+
 .editor-canvas-ts-container
   --editor-primary: #2222f8
   --editor-secondary: #074355
   --editor-scence-bg: #323650
   --petri-net-connection-fill: #000000
+  height: 1080px;
 
 $editor-scene-bg: #323650
+
+.editor-canvas-ts-container.editor-cont.fullscreen
+    position: absolute
+    top: calc(0% + 64px)
+    left: 0%
+    width: 100vw
+    height: calc(100vh - 64px)
 
 .editor-cont .top-left
     left: calc(100% - 55px)
     top: 5px
     height: fit-content
     position: relative
+
 
 .drop-zone-backing
     top: 0%

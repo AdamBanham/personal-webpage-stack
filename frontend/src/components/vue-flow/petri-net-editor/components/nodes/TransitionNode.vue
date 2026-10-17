@@ -1,19 +1,39 @@
 <template>
-    <PetriNetNodeToolbar/>
+    <PetriNetNodeToolbar />
 
     <!-- visual content -->
-    <div class="text-bg-light transition rounded-2 shadow-sm border" :style="{ '--flash-duration': `${flashDuration}ms` }"
-        :class="flashing ? 'flashing' : { enabled: isEnabled(node.id) }">
+    <div class="transition rounded-2 shadow-sm border"
+        :style="{ '--flash-duration': `${flashDuration}ms`, backgroundColor: data.color }"
+        :class="[{ 'text-bg-light': !data.color }, flashing ? 'flashing' : { enabled: isEnabled(node.id) }]"
+        @dblclick="startEditLabel">
 
         <!-- times fired -->
-        <span v-if="firedCount(node.id)" class="fired-count badge rounded-pill text-bg-dark">{{ firedCount(node.id) }}</span>
+        <span v-if="firedCount(node.id)" class="fired-count badge rounded-pill text-bg-dark">
+            {{ firedCount(node.id) }}
+        </span>
 
 
-        <!-- label -->
-        <div class="floating-label text-center">
-            <p class="fw-lighter small" style="font-size: 6px; width: fit-content;">
-                ({{ node.id }})
+        <!-- identity -->
+        <div class="floating-identity text-end">
+            <p class="fw-lighter" style="width: fit-content;">
+                (t<sub>
+                    {{ parseInt(node.id.split("-")[1], 10) }}
+                </sub>)
             </p>
+        </div>
+        <!-- label -->
+        <div class="floating-label text-start">
+            <p class="fw-lighter" v-if="!editingLabel" style="width: fit-content;">
+                {{ label }}
+            </p>
+            <div class="text-bg-light editing-label-box nodrag nowheel" v-else>
+                <v-form @submit.prevent.stop="updateLabel" @dblclick.stop @keydown.esc="cancelEditLabel">
+                    <v-text-field label="New Label" v-model="newLabel" variant="outlined" density="compact" hide-details
+                        ref="editingTextField">
+
+                    </v-text-field>
+                </v-form>
+            </div>
         </div>
     </div>
 
@@ -25,19 +45,72 @@
 <script lang="ts" setup>
 import { Handle, Position, useNode, useVueFlow } from '@vue-flow/core'
 import { PetriEditorNamespace } from '../../js'
-import { computed } from 'vue'
+import { computed, nextTick, onMounted, onUnmounted, ref, toValue, useTemplateRef, watch } from 'vue'
 import PetriNetNodeToolbar from '../PetriNetNodeToolbar.vue'
 import useFiring from '../../js/useFiring'
 
 
-const { } = useVueFlow(PetriEditorNamespace)
+const { updateNodeInternals } = useVueFlow(PetriEditorNamespace)
 
 const node = useNode()
-const data = node.node.data
-const label = "Transition"
+const data = computed(
+    () => node.node.data
+)
+const label = computed(
+    () => toValue(data).label ? toValue(data).label : "missing"
+)
+const editingTextField = useTemplateRef('editingTextField')
+
+const editingLabel = ref(false)
+const newLabel = ref("")
+function startEditLabel() {
+    if (toValue(editingLabel)) return
+    newLabel.value = label.value
+    editingLabel.value = true
+    nextTick(
+        () => editingTextField.value.focus()
+    )
+}
+function cancelEditLabel() {
+    editingLabel.value = false
+}
+function updateLabel() {
+    node.node.data.label = newLabel.value
+    editingLabel.value = false
+    updateNodeInternals([node.id])
+}
+
+const selected = computed(
+    () => node.node.selected
+)
+watch(
+    selected,
+    (newVal) => {
+        if (!newVal) {
+            editingLabel.value = false;
+        }
+    }
+)
 
 const { isEnabled, firedCount, flashingTransition, flashDuration } = useFiring(PetriEditorNamespace)
 const flashing = computed(() => flashingTransition.value === node.id)
+
+// keyboard handles
+function onKeydown(event: KeyboardEvent) {
+    if (event.key !== 'Enter' || event.repeat || !node.node.selected) return
+    const target = event.target
+    if (
+        target instanceof HTMLElement &&
+        (target.isContentEditable || ['INPUT', 'TEXTAREA', 'SELECT'].includes(target.tagName))
+    ) {
+        return
+    }
+    event.preventDefault()
+    startEditLabel()
+}
+
+onMounted(() => window.addEventListener('keydown', onKeydown))
+onUnmounted(() => window.removeEventListener('keydown', onKeydown))
 
 </script>
 
@@ -46,12 +119,36 @@ const flashing = computed(() => flashingTransition.value === node.id)
     height: 50px;
     width: 50px;
 
-    .floating-label {
-        position: absolute;
-        top: calc(100% + 5px);
-        left: 50%;
-        width: fit-content;
+    .floating-identity {
         text-wrap: nowrap;
+        position: absolute;
+        top: calc(90% + 8px);
+        left: calc(100% - 8px);
+        z-index: -1;
+        p {
+            font-size: 8px;
+        }
+    }
+
+    .floating-label {
+        text-wrap: nowrap;
+        position: absolute;
+        top: calc(-10% - 8px);
+        left: calc(0% - 8px);
+        z-index: -1;
+        p {
+            font-size: 8px;
+        }
+    }
+
+    .editing-label-box {
+        position: absolute;
+        width: 100px;
+        height: 25px;
+        font-size: 10px;
+        top: calc(0% - 50px);
+        left: calc(0% - 25px);
+        z-index: 500;
     }
 
     .fired-count {

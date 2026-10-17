@@ -62,11 +62,11 @@ export default class ObjectValueConstraintHandler extends ConstraintHandler {
     prepareData(context:any) : ObjectValueContext {
         const data = super.prepareData(context);
 
-        let dummyState = this._factory
+        const dummyState = this._factory
             .createDummyAttributesForValueConstraint(
                 data.source,
             );
-        let constraint = this._modeling.createShape(
+        const constraint = this._modeling.createShape(
             Object.assign({}, dummyState),
             {x: dummyState.x, y: dummyState.y },
             data.source.parent
@@ -84,7 +84,7 @@ export default class ObjectValueConstraintHandler extends ConstraintHandler {
     }
 
     move(event: ObjectValueContext) {
-        let constraint = event.constraint;
+        const constraint = event.constraint;
 
         const { x, y } = event;
 
@@ -100,7 +100,7 @@ export default class ObjectValueConstraintHandler extends ConstraintHandler {
     }
 
     end(event: ObjectValueContext) {
-        let source = event.source,
+        const source = event.source,
             constraint = event.constraint,
             that = this;
         source.addConstraint(constraint);
@@ -117,14 +117,14 @@ export default class ObjectValueConstraintHandler extends ConstraintHandler {
 
     cleanup(event: ObjectValueContext): void {
         if (!this._added) {
-            let constraint = event.constraint;
+            const constraint = event.constraint;
             this._modeling.removeElements([constraint]);
         }
         this._added = false;
     }
 
     cancel(event: ObjectValueContext): void {
-        let constraint = event.constraint;
+        const constraint = event.constraint;
         this._modeling.removeElements([constraint]);
     }
 }

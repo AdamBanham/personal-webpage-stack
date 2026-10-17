@@ -28,7 +28,7 @@ export default class SubtypeConnectionRenderer extends TemplateRenderer<OrmSubty
         super(eventBus, renderOptions, SHAPE_TYPE, "connection");
 
         // add definitions
-        let defs = svgCreate("defs",{});
+        const defs = svgCreate("defs",{});
         this._setupMarkers(defs);
         // @ts-ignore
         svgAppend(canvas.getActiveLayer(), defs);
@@ -43,7 +43,7 @@ export default class SubtypeConnectionRenderer extends TemplateRenderer<OrmSubty
     }
 
     _setupMarkers(defs:any) {
-        let arrowMarker = svgCreate("marker", {
+        const arrowMarker = svgCreate("marker", {
             id: "subtype-arrowhead",
             refX: 8,
             refY: 5,
@@ -53,7 +53,7 @@ export default class SubtypeConnectionRenderer extends TemplateRenderer<OrmSubty
             viewBox: "0 0 10 10"
         });
 
-        let arrowPath = svgCreate("path", {
+        const arrowPath = svgCreate("path", {
             d: "M 0 0 L 10 5 L 0 10 z",
             fill: RenderingConstants.css.MANDATORY_ROLE_STROKE
         });
@@ -64,12 +64,12 @@ export default class SubtypeConnectionRenderer extends TemplateRenderer<OrmSubty
 
     draw(visuals: SVGElement, element: OrmSubtypeConnection): SVGElement {
         // Placeholder for actual rendering logic
-        let waypoints = Array.from(element.waypoints);
-        let group = svgCreate("g", {
+        const waypoints = Array.from(element.waypoints);
+        const group = svgCreate("g", {
             class: RenderingConstants.classes.VISUAL_GROUP_CLASS
         });
         if (waypoints.length >= 2){
-            var line = createLine(
+            const line = createLine(
                 waypoints, Object.assign({
                     id: element.id
                 }, 
@@ -92,7 +92,7 @@ export default class SubtypeConnectionRenderer extends TemplateRenderer<OrmSubty
      */
     drawDebug(visuals: any, element: any) {
         for (let i = 0; i < element.waypoints.length; i++) {
-            let dot = this._drawDebugDot(
+            const dot = this._drawDebugDot(
                 element.waypoints[i].x,
                 element.waypoints[i].y
             );

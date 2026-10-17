@@ -32,14 +32,14 @@ export default class UniquenessRenderer extends TemplateRenderer<SimpleConstrain
     }
 
     draw(visuals:any, constraint:SimpleConstraint){
-        var group = svgCreate("g", {
+        const group = svgCreate("g", {
             class: RenderingConstants.classes.VISUAL_GROUP_CLASS,
         });
         // draw segments 
         let curr_x = 0;
         let next_x = unitWidth;
         let x1, y1, x2, y2;
-        let color = (constraint.editing) ? 
+        const color = (constraint.editing) ? 
         ( constraint.valid ? 
             RenderingConstants.css.CONSTRAINT_EDIT_COLOUR : 
             RenderingConstants.css.CONSTRAINT_EDIT_FAIL) 
@@ -56,9 +56,9 @@ export default class UniquenessRenderer extends TemplateRenderer<SimpleConstrain
                 x2 = next_x;
                 y2 = 1.5;
             }
-            let dash = (constraint.isRoleConstrainted(i)) 
+            const dash = (constraint.isRoleConstrainted(i)) 
                 ? "0" : "2.5";
-            let line = svgCreate("line", {
+            const line = svgCreate("line", {
                 x1,
                 y1,
                 x2,

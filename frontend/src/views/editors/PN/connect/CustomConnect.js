@@ -29,7 +29,7 @@ export default function Connect(eventBus, dragging, modeling, rules,
     // event handlers
   
     eventBus.on('connect.hover', function(event) {
-      var context = event.context,
+      let context = event.context,
           start = context.start,
           hover = event.hover,
           canExecute;
@@ -65,7 +65,7 @@ export default function Connect(eventBus, dragging, modeling, rules,
     });
   
     eventBus.on([ 'connect.out', 'connect.cleanup' ], function(event) {
-      var context = event.context;
+      const context = event.context;
   
       context.hover = null;
       context.source = null;
@@ -75,7 +75,7 @@ export default function Connect(eventBus, dragging, modeling, rules,
     });
   
     eventBus.on('connect.end', function(event) {
-      var context = event.context,
+      const context = event.context,
           canExecute = context.canExecute,
           connectionStart = context.connectionStart,
           connectionEnd = {
@@ -89,7 +89,7 @@ export default function Connect(eventBus, dragging, modeling, rules,
         return false;
       }
   
-      var attrs = {
+      let attrs = {
         id: context.id
       },
           hints = {
@@ -100,7 +100,7 @@ export default function Connect(eventBus, dragging, modeling, rules,
       if (isObject(canExecute)) {
         attrs = canExecute;
       }
-      var connection = factory.createFlow({
+      const connection = factory.createFlow({
         source: source,
         target: target,
       });
@@ -156,7 +156,7 @@ Connect.$inject = [
 // helpers //////////
   
 export function isReverse(context) {
-var hover = context.hover,
+const hover = context.hover,
     source = context.source,
     target = context.target;
 

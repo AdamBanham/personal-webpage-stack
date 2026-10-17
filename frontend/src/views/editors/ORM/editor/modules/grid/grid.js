@@ -16,7 +16,7 @@ import {
    * @typedef {import('diagram-js/lib/core/EventBus').default} EventBus
    */
   
-  var GRID_COLOR = '#ccc',
+  const GRID_COLOR = '#ccc',
       LAYER_NAME = 'djs-grid';
   
   export var GRID_DIMENSIONS = {
@@ -31,7 +31,7 @@ import {
 export default function Grid(canvas, eventBus) {
     this._canvas = canvas;
   
-    var self = this;
+    const self = this;
   
     eventBus.on('diagram.init', function() {
       self._init();
@@ -39,7 +39,7 @@ export default function Grid(canvas, eventBus) {
     });
   
     eventBus.on('gridSnapping.toggle', function(event) {
-      var active = event.active;
+      const active = event.active;
   
       self.toggle(active);
   
@@ -47,14 +47,14 @@ export default function Grid(canvas, eventBus) {
     });
   
     eventBus.on('canvas.viewbox.changed', function(context) {
-      var viewbox = context.viewbox;
+      const viewbox = context.viewbox;
   
       self._centerGridAroundViewbox(viewbox);
     });
   }
   
   Grid.prototype._init = function() {
-    var defs = domQuery('defs', this._canvas._svg);
+    let defs = domQuery('defs', this._canvas._svg);
   
     if (!defs) {
       defs = svgCreate('defs');
@@ -62,9 +62,9 @@ export default function Grid(canvas, eventBus) {
       svgAppend(this._canvas._svg, defs);
     }
   
-    var pattern = this._pattern = svgCreate('pattern');
+    const pattern = this._pattern = svgCreate('pattern');
   
-    var patternId = 'djs-grid-pattern-' + randomNumber();
+    const patternId = 'djs-grid-pattern-' + randomNumber();
   
     svgAttr(pattern, {
       id: patternId,
@@ -73,7 +73,7 @@ export default function Grid(canvas, eventBus) {
       patternUnits: 'userSpaceOnUse'
     });
   
-    var circle = this._circle = svgCreate('circle');
+    const circle = this._circle = svgCreate('circle');
   
     svgAttr(circle, {
       cx: 0.5,
@@ -86,7 +86,7 @@ export default function Grid(canvas, eventBus) {
   
     svgAppend(defs, pattern);
   
-    var grid = this._gfx = svgCreate('rect');
+    const grid = this._gfx = svgCreate('rect');
   
     svgAttr(grid, {
       x: -(GRID_DIMENSIONS.width / 2),
@@ -102,7 +102,7 @@ export default function Grid(canvas, eventBus) {
       viewbox = this._canvas.viewbox();
     }
   
-    var mid = getMid(viewbox);
+    const mid = getMid(viewbox);
   
     svgAttr(this._gfx, {
       x: -(GRID_DIMENSIONS.width / 2) + quantize(mid.x, SPACING),
@@ -134,7 +134,7 @@ export default function Grid(canvas, eventBus) {
       return;
     }
   
-    var parent = this._getParent();
+    const parent = this._getParent();
   
     if (visible) {
       svgAppend(parent, this._gfx);

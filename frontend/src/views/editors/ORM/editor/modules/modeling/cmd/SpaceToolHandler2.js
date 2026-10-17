@@ -14,7 +14,7 @@ export default class SpaceToolHandler2 extends SpaceToolHandler {
     }
 
     preExecute(context) {
-        var delta = context.delta,
+        const delta = context.delta,
         direction = context.direction,
         movingShapes = context.movingShapes,
         resizingShapes = context.resizingShapes,
@@ -61,14 +61,14 @@ function includes(array, item) {
 }
 
 function getWaypointsUpdatingConnections(movingShapes, resizingShapes) {
-    var waypointsUpdatingConnections = [];
+    const waypointsUpdatingConnections = [];
 
     forEach(movingShapes.concat(resizingShapes), function(shape) {
-        var incoming = shape.incoming || [],
+        const incoming = shape.incoming || [],
             outgoing = shape.outgoing || [];
 
         forEach(incoming.concat(outgoing), function(connection) {
-        var source = connection.source,
+        const source = connection.source,
             target = connection.target;
 
         if (includes(movingShapes, source) ||

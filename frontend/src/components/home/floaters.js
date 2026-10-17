@@ -77,12 +77,12 @@ export class FloaterBase
 
     checkSetup() 
     {
-        var unValidated = {};
-        var valid = true;
-        var checks = ["orbitsize", "zlevel", "speed", "starsize", "startdeg"];
+        const unValidated = {};
+        let valid = true;
+        const checks = ["orbitsize", "zlevel", "speed", "starsize", "startdeg"];
         try 
         {
-            for (var check of checks)
+            for (const check of checks)
             {
                 if (!this[check] || this[check] === null || this[check] == undefined)
                 {

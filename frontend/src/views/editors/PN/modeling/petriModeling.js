@@ -16,7 +16,7 @@ class PetriModeling extends modeling {
   }
 
   getHandlers() {
-    var handlers = super.getHandlers();
+    const handlers = super.getHandlers();
     return handlers;
   }
 
@@ -33,7 +33,7 @@ class PetriModeling extends modeling {
 
       element.silent = !element.silent;
 
-      var context = {
+      const context = {
         elements: [element].concat(element.incoming).concat(element.outgoing)
       }
 

@@ -15,7 +15,7 @@ import {
   roundPoint
 } from 'diagram-js/lib/layout/LayoutUtil';
 
-var sqrt = Math.sqrt,
+const sqrt = Math.sqrt,
     min = Math.min,
     max = Math.max,
     abs = Math.abs;
@@ -24,7 +24,7 @@ function sq(n) {
     return Math.pow(n, 2);
 }
 
-var EQUAL_THRESHOLD = 0.1;
+const EQUAL_THRESHOLD = 0.1;
 
 class LabelBehaviour extends CommandInterceptor {
 
@@ -32,19 +32,19 @@ class LabelBehaviour extends CommandInterceptor {
         super(eventBus)
 
         // have labels move around when connections move
-        var self = this
+        const self = this
         this.postExecute([
             'connection.layout',
             'connection.updateWaypoints'
           ], function(event) {
-            var context = event.context,
+            const context = event.context,
                 hints = context.hints || {};
         
             if (hints.labelBehavior === false) {
               return;
             }
         
-            var connection = context.connection,
+            let connection = context.connection,
                 label = connection.label,
                 labelAdjustment;
         
@@ -65,7 +65,7 @@ class LabelBehaviour extends CommandInterceptor {
 
     getVisibleLabelAdjustment(event) {
 
-        var context = event.context,
+        const context = event.context,
             connection = context.connection,
             label = connection.label,
             hints = assign({}, context.hints),
@@ -85,21 +85,21 @@ class LabelBehaviour extends CommandInterceptor {
     }
 
     getLabelAdjustment(label, newWaypoints, oldWaypoints, hints) {
-        var labelPosition = getMid(label);
+        const labelPosition = getMid(label);
       
         return this.getAnchorPointAdjustment(labelPosition, newWaypoints, oldWaypoints, hints).delta;
     }
 
     findNewLineStartIndex(oldWaypoints, newWaypoints, attachment, hints) {
 
-        var index = attachment.segmentIndex;
+        const index = attachment.segmentIndex;
       
-        var offset = newWaypoints.length - oldWaypoints.length;
+        const offset = newWaypoints.length - oldWaypoints.length;
       
         // segmentMove happened
         if (hints.segmentMove) {
       
-          var oldSegmentStartIndex = hints.segmentMove.segmentStartIndex,
+          const oldSegmentStartIndex = hints.segmentMove.segmentStartIndex,
               newSegmentStartIndex = hints.segmentMove.newSegmentStartIndex;
       
           // if point was on moved segment return new segment index
@@ -119,7 +119,7 @@ class LabelBehaviour extends CommandInterceptor {
         // bendpointMove happened
         if (hints.bendpointMove) {
       
-          var insert = hints.bendpointMove.insert,
+          let insert = hints.bendpointMove.insert,
               bendpointIndex = hints.bendpointMove.bendpointIndex,
               newIndex;
       
@@ -141,7 +141,7 @@ class LabelBehaviour extends CommandInterceptor {
             // decide point should take right or left segment
             if (insert && attachment.type !== 'bendpoint' && bendpointIndex - 1 === index) {
       
-              var rel = relativePositionMidWaypoint(newWaypoints, bendpointIndex);
+              const rel = relativePositionMidWaypoint(newWaypoints, bendpointIndex);
       
               if (rel < attachment.relativeLocation) {
                 newIndex++;
@@ -171,16 +171,16 @@ class LabelBehaviour extends CommandInterceptor {
       
 
     getAnchorPointAdjustment(position, newWaypoints, oldWaypoints, hints) {
-        var dx = 0,
+        let dx = 0,
             dy = 0;
       
-        var oldPosition = {
+        const oldPosition = {
           point: position,
           delta: { x: 0, y: 0 }
         };
       
         // get closest attachment
-        var attachment = getAttachment(position, oldWaypoints),
+        const attachment = getAttachment(position, oldWaypoints),
             oldLabelLineIndex = attachment.segmentIndex,
             newLabelLineIndex = findNewLineStartIndex(oldWaypoints, newWaypoints, attachment, hints);
       
@@ -193,17 +193,17 @@ class LabelBehaviour extends CommandInterceptor {
           return oldPosition;
         }
       
-        var oldLabelLine = getLine(oldWaypoints, oldLabelLineIndex),
+        const oldLabelLine = getLine(oldWaypoints, oldLabelLineIndex),
             newLabelLine = getLine(newWaypoints, newLabelLineIndex),
             oldFoot = attachment.position;
       
-        var relativeFootPosition = getRelativeFootPosition(oldLabelLine, oldFoot),
+        let relativeFootPosition = getRelativeFootPosition(oldLabelLine, oldFoot),
             angleDelta = getAngleDelta(oldLabelLine, newLabelLine);
       
         // special rule if label on bendpoint
         if (attachment.type === 'bendpoint') {
       
-          var offset = newWaypoints.length - oldWaypoints.length,
+          const offset = newWaypoints.length - oldWaypoints.length,
               oldBendpointIndex = attachment.bendpointIndex,
               oldBendpoint = oldWaypoints[oldBendpointIndex];
       
@@ -214,7 +214,7 @@ class LabelBehaviour extends CommandInterceptor {
       
           // new bendpoint and old bendpoint have same index, then just return the offset
           if (offset === 0) {
-            var newBendpoint = newWaypoints[oldBendpointIndex];
+            const newBendpoint = newWaypoints[oldBendpointIndex];
       
             dx = newBendpoint.x - attachment.position.x,
             dy = newBendpoint.y - attachment.position.y;
@@ -237,13 +237,13 @@ class LabelBehaviour extends CommandInterceptor {
           }
         }
       
-        var newFoot = {
+        const newFoot = {
           x: (newLabelLine[1].x - newLabelLine[0].x) * relativeFootPosition + newLabelLine[0].x,
           y: (newLabelLine[1].y - newLabelLine[0].y) * relativeFootPosition + newLabelLine[0].y
         };
       
         // the rotated vector to label
-        var newLabelVector = rotateVector({
+        const newLabelVector = rotateVector({
           x: position.x - oldFoot.x,
           y: position.y - oldFoot.y
         }, angleDelta);
@@ -264,24 +264,24 @@ class LabelBehaviour extends CommandInterceptor {
 
 function getRelativeFootPosition(line, foot) {
 
-    var length = getDistancePointPoint(line[0], line[1]),
+    const length = getDistancePointPoint(line[0], line[1]),
         lengthToFoot = getDistancePointPoint(line[0], foot);
   
     return length === 0 ? 0 : lengthToFoot / length;
 }
 
 function getAngleDelta(l1, l2) {
-    var a1 = getAngle(l1),
+    const a1 = getAngle(l1),
         a2 = getAngle(l2);
     return a2 - a1;
   }
 
 function relativePositionMidWaypoint(waypoints, idx) {
 
-    var distanceSegment1 = getDistancePointPoint(waypoints[idx - 1], waypoints[idx]),
+    const distanceSegment1 = getDistancePointPoint(waypoints[idx - 1], waypoints[idx]),
         distanceSegment2 = getDistancePointPoint(waypoints[idx], waypoints[idx + 1]);
   
-    var relativePosition = distanceSegment1 / (distanceSegment1 + distanceSegment2);
+    const relativePosition = distanceSegment1 / (distanceSegment1 + distanceSegment2);
   
     return relativePosition;
   }
@@ -328,14 +328,14 @@ function mid(p1, p2) {
 
 function findNewLineStartIndex(oldWaypoints, newWaypoints, attachment, hints) {
 
-    var index = attachment.segmentIndex;
+    const index = attachment.segmentIndex;
   
-    var offset = newWaypoints.length - oldWaypoints.length;
+    const offset = newWaypoints.length - oldWaypoints.length;
   
     // segmentMove happened
     if (hints.segmentMove) {
   
-      var oldSegmentStartIndex = hints.segmentMove.segmentStartIndex,
+      const oldSegmentStartIndex = hints.segmentMove.segmentStartIndex,
           newSegmentStartIndex = hints.segmentMove.newSegmentStartIndex;
   
       // if point was on moved segment return new segment index
@@ -355,7 +355,7 @@ function findNewLineStartIndex(oldWaypoints, newWaypoints, attachment, hints) {
     // bendpointMove happened
     if (hints.bendpointMove) {
   
-      var insert = hints.bendpointMove.insert,
+      let insert = hints.bendpointMove.insert,
           bendpointIndex = hints.bendpointMove.bendpointIndex,
           newIndex;
   
@@ -377,7 +377,7 @@ function findNewLineStartIndex(oldWaypoints, newWaypoints, attachment, hints) {
         // decide point should take right or left segment
         if (insert && attachment.type !== 'bendpoint' && bendpointIndex - 1 === index) {
   
-          var rel = relativePositionMidWaypoint(newWaypoints, bendpointIndex);
+          const rel = relativePositionMidWaypoint(newWaypoints, bendpointIndex);
   
           if (rel < attachment.relativeLocation) {
             newIndex++;
@@ -408,19 +408,19 @@ function findNewLineStartIndex(oldWaypoints, newWaypoints, attachment, hints) {
 
 function getCircleSegmentIntersections(s1, s2, cc, cr) {
 
-    var baX = s2.x - s1.x;
-    var baY = s2.y - s1.y;
-    var caX = cc.x - s1.x;
-    var caY = cc.y - s1.y;
+    const baX = s2.x - s1.x;
+    const baY = s2.y - s1.y;
+    const caX = cc.x - s1.x;
+    const caY = cc.y - s1.y;
   
-    var a = baX * baX + baY * baY;
-    var bBy2 = baX * caX + baY * caY;
-    var c = caX * caX + caY * caY - cr * cr;
+    const a = baX * baX + baY * baY;
+    const bBy2 = baX * caX + baY * caY;
+    const c = caX * caX + caY * caY - cr * cr;
   
-    var pBy2 = bBy2 / a;
-    var q = c / a;
+    const pBy2 = bBy2 / a;
+    const q = c / a;
   
-    var disc = pBy2 * pBy2 - q;
+    let disc = pBy2 * pBy2 - q;
   
     // check against negative value to work around
     // negative, very close to zero results (-4e-15)
@@ -434,11 +434,11 @@ function getCircleSegmentIntersections(s1, s2, cc, cr) {
     }
   
     // if disc == 0 ... dealt with later
-    var tmpSqrt = sqrt(disc);
-    var abScalingFactor1 = -pBy2 + tmpSqrt;
-    var abScalingFactor2 = -pBy2 - tmpSqrt;
+    const tmpSqrt = sqrt(disc);
+    const abScalingFactor1 = -pBy2 + tmpSqrt;
+    const abScalingFactor2 = -pBy2 - tmpSqrt;
   
-    var i1 = {
+    const i1 = {
       x: s1.x - baX * abScalingFactor1,
       y: s1.y - baY * abScalingFactor1
     };
@@ -447,7 +447,7 @@ function getCircleSegmentIntersections(s1, s2, cc, cr) {
       return [ i1 ];
     }
   
-    var i2 = {
+    const i2 = {
       x: s1.x - baX * abScalingFactor2,
       y: s1.y - baY * abScalingFactor2
     };
@@ -461,7 +461,7 @@ function getCircleSegmentIntersections(s1, s2, cc, cr) {
 
 function getAttachment(point, line) {
 
-    var idx = 0,
+    let idx = 0,
         segmentStart,
         segmentEnd,
         segmentStartDistance,

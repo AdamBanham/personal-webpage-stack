@@ -60,7 +60,7 @@ export default class Importing {
     }
 
     decode(text){
-        var ret = text
+        let ret = text
         for(const illegal in XML_ILLEGALS){
             ret = ret.replace(
                 XML_ILLEGALS[illegal], illegal
@@ -72,11 +72,11 @@ export default class Importing {
     load(context:EventContext){
 
 
-        var tree = new DOMParser().parseFromString(
+        const tree = new DOMParser().parseFromString(
             context.text, "text/xml"
         )
         
-        var errors = tree.getElementsByTagName("parsererror")
+        const errors = tree.getElementsByTagName("parsererror")
         if (errors.length > 0){
             alert(
                 "Parsing failed :: "
@@ -84,7 +84,7 @@ export default class Importing {
             )
             return;
         }
-        var system = tree.getElementsByTagName("transition-system")
+        const system = tree.getElementsByTagName("transition-system")
         if (system.length > 0){
             this.import(system[0])
         }
@@ -105,8 +105,8 @@ export default class Importing {
 
     _import(system){
         // clear the system, except for root
-        var that = this
-        var els = this._registry.getAll().filter(
+        const that = this
+        const els = this._registry.getAll().filter(
             (v) => {
                 return !v.id.includes("implicitroot")
             }
@@ -118,20 +118,20 @@ export default class Importing {
             )
         }
         // parse states
-        var named_els = {}
+        const named_els = {}
         
-        var states = system.getElementsByTagName("state")
-        for (var state of states){
+        const states = system.getElementsByTagName("state")
+        for (const state of states){
             var attrs = state.attributes
-            var pos = state.getElementsByTagName("position")[0]
+            const pos = state.getElementsByTagName("position")[0]
             var label = state.getElementsByTagName("label")[0]
-            var context = {
+            const context = {
                 id: attrs.id.value,
                 x: pos.attributes.x.value,
                 y: pos.attributes.y.value,
                 stateLabel: this.decode(label.textContent + "")
             }
-            var shape = this._factory.createState(
+            const shape = this._factory.createState(
                 context, attrs.type.value
             )
             named_els[shape.id] = shape
@@ -143,22 +143,22 @@ export default class Importing {
             )
         }
         // parse arcs
-        var arcs = system.getElementsByTagName("arc")
-        for(var arc of arcs){
+        const arcs = system.getElementsByTagName("arc")
+        for(const arc of arcs){
             var attrs = arc.attributes 
             var label = this.decode(
                 arc.getElementsByTagName("label")[0].textContent + ""
             ).trim()
-            var src = arc.getElementsByTagName("source")[0].attributes
-            var tgt = arc.getElementsByTagName("target")[0].attributes
-            var connect = this._factory.createConnectionBetweenStates(
+            const src = arc.getElementsByTagName("source")[0].attributes
+            const tgt = arc.getElementsByTagName("target")[0].attributes
+            const connect = this._factory.createConnectionBetweenStates(
                 attrs.id.value, 
                 named_els[src.id.value],
                 named_els[tgt.id.value],
                 label
             );
-            var waypoints = []
-            var svgWay = arc.getElementsByTagName("waypoints")
+            const waypoints = []
+            let svgWay = arc.getElementsByTagName("waypoints")
             if (svgWay.length > 0){
                 svgWay = svgWay[0].getElementsByTagName("position")
                 for(const svgWayPoint of svgWay){
@@ -171,7 +171,7 @@ export default class Importing {
             }
             connect.arcLabel = label
             this._factory.logIdentifer(connect.id)
-            var nc = this._modeling.connect(
+            const nc = this._modeling.connect(
                 connect.source,
                 connect.target,
                 connect,
@@ -183,7 +183,7 @@ export default class Importing {
                 // nc.waypoints = waypoints
             }
             if (label.length > 0){
-                var elLabel = this._factory.createLabel({
+                const elLabel = this._factory.createLabel({
                     text: label,
                     width: 50,
                     height: 12,
@@ -206,10 +206,10 @@ export default class Importing {
             
         }
         // move all states to ensure a clean start
-        var bus = this._bus
-        var modeler = this._modeling
-        var push = 1
-        for(var k in named_els){
+        const bus = this._bus
+        const modeler = this._modeling
+        let push = 1
+        for(const k in named_els){
             const item = named_els[k]
             this._modeling.moveShape(item,
                 {x: 1, y:1},

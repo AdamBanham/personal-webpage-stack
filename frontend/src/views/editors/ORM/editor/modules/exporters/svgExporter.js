@@ -86,7 +86,7 @@ class SvgExporter {
     }
 
     save(){
-        var svg;
+        let svg;
         try {        
             const contentNode = this._canvas.getActiveLayer(),
                   defsNode = domQuery(':scope > defs', this._canvas._svg);

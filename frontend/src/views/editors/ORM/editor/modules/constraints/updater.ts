@@ -46,7 +46,7 @@ export default class ConstraintWatcher {
 
     update(fact:Fact) {
         fact.refreshUniquenessPositions();
-        for(var constraint of fact.uniqueness) {
+        for(const constraint of fact.uniqueness) {
             constraint.roles = fact.roles;
             constraint.refreshConstraintedRoles();
         }

@@ -110,7 +110,7 @@ export default function TSEditor(options) {
       DocumentReflection
     ];
 
-    var diagram =  new Diagram({
+    const diagram =  new Diagram({
         canvas: {
             container
         },

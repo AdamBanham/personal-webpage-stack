@@ -100,7 +100,7 @@ export default function ORMEditor(container: HTMLElement): Diagram<null> {
         OrmFileImporter
     ];
 
-    var diagram =  new Diagram({
+    const diagram =  new Diagram({
         canvas: {
             container
         },
@@ -113,7 +113,7 @@ export default function ORMEditor(container: HTMLElement): Diagram<null> {
 
     setTimeout(
         () => {
-            let canvas = (diagram.get('canvas') as any);
+            const canvas = (diagram.get('canvas') as any);
             scaleToFitElements(canvas);
         }, 50
     );

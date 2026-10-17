@@ -20,7 +20,7 @@ export default class CacheReflection {
     }
 
     reflect(context) {
-        let system = this._exporting.fire("exporting.export");
+        const system = this._exporting.fire("exporting.export");
 
         this._local.fire("local.storage.set", { content : system });
     }

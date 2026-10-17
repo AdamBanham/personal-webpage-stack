@@ -25,10 +25,10 @@ class ContentManager {
     }
 
     updateInfo(){
-        var ret = []
-        for (var cont of this.content){
-            var keep = true
-            for (var fil of this.filters){
+        const ret = []
+        for (const cont of this.content){
+            let keep = true
+            for (const fil of this.filters){
                 keep = keep && fil.accepts(cont)
                 if (!keep){
                     break
@@ -46,7 +46,7 @@ class ContentManager {
     }
 
     addFilter(mode, value) {
-        var fil = new ContentFilter(mode, value)
+        const fil = new ContentFilter(mode, value)
         this.filters.push(fil)
         this.updateInfo()
     }

@@ -34,7 +34,7 @@ export function isWithinShape(
     shape: ShapeLike,
     position: Position
     ) : boolean {
-        let ret = (
+        const ret = (
             position.x >= shape.x &&
             position.x <= shape.x + shape.width &&
             position.y >= shape.y &&
@@ -53,11 +53,11 @@ export function scaleToFitElements(canvas:Canvas){
     if (inner.width === 0 || inner.height === 0) {
         return;
     }
-    var center = {
+    const center = {
         x: inner.x + inner.width/2,
         y: inner.y + inner.height/2
     };
-    let scale = Math.min( 
+    const scale = Math.min( 
         (outer.width / inner.width),
         (outer.height / inner.height)
     ) * 0.8;

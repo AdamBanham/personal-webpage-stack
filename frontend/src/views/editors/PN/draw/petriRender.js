@@ -25,7 +25,7 @@ import {
   
 
 
-var RENDER_PRIORITY = 1500;
+const RENDER_PRIORITY = 1500;
 const LABEL_COLOUR = "#01031b"
 const INNER_ICON_FILL_COLOUR = "#222222"
 const MARKED_COLOR = "#ebdf3f"
@@ -50,13 +50,13 @@ export default class PetriRenderer extends  BaseRenderer {
     
     constructor(eventBus, styles, canvas, textRender) {
         super(eventBus, 1)
-        var self = this;
+        const self = this;
         this._textRender = textRender
 
-        var renderPriority = RENDER_PRIORITY;
+        const renderPriority = RENDER_PRIORITY;
 
         eventBus.on([ 'render.shape' ], renderPriority, function(evt, context) {
-            var type = evt.type,
+            const type = evt.type,
                 element = context.element,
                 visuals = context.gfx,
                 attrs = context.attrs;
@@ -66,7 +66,7 @@ export default class PetriRenderer extends  BaseRenderer {
             }
         });
         eventBus.on(['render.connection' ], renderPriority - 50, function(evt, context) {
-            var type = evt.type,
+            const type = evt.type,
                 element = context.element,
                 visuals = context.gfx,
                 attrs = context.attrs;
@@ -89,15 +89,15 @@ export default class PetriRenderer extends  BaseRenderer {
             { fill: '#404040', stroke: '#222222', strokeWidth: 2 }
         );
 
-        var defs = svgCreate("defs", {})
+        const defs = svgCreate("defs", {})
         this._setupMarkers(defs)
         svgAppend(canvas.getActiveLayer(), defs)
     }
 
     _setupMarkers(defs){
-        var xOffset = ((placeRadius+5) * 2) / 5.0
-        var yOffset = (((placeRadius-4) / 2)) / 5
-        var marker = svgCreate("marker", {
+        let xOffset = ((placeRadius+5) * 2) / 5.0
+        let yOffset = (((placeRadius-4) / 2)) / 5
+        const marker = svgCreate("marker", {
             id: 'src-place-arrow',
             viewbox: '0 0 5 5',
             refX: 2.5,
@@ -111,7 +111,7 @@ export default class PetriRenderer extends  BaseRenderer {
         })
         xOffset = (((transitionSize/2)+8) * 2) / 5.0
         yOffset = ((((transitionSize/2)-8) / 2)) / 5
-        var marker2 = svgCreate("marker", {
+        const marker2 = svgCreate("marker", {
             id: 'src-trans-arrow',
             viewbox: '0 0 5 5',
             refX: 2.5,
@@ -126,7 +126,7 @@ export default class PetriRenderer extends  BaseRenderer {
 
         xOffset = (((transitionSize/4) * 2.0) / 5.0) * 2.1
         yOffset = (((transitionSize/2) / 2.0) / 5.0) * 0.9
-        var marker3 = svgCreate("marker", {
+        const marker3 = svgCreate("marker", {
             id: 'src-silent-trans-arrow',
             viewbox: '0 0 5 5',
             refX: 2.5,
@@ -138,7 +138,7 @@ export default class PetriRenderer extends  BaseRenderer {
             stroke: '#222222',
             fill: '#222222'
         })
-        var marker4 = svgCreate("marker", {
+        const marker4 = svgCreate("marker", {
             id: 'connect-hover-arrow',
             viewbox: '0 0 5 5',
             refX: 2.5,
@@ -150,7 +150,7 @@ export default class PetriRenderer extends  BaseRenderer {
             stroke: '#5671e7',
             fill: '#5671e7'
         })
-        var markerPath = svgCreate("path", {
+        let markerPath = svgCreate("path", {
             d: "M 0 0 L 5 2.5 L 0 5 z"
         })
         svgAppend(marker, markerPath)
@@ -182,12 +182,12 @@ export default class PetriRenderer extends  BaseRenderer {
 
     drawShape(visuals, element, attrs) {
             // init
-            var svgElements = [];
-            var group = svgCreate("g", {})
+            const svgElements = [];
+            const group = svgCreate("g", {})
             
             // construct the svg elements for the state
             if (isPlace(element)){
-                var place = this.createCircleForState(element, this.PLACE_STYLE)
+                const place = this.createCircleForState(element, this.PLACE_STYLE)
                 svgElements.push(
                     this.createShadowForState(place)
                 )
@@ -198,14 +198,14 @@ export default class PetriRenderer extends  BaseRenderer {
                     this.drawShapeId(element)
                 )
             } else if (isTransition(element)){
-                var trans = this.drawTransition(element, this.TRANSITION_STYLE)
+                const trans = this.drawTransition(element, this.TRANSITION_STYLE)
                 svgElements.push(
                     this.drawTransitionShadow(trans)
                 );
                 svgElements.push(
                     trans
                 );
-                let label = this.drawTransitionLabel(element);
+                const label = this.drawTransitionLabel(element);
                 if (label) svgElements.push(label);
                  svgElements.push(
                     this.drawTransitionId(element)
@@ -221,7 +221,7 @@ export default class PetriRenderer extends  BaseRenderer {
             
             
             // append svgs and return the svg group
-            for(var svg of svgElements){
+            for(const svg of svgElements){
                 svgAppend(group, svg)
             }
             svgAppend(visuals, group)
@@ -229,7 +229,7 @@ export default class PetriRenderer extends  BaseRenderer {
     };
 
     createCircleForState(element, style){
-        var svg = svgCreate("circle", style || {})
+        const svg = svgCreate("circle", style || {})
         svgAttr(svg, 
             {
                 cx: element.cx,
@@ -247,7 +247,7 @@ export default class PetriRenderer extends  BaseRenderer {
     }
     
     createShadowForState(svgElement){
-        var svg = svgClone(svgElement)
+        const svg = svgClone(svgElement)
         svgAttr(svg,{
             opacity: 0.25,
             cx: parseFloat(svgElement.attributes.cx.nodeValue) + (placeRadius * 0.1),
@@ -257,7 +257,7 @@ export default class PetriRenderer extends  BaseRenderer {
     }
 
     drawTransitionId(element){
-        var text = svgCreate('text',
+        const text = svgCreate('text',
             assign({
                 opacity: 0.75,
                 x: -1 * element.width * 0.1,
@@ -270,7 +270,7 @@ export default class PetriRenderer extends  BaseRenderer {
     }
 
     drawShapeId(element){
-        var text = svgCreate('text',
+        const text = svgCreate('text',
             assign({
                 opacity: 0.75,
                 x: -1 * placeRadius * 0.05,
@@ -283,7 +283,7 @@ export default class PetriRenderer extends  BaseRenderer {
     }
 
     drawTransition(element, style){
-        var rect = svgCreate('rect', style || {});
+        const rect = svgCreate('rect', style || {});
         svgAttr(rect,
             {x:0, y:0})
         if (element.silent){
@@ -310,7 +310,7 @@ export default class PetriRenderer extends  BaseRenderer {
     drawTransitionLabel(element){
         if (element.silent)
             return null
-        var text = svgCreate('text',
+        const text = svgCreate('text',
             assign({
                 x: element.silent ? transitionSize/-3 : transitionSize/2,
                 y: element.silent ? element.height : transitionSize/2,
@@ -329,7 +329,7 @@ export default class PetriRenderer extends  BaseRenderer {
     }
 
     drawTransitionShadow(svgElement){
-        var svg = svgClone(svgElement)
+        const svg = svgClone(svgElement)
         svgAttr(svg,{
             opacity: 0.25,
             x: parseFloat(svgElement.attributes.x.nodeValue) 
@@ -344,8 +344,8 @@ export default class PetriRenderer extends  BaseRenderer {
         if (!connection.waypoints || connection.waypoints.length < 2){
             return visuals;
         }
-        let waypoints = Array.from(connection.waypoints);
-        var line = createLine(
+        const waypoints = Array.from(connection.waypoints);
+        const line = createLine(
             connection.waypoints, 
             assign({}, this.CONNECTION_STYLE),
             5

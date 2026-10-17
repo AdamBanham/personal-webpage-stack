@@ -1,6 +1,6 @@
 import { ArticleStructure } from "../../articleElement.js";
 
-var article = new ArticleStructure(
+const article = new ArticleStructure(
     "Starting in Academia @ Adelaide University",
     "au-start-25"
 )

@@ -30,7 +30,7 @@ export default class ContraintsModule {
         this._modeling = modeling;
 
         // register event listeners
-        var that = this;
+        const that = this;
         this._eventBus.on(BUS_TRIGGER, (context) => {
             that.init(context);
         });
@@ -57,7 +57,7 @@ export default class ContraintsModule {
      * 
      */ 
     init(context) {
-        var controller = this._registry[context.mode];
+        const controller = this._registry[context.mode];
         if (!controller) {
             throw new Error('no constraint handler found');
         }

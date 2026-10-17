@@ -9,7 +9,7 @@ import {
 import connect from '.';
 import layout from '../layout';
 
-var MARKER_OK = 'connect-ok',
+const MARKER_OK = 'connect-ok',
 MARKER_NOT_OK = 'connect-not-ok';
   
 export default function Connect(eventBus, dragging, modeling, rules, 
@@ -75,7 +75,7 @@ export default function Connect(eventBus, dragging, modeling, rules,
     // event handlers
   
     eventBus.on('connect.hover', function(event) {
-      var context = event.context,
+      let context = event.context,
           start = context.start,
           hover = event.hover,
           canExecute;
@@ -100,7 +100,7 @@ export default function Connect(eventBus, dragging, modeling, rules,
     });
   
     eventBus.on([ 'connect.out', ], function(event) {
-      var context = event.context;
+      const context = event.context;
   
       context.hover = null;
       context.target = null;
@@ -111,7 +111,7 @@ export default function Connect(eventBus, dragging, modeling, rules,
     });
 
     eventBus.on(['connect.move'], function(event) {
-      var context = event.context;
+      const context = event.context;
       context.connectionEnd = {
         x: event.x,
         y: event.y
@@ -120,14 +120,14 @@ export default function Connect(eventBus, dragging, modeling, rules,
     });
 
     eventBus.on(['connect.cleanup'], function(event) {
-      var context = event.context;
+      const context = event.context;
   
       context.hover = null;
       context.target = null;
   
       context.canExecute = false;
 
-      let connection = context.getConnection();
+      const connection = context.getConnection();
       //console.log("connect cleanup", connection);
       if (connection) {
         modeling.removeElements([connection]);
@@ -136,7 +136,7 @@ export default function Connect(eventBus, dragging, modeling, rules,
     });
   
     eventBus.on('connect.end', function(event) {
-      var context = event.context,
+      const context = event.context,
           canExecute = context.canExecute,
           connectionStart = context.connectionStart,
           connectionEnd = context.connectionEnd,
@@ -147,7 +147,7 @@ export default function Connect(eventBus, dragging, modeling, rules,
         return false;
       }
   
-      var attrs = {
+      let attrs = {
             id: context.id
           },
           hints = {
@@ -158,7 +158,7 @@ export default function Connect(eventBus, dragging, modeling, rules,
       if (isObject(canExecute)) {
         attrs = canExecute;
       }
-      let connection = modeling.connect(source, target, attrs, hints);
+      const connection = modeling.connect(source, target, attrs, hints);
       modeling.layoutConnection(connection);
 
       eventBus.fire('elements.changed', {
@@ -216,7 +216,7 @@ Connect.$inject = [
 // helpers //////////
   
 export function isReverse(context) {
-var hover = context.hover,
+const hover = context.hover,
     source = context.source,
     target = context.target;
 

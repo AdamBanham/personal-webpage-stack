@@ -27,13 +27,13 @@ export default class FactRenderer extends TemplateRenderer<Fact> {
     }
 
     draw(visuals: SVGElement, element: Fact): SVGElement {
-        var group = svgCreate("g", {
+        const group = svgCreate("g", {
                 class: RenderingConstants.classes.VISUAL_GROUP_CLASS,
         });
         
         // setup 
-        let rx = 2.5;
-        let dashType = "";
+        const rx = 2.5;
+        const dashType = "";
         let centerText = Math.floor(element.width * 0.5);
 
         // draw roles for fact
@@ -42,7 +42,7 @@ export default class FactRenderer extends TemplateRenderer<Fact> {
         const isVertical = element.alignment === "vertical";
         
         for (let i = 0; i < element.roles; i++){
-            let box = svgCreate("rect", {
+            const box = svgCreate("rect", {
                 'stroke-dasharray': dashType,
                 class: RenderingConstants.classes.FACT_ROLE_CLASS,
                 rx: rx,
@@ -58,14 +58,14 @@ export default class FactRenderer extends TemplateRenderer<Fact> {
             // TODO: this should react to constraint building or 
             //       uniqueness constraint building
             if (element.hovered && i === element.hoveredRole!){
-                let attrs = {
+                const attrs = {
                     rx: rx,
                     width: unitWidth,
                     height: unitHeight,
                     x: x,
                     y: y
                 };
-                let cover = this._handleHighlighting(element, attrs, i);
+                const cover = this._handleHighlighting(element, attrs, i);
                 svgAppend(group, cover);
             }
             
@@ -83,7 +83,7 @@ export default class FactRenderer extends TemplateRenderer<Fact> {
 
         if (element.objectified && element.objectifiedName){
             let upperText;
-            let offset =  - 10 - (10 * element.uniqueness.length) - 12.5;
+            const offset =  - 10 - (10 * element.uniqueness.length) - 12.5;
 
             // adjust for vertical alignment
             if (element.isVertical()){
@@ -126,7 +126,7 @@ export default class FactRenderer extends TemplateRenderer<Fact> {
                 }
             }
             transform += " scale(6)";
-            let arrowhead = svgCreate("path", {
+            const arrowhead = svgCreate("path", {
                 d: 'm0 0v3.804C0 3.999 0 4 .157 3.864L1.764 2.234C2.002 2.002 2.001 2 1.749 1.749L.078.092C0-.001 0 0 0 .108z',
                 'stroke-linecap': "round",
                 class: RenderingConstants.classes.FACT_VERB_ARROW_CLASS,
@@ -141,8 +141,8 @@ export default class FactRenderer extends TemplateRenderer<Fact> {
     }
 
     _handleHighlighting(element: Fact, attrs: object, role: number): SVGElement {
-        let coverBox = svgCreate("rect", attrs);
-        let classing = svgClasses(coverBox);
+        const coverBox = svgCreate("rect", attrs);
+        const classing = svgClasses(coverBox);
 
         let highlightMode = element.highlightMode,
             focus = element.highlightFocus,
@@ -160,7 +160,7 @@ export default class FactRenderer extends TemplateRenderer<Fact> {
                     RenderingConstants.classes.FACT_ROLE_FREE_CLASS;       
                 break;
             case "uniqueness":
-                let unique:SimpleConstraint = focus as SimpleConstraint;
+                const unique:SimpleConstraint = focus as SimpleConstraint;
                 classer = unique.isRoleConstrainted(role) ? 
                     RenderingConstants.classes.FACT_ROLE_FILLED_CLASS : 
                     RenderingConstants.classes.FACT_ROLE_FREE_CLASS; 

@@ -28,7 +28,7 @@ export default class LabelRenderer extends TemplateRenderer<Label> {
 
     draw(visuals: any, element: Label) {
 
-        var group = svgCreate("g", {
+        const group = svgCreate("g", {
             class: RenderingConstants.css.RENDER_VISUALS_CLASS
         });
 
@@ -57,7 +57,7 @@ export default class LabelRenderer extends TemplateRenderer<Label> {
                 y = 3.5;
             }
         }
-        var text = svgCreate('text',
+        const text = svgCreate('text',
             {
                 x,
                 y,

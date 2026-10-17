@@ -30,7 +30,7 @@ export class ObjectifiedRole implements Objectification {
     outgoing: Connection[];
 
     constructor(fact: Fact) {
-        let id = fact.id.split('-')[1];
+        const id = fact.id.split('-')[1];
         this.id = `objectification-${id}`;
         this.type = OBJECTIFICATION_TYPE;
         this.label = undefined;

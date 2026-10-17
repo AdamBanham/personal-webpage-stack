@@ -134,7 +134,7 @@ export default class Exporting {
     }
 
     encode(text){
-        var ret = text
+        let ret = text
         for(const illegal in XML_ILLEGALS){
             ret = ret.replace(
                 illegal, XML_ILLEGALS[illegal]
@@ -145,10 +145,10 @@ export default class Exporting {
 
     export(){
         this._xml = this.createHead()
-        var that = this
+        const that = this
         // process places first
-        var check = isPlace
-        var els = this._registry.filter(check)
+        let check = isPlace
+        let els = this._registry.filter(check)
         var f = function(el,gfx) {
             return that.serialise(that,el,gfx)
         }
@@ -192,8 +192,8 @@ export default class Exporting {
     }
 
     _serialisePlace(self, element, gfx){
-        var UUID = uuidv4()
-        var placeSvg = ""+ PLACE_TEMPLATE({
+        const UUID = uuidv4()
+        const placeSvg = ""+ PLACE_TEMPLATE({
             id: element.id,
             name: element.id,
             x: parseInt(element.x),
@@ -208,8 +208,8 @@ export default class Exporting {
     }
 
     _serialiseTransition(self, element, gfx){
-        var UUID = uuidv4()
-        var transitionSvg = ""+ TRANSITION_TEMPLATE({
+        const UUID = uuidv4()
+        const transitionSvg = ""+ TRANSITION_TEMPLATE({
             id: element.id,
             name: element.labelText,
             silent: element.silent,
@@ -222,14 +222,14 @@ export default class Exporting {
     }
 
     _serialiseFlow(self, element, gfx){
-        var UUID = uuidv4()
-        var flowSvg = ""+ FLOW_TEMPLATE({
+        const UUID = uuidv4()
+        let flowSvg = ""+ FLOW_TEMPLATE({
             id: element.id,
             src: element.source.id,
             tgt: element.target.id,
             UUID: UUID
         })
-        for(var way of element.waypoints){
+        for(const way of element.waypoints){
             flowSvg += FLOW_WAYPOINT({
                 x: parseInt(way.x),
                 y: parseInt(way.y)
