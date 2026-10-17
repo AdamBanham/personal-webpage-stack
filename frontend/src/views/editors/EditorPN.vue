@@ -254,6 +254,18 @@ onBeforeUnmount(() => {
 })
 </script>
     
+<style lang="sass">
+@use "@/styles/coloursAnt.sass" as c
+
+// diagram-js mounts the context pad at runtime, so scoped styles do not reach it
+.editor-content .editor-canvas
+  .djs-context-pad
+    .entry
+      color: #000000
+      &:hover
+        color: c.$blue-7
+</style>
+
 <style lang="sass" scoped>
 @use "./PN/scoped"
 </style>
