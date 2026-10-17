@@ -1,0 +1,2 @@
+import{L as e,f as t,l as n}from"./runtime-core.esm-bundler-C7VbFZnF.js";import{n as r}from"./app-2v4iUkJD.js";var i={},a={class:`content-bar`};function o(r,i){return e(),t(`div`,a,[...i[0]||(i[0]=[n(`div`,{class:`not-ready`},[n(`div`,{class:`content`},[n(`p`,null,` I am currently building this page, come back later.... `)])],-1)])])}var s=r(i,[[`render`,o],[`__scopeId`,`data-v-8f25d14e`]]);export{s as default};
+//# sourceMappingURL=NotReady-DcXiYEDi.js.map

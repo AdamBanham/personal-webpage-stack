@@ -1,0 +1,2 @@
+import{a as e,o as t}from"./grid-iRhTu87-.js";import{W as n,v as r,y as i}from"./snapping-6EwLI9Cw.js";var a={__depends__:[t,i,r,n],__init__:[`copyPaste`],copyPaste:[`type`,e]};export{a as t};
+//# sourceMappingURL=copy-paste-B23IyssU.js.map

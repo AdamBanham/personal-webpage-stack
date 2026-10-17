@@ -1,2 +1,0 @@
-import{_ as a,o as s,c,a as e}from"./app-bSaJObPU.js";const o={},n={class:"content-bar"};function r(d,t){return s(),c("div",n,[...t[0]||(t[0]=[e("div",{class:"not-ready"},[e("div",{class:"content"},[e("p",null," I am currently building this page, come back later.... ")])],-1)])])}const _=a(o,[["render",r],["__scopeId","data-v-8f25d14e"]]);export{_ as default};
-//# sourceMappingURL=NotReady-ByyQzVIA.js.map
