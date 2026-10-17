@@ -22,11 +22,25 @@
                         <v-tooltip text="Add Place (P)" activator="parent" location="bottom"></v-tooltip>
                     </button>
                 </div>
+                <div class="col-2 ms-1" v-if="nodeType === 'transition'">
+                    <button class="btn btn-light p-1" :disabled="!canFire" @click.stop="triggerFire()"
+                        @mouseenter="previewBinding(firstBinding)" @mouseleave="previewBinding(null)">
+                        <span class="mdi mdi-play"></span>
+                    </button>
+                    <!-- disabled buttons swallow hover, so the tooltip hangs off the wrapper -->
+                    <v-tooltip :text="canFire ? 'Fire (F)' : 'Fire (F) — no bindings'" activator="parent"
+                        location="bottom"></v-tooltip>
+                </div>
                 <div class="col-2 ms-1" v-if="nodeType === 'place'">
-                    <button class="btn btn-light p-1"
-                        @click.stop="triggerAddToken()">
+                    <button class="btn btn-light p-1" @click.stop="triggerAddToken()">
                         <span class="mdi mdi-circle-double"></span>
                         <v-tooltip text="Add Token (k)" activator="parent" location="bottom"></v-tooltip>
+                    </button>
+                </div>
+                <div class="col-2 ms-1" v-if="nodeType === 'place'">
+                    <button class="btn btn-light p-1" @click.stop="triggerClearTokens()">
+                        <span class="mdi mdi-close-circle-multiple-outline"></span>
+                        <v-tooltip text="Clear Tokens (s)" activator="parent" location="bottom"></v-tooltip>
                     </button>
                 </div>
             </div>
@@ -48,14 +62,19 @@ import { NodeToolbar } from '@vue-flow/node-toolbar'
 import { NodeTypes, PetriEditorNamespace } from '../js'
 import { computed, onMounted, onUnmounted, toValue } from 'vue'
 import useIdentities from '../js/useIdentities'
+import useFiring from '../js/useFiring'
 
 const node = useNode()
 const data = node.node.data
 const nodeType = node.node.type as NodeTypes
 const position = computed(() => node.node.position)
 
-const { connectionStartHandle, removeNodes, addNodes, addEdges } = useVueFlow(PetriEditorNamespace)
+const { connectionStartHandle, removeNodes, addNodes, addEdges, nodes } = useVueFlow(PetriEditorNamespace)
 const { getNext } = useIdentities()
+const { bindingsFor, isFiring, fire, previewBinding } = useFiring(PetriEditorNamespace)
+
+const firstBinding = computed(() => (nodeType === 'transition' ? bindingsFor(node.id)[0] ?? null : null))
+const canFire = computed(() => !!firstBinding.value && !isFiring.value)
 
 function triggerConnect() {
     if (connectionStartHandle.value || !node.node.selected) return
@@ -75,11 +94,16 @@ function triggerConnect() {
     }))
 }
 
+function triggerFire() {
+    if (!canFire.value) return
+    fire(node.id, firstBinding.value!)
+}
+
 function triggerDelete() {
     removeNodes(node.id)
 }
 
-function triggerAddToken(){
+function triggerAddToken() {
     const pos = toValue(position)
     const newNode = {
         type: 'token',
@@ -94,6 +118,15 @@ function triggerAddToken(){
 
     addNodes(newNode)
 }
+function triggerClearTokens() {
+    let innerTokens = nodes.value.filter(
+        el => el.type === 'token'
+    ).filter(
+        el => el.parentNode === node.id
+    )
+
+    removeNodes(innerTokens)
+}
 
 function triggerAdd(type: NodeTypes) {
     const pos = toValue(position)
@@ -103,7 +136,7 @@ function triggerAdd(type: NodeTypes) {
         type: type,
         position: {
             x: pos.x + 100,
-            y: pos.y
+            y: pos.y - 7.5
         }
     }
     addNodes(
@@ -158,9 +191,21 @@ function onKeydown(event: KeyboardEvent) {
             }
             break
         case ('k'):
-            if (nodeType == 'place'){
+            if (nodeType == 'place') {
                 triggerAddToken()
             }
+            break
+        case ('s'):
+            if (nodeType == 'place') {
+                triggerClearTokens()
+            }
+            break
+        case ('f'):
+            if (nodeType == 'transition' && canFire.value) {
+                triggerFire()
+                event.preventDefault()
+            }
+            break
     }
 }
 
